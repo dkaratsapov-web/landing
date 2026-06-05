@@ -647,6 +647,22 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @media (max-width: 1040px) {
   .proc-chain .proc-link { display: none; }   /* segments only read across a single row */
 }
+/* Phones: turn the steps into a horizontal snap carousel and bring the
+   animated chain (flowing links + node pulse) back since they line up again. */
+@media (max-width: 640px) {
+  .proc-grid {
+    display: flex !important; gap: 0 !important;
+    overflow-x: auto; scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+    margin: 0 -22px; padding: 6px 22px 16px;
+    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
+  }
+  .proc-grid::-webkit-scrollbar { height: 6px; }
+  .proc-grid::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+  .proc-step { flex: 0 0 64%; max-width: 230px; scroll-snap-align: start; }
+  .proc-chain .proc-link { display: block; }            /* re-enable flowing connector */
+  .proc-step:last-child .proc-node-row { padding-right: 0; }
+}
 
 /* ---------- Wave section dividers ---------- */
 .wave-svg { animation: waveSlide var(--wave-spd, 15s) linear infinite; }
