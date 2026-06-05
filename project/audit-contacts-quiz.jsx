@@ -127,8 +127,15 @@ function Contacts() {
             <a className="contact-row" href="https://t.me/Daniil_065" target="_blank" rel="noopener">
               <span className="icon-tile" style={{ width: 50, height: 50 }}><IconSend size={22} /></span>
               <div>
-                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Telegram · Max</div>
+                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Telegram</div>
                 <div style={{ fontSize: 19, fontWeight: 600 }}>@Daniil_065</div>
+              </div>
+            </a>
+            <a className="contact-row" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener">
+              <span className="icon-tile" style={{ width: 50, height: 50, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20 }}>M</span>
+              <div>
+                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>MAX</div>
+                <div style={{ fontSize: 19, fontWeight: 600 }}>Написать в MAX</div>
               </div>
             </a>
           </div>
