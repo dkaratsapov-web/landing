@@ -85,7 +85,7 @@ const STATS = [
 ];
 
 const SERVICES = [
-  { icon: 'IconTarget',  name: 'Контекстная реклама',   tag: 'Яндекс.Директ',
+  { icon: 'IconTarget',  name: 'Контекстная реклама',   tag: 'Yandex Ads, Google Ads',
     result: 'Привожу целевые заявки с первых дней — без слива бюджета на нецелевой трафик.',
     works: [
       'Аудит ниши, спроса и конкурентов',
@@ -96,7 +96,7 @@ const SERVICES = [
     ],
     term: 'Запуск за 3–5 дней',
     price: 'от 30 000 ₽ настройка · от 20 000 ₽/мес ведение' },
-  { icon: 'IconUsers',   name: 'Таргетированная реклама', tag: 'VK Ads',
+  { icon: 'IconUsers',   name: 'Таргетированная реклама', tag: 'VK Ads, Telegram Ads, Avito Ads',
     result: 'Нахожу вашу аудиторию в соцсетях и веду её до заявки.',
     works: [
       'Анализ и сегментация целевой аудитории',
