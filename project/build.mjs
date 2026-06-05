@@ -48,6 +48,9 @@ copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
 // punycode (ASCII) form. Emitting it on every build keeps the domain bound.
 writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai\n', 'utf8');
 
+// Favicon (lime paper plane) — copy verbatim.
+copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
+
 const scriptTags = [
   '  <script defer src="tweaks-panel.js"></script>',
   '  <script defer src="image-slot.js"></script>',
@@ -77,6 +80,7 @@ const html = `<!DOCTYPE html>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" as="image" href="assets/portrait.jpg" fetchpriority="high" />
 
   <script defer src="${REACT}" crossorigin="anonymous"></script>

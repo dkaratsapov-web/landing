@@ -20,7 +20,7 @@ function Nav({ onCta }) {
     <nav className={'nav' + (scrolled ? ' scrolled' : '')}>
       <div className="wrap">
         <a className="brand" href="#top" onClick={(e) => go(e, '#top')}>
-          <span className="dot">ДК</span>Даниил Карацапов
+          <span className="dot"><IconPlane size={18} /></span>Даниил Карацапов
         </a>
         <div className="nav-links">
           {NAV_LINKS.map(([t, h]) => <a key={h} href={h} onClick={(e) => go(e, h)}>{t}</a>)}
