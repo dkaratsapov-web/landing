@@ -25,17 +25,37 @@ const QUOTES = [
 
 function Quotes() {
   const [i, setI] = useStateE(0);
+  const [typed, setTyped] = useStateE(0);
   const [paused, setPaused] = useStateE(false);
-  const timer = useRefE(null);
+  const q = QUOTES[i];
 
+  // Flatten the quote into a list of [char, isHighlighted] for the typewriter.
+  const chars = [];
+  q.parts.forEach(([txt, hl]) => { for (const ch of txt) chars.push([ch, hl]); });
+  const total = chars.length;
+  const done = typed >= total;
+
+  // Type the active quote out, one character at a time.
   useEffectE(() => {
-    if (paused) return;
-    timer.current = setInterval(() => setI((p) => (p + 1) % QUOTES.length), 5800);
-    return () => clearInterval(timer.current);
-  }, [paused]);
+    setTyped(0);
+    let n = 0;
+    const id = setInterval(() => {
+      n += 1;
+      setTyped(n);
+      if (n >= total) clearInterval(id);
+    }, 42);
+    return () => clearInterval(id);
+  }, [i, total]);
+
+  // Once typed (and not hovered), hold for a beat, then advance to the next.
+  useEffectE(() => {
+    if (!done || paused) return;
+    const id = setTimeout(() => setI((p) => (p + 1) % QUOTES.length), 2800);
+    return () => clearTimeout(id);
+  }, [done, paused]);
 
   return (
-    <section className="sec bg-b" style={{ overflow: 'hidden' }}>
+    <section className="sec quotes-sec bg-b" style={{ overflow: 'hidden' }}>
       <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap wrap-narrow" style={{ maxWidth: 1000 }}
         onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
@@ -43,17 +63,18 @@ function Quotes() {
           <span className="eyebrow center">Во что я верю</span>
         </div>
         <div className="quotes-stage">
-          {QUOTES.map((q, idx) => (
-            <figure key={idx} className={'quote-item' + (idx === i ? ' active' : '')}>
-              <div className="quote-mark" aria-hidden="true">“</div>
-              <blockquote className="quote-text">
-                {q.parts.map(([txt, hl], k) => hl ? <span key={k} className="hl">{txt}</span> : <React.Fragment key={k}>{txt}</React.Fragment>)}
-              </blockquote>
-              <figcaption className="quote-author">
-                <span className="rule" /><b>{q.author}</b><span>·&nbsp;{q.role}</span>
-              </figcaption>
-            </figure>
-          ))}
+          <figure className="quote-item active">
+            <div className="quote-mark" aria-hidden="true">“</div>
+            <blockquote className="quote-text">
+              {chars.slice(0, typed).map(([ch, hl], k) =>
+                hl ? <span key={k} className="hl">{ch}</span> : <React.Fragment key={k}>{ch}</React.Fragment>
+              )}
+              <span className={'type-caret' + (done ? ' done' : '')} aria-hidden="true" />
+            </blockquote>
+            <figcaption className="quote-author" style={{ opacity: done ? 1 : 0 }}>
+              <span className="rule" /><b>{q.author}</b><span>·&nbsp;{q.role}</span>
+            </figcaption>
+          </figure>
         </div>
         <div className="quote-dots">
           {QUOTES.map((_, idx) => (
