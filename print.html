@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Даниил Карацапов — интернет-маркетолог | Контекст, таргет, сайты</title>
+  <meta name="description" content="Частный интернет-маркетолог Даниил Карацапов. Контекстная реклама, таргет, разработка сайтов. Работаю лично, отвечаю за результат." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="stylesheet" href="landing.css" />
+
+  <style>
+    /* ---- Print optimisation ---- */
+    @page { size: A4 portrait; margin: 1.2cm 1cm; }
+
+    @media print {
+      *, *::before, *::after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      /* ---------------------------------------------------------------
+         LIGHT PRINT THEME — dark text on white.
+         A dark website printed to PDF goes unreadable the moment the
+         browser drops background graphics (light text on white paper).
+         We flip the token palette to a light theme so the PDF is always
+         legible regardless of the user's print settings.
+         !important on the custom properties also beats the inline accent
+         vars the app writes onto <html>.
+      --------------------------------------------------------------- */
+      html {
+        --pg:        #ffffff !important;
+        --tile-a:    #ffffff !important;
+        --tile-b:    #f8f8fa !important;
+        --tile-c:    #f2f2f4 !important;
+        --tile-card: #f2f2f4 !important;
+        --line:        rgba(0,0,0,0.12) !important;
+        --line-strong: rgba(0,0,0,0.22) !important;
+        --txt:   #1d1d1f !important;
+        --txt-2: #45454a !important;
+        --txt-3: #6e6e73 !important;
+        /* Accent — darken so text/eyebrow stays readable on white paper.
+           Button fills stay lime (brand identity, print-color-adjust enforces it). */
+        --accent:         #5a9e15 !important;
+        --accent-bright:  #3d6e0a !important;
+        --accent-ink:     #ffffff !important;
+        --accent-line:    transparent !important;
+        --accent-soft:    rgba(61,110,10,0.07) !important;
+        --accent-soft-bd: rgba(61,110,10,0.25) !important;
+      }
+      html, body { background: #ffffff !important; color: #1d1d1f !important; }
+
+      /* Freeze any animation/transition at end state */
+      *, *::before, *::after {
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+      /* Reveal-on-scroll never fires in print — force visible */
+      .reveal { opacity: 1 !important; transform: none !important; }
+
+      /* Quotes: only active quote shows; force it fully opaque and static */
+      .quote-item { position: static !important; opacity: 0 !important; height: 0 !important; overflow: hidden !important; }
+      .quote-item.active { opacity: 1 !important; height: auto !important; overflow: visible !important; }
+      .quotes-stage { min-height: 0 !important; display: block !important; }
+      .quote-dots { display: none !important; }
+
+      /* Fixed nav → static, light */
+      .nav { position: static !important; background: #ffffff !important;
+        backdrop-filter: none !important; border-bottom: 1px solid rgba(0,0,0,0.12) !important; }
+      .nav-cta, .nav-burger { display: none !important; }
+      .nav-links { display: flex !important; }
+      .nav-links a { color: #45454a !important; }
+
+      /* Hide interactive-only chrome */
+      .twk-panel, .toast-wrap { display: none !important; }
+      /* Background atmosphere off for a clean PDF */
+      .atmos { display: none !important; }
+
+      /* Footer uses a literal black — force it light too */
+      .footer { background: #f6f6f8 !important; border-top: 1px solid rgba(0,0,0,0.12) !important; }
+
+      /* Hero: avoid forcing 100vh height so it doesn't waste a page */
+      .hero-split-grid { min-height: 0 !important; padding-top: 24px !important;
+        padding-bottom: 44px !important; }
+      header#top { padding-top: 0 !important; }
+
+      /* Tighten section rhythm + add hairline separators on white */
+      .sec { padding: 44px 0 !important; }
+      .sec-tight { padding: 28px 0 !important; }
+      .sec, .sec-tight { border-top: 1px solid rgba(0,0,0,0.08) !important; }
+
+      /* Cards: slightly gray fill to stand out against both white + light-gray section backgrounds */
+      .card { background: #f2f2f4 !important; border-color: rgba(0,0,0,0.1) !important; }
+
+      /* Forms: readable in print */
+      .input, .textarea {
+        background: #f4f4f6 !important;
+        border-color: rgba(0,0,0,0.2) !important;
+        color: #1d1d1f !important;
+      }
+      .consent { color: #6e6e73 !important; }
+
+      /* Keep blocks intact across page breaks */
+      section, header { break-inside: avoid-page; }
+      .card, article, .stat-grid, .proc-step, .contact-row,
+      .feat-grid, form { break-inside: avoid; }
+
+      /* Open every case card so metrics print */
+      .case-body-print { max-height: 9999px !important; overflow: visible !important; }
+      img { break-inside: avoid; max-width: 100% !important; }
+      a { text-decoration: none !important; color: #3d6e0a !important; }
+      .brand { color: #1d1d1f !important; }
+    }
+  </style>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script src="image-slot.js"></script>
+  <script type="text/babel" src="icons.jsx"></script>
+  <script type="text/babel" src="shared.jsx"></script>
+  <script type="text/babel" src="extras.jsx"></script>
+  <script type="text/babel" src="nav-hero-about.jsx"></script>
+  <script type="text/babel" src="services-process-cases.jsx"></script>
+  <script type="text/babel" src="audit-contacts-quiz.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+
+  <script type="text/babel">
+    // Wait for React mount + fonts, expand all case cards, then print.
+    (async function () {
+      const waitForRoot = () => new Promise((res) => {
+        const t = setInterval(() => {
+          if (document.querySelector('#cases .case-head')) { clearInterval(t); res(); }
+        }, 120);
+        setTimeout(() => { clearInterval(t); res(); }, 8000);
+      });
+      await waitForRoot();
+      // Force every reveal visible (IntersectionObserver won't fire for off-screen)
+      document.querySelectorAll('.reveal').forEach((e) => e.classList.add('in'));
+      // Open all case cards so their metrics are visible in the PDF
+      document.querySelectorAll('#cases .case-head').forEach((btn) => {
+        const body = btn.nextElementSibling;
+        if (body) {
+          body.style.maxHeight = '9999px';
+          body.style.overflow = 'visible';
+          body.classList.add('case-body-print');
+        }
+      });
+      try { await document.fonts.ready; } catch (e) {}
+      setTimeout(() => window.print(), 900);
+    })();
+  </script>
+</body>
+</html>
