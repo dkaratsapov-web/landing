@@ -177,6 +177,7 @@ const CASES = [
       ['+82', 'отзыва в Яндекс Бизнес за полгода'],
     ] },
   { id: 'profildoors', client: 'Профиль Дорс', field: 'Сеть салонов межкомнатных дверей', geo: 'Москва',
+    img: 'assets/cases/profildoors.jpg',
     tags: ['context', 'geo', 'target'],
     services: ['Яндекс Директ', 'VK Ads', 'Яндекс Бизнес', 'RoiStat'],
     summary: 'Комплексная Digital-стратегия для сети салонов межкомнатных дверей.',
