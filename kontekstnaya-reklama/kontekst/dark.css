@@ -1,6 +1,6 @@
 /* ============================================================
    Контекстная реклама — тёмная тема «Карацапов»
-   Near-black фон · салатовый акцент · Manrope · много анимаций
+   Near-black фон · салатовый акцент · Nunito · много анимаций
    ============================================================ */
 
 :root {
@@ -32,7 +32,7 @@
   --sp-section: 120px;
   --maxw: 1280px;
 
-  --font: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -49,6 +49,7 @@ body {
 }
 img { display: block; max-width: 100%; }
 a { color: inherit; text-decoration: none; }
+.navplane{display:block;flex:0 0 auto}
 ::selection { background: var(--lime); color: var(--lime-ink); }
 
 /* Фоновое свечение + сетка — фиксировано, дрейфует */
