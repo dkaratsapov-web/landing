@@ -234,6 +234,18 @@ h2.section-title {
 
 /* ---------- Certificates ---------- */
 .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px; }
+/* On phones: horizontal snap carousel instead of a tall vertical stack */
+@media (max-width: 640px) {
+  .cert-grid {
+    display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin: 0 -22px; padding: 4px 22px 14px;
+    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
+  }
+  .cert-grid::-webkit-scrollbar { height: 6px; }
+  .cert-grid::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+  .cert-card { flex: 0 0 70%; max-width: 250px; scroll-snap-align: start; }
+}
 .cert-card {
   display: flex; flex-direction: column; gap: 14px; text-align: left;
   background: transparent; border: none; padding: 0; cursor: pointer; color: var(--txt);
