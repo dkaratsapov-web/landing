@@ -530,39 +530,81 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 .quote-dot.on { background: var(--accent-bright); width: 26px; border-radius: 6px; }
 
 /* ============================================================
-   CASES — emphasized: photo thumbnails + featured card
+   CASES — filterable cards (tabs by service)
    ============================================================ */
-.case-card { overflow: hidden; position: relative; }
-.case-card.featured { border-color: var(--accent-soft-bd); }
-.case-head {
-  width: 100%; text-align: left; cursor: pointer; background: transparent; border: none;
-  color: var(--txt); display: grid; grid-template-columns: 132px 1fr auto; gap: 24px;
-  align-items: center; padding: 20px;
+.kase-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+.kase-tab {
+  display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+  font-family: var(--font-text); font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--txt-2); background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line); border-radius: var(--r-pill); padding: 9px 16px;
+  transition: color .2s ease, border-color .2s ease, background .2s ease;
 }
-.case-card.featured .case-head { grid-template-columns: 240px 1fr auto; gap: 32px; padding: 24px; }
-.case-thumb {
-  border-radius: var(--r-md); overflow: hidden; aspect-ratio: 4 / 3; width: 100%;
-  background: var(--tile-b); border: 1px solid var(--line);
+.kase-tab:hover { color: var(--txt); border-color: var(--line-strong); }
+.kase-tab.on { color: var(--accent-ink); background: var(--accent); border-color: var(--accent-line); }
+.kase-tab-n {
+  font-size: 12px; min-width: 20px; height: 20px; padding: 0 6px; border-radius: var(--r-pill);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.08); color: inherit;
 }
-.case-thumb image-slot { width: 100%; height: 100%; display: block; }
-.case-card.featured .case-thumb { aspect-ratio: 16 / 10; }
-.case-metric-num {
-  font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
-  color: var(--accent-bright); font-size: clamp(28px, 3vw, 40px); line-height: 1;
-}
-.case-card.featured .case-metric-num { font-size: clamp(40px, 4.5vw, 64px); }
-.case-chevron { display: inline-flex; transition: transform .3s ease; color: var(--txt-2); }
-.case-chevron.open { transform: rotate(180deg); }
-.case-body { max-height: 0; overflow: hidden; transition: max-height .45s cubic-bezier(.16,.7,.3,1); }
+.kase-tab.on .kase-tab-n { background: rgba(0,0,0,0.18); }
 
-@media (max-width: 900px) {
-  .case-head, .case-card.featured .case-head { grid-template-columns: 96px 1fr !important; gap: 16px !important; }
-  .case-thumb { grid-row: span 2; }
-  .case-metric { grid-column: 2; }
+.kase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 22px; }
+.kase { overflow: hidden; display: flex; flex-direction: column;
+  opacity: 0; animation: kaseIn .5s cubic-bezier(.16,.7,.3,1) forwards;
+  animation-delay: calc(var(--d) * 70ms); }
+@keyframes kaseIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.kase:hover { border-color: var(--accent-soft-bd); }
+.kase-photo {
+  position: relative; aspect-ratio: 16 / 10; background: var(--tile-b);
+  border-bottom: 1px solid var(--line); overflow: hidden;
 }
-@media (max-width: 560px) {
-  .case-head, .case-card.featured .case-head { grid-template-columns: 1fr !important; }
-  .case-thumb { grid-row: auto; max-width: 160px; }
+.kase-photo image-slot { width: 100%; height: 100%; display: block; }
+.kase-badge {
+  position: absolute; top: 14px; left: 14px; z-index: 1;
+  background: var(--accent); color: var(--accent-ink);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.01em;
+  padding: 6px 12px; border-radius: var(--r-pill);
+}
+.kase-geo {
+  position: absolute; bottom: 14px; left: 14px; z-index: 1;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(8,8,10,0.66); backdrop-filter: blur(8px); color: var(--txt);
+  font-size: 13px; padding: 6px 12px; border-radius: var(--r-pill);
+}
+.kase-geo .i { color: var(--accent-bright); }
+.kase-content { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.kase-field { color: var(--accent-bright); font-size: 13px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em; }
+.kase-name { font-family: var(--font-display); font-size: 24px; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--txt); margin: -6px 0 0; }
+.kase-summary { color: var(--txt-2); font-size: 15px; line-height: 1.5; margin: 0; }
+.kase-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px;
+  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+.kase-metric-v { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em;
+  color: var(--accent-bright); font-size: 26px; line-height: 1.05; }
+.kase-metric-l { color: var(--txt-3); font-size: 12.5px; line-height: 1.35; margin-top: 5px; }
+.kase-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.kase-chip { font-size: 12px; color: var(--txt-2); padding: 5px 11px; border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.04); border: 1px solid var(--line); }
+
+@media (prefers-reduced-motion: reduce) { .kase { animation: none; opacity: 1; } }
+
+/* tabs scroll horizontally + cards become a swipe carousel on phones */
+@media (max-width: 640px) {
+  .kase-tabs { flex-wrap: nowrap; overflow-x: auto; margin: 0 -22px 16px; padding: 0 22px 4px;
+    scrollbar-width: none; }
+  .kase-tabs::-webkit-scrollbar { display: none; }
+  .kase-tab { flex: 0 0 auto; }
+  .kase-grid {
+    display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+    margin: 0 -22px; padding: 4px 22px 16px;
+    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
+  }
+  .kase-grid::-webkit-scrollbar { height: 6px; }
+  .kase-grid::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+  .kase { flex: 0 0 86%; max-width: 340px; scroll-snap-align: start; }
 }
 
 /* ============================================================
