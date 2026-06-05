@@ -187,13 +187,14 @@ function Process() {
           <h2 className="section-title">Прозрачно, по шагам</h2>
           <p className="lead" style={{ marginTop: 22 }}>Вы всегда понимаете, на каком этапе проект и что я делаю прямо сейчас.</p>
         </div>
-        <div className="proc-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
+        <div className="proc-grid proc-chain" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
           {PROCESS.map((p, i) =>
           <div key={i} className="reveal proc-step" style={{ transitionDelay: i * 60 + 'ms', position: 'relative',
-            padding: '0 22px 0 0' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-                <span style={{ color: 'var(--accent-bright)' }}><Glyph name={p.icon} size={22} /></span>
-                <span style={{ flex: 1, height: 1, background: 'var(--line)' }} />
+            padding: '0 22px 0 0', '--i': i }}>
+              <div className="proc-node-row">
+                <span className="proc-node"><Glyph name={p.icon} size={20} /></span>
+                {i < PROCESS.length - 1 &&
+                  <span className="proc-link"><span className="proc-link-flow" /></span>}
               </div>
               <div style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 600, color: 'var(--txt-3)',
               letterSpacing: '0.06em', marginBottom: 10 }}>{p.n}</div>
