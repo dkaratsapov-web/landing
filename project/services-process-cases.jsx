@@ -19,20 +19,14 @@ function ServiceHead() {
 
 }
 
-function ServiceCard({ s, i, open, onToggle }) {
-  const [h, setH] = useStateB(0);
-  const innerRef = useRefB(null);
-  useEffectB(() => {
-    setH(open && innerRef.current ? innerRef.current.scrollHeight : 0);
-  }, [open]);
+function ServiceCard({ s, open, onToggle }) {
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect();
     e.currentTarget.style.setProperty('--mx', (e.clientX - r.left) + 'px');
     e.currentTarget.style.setProperty('--my', (e.clientY - r.top) + 'px');
   };
   return (
-    <article className={'card svc-x reveal' + (open ? ' open' : '')} onMouseMove={onMove}
-      style={{ transitionDelay: i * 50 + 'ms' }}>
+    <article className={'card svc-x' + (open ? ' open' : '')} onMouseMove={onMove}>
       <button className="svc-x-head" onClick={onToggle} aria-expanded={open}>
         <span className="icon-tile svc-x-icon"><Glyph name={s.icon} size={24} /></span>
         <span className="svc-x-titles">
@@ -42,27 +36,29 @@ function ServiceCard({ s, i, open, onToggle }) {
         <span className="svc-x-result">{s.result}</span>
         <span className={'svc-x-chev' + (open ? ' open' : '')}><IconChevron size={22} /></span>
       </button>
-      <div className="svc-x-body" style={{ maxHeight: h }}>
-        <div ref={innerRef} className="svc-x-inner">
-          <div className="svc-x-detail">
-            <div className="svc-x-works">
-              <div className="svc-x-label">Что входит</div>
-              <ul className="svc-x-list">
-                {s.works.map((w, k) => <li key={k}><IconCheck size={16} />{w}</li>)}
-              </ul>
-            </div>
-            <div className="svc-x-aside">
-              <div className="svc-x-meta-row">
-                <span className="svc-x-meta-label"><IconClock size={14} />Срок</span>
-                <span className="svc-x-meta-val">{s.term}</span>
+      <div className="svc-x-body">
+        <div className="svc-x-clip">
+          <div className="svc-x-inner">
+            <div className="svc-x-detail">
+              <div className="svc-x-works">
+                <div className="svc-x-label">Что входит</div>
+                <ul className="svc-x-list">
+                  {s.works.map((w, k) => <li key={k}><IconCheck size={16} />{w}</li>)}
+                </ul>
               </div>
-              <div className="svc-x-meta-row">
-                <span className="svc-x-meta-label"><IconBolt size={14} />Стоимость</span>
-                <span className="svc-x-meta-val accent">{s.price}</span>
+              <div className="svc-x-aside">
+                <div className="svc-x-meta-row">
+                  <span className="svc-x-meta-label"><IconClock size={14} />Срок</span>
+                  <span className="svc-x-meta-val">{s.term}</span>
+                </div>
+                <div className="svc-x-meta-row">
+                  <span className="svc-x-meta-label"><IconBolt size={14} />Стоимость</span>
+                  <span className="svc-x-meta-val accent">{s.price}</span>
+                </div>
+                <a className="btn btn-fill btn-sm svc-x-cta" href="#contacts">
+                  Обсудить задачу<IconArrowRight size={16} />
+                </a>
               </div>
-              <a className="btn btn-fill btn-sm svc-x-cta" href="#contacts">
-                Обсудить задачу<IconArrowRight size={16} />
-              </a>
             </div>
           </div>
         </div>
@@ -79,7 +75,7 @@ function ServicesGrid() {
         <ServiceHead />
         <div className="svc-x-stack" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {SERVICES.map((s, i) =>
-          <ServiceCard key={i} s={s} i={i} open={open === i}
+          <ServiceCard key={i} s={s} open={open === i}
             onToggle={() => setOpen(open === i ? -1 : i)} />
           )}
         </div>
