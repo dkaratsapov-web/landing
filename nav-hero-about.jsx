@@ -50,7 +50,7 @@ function Nav({ onCta }) {
 function HeroTrust() {
   return (
     <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap', marginTop: 40 }}>
-      {[['С 2017', 'в маркетинге'], ['5 услуг', 'под вашу задачу'], ['24 ч', 'среднее время ответа']].map(([a, b], i) => (
+      {[['С 2017', 'в маркетинге'], ['70+', 'ниш с результатами'], ['60 минут', 'среднее время ответа']].map(([a, b], i) => (
         <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 26, letterSpacing: '-0.02em' }}>{a}</span>
           <span style={{ color: 'var(--txt-2)', fontSize: 14, marginTop: 2 }}>{b}</span>
