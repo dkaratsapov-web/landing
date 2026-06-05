@@ -61,7 +61,7 @@ function Audit() {
           {f.sent ? <SuccessPanel onReset={f.reset} title="Готово!" text="Я получил заявку и перезвоню лично, чтобы договориться об аудите." /> :
 
           <form onSubmit={f.submit} noValidate>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 22px' }}>Заказать аудит</h3>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 22px', color: 'var(--txt)' }}>Заказать аудит</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
                 <Field label="Как вас зовут" error={f.err.name}>
                   <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
@@ -96,7 +96,7 @@ function SuccessPanel({ title, text, onReset }) {
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 22 }}>
         <IconCheck size={32} style={{ color: 'var(--accent-ink)' }} />
       </div>
-      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 12px' }}>{title}</h3>
+      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 12px', color: 'var(--txt)' }}>{title}</h3>
       <p className="muted" style={{ fontSize: 16, lineHeight: 1.5, margin: '0 auto', maxWidth: 320 }}>{text}</p>
       {onReset && <button className="btn btn-ghost btn-sm" style={{ marginTop: 22 }} onClick={onReset}>Отправить ещё одну</button>}
     </div>);
@@ -218,7 +218,7 @@ function QuizModal({ open, onClose }) {
           {phase === 'q' &&
           <div key={step} style={{ animation: 'toastIn .3s ease' }}>
               <div style={{ color: 'var(--txt-3)', fontSize: 14, marginBottom: 12 }}>Вопрос {step + 1} из {total}</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 24px' }}>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 24px', color: 'var(--txt)' }}>
                 {QUIZ_STEPS[step].q}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -245,7 +245,7 @@ function QuizModal({ open, onClose }) {
 
           {phase === 'form' && !f.sent &&
           <form onSubmit={f.submit} noValidate style={{ animation: 'toastIn .3s ease' }}>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 8px' }}>Куда отправить решение?</h3>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 8px', color: 'var(--txt)' }}>Куда отправить решение?</h3>
               <p className="muted" style={{ margin: '0 0 24px', fontSize: 16 }}>Подберу под ваши ответы и закреплю скидку 10%. Перезвоню лично.</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <Field label="Как вас зовут" error={f.err.name}>
