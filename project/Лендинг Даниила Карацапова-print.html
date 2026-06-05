@@ -14,7 +14,7 @@
 
   <style>
     /* ---- Print optimisation ---- */
-    @page { size: A4 portrait; margin: 1cm; }
+    @page { size: A4 portrait; margin: 1.2cm 1cm; }
 
     @media print {
       *, *::before, *::after {
@@ -33,18 +33,22 @@
       html {
         --pg:        #ffffff !important;
         --tile-a:    #ffffff !important;
-        --tile-b:    #f6f6f8 !important;
-        --tile-c:    #ffffff !important;
-        --tile-card: #ffffff !important;
+        --tile-b:    #f8f8fa !important;
+        --tile-c:    #f2f2f4 !important;
+        --tile-card: #f2f2f4 !important;
         --line:        rgba(0,0,0,0.12) !important;
         --line-strong: rgba(0,0,0,0.22) !important;
         --txt:   #1d1d1f !important;
         --txt-2: #45454a !important;
         --txt-3: #6e6e73 !important;
-        /* Darkened accent so links / eyebrow / numbers stay readable on white */
-        --accent-bright: #34620a !important;
-        --accent-soft:    rgba(52,98,10,0.08) !important;
-        --accent-soft-bd: rgba(52,98,10,0.30) !important;
+        /* Accent — darken so text/eyebrow stays readable on white paper.
+           Button fills stay lime (brand identity, print-color-adjust enforces it). */
+        --accent:         #5a9e15 !important;
+        --accent-bright:  #3d6e0a !important;
+        --accent-ink:     #ffffff !important;
+        --accent-line:    transparent !important;
+        --accent-soft:    rgba(61,110,10,0.07) !important;
+        --accent-soft-bd: rgba(61,110,10,0.25) !important;
       }
       html, body { background: #ffffff !important; color: #1d1d1f !important; }
 
@@ -56,6 +60,12 @@
       }
       /* Reveal-on-scroll never fires in print — force visible */
       .reveal { opacity: 1 !important; transform: none !important; }
+
+      /* Quotes: only active quote shows; force it fully opaque and static */
+      .quote-item { position: static !important; opacity: 0 !important; height: 0 !important; overflow: hidden !important; }
+      .quote-item.active { opacity: 1 !important; height: auto !important; overflow: visible !important; }
+      .quotes-stage { min-height: 0 !important; display: block !important; }
+      .quote-dots { display: none !important; }
 
       /* Fixed nav → static, light */
       .nav { position: static !important; background: #ffffff !important;
@@ -70,7 +80,7 @@
       .atmos { display: none !important; }
 
       /* Footer uses a literal black — force it light too */
-      .footer { background: #ffffff !important; border-top: 1px solid rgba(0,0,0,0.12) !important; }
+      .footer { background: #f6f6f8 !important; border-top: 1px solid rgba(0,0,0,0.12) !important; }
 
       /* Hero: avoid forcing 100vh height so it doesn't waste a page */
       .hero-split-grid { min-height: 0 !important; padding-top: 24px !important;
@@ -78,9 +88,20 @@
       header#top { padding-top: 0 !important; }
 
       /* Tighten section rhythm + add hairline separators on white */
-      .sec { padding: 52px 0 !important; }
-      .sec-tight { padding: 36px 0 !important; }
+      .sec { padding: 44px 0 !important; }
+      .sec-tight { padding: 28px 0 !important; }
       .sec, .sec-tight { border-top: 1px solid rgba(0,0,0,0.08) !important; }
+
+      /* Cards: slightly gray fill to stand out against both white + light-gray section backgrounds */
+      .card { background: #f2f2f4 !important; border-color: rgba(0,0,0,0.1) !important; }
+
+      /* Forms: readable in print */
+      .input, .textarea {
+        background: #f4f4f6 !important;
+        border-color: rgba(0,0,0,0.2) !important;
+        color: #1d1d1f !important;
+      }
+      .consent { color: #6e6e73 !important; }
 
       /* Keep blocks intact across page breaks */
       section, header { break-inside: avoid-page; }
@@ -88,9 +109,10 @@
       .feat-grid, form { break-inside: avoid; }
 
       /* Open every case card so metrics print */
-      .case-body-print { max-height: none !important; }
-      img { break-inside: avoid; }
-      a { text-decoration: none !important; }
+      .case-body-print { max-height: 9999px !important; overflow: visible !important; }
+      img { break-inside: avoid; max-width: 100% !important; }
+      a { text-decoration: none !important; color: #3d6e0a !important; }
+      .brand { color: #1d1d1f !important; }
     }
   </style>
 
@@ -118,7 +140,7 @@
         const t = setInterval(() => {
           if (document.querySelector('#cases .case-head')) { clearInterval(t); res(); }
         }, 120);
-        setTimeout(() => { clearInterval(t); res(); }, 6000);
+        setTimeout(() => { clearInterval(t); res(); }, 8000);
       });
       await waitForRoot();
       // Force every reveal visible (IntersectionObserver won't fire for off-screen)
@@ -126,11 +148,14 @@
       // Open all case cards so their metrics are visible in the PDF
       document.querySelectorAll('#cases .case-head').forEach((btn) => {
         const body = btn.nextElementSibling;
-        if (body) { body.style.maxHeight = 'none'; body.classList.add('case-body-print'); }
-        const chev = btn.querySelector('span[style*="rotate"]');
+        if (body) {
+          body.style.maxHeight = '9999px';
+          body.style.overflow = 'visible';
+          body.classList.add('case-body-print');
+        }
       });
       try { await document.fonts.ready; } catch (e) {}
-      setTimeout(() => window.print(), 700);
+      setTimeout(() => window.print(), 900);
     })();
   </script>
 </body>
