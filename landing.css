@@ -421,8 +421,10 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   transition: transform .4s cubic-bezier(.16,.7,.3,1), color .2s ease; }
 .svc-x-chev.open { transform: rotate(180deg); color: var(--accent-bright); }
 
-.svc-x-body { max-height: 0; overflow: hidden;
-  transition: max-height .5s cubic-bezier(.16,.7,.3,1); }
+.svc-x-body { display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .45s cubic-bezier(.16,.7,.3,1); }
+.svc-x.open .svc-x-body { grid-template-rows: 1fr; }
+.svc-x-clip { overflow: hidden; min-height: 0; }
 .svc-x-inner { padding: 4px 28px 28px; }
 .svc-x-detail { display: grid; grid-template-columns: 1.5fr 1fr; gap: 32px;
   padding-top: 24px; border-top: 1px solid var(--line); }
