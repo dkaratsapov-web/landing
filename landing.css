@@ -392,44 +392,44 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 }
 
 /* ============================================================
-   SERVICES — expandable cards with spotlight glow
+   SERVICES — full-width expandable accordion with spotlight glow
    ============================================================ */
 .svc-x { position: relative; padding: 0; overflow: hidden; isolation: isolate;
-  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease; }
+  transition: border-color .25s ease, box-shadow .25s ease; }
 .svc-x::before {            /* cursor-following spotlight */
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0;
-  background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 0),
-    color-mix(in srgb, var(--accent-bright) 16%, transparent), transparent 62%);
+  background: radial-gradient(480px circle at var(--mx, 50%) var(--my, 0),
+    color-mix(in srgb, var(--accent-bright) 14%, transparent), transparent 60%);
   transition: opacity .3s ease;
 }
 .svc-x:hover::before { opacity: 1; }
-.svc-x:hover { border-color: var(--accent-soft-bd); transform: translateY(-3px);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.35); }
+.svc-x:hover { border-color: var(--accent-soft-bd); box-shadow: 0 14px 40px rgba(0,0,0,0.30); }
 .svc-x.open { border-color: var(--accent-soft-bd); }
 .svc-x > * { position: relative; z-index: 1; }
 
-.svc-x-head { width: 100%; display: flex; align-items: center; gap: 16px;
-  background: transparent; border: none; cursor: pointer; color: var(--txt);
-  padding: 26px 26px 0; text-align: left; }
+.svc-x-head { width: 100%; display: grid; grid-template-columns: auto auto 1fr auto;
+  align-items: center; gap: 22px; background: transparent; border: none; cursor: pointer;
+  color: var(--txt); padding: 24px 28px; text-align: left; }
 .svc-x-icon { transition: transform .3s cubic-bezier(.16,.7,.3,1); }
 .svc-x:hover .svc-x-icon { transform: translateY(-2px) scale(1.06); }
-.svc-x-titles { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+.svc-x-titles { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
 .svc-x-name { font-family: var(--font-display); font-size: 21px; font-weight: 600;
   letter-spacing: -0.01em; color: var(--txt); }
 .svc-x-tag { color: var(--accent-bright); font-size: 13px; }
-.svc-x-chev { color: var(--txt-3); flex: 0 0 auto;
+.svc-x-result { color: var(--txt-2); font-size: 15px; line-height: 1.5; }
+.svc-x-chev { color: var(--txt-3); flex: 0 0 auto; justify-self: end;
   transition: transform .4s cubic-bezier(.16,.7,.3,1), color .2s ease; }
 .svc-x-chev.open { transform: rotate(180deg); color: var(--accent-bright); }
 
-.svc-x-result { margin: 14px 26px 0; font-size: 15px; line-height: 1.55; color: var(--txt-2); }
-
 .svc-x-body { max-height: 0; overflow: hidden;
   transition: max-height .5s cubic-bezier(.16,.7,.3,1); }
-.svc-x-inner { padding: 22px 26px 6px; }
+.svc-x-inner { padding: 4px 28px 28px; }
+.svc-x-detail { display: grid; grid-template-columns: 1.5fr 1fr; gap: 32px;
+  padding-top: 24px; border-top: 1px solid var(--line); }
 .svc-x-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--txt-3); margin-bottom: 14px; }
-.svc-x-list { list-style: none; margin: 0 0 20px; padding: 0;
-  display: flex; flex-direction: column; gap: 11px; }
+  color: var(--txt-3); margin-bottom: 16px; }
+.svc-x-list { list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
 .svc-x-list li { display: flex; gap: 10px; align-items: flex-start;
   font-size: 15px; color: var(--txt-2); line-height: 1.4;
   opacity: 0; transform: translateX(-8px); }
@@ -442,27 +442,28 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @keyframes svcItemIn { to { opacity: 1; transform: none; } }
 .svc-x-list li .i { color: var(--accent-bright); flex: 0 0 auto; margin-top: 2px; }
 
-.svc-x-meta { display: flex; flex-wrap: wrap; gap: 14px 28px;
-  padding-top: 18px; border-top: 1px solid var(--line); }
-.svc-x-meta > div { display: flex; flex-direction: column; gap: 5px; }
-.svc-x-meta-label { display: inline-flex; align-items: center; gap: 6px;
+.svc-x-aside { display: flex; flex-direction: column; gap: 16px;
+  padding: 22px; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd);
+  border-radius: var(--r-md); align-self: start; }
+.svc-x-meta-row { display: flex; flex-direction: column; gap: 6px; }
+.svc-x-meta-label { display: inline-flex; align-items: center; gap: 7px;
   font-size: 12px; color: var(--txt-3); text-transform: uppercase; letter-spacing: 0.05em; }
-.svc-x-meta-label .i { width: 13px; height: 13px; color: var(--accent-bright); }
-.svc-x-meta-val { font-size: 15px; font-weight: 600; color: var(--txt); line-height: 1.4; }
+.svc-x-meta-label .i { width: 14px; height: 14px; color: var(--accent-bright); }
+.svc-x-meta-val { font-size: 16px; font-weight: 600; color: var(--txt); line-height: 1.4; }
 .svc-x-meta-val.accent { color: var(--accent-bright); }
+.svc-x-cta { margin-top: 4px; }
 
-.svc-x-toggle { width: 100%; display: flex; align-items: center; justify-content: space-between;
-  gap: 8px; background: transparent; border: none; border-top: 1px solid var(--line);
-  margin-top: 18px; padding: 16px 26px; cursor: pointer; color: var(--accent-bright);
-  font-family: var(--font-text); font-size: 14px; font-weight: 600;
-  transition: background .2s ease; }
-.svc-x-toggle:hover { background: var(--accent-soft); }
-.svc-x-toggle .i { transition: transform .4s cubic-bezier(.16,.7,.3,1); }
-.svc-x.open .svc-x-toggle .i { transform: rotate(180deg); }
+@media (max-width: 720px) {
+  .svc-x-head { grid-template-columns: auto 1fr auto; gap: 16px; padding: 20px; }
+  .svc-x-result { display: none; }
+  .svc-x-titles { min-width: 0; }
+  .svc-x-inner { padding: 4px 20px 22px; }
+  .svc-x-detail { grid-template-columns: 1fr; gap: 22px; }
+  .svc-x-list { grid-template-columns: 1fr; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .svc-x.open .svc-x-list li { animation: none; opacity: 1; transform: none; }
-  .svc-x:hover { transform: none; }
 }
 
 /* ---------- Wave section dividers ---------- */

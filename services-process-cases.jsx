@@ -1,22 +1,5 @@
 /* services-process-cases.jsx — Services (3 variants), Why, Process, Cases. */
 const { useState: useStateB, useRef: useRefB, useEffect: useEffectB } = React;
-
-/* Responsive column count for the masonry services layout. Distributing the
-   cards into independent columns means expanding one card only pushes the
-   cards below it in the same column — no empty gaps next to short siblings. */
-function useColumns() {
-  const [cols, setCols] = useStateB(3);
-  useEffectB(() => {
-    const calc = () => {
-      const w = window.innerWidth;
-      setCols(w >= 1180 ? 3 : w >= 760 ? 2 : 1);
-    };
-    calc();
-    window.addEventListener('resize', calc);
-    return () => window.removeEventListener('resize', calc);
-  }, []);
-  return cols;
-}
 const ICONS_MAP = {
   IconTarget, IconUsers, IconMonitor, IconChart, IconLayers, IconPhone, IconSearch,
   IconMap, IconBolt, IconHandshake, IconEye, IconShield
@@ -36,17 +19,12 @@ function ServiceHead() {
 
 }
 
-function ServiceCard({ s, i }) {
-  const [open, setOpen] = useStateB(false);
+function ServiceCard({ s, i, open, onToggle }) {
   const [h, setH] = useStateB(0);
   const innerRef = useRefB(null);
-  const toggle = () => {
-    setOpen((prev) => {
-      const next = !prev;
-      setH(next && innerRef.current ? innerRef.current.scrollHeight : 0);
-      return next;
-    });
-  };
+  useEffectB(() => {
+    setH(open && innerRef.current ? innerRef.current.scrollHeight : 0);
+  }, [open]);
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect();
     e.currentTarget.style.setProperty('--mx', (e.clientX - r.left) + 'px');
@@ -55,55 +33,54 @@ function ServiceCard({ s, i }) {
   return (
     <article className={'card svc-x reveal' + (open ? ' open' : '')} onMouseMove={onMove}
       style={{ transitionDelay: i * 50 + 'ms' }}>
-      <button className="svc-x-head" onClick={toggle} aria-expanded={open}>
+      <button className="svc-x-head" onClick={onToggle} aria-expanded={open}>
         <span className="icon-tile svc-x-icon"><Glyph name={s.icon} size={24} /></span>
         <span className="svc-x-titles">
           <span className="svc-x-name">{s.name}</span>
           <span className="svc-x-tag">{s.tag}</span>
         </span>
-        <span className={'svc-x-chev' + (open ? ' open' : '')}><IconChevron size={20} /></span>
+        <span className="svc-x-result">{s.result}</span>
+        <span className={'svc-x-chev' + (open ? ' open' : '')}><IconChevron size={22} /></span>
       </button>
-      <p className="svc-x-result">{s.result}</p>
       <div className="svc-x-body" style={{ maxHeight: h }}>
         <div ref={innerRef} className="svc-x-inner">
-          <div className="svc-x-label">Что входит</div>
-          <ul className="svc-x-list">
-            {s.works.map((w, k) => <li key={k}><IconCheck size={16} />{w}</li>)}
-          </ul>
-          <div className="svc-x-meta">
-            <div>
-              <span className="svc-x-meta-label"><IconClock size={13} />Срок</span>
-              <span className="svc-x-meta-val">{s.term}</span>
+          <div className="svc-x-detail">
+            <div className="svc-x-works">
+              <div className="svc-x-label">Что входит</div>
+              <ul className="svc-x-list">
+                {s.works.map((w, k) => <li key={k}><IconCheck size={16} />{w}</li>)}
+              </ul>
             </div>
-            <div>
-              <span className="svc-x-meta-label"><IconBolt size={13} />Стоимость</span>
-              <span className="svc-x-meta-val accent">{s.price}</span>
+            <div className="svc-x-aside">
+              <div className="svc-x-meta-row">
+                <span className="svc-x-meta-label"><IconClock size={14} />Срок</span>
+                <span className="svc-x-meta-val">{s.term}</span>
+              </div>
+              <div className="svc-x-meta-row">
+                <span className="svc-x-meta-label"><IconBolt size={14} />Стоимость</span>
+                <span className="svc-x-meta-val accent">{s.price}</span>
+              </div>
+              <a className="btn btn-fill btn-sm svc-x-cta" href="#contacts">
+                Обсудить задачу<IconArrowRight size={16} />
+              </a>
             </div>
           </div>
         </div>
       </div>
-      <button className="svc-x-toggle" onClick={toggle} aria-expanded={open}>
-        {open ? 'Свернуть' : 'Что входит, сроки и цена'}
-        <IconChevron size={16} />
-      </button>
     </article>);
 
 }
 
 function ServicesGrid() {
-  const cols = useColumns();
-  const columns = Array.from({ length: cols }, () => []);
-  SERVICES.forEach((s, i) => columns[i % cols].push({ s, i }));
+  const [open, setOpen] = useStateB(-1);
   return (
     <section id="services" className="sec bg-pg">
       <div className="wrap">
         <ServiceHead />
-        <div className="svc-x-cols" style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
-          {columns.map((col, c) =>
-          <div key={c} className="svc-x-col" style={{ flex: 1, minWidth: 0,
-            display: 'flex', flexDirection: 'column', gap: 20 }}>
-              {col.map(({ s, i }) => <ServiceCard key={i} s={s} i={i} />)}
-            </div>
+        <div className="svc-x-stack" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          {SERVICES.map((s, i) =>
+          <ServiceCard key={i} s={s} i={i} open={open === i}
+            onToggle={() => setOpen(open === i ? -1 : i)} />
           )}
         </div>
       </div>
