@@ -1,5 +1,22 @@
 /* services-process-cases.jsx — Services (3 variants), Why, Process, Cases. */
-const { useState: useStateB, useRef: useRefB } = React;
+const { useState: useStateB, useRef: useRefB, useEffect: useEffectB } = React;
+
+/* Responsive column count for the masonry services layout. Distributing the
+   cards into independent columns means expanding one card only pushes the
+   cards below it in the same column — no empty gaps next to short siblings. */
+function useColumns() {
+  const [cols, setCols] = useStateB(3);
+  useEffectB(() => {
+    const calc = () => {
+      const w = window.innerWidth;
+      setCols(w >= 1180 ? 3 : w >= 760 ? 2 : 1);
+    };
+    calc();
+    window.addEventListener('resize', calc);
+    return () => window.removeEventListener('resize', calc);
+  }, []);
+  return cols;
+}
 const ICONS_MAP = {
   IconTarget, IconUsers, IconMonitor, IconChart, IconLayers, IconPhone, IconSearch,
   IconMap, IconBolt, IconHandshake, IconEye, IconShield
@@ -74,13 +91,20 @@ function ServiceCard({ s, i }) {
 }
 
 function ServicesGrid() {
+  const cols = useColumns();
+  const columns = Array.from({ length: cols }, () => []);
+  SERVICES.forEach((s, i) => columns[i % cols].push({ s, i }));
   return (
     <section id="services" className="sec bg-pg">
       <div className="wrap">
         <ServiceHead />
-        <div className="svc-x-grid" style={{ display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, alignItems: 'start' }}>
-          {SERVICES.map((s, i) => <ServiceCard key={i} s={s} i={i} />)}
+        <div className="svc-x-cols" style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
+          {columns.map((col, c) =>
+          <div key={c} className="svc-x-col" style={{ flex: 1, minWidth: 0,
+            display: 'flex', flexDirection: 'column', gap: 20 }}>
+              {col.map(({ s, i }) => <ServiceCard key={i} s={s} i={i} />)}
+            </div>
+          )}
         </div>
       </div>
     </section>);
