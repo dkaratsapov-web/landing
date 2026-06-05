@@ -198,32 +198,32 @@ function About() {
   useReveal();
   return (
     <section id="about" className="sec bg-a">
-      <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
-        <div className="reveal">
-          <span className="eyebrow">Обо мне</span>
-          <h2 className="section-title">Вы работаете<br />с конкретным человеком</h2>
-          <p className="lead" style={{ marginTop: 26 }}>
-            7+ лет я занимаюсь интернет-маркетингом. Каждый проект веду лично — от аудита до результата.
-            Работаю с малым бизнесом, стартапами и локальными компаниями по всей России.
-          </p>
-          <p className="lead" style={{ marginTop: 18 }}>
-            Никаких «наших специалистов» и менеджеров-посредников. Вы всегда знаете, кто делает вашу
-            рекламу и почему она работает именно так. Я отвечаю за результат лично.
-          </p>
-          <div style={{ display: 'flex', gap: 12, marginTop: 30, flexWrap: 'wrap' }}>
-            <span className="chip"><IconMap size={15} />Вся Россия, онлайн</span>
-            <span className="chip"><IconClock size={15} />Отвечаю в течение дня</span>
-          </div>
-        </div>
-        <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', aspectRatio: '3 / 4',
-            border: '1px solid var(--line)', background: 'var(--tile-b)' }}>
-            <image-slot id="about-photo" src="assets/about-work.jpg" placeholder="Фото за работой" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
+      <div className="wrap two-col about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'stretch' }}>
+        <div className="reveal about-col" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 40 }}>
+          <div>
+            <span className="eyebrow">Обо мне</span>
+            <h2 className="section-title">Вы работаете<br />с конкретным человеком</h2>
+            <p className="lead" style={{ marginTop: 26 }}>
+              7+ лет я занимаюсь интернет-маркетингом. Каждый проект веду лично — от аудита до результата.
+              Работаю с малым бизнесом, стартапами и локальными компаниями по всей России.
+            </p>
+            <p className="lead" style={{ marginTop: 18 }}>
+              Никаких «наших специалистов» и менеджеров-посредников. Вы всегда знаете, кто делает вашу
+              рекламу и почему она работает именно так. Я отвечаю за результат лично.
+            </p>
+            <div style={{ display: 'flex', gap: 12, marginTop: 30, flexWrap: 'wrap' }}>
+              <span className="chip"><IconMap size={15} />Вся Россия, онлайн</span>
+              <span className="chip"><IconClock size={15} />Отвечаю в течение дня</span>
+            </div>
           </div>
           <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28,
             padding: '36px', background: 'var(--tile-card)', border: '1px solid var(--line)', borderRadius: 'var(--r-lg)' }}>
             {STATS.map((s, i) => <StatBlock key={i} s={s} />)}
           </div>
+        </div>
+        <div className="reveal about-photo-wrap" style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden',
+          border: '1px solid var(--line)', background: 'var(--tile-b)', minHeight: 0 }}>
+          <image-slot id="about-photo" src="assets/about-work.jpg" placeholder="Фото за работой" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
         </div>
       </div>
     </section>
