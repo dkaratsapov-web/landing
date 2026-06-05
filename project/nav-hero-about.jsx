@@ -50,7 +50,7 @@ function Nav({ onCta }) {
 function HeroTrust() {
   return (
     <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap', marginTop: 40 }}>
-      {[['7+ лет', 'личной практики'], ['150+', 'проектов'], ['Лично', 'от аудита до заявок']].map(([a, b], i) => (
+      {[['С 2017', 'в маркетинге'], ['5 услуг', 'под вашу задачу'], ['24 ч', 'среднее время ответа']].map(([a, b], i) => (
         <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 26, letterSpacing: '-0.02em' }}>{a}</span>
           <span style={{ color: 'var(--txt-2)', fontSize: 14, marginTop: 2 }}>{b}</span>
@@ -216,9 +216,9 @@ function About() {
           </div>
         </div>
         <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', aspectRatio: '16 / 10',
+          <div style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', aspectRatio: '4 / 3',
             border: '1px solid var(--line)', background: 'var(--tile-b)' }}>
-            <image-slot id="about-photo" placeholder="Фото за работой" shape="rounded" radius="18" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
+            <image-slot id="about-photo" placeholder="Перетащите фото (Москва-Сити, MacBook)" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
           </div>
           <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28,
             padding: '36px', background: 'var(--tile-card)', border: '1px solid var(--line)', borderRadius: 'var(--r-lg)' }}>
