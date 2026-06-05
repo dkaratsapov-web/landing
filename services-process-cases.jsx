@@ -1,5 +1,5 @@
 /* services-process-cases.jsx — Services (3 variants), Why, Process, Cases. */
-const { useState: useStateB } = React;
+const { useState: useStateB, useRef: useRefB } = React;
 const ICONS_MAP = {
   IconTarget, IconUsers, IconMonitor, IconChart, IconLayers, IconPhone, IconSearch,
   IconMap, IconBolt, IconHandshake, IconEye, IconShield
@@ -19,23 +19,68 @@ function ServiceHead() {
 
 }
 
+function ServiceCard({ s, i }) {
+  const [open, setOpen] = useStateB(false);
+  const [h, setH] = useStateB(0);
+  const innerRef = useRefB(null);
+  const toggle = () => {
+    setOpen((prev) => {
+      const next = !prev;
+      setH(next && innerRef.current ? innerRef.current.scrollHeight : 0);
+      return next;
+    });
+  };
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    e.currentTarget.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  };
+  return (
+    <article className={'card svc-x reveal' + (open ? ' open' : '')} onMouseMove={onMove}
+      style={{ transitionDelay: i * 50 + 'ms' }}>
+      <button className="svc-x-head" onClick={toggle} aria-expanded={open}>
+        <span className="icon-tile svc-x-icon"><Glyph name={s.icon} size={24} /></span>
+        <span className="svc-x-titles">
+          <span className="svc-x-name">{s.name}</span>
+          <span className="svc-x-tag">{s.tag}</span>
+        </span>
+        <span className={'svc-x-chev' + (open ? ' open' : '')}><IconChevron size={20} /></span>
+      </button>
+      <p className="svc-x-result">{s.result}</p>
+      <div className="svc-x-body" style={{ maxHeight: h }}>
+        <div ref={innerRef} className="svc-x-inner">
+          <div className="svc-x-label">Что входит</div>
+          <ul className="svc-x-list">
+            {s.works.map((w, k) => <li key={k}><IconCheck size={16} />{w}</li>)}
+          </ul>
+          <div className="svc-x-meta">
+            <div>
+              <span className="svc-x-meta-label"><IconClock size={13} />Срок</span>
+              <span className="svc-x-meta-val">{s.term}</span>
+            </div>
+            <div>
+              <span className="svc-x-meta-label"><IconBolt size={13} />Стоимость</span>
+              <span className="svc-x-meta-val accent">{s.price}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button className="svc-x-toggle" onClick={toggle} aria-expanded={open}>
+        {open ? 'Свернуть' : 'Что входит, сроки и цена'}
+        <IconChevron size={16} />
+      </button>
+    </article>);
+
+}
+
 function ServicesGrid() {
   return (
     <section id="services" className="sec bg-pg">
       <div className="wrap">
         <ServiceHead />
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
-          {SERVICES.map((s, i) =>
-          <article key={i} className="card reveal" style={{ padding: 30, display: 'flex', flexDirection: 'column',
-            gap: 18, transitionDelay: i * 40 + 'ms' }}>
-              <span className="icon-tile"><Glyph name={s.icon} size={24} /></span>
-              <div>
-                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600, letterSpacing: '-0.01em', margin: 0, color: "rgb(255, 255, 255)" }}>{s.name}</h3>
-                <div style={{ color: 'var(--accent-bright)', fontSize: 14, marginTop: 6 }}>{s.tag}</div>
-              </div>
-              <p className="muted" style={{ margin: 0, fontSize: 16, lineHeight: 1.5 }}>{s.result}</p>
-            </article>
-          )}
+        <div className="svc-x-grid" style={{ display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, alignItems: 'start' }}>
+          {SERVICES.map((s, i) => <ServiceCard key={i} s={s} i={i} />)}
         </div>
       </div>
     </section>);
