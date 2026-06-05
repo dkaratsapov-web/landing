@@ -6,6 +6,16 @@ const NAV_LINKS = [
   ['Кейсы', '#cases'], ['Контакты', '#contacts'],
 ];
 
+/* Логотип — салатовый бумажный самолётик (гранёный оригами), боксless. */
+function BrandPlane() {
+  return (
+    <svg className="brand-plane" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+      <polygon points="22,2 2.5,9.5 10.5,12.5" fill="#c4f53e" />
+      <polygon points="22,2 10.5,12.5 11,22" fill="#8fbf1e" />
+    </svg>
+  );
+}
+
 function Nav({ onCta }) {
   const [scrolled, setScrolled] = useStateA(false);
   const [open, setOpen] = useStateA(false);
@@ -20,7 +30,7 @@ function Nav({ onCta }) {
     <nav className={'nav' + (scrolled ? ' scrolled' : '')}>
       <div className="wrap">
         <a className="brand" href="#top" onClick={(e) => go(e, '#top')}>
-          <span className="dot"><IconPlane size={18} /></span>Даниил Карацапов
+          <BrandPlane />Даниил Карацапов
         </a>
         <div className="nav-links">
           {NAV_LINKS.map(([t, h]) => <a key={h} href={h} onClick={(e) => go(e, h)}>{t}</a>)}

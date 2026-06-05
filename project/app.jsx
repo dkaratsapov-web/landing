@@ -37,6 +37,29 @@ function AccentSwatches({ value, onChange }) {
 
 }
 
+/* Уведомление о cookie — показывается один раз, выбор хранится в localStorage. */
+function CookieNotice() {
+  const [show, setShow] = useStateApp(false);
+  React.useEffect(() => {
+    let ok = false;
+    try { ok = !!localStorage.getItem('ck-accept'); } catch (e) {}
+    if (!ok) setShow(true);
+  }, []);
+  if (!show) return null;
+  const accept = () => {
+    try { localStorage.setItem('ck-accept', '1'); } catch (e) {}
+    setShow(false);
+  };
+  return (
+    <div className="cookie-bar" role="dialog" aria-live="polite">
+      <p className="cookie-text">
+        Мы используем файлы cookie, чтобы улучшить работу сайта. К сайту подключён сервис веб-аналитики Яндекс.Метрика, использующий cookie-файлы.
+      </p>
+      <button type="button" className="cookie-ok" onClick={accept}>ок</button>
+    </div>);
+
+}
+
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [quizOpen, setQuizOpen] = useStateApp(false);
@@ -84,6 +107,7 @@ function App() {
       <SectionWave from="#151517" to="#000000" speed={15} />
       <Footer onCta={scrollToContacts} />
       <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
+      <CookieNotice />
 
       <TweaksPanel>
         <TweakSection label="Главный экран (Hero)" />

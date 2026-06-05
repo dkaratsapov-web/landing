@@ -160,13 +160,7 @@ h2.section-title {
   letter-spacing: -0.01em; color: var(--txt); text-decoration: none;
   display: inline-flex; align-items: center; gap: 11px;
 }
-.brand .dot {
-  width: 32px; height: 32px; padding: 0; border-radius: var(--r-md);
-  display: inline-flex; align-items: center; justify-content: center;
-  background: var(--accent-ink); color: var(--accent);
-  border: 1px solid var(--accent-soft-bd);
-}
-.brand .dot .i { width: 18px; height: 18px; }
+.brand-plane { display: block; flex: 0 0 auto; }
 .nav-links { display: flex; gap: 30px; margin-left: auto; }
 .nav-links a {
   font-size: 15px; color: var(--txt-2); text-decoration: none; letter-spacing: -0.01em;
@@ -326,6 +320,30 @@ h2.section-title {
 .toast .ic { width: 28px; height: 28px; border-radius: var(--r-full); background: var(--accent); display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; }
 .toast .ic .i { width: 16px; height: 16px; color: var(--accent-ink); }
 @keyframes toastIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Cookie notice ---------- */
+.cookie-bar {
+  position: fixed; left: 20px; bottom: 20px; z-index: 150;
+  max-width: 380px; display: flex; align-items: center; gap: 16px;
+  padding: 16px 18px; border-radius: var(--r-lg);
+  background: rgba(18,18,20,0.96); border: 1px solid var(--line-strong);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  animation: cookieIn .4s cubic-bezier(.16,.7,.3,1);
+}
+@keyframes cookieIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.cookie-text { margin: 0; font-size: 13.5px; line-height: 1.5; color: var(--txt-2); }
+.cookie-ok {
+  flex: 0 0 auto; cursor: pointer; padding: 9px 22px; border-radius: var(--r-pill);
+  background: transparent; color: var(--txt); border: 1px solid var(--line-strong);
+  font-family: var(--font-text); font-size: 14px;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+.cookie-ok:hover { border-color: var(--accent); color: var(--accent-bright); background: var(--accent-soft); }
+.cookie-ok:active { transform: scale(0.96); }
+@media (max-width: 560px) {
+  .cookie-bar { left: 12px; right: 12px; bottom: 12px; max-width: none; }
+}
 
 /* ---------- Footer ---------- */
 .footer { background: #000; border-top: 1px solid var(--line); }
