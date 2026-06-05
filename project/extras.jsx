@@ -87,12 +87,18 @@ function Quotes() {
   );
 }
 
-/* ---------- SectionWave: animated SVG wave divider between sections ---------- */
+/* ---------- SectionWave: animated SVG wave divider between sections ----------
+   INVARIANT (чтобы не появлялись чёрные/тёмные полосы на стыках):
+   • `from` ДОЛЖЕН совпадать с фоном предыдущей секции, `to` — следующей.
+   • Волна перекрывает оба соседних блока на 1px (marginTop/Bottom: -1):
+     верхний 1px волны = `from` (= пред. блок), нижний 1px = `to` (= след. блок),
+     поэтому перекрытие невидимо, но субпиксельная щель (через которую был
+     виден фон страницы #08080a) закрыта. Не возвращать marginBottom к 0. */
 function SectionWave({ from = '#08080a', to = '#0d0d0f', height = 88, speed = 15 }) {
   const gid = 'wv' + from.replace(/#/g, '') + to.replace(/#/g, '');
   return (
     <div style={{ position: 'relative', height, overflow: 'hidden',
-      background: from, flexShrink: 0, lineHeight: 0, marginTop: -1, marginBottom: 0, zIndex: 2 }}>
+      background: from, flexShrink: 0, lineHeight: 0, marginTop: -1, marginBottom: -1, zIndex: 2 }}>
       <svg className="wave-svg" viewBox="0 0 2880 88" preserveAspectRatio="none"
         style={{ '--wave-spd': speed + 's', position: 'absolute', bottom: 0, left: 0, width: '200%', height: '100%' }}>
         <defs>

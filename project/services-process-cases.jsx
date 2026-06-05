@@ -6,6 +6,15 @@ const ICONS_MAP = {
 };
 const Glyph = ({ name, size }) => {const C = ICONS_MAP[name] || IconBolt;return <C size={size} />;};
 
+/* Подсказка-призыв «листайте» — видна только на мобильных над каруселями. */
+function SwipeHint() {
+  return (
+    <div className="swipe-hint" aria-hidden="true">
+      <span>Листайте</span><IconArrowRight size={16} />
+    </div>
+  );
+}
+
 /* ---------------- SERVICES ---------------- */
 function ServiceHead() {
   return (
@@ -73,6 +82,7 @@ function ServicesGrid() {
     <section id="services" className="sec bg-pg">
       <div className="wrap">
         <ServiceHead />
+        <SwipeHint />
         <div className="svc-x-stack" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {SERVICES.map((s, i) =>
           <ServiceCard key={i} s={s} open={open === i}
@@ -182,6 +192,7 @@ function Certificates() {
             Официальные сертификации Яндекса и партнёрский статус Roistat. Нажмите на сертификат, чтобы открыть его в полном размере.
           </p>
         </div>
+        <SwipeHint />
         <div className="cert-grid">
           {CERTS.map((it, i) =>
           <button key={i} type="button" className="cert-card" onClick={() => setOpen(i)} aria-label={'Открыть: ' + it.title}>
@@ -230,6 +241,7 @@ function Process() {
           <h2 className="section-title">Прозрачно, по шагам</h2>
           <p className="lead" style={{ marginTop: 22 }}>Вы всегда понимаете, на каком этапе проект и что я делаю прямо сейчас.</p>
         </div>
+        <SwipeHint />
         <div className="proc-grid proc-chain" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
           {PROCESS.map((p, i) =>
           <div key={i} className="reveal proc-step" style={{ transitionDelay: i * 60 + 'ms', position: 'relative',
@@ -299,7 +311,7 @@ function CaseCard({ c, idx, open, onToggle, featured }) {
 function Cases({ onCta }) {
   const [open, setOpen] = useStateB(0);
   return (
-    <section id="cases" className="sec bg-b" style={{ overflow: 'hidden' }}>
+    <section id="cases" className="sec bg-b" style={{ overflow: 'hidden', marginTop: -1 }}>
       <Atmos glows={[1, 2, 3]} pattern="dots" />
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 780, marginBottom: 48 }}>
@@ -307,7 +319,8 @@ function Cases({ onCta }) {
           <h2 className="section-title">Результат в цифрах,<br />а не в красивых отчётах</h2>
           <p className="lead" style={{ marginTop: 22 }}>Раскройте карточку — внутри метрики, сроки и каналы. Без «мы реализовали»: я реализовал.</p>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <SwipeHint />
+        <div className="case-list" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {CASES.map((c, i) =>
           <CaseCard key={i} c={c} idx={i} featured={i === 0} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
           )}
