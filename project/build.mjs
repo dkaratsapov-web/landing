@@ -51,7 +51,17 @@ writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p
 // Favicon (lime paper plane) — copy verbatim.
 copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
 
+// Editable content: ship content.json (fetched at runtime / edited via /admin)
+// and regenerate content-default.js (baked fallback loaded before the app).
+const contentJson = readFileSync(join(srcDir, 'content.json'), 'utf8');
+writeFileSync(join(outDir, 'content.json'), contentJson, 'utf8');
+writeFileSync(join(outDir, 'content-default.js'),
+  '/* AUTO-GENERATED from content.json — fallback loaded before the app. */\nwindow.CONTENT = '
+  + contentJson + ';\n', 'utf8');
+copyFileSync(join(srcDir, 'admin.html'), join(outDir, 'admin.html'));
+
 const scriptTags = [
+  '  <script defer src="content-default.js"></script>',
   '  <script defer src="tweaks-panel.js"></script>',
   '  <script defer src="image-slot.js"></script>',
   '  <script defer src="icons.js"></script>',

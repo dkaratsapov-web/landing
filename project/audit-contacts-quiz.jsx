@@ -107,31 +107,32 @@ function SuccessPanel({ title, text, onReset }) {
 function Contacts() {
   const toast = useToast();
   const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.');
+  const K = window.CONTENT.contacts || {};
   return (
     <section id="contacts" className="sec bg-b" style={{ overflow: 'hidden' }}>
       <Atmos glows={[1, 2]} pattern="grid" drifting={true} />
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'flex-start' }}>
         <div className="reveal">
-          <span className="eyebrow">Контакты</span>
-          <h2 className="section-title">Свяжитесь со мной — разберём вашу задачу</h2>
-          <p className="lead" style={{ marginTop: 22 }}>Напишите в Telegram или оставьте номер — я перезвоню лично, без колл-центра и менеджеров.</p>
+          <span className="eyebrow">{K.eyebrow}</span>
+          <h2 className="section-title"><Lines text={K.heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{K.lead}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 32 }}>
-            <a className="contact-row" href="tel:+79963470065"
-            onClick={() => toast('Звонок: +7 (996) 347-00-65')}>
+            <a className="contact-row" href={'tel:' + (K.phoneTel || '')}
+            onClick={() => toast('Звонок: ' + (K.phone || ''))}>
               <span className="icon-tile" style={{ width: 50, height: 50 }}><IconPhone size={22} /></span>
               <div>
                 <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Телефон</div>
-                <div style={{ fontSize: 19, fontWeight: 600 }}>+7 (996) 347-00-65</div>
+                <div style={{ fontSize: 19, fontWeight: 600 }}>{K.phone}</div>
               </div>
             </a>
-            <a className="contact-row" href="https://t.me/Daniil_065" target="_blank" rel="noopener">
+            <a className="contact-row" href={K.telegramUrl} target="_blank" rel="noopener">
               <span className="icon-tile" style={{ width: 50, height: 50 }}><IconSend size={22} /></span>
               <div>
                 <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Telegram</div>
-                <div style={{ fontSize: 19, fontWeight: 600 }}>@Daniil_065</div>
+                <div style={{ fontSize: 19, fontWeight: 600 }}>{K.telegram}</div>
               </div>
             </a>
-            <a className="contact-row" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener">
+            <a className="contact-row" href={K.maxUrl} target="_blank" rel="noopener">
               <span className="icon-tile" style={{ width: 50, height: 50, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20 }}>M</span>
               <div>
                 <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>MAX</div>

@@ -59,9 +59,10 @@ function Nav({ onCta }) {
 
 /* ---------------- HERO ---------------- */
 function HeroTrust() {
+  const trust = (window.CONTENT.hero && window.CONTENT.hero.trust) || [];
   return (
     <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap', marginTop: 40 }}>
-      {[['С 2017', 'в маркетинге'], ['70+', 'ниш с результатами'], ['60 минут', 'среднее время ответа']].map(([a, b], i) => (
+      {trust.map(([a, b], i) => (
         <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 26, letterSpacing: '-0.02em' }}>{a}</span>
           <span style={{ color: 'var(--txt-2)', fontSize: 14, marginTop: 2 }}>{b}</span>
@@ -75,23 +76,24 @@ const HERO_H = 'Маркетинг, который\u00A0делаю я\u00A0са�
 const HERO_SUB = 'Помогаю малому и среднему бизнесу привлекать клиентов через интернет. Без посредников, без анонимных команд и пустых отчётов.';
 
 function HeroSplit({ portrait, onCta }) {
+  const H = window.CONTENT.hero || {};
   return (
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
       <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap hero-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 56,
         alignItems: 'center', padding: '40px 32px 80px' }}>
         <div className="hero-copy">
-          <span className="eyebrow reveal in">Даниил Карацапов · интернет-маркетолог</span>
+          <span className="eyebrow reveal in">{H.eyebrow}</span>
           <h1 className="display reveal in" style={{ fontSize: 'clamp(40px, 6vw, 76px)' }}>
-            Маркетинг, который<br />делаю <span style={{ color: 'var(--accent-bright)' }}>я сам</span>
+            {H.titleLine1}<br />{H.titleLine2} <span style={{ color: 'var(--accent-bright)' }}>{H.titleAccent}</span>
           </h1>
-          <p className="lead reveal in" style={{ marginTop: 26, maxWidth: 480 }}>{HERO_SUB}</p>
+          <p className="lead reveal in" style={{ marginTop: 26, maxWidth: 480 }}>{H.sub}</p>
           <div className="reveal in" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
             <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
-              Обсудить задачу<IconArrowRight size={18} />
+              {H.ctaPrimary}<IconArrowRight size={18} />
             </a>
-            <a className="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener">
-              <IconSend size={17} />Telegram
+            <a className="btn btn-ghost btn-lg" href={H.telegramUrl} target="_blank" rel="noopener">
+              <IconSend size={17} />{H.ctaTelegram}
             </a>
           </div>
           <HeroTrust />
@@ -207,24 +209,25 @@ function StatBlock({ s }) {
 
 function About() {
   useReveal();
+  const A = window.CONTENT.about || {};
+  const paras = A.paragraphs || [];
+  const chips = A.chips || [];
+  const chipIcons = [IconMap, IconClock];
   return (
     <section id="about" className="sec bg-a">
       <div className="wrap two-col about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'stretch' }}>
         <div className="reveal about-col" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 40 }}>
           <div>
-            <span className="eyebrow">Обо мне</span>
-            <h2 className="section-title">Вы работаете<br />с конкретным человеком</h2>
-            <p className="lead" style={{ marginTop: 26 }}>
-              Почти 10 лет я занимаюсь интернет-маркетингом. Каждый проект веду лично — от аудита до результата.
-              Работаю с малым бизнесом, стартапами и локальными компаниями по всей России.
-            </p>
-            <p className="lead" style={{ marginTop: 18 }}>
-              Никаких «наших специалистов» и менеджеров-посредников. Вы всегда знаете, кто делает вашу
-              рекламу и почему она работает именно так. Я отвечаю за результат лично.
-            </p>
+            <span className="eyebrow">{A.eyebrow}</span>
+            <h2 className="section-title"><Lines text={A.heading} /></h2>
+            {paras.map((p, i) =>
+              <p className="lead" key={i} style={{ marginTop: i === 0 ? 26 : 18 }}>{p}</p>
+            )}
             <div style={{ display: 'flex', gap: 12, marginTop: 30, flexWrap: 'wrap' }}>
-              <span className="chip"><IconMap size={15} />Вся Россия, онлайн</span>
-              <span className="chip"><IconClock size={15} />Отвечаю в течение дня</span>
+              {chips.map((ch, i) => {
+                const Ic = chipIcons[i] || IconMap;
+                return <span className="chip" key={i}><Ic size={15} />{ch}</span>;
+              })}
             </div>
           </div>
           <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28,

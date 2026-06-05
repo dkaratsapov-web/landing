@@ -11,27 +11,30 @@ function Atmos({ glows = [1, 2], pattern = 'dots', drifting = false }) {
   );
 }
 
-/* ---------- Quotes: auto-rotating, animated ---------- */
-const QUOTES = [
-  { parts: [['Цель маркетинга — ', false], ['сделать продажи излишними', true], ['.', false]],
-    author: 'Питер Друкер', role: 'теоретик менеджмента' },
-  { parts: [['Ваш бренд — это то, что ', false], ['о вас говорят, когда вас нет в комнате', true], ['.', false]],
-    author: 'Джефф Безос', role: 'основатель Amazon' },
-  { parts: [['Если это ', false], ['не продаёт', true], [' — это не креатив.', false]],
-    author: 'Дэвид Огилви', role: '«отец рекламы»' },
-  { parts: [['Будьте ', false], ['эталоном качества', true], [' — не все привыкли к среде, где ждут совершенства.', false]],
-    author: 'Стив Джобс', role: 'сооснователь Apple' },
-];
+/* ---------- Quotes: auto-rotating, animated (content from CONTENT.quotes) ---------- */
+/* Each quote in content.json is { text, hl, author, role }; hl is the substring
+   to highlight. Convert to [char, isHighlighted] pairs for the typewriter. */
+function quoteChars(q) {
+  const t = (q && q.text) || '';
+  const hl = (q && q.hl) || '';
+  const at = hl ? t.indexOf(hl) : -1;
+  const chars = [];
+  for (let k = 0; k < t.length; k++) {
+    chars.push([t[k], at >= 0 && k >= at && k < at + hl.length]);
+  }
+  return chars;
+}
 
 function Quotes() {
   const [i, setI] = useStateE(0);
   const [typed, setTyped] = useStateE(0);
   const [paused, setPaused] = useStateE(false);
-  const q = QUOTES[i];
+  const QUOTES = (window.CONTENT && window.CONTENT.quotes) || [];
+  const head = (window.CONTENT && window.CONTENT.quotesHead) || {};
+  if (!QUOTES.length) return null;
+  const q = QUOTES[Math.min(i, QUOTES.length - 1)];
 
-  // Flatten the quote into a list of [char, isHighlighted] for the typewriter.
-  const chars = [];
-  q.parts.forEach(([txt, hl]) => { for (const ch of txt) chars.push([ch, hl]); });
+  const chars = quoteChars(q);
   const total = chars.length;
   const done = typed >= total;
 
@@ -60,7 +63,7 @@ function Quotes() {
       <div className="wrap wrap-narrow" style={{ maxWidth: 1000 }}
         onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: 8 }}>
-          <span className="eyebrow center">Во что я верю</span>
+          <span className="eyebrow center">{head.eyebrow || 'Во что я верю'}</span>
         </div>
         <div className="quotes-stage">
           <figure className="quote-item active">

@@ -127,4 +127,15 @@ function App() {
 
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+/* Load editable content (content.json) before first render. content-default.js
+   already set window.CONTENT as a baked fallback, so the site renders even if
+   the fetch fails. applyContent() refreshes the data arrays from CONTENT. */
+function boot() {
+  if (typeof applyContent === 'function') applyContent();
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+}
+fetch('content.json', { cache: 'no-store' })
+  .then((r) => (r.ok ? r.json() : null))
+  .then((c) => { if (c && typeof c === 'object') window.CONTENT = c; })
+  .catch(() => {})
+  .finally(boot);

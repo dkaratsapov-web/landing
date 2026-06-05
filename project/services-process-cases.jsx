@@ -19,11 +19,9 @@ function SwipeHint() {
 function ServiceHead() {
   return (
     <div className="reveal" style={{ maxWidth: 720, marginBottom: 56 }}>
-      <span className="eyebrow">Что я делаю</span>
-      <h2 className="section-title">Пять направлений.<br />Один ответственный — я</h2>
-      <p className="lead" style={{ marginTop: 22 }}>
-        Не «полный спектр услуг», а конкретные инструменты под вашу задачу. Беру то, что принесёт заявки.
-      </p>
+      <span className="eyebrow">{(window.CONTENT.servicesHead || {}).eyebrow}</span>
+      <h2 className="section-title"><Lines text={(window.CONTENT.servicesHead || {}).heading} /></h2>
+      <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.servicesHead || {}).lead}</p>
     </div>);
 
 }
@@ -186,11 +184,9 @@ function Certificates() {
     <section id="certs" className="sec bg-b">
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 680, marginBottom: 48 }}>
-          <span className="eyebrow">Подтверждённая экспертиза</span>
-          <h2 className="section-title">Мои сертификаты</h2>
-          <p className="lead" style={{ marginTop: 22 }}>
-            Официальные сертификации Яндекса и партнёрский статус Roistat. Нажмите на сертификат, чтобы открыть его в полном размере.
-          </p>
+          <span className="eyebrow">{(window.CONTENT.certsHead || {}).eyebrow}</span>
+          <h2 className="section-title"><Lines text={(window.CONTENT.certsHead || {}).heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.certsHead || {}).lead}</p>
         </div>
         <SwipeHint />
         <div className="cert-grid">
@@ -237,9 +233,9 @@ function Process() {
     <section id="process" className="sec bg-pg">
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 680, marginBottom: 56 }}>
-          <span className="eyebrow">Как я работаю</span>
-          <h2 className="section-title">Прозрачно, по шагам</h2>
-          <p className="lead" style={{ marginTop: 22 }}>Вы всегда понимаете, на каком этапе проект и что я делаю прямо сейчас.</p>
+          <span className="eyebrow">{(window.CONTENT.processHead || {}).eyebrow}</span>
+          <h2 className="section-title"><Lines text={(window.CONTENT.processHead || {}).heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.processHead || {}).lead}</p>
         </div>
         <SwipeHint />
         <div className="proc-grid proc-chain" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
@@ -301,9 +297,9 @@ function Cases({ onCta }) {
       <Atmos glows={[1, 2, 3]} pattern="dots" />
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 820, marginBottom: 30 }}>
-          <span className="eyebrow">Кейсы · доказательства</span>
-          <h2 className="section-title">Результат в цифрах,<br />а не в красивых отчётах</h2>
-          <p className="lead" style={{ marginTop: 22 }}>Выберите направление — кейсы отфильтруются по нему. Все цифры взяты из реальных проектов.</p>
+          <span className="eyebrow">{(window.CONTENT.casesHead || {}).eyebrow}</span>
+          <h2 className="section-title"><Lines text={(window.CONTENT.casesHead || {}).heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.casesHead || {}).lead}</p>
         </div>
         <div className="kase-tabs" role="tablist">
           {CASE_FILTERS.map((f) =>
