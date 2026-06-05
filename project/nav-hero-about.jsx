@@ -68,7 +68,7 @@ function HeroSplit({ portrait, onCta }) {
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
       <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap hero-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 56,
-        alignItems: 'center', minHeight: 'calc(100vh - 64px)', padding: '64px 32px' }}>
+        alignItems: 'center', padding: '40px 32px 80px' }}>
         <div className="hero-copy">
           <span className="eyebrow reveal in">Даниил Карацапов · интернет-маркетолог</span>
           <h1 className="display reveal in" style={{ fontSize: 'clamp(40px, 6vw, 76px)' }}>

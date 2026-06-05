@@ -50,7 +50,7 @@ a:hover { text-decoration: none; }
 img { display: block; max-width: 100%; }
 
 /* ---------- Layout primitives ---------- */
-.wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.wrap { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 60px); }
 .wrap-narrow { max-width: 920px; }
 section { position: relative; }
 .sec { padding: 120px 0; }
