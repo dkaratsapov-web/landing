@@ -222,10 +222,18 @@ const CERTS = [
     img: 'assets/certs/direct-pro.jpg', file: 'assets/certs/direct-pro.pdf' },
   { title: 'Яндекс Директ — Базовый', issuer: 'Яндекс · сертификат специалиста',
     img: 'assets/certs/direct-base.jpg', file: 'assets/certs/direct-base.pdf' },
+  { title: 'Яндекс Метрика', issuer: 'Яндекс · сертификат специалиста',
+    img: 'assets/certs/metrika.jpg', file: 'assets/certs/metrika.pdf' },
   { title: 'Медийная реклама', issuer: 'Яндекс · сертификат специалиста',
     img: 'assets/certs/media.jpg', file: 'assets/certs/media.pdf' },
+  { title: 'Реклама мобильных приложений', issuer: 'Яндекс · сертификация специалиста',
+    img: 'assets/certs/mobile.jpg', file: 'assets/certs/mobile.pdf' },
   { title: 'Геоперформанс и Яндекс Бизнес', issuer: 'Яндекс · сертификация специалиста',
     img: 'assets/certs/yandex-geo.jpg', file: 'assets/certs/yandex-geo.pdf' },
+  { title: 'Google Реклама — Поиск', issuer: 'Google Ads · поисковые кампании',
+    img: 'assets/certs/google-search.jpg', file: 'assets/certs/google-search.pdf' },
+  { title: 'Google Реклама — КМС', issuer: 'Google Ads · контекстно-медийная сеть',
+    img: 'assets/certs/google-display.jpg', file: 'assets/certs/google-display.pdf' },
 ];
 
 const QUIZ_STEPS = [
