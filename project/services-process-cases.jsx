@@ -154,25 +154,68 @@ function Services({ variant }) {
   return <ServicesGrid />;
 }
 
-/* ---------------- WHY ---------------- */
-function Why() {
+/* ---------------- CERTIFICATES ---------------- */
+function Certificates() {
+  const [open, setOpen] = useStateB(-1);
+  const close = () => setOpen(-1);
+  const step = (d) => setOpen((o) => (o + d + CERTS.length) % CERTS.length);
+  useEffectB(() => {
+    if (open < 0) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(-1);
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [open]);
+
+  const c = open >= 0 ? CERTS[open] : null;
   return (
-    <section className="sec bg-b">
+    <section id="certs" className="sec bg-b">
       <div className="wrap">
-        <div className="reveal" style={{ maxWidth: 680, marginBottom: 52 }}>
-          <span className="eyebrow">Почему работают со мной</span>
-          <h2 className="section-title">Без агентской анонимности</h2>
+        <div className="reveal" style={{ maxWidth: 680, marginBottom: 48 }}>
+          <span className="eyebrow">Подтверждённая экспертиза</span>
+          <h2 className="section-title">Мои сертификаты</h2>
+          <p className="lead" style={{ marginTop: 22 }}>
+            Официальные сертификации Яндекса и партнёрский статус Roistat. Нажмите на сертификат, чтобы открыть его в полном размере.
+          </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
-          {WHY.map((w, i) =>
-          <div key={i} className="reveal" style={{ transitionDelay: i * 60 + 'ms' }}>
-              <span className="icon-tile" style={{ width: 56, height: 56 }}><Glyph name={w.icon} size={26} /></span>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 23, fontWeight: 600, letterSpacing: '-0.01em', margin: '22px 0 12px', color: "rgb(255, 255, 255)" }}>{w.title}</h3>
-              <p className="muted" style={{ margin: 0, fontSize: 17, lineHeight: 1.55 }}>{w.desc}</p>
-            </div>
+        <div className="cert-grid">
+          {CERTS.map((it, i) =>
+          <button key={i} type="button" className="cert-card" onClick={() => setOpen(i)} aria-label={'Открыть: ' + it.title}>
+              <span className="cert-thumb">
+                <img src={it.img} alt={it.title} loading="lazy" decoding="async" />
+                <span className="cert-zoom"><IconSearch size={20} /></span>
+              </span>
+              <span className="cert-meta">
+                <span className="cert-title">{it.title}</span>
+                <span className="cert-issuer">{it.issuer}</span>
+              </span>
+            </button>
           )}
         </div>
       </div>
+
+      {c &&
+      <div className="cert-lb" onClick={close} role="dialog" aria-modal="true">
+        <button className="cert-lb-close" onClick={close} aria-label="Закрыть"><IconClose size={26} /></button>
+        <button className="cert-lb-nav prev" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Предыдущий"><IconChevron size={28} /></button>
+        <div className="cert-lb-stage" onClick={(e) => e.stopPropagation()}>
+          <img src={c.img} alt={c.title} />
+          <div className="cert-lb-bar">
+            <div>
+              <div className="cert-lb-title">{c.title}</div>
+              <div className="cert-lb-sub">{c.issuer}</div>
+            </div>
+            <a className="btn btn-fill btn-sm" href={c.file} target="_blank" rel="noopener">
+              Открыть PDF<IconArrowRight size={16} />
+            </a>
+          </div>
+        </div>
+        <button className="cert-lb-nav next" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Следующий"><IconChevron size={28} /></button>
+      </div>}
     </section>);
 
 }
@@ -279,4 +322,4 @@ function Cases({ onCta }) {
 
 }
 
-Object.assign(window, { Services, Why, Process, Cases });
+Object.assign(window, { Services, Certificates, Process, Cases });

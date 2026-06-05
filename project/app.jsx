@@ -70,7 +70,7 @@ function App() {
       <SectionWave from="#0d0d0f" to="#08080a" speed={13} />
       <Services variant={t.servicesVariant} />
       <SectionWave from="#08080a" to="#151517" speed={18} />
-      <Why />
+      <Certificates />
       <SectionWave from="#151517" to="#08080a" speed={14} />
       <Process data-comment-anchor="a0b41ccc3a-h3-158-15" />
       <SectionWave from="#08080a" to="#151517" speed={16} />

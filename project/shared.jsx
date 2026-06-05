@@ -214,6 +214,20 @@ const WHY = [
   { icon: 'IconShield',    title: 'Отвечаю за результат',   desc: 'Не прячусь за «красивыми отчётами». Смотрим на заявки и деньги, а не на показы.' },
 ];
 
+/* Сертификаты — превью (jpg) + полный документ (pdf). Открываются в лайтбоксе. */
+const CERTS = [
+  { title: 'Официальный партнёр Roistat', issuer: 'Roistat · сквозная аналитика',
+    img: 'assets/certs/roistat.jpg', file: 'assets/certs/roistat.pdf' },
+  { title: 'Яндекс Директ — Продвинутый', issuer: 'Яндекс · сертификат специалиста',
+    img: 'assets/certs/direct-pro.jpg', file: 'assets/certs/direct-pro.pdf' },
+  { title: 'Яндекс Директ — Базовый', issuer: 'Яндекс · сертификат специалиста',
+    img: 'assets/certs/direct-base.jpg', file: 'assets/certs/direct-base.pdf' },
+  { title: 'Медийная реклама', issuer: 'Яндекс · сертификат специалиста',
+    img: 'assets/certs/media.jpg', file: 'assets/certs/media.pdf' },
+  { title: 'Геоперформанс и Яндекс Бизнес', issuer: 'Яндекс · сертификация специалиста',
+    img: 'assets/certs/yandex-geo.jpg', file: 'assets/certs/yandex-geo.pdf' },
+];
+
 const QUIZ_STEPS = [
   { q: 'Какая задача сейчас важнее?', opts: ['Привлечь заявки', 'Сделать сайт', 'Настроить аналитику', 'Взять маркетинг целиком'] },
   { q: 'В какой нише ваш бизнес?', opts: ['Услуги', 'Товары / e-com', 'Производство', 'Другое'] },
@@ -223,5 +237,5 @@ const QUIZ_STEPS = [
 
 Object.assign(window, {
   useReveal, useCountUp, ToastProvider, useToast, maskPhone, phoneValid,
-  STATS, SERVICES, PROCESS, CASES, WHY, QUIZ_STEPS,
+  STATS, SERVICES, PROCESS, CASES, WHY, CERTS, QUIZ_STEPS,
 });
