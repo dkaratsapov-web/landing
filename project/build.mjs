@@ -44,6 +44,10 @@ for (const f of JSX_FILES) results.push(await compile(f));
 // image-slot.js is already plain JS — copy verbatim.
 copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
 
+// Custom domain for GitHub Pages. IDN «карацапов-даниил-маркетинг.рф» in
+// punycode (ASCII) form. Emitting it on every build keeps the domain bound.
+writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai\n', 'utf8');
+
 const scriptTags = [
   '  <script defer src="tweaks-panel.js"></script>',
   '  <script defer src="image-slot.js"></script>',
