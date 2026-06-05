@@ -277,7 +277,8 @@ h2.section-title {
    Restrained, accent-tinted, sits behind content. Honors
    prefers-reduced-motion (drift freezes, opacity stays).
    ============================================================ */
-.atmos { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.atmos { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
+  contain: strict; }   /* isolate paint/layout so background drift doesn't repaint the section */
 .no-atmos .atmos { display: none; }
 section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-index: 1; }
 
