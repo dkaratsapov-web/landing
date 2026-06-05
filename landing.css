@@ -468,6 +468,45 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .svc-x.open .svc-x-list li { animation: none; opacity: 1; transform: none; }
 }
 
+/* ============================================================
+   PROCESS — animated chain: flowing current + sequential pulse
+   ============================================================ */
+.proc-node-row { display: flex; align-items: center; margin-bottom: 22px; }
+.proc-node { width: 46px; height: 46px; border-radius: 50%; flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--accent-bright); background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-bd); position: relative; z-index: 1;
+  animation: procNode 5s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.6s); }
+@keyframes procNode {
+  0%, 55%, 100% { box-shadow: 0 0 0 0 transparent; transform: scale(1); border-color: var(--accent-soft-bd); }
+  10% { box-shadow: 0 0 0 7px var(--accent-soft),
+          0 0 26px 2px color-mix(in srgb, var(--accent-bright) 50%, transparent);
+        transform: scale(1.12); border-color: var(--accent-bright); }
+  22% { box-shadow: 0 0 0 0 transparent; transform: scale(1); border-color: var(--accent-soft-bd); }
+}
+.proc-link { flex: 1; height: 2px; margin-left: 6px; position: relative; overflow: hidden;
+  background: var(--line); border-radius: 2px; }
+.proc-link-flow { position: absolute; inset: 0; border-radius: 2px;
+  background: linear-gradient(90deg, transparent 0%,
+    color-mix(in srgb, var(--accent-bright) 90%, transparent) 50%, transparent 100%);
+  background-size: 55% 100%; background-repeat: no-repeat;
+  animation: procFlow 5s linear infinite;
+  animation-delay: calc(var(--i) * 0.6s); }
+@keyframes procFlow {
+  0%   { background-position: -60% 0; opacity: 0; }
+  4%   { opacity: 1; }
+  20%  { background-position: 170% 0; opacity: 1; }
+  24%, 100% { background-position: 170% 0; opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proc-node, .proc-link-flow { animation: none; }
+  .proc-link-flow { opacity: 1; background-position: 50% 0; }
+}
+@media (max-width: 1040px) {
+  .proc-chain .proc-link { display: none; }   /* segments only read across a single row */
+}
+
 /* ---------- Wave section dividers ---------- */
 .wave-svg { animation: waveSlide var(--wave-spd, 15s) linear infinite; }
 @keyframes waveSlide {
