@@ -263,45 +263,29 @@ function Process() {
 
 }
 
-/* ---------------- CASES (expandable, with photo + featured) ---------------- */
-function CaseCard({ c, idx, open, onToggle, featured }) {
-  const stop = (e) => e.stopPropagation();
+/* ---------------- CASES (filterable cards) ---------------- */
+function CaseCard({ c, idx }) {
   return (
-    <article className={'card case-card reveal' + (featured ? ' featured' : '')} style={{ transitionDelay: idx * 50 + 'ms' }}>
-      <div className="case-head" role="button" tabIndex={0} onClick={onToggle}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}>
-        <div className="case-thumb" onClick={stop}>
-          <image-slot id={'case-photo-' + idx} src={c.photo} placeholder="Фото проекта" shape="rounded" radius="11"></image-slot>
-        </div>
-        <div>
-          <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 10, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-            {featured && <span className="chip accent" style={{ padding: '4px 11px', fontSize: 12 }}>Кейс месяца</span>}
-            <span>{c.field}</span>
-          </div>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: featured ? 30 : 24, fontWeight: 600, letterSpacing: '-0.01em', margin: 0, color: 'var(--txt)' }}>{c.client}</h3>
-          <p className="muted" style={{ margin: '12px 0 0', fontSize: featured ? 17 : 16, lineHeight: 1.5, maxWidth: 560 }}>{c.summary}</p>
-        </div>
-        <div className="case-metric" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 14 }}>
-          <div style={{ textAlign: 'right' }}>
-            <div className="case-metric-num">{c.metric}</div>
-            <div style={{ color: 'var(--txt-2)', fontSize: 13, marginTop: 4, maxWidth: 150 }}>{c.metricLabel}</div>
-          </div>
-          <span className={'case-chevron' + (open ? ' open' : '')}><IconChevron size={22} /></span>
-        </div>
+    <article className="kase card" style={{ '--d': idx }}>
+      <div className="kase-photo">
+        <image-slot id={'kase-' + c.id} src={c.img} placeholder="Фото проекта" shape="rounded" radius="0"></image-slot>
+        {c.badge && <span className="kase-badge">{c.badge}</span>}
+        <span className="kase-geo"><IconMap size={13} />{c.geo}</span>
       </div>
-      <div className="case-body" style={{ maxHeight: open ? 420 : 0 }}>
-        <div style={{ padding: '4px 24px 28px', borderTop: '1px solid var(--line)', marginTop: 0 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 18, paddingTop: 24 }}>
-            {c.details.map(([k, v], i) =>
-            <div key={i}>
-                <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 6 }}>{k}</div>
-                <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--txt)' }}>{v}</div>
-              </div>
-            )}
-          </div>
-          <div style={{ marginTop: 24, color: 'var(--txt-2)', fontSize: 14, fontStyle: 'italic', borderLeft: '2px solid var(--accent-soft-bd)', paddingLeft: 14 }}>
-            {c.note}
-          </div>
+      <div className="kase-content">
+        <div className="kase-field">{c.field}</div>
+        <h3 className="kase-name">{c.client}</h3>
+        <p className="kase-summary">{c.summary}</p>
+        <div className="kase-metrics">
+          {c.metrics.map(([v, l], k) =>
+          <div className="kase-metric" key={k}>
+              <div className="kase-metric-v">{v}</div>
+              <div className="kase-metric-l">{l}</div>
+            </div>
+          )}
+        </div>
+        <div className="kase-chips">
+          {c.services.map((s, k) => <span className="kase-chip" key={k}>{s}</span>)}
         </div>
       </div>
     </article>);
@@ -309,24 +293,32 @@ function CaseCard({ c, idx, open, onToggle, featured }) {
 }
 
 function Cases({ onCta }) {
-  const [open, setOpen] = useStateB(0);
+  const [filter, setFilter] = useStateB('all');
+  const count = (id) => id === 'all' ? CASES.length : CASES.filter((c) => c.tags.includes(id)).length;
+  const list = CASES.filter((c) => filter === 'all' || c.tags.includes(filter));
   return (
     <section id="cases" className="sec bg-b" style={{ overflow: 'hidden', marginTop: -1 }}>
       <Atmos glows={[1, 2, 3]} pattern="dots" />
       <div className="wrap">
-        <div className="reveal" style={{ maxWidth: 780, marginBottom: 48 }}>
+        <div className="reveal" style={{ maxWidth: 820, marginBottom: 30 }}>
           <span className="eyebrow">Кейсы · доказательства</span>
           <h2 className="section-title">Результат в цифрах,<br />а не в красивых отчётах</h2>
-          <p className="lead" style={{ marginTop: 22 }}>Раскройте карточку — внутри метрики, сроки и каналы. Без «мы реализовали»: я реализовал.</p>
+          <p className="lead" style={{ marginTop: 22 }}>Выберите направление — кейсы отфильтруются по нему. Все цифры взяты из реальных проектов.</p>
         </div>
-        <SwipeHint />
-        <div className="case-list" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {CASES.map((c, i) =>
-          <CaseCard key={i} c={c} idx={i} featured={i === 0} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
+        <div className="kase-tabs" role="tablist">
+          {CASE_FILTERS.map((f) =>
+          <button key={f.id} type="button" role="tab" aria-selected={filter === f.id}
+            className={'kase-tab' + (filter === f.id ? ' on' : '')} onClick={() => setFilter(f.id)}>
+              {f.label}<span className="kase-tab-n">{count(f.id)}</span>
+            </button>
           )}
         </div>
-        <div className="reveal" style={{ marginTop: 40 }}>
-          <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => {e.preventDefault();onCta();}}>
+        <SwipeHint />
+        <div className="kase-grid" key={filter}>
+          {list.map((c, i) => <CaseCard key={c.id} c={c} idx={i} />)}
+        </div>
+        <div style={{ marginTop: 44 }}>
+          <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
             Обсудить похожую задачу<IconArrowRight size={18} />
           </a>
         </div>
