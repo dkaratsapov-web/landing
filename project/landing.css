@@ -160,7 +160,8 @@ h2.section-title {
   letter-spacing: -0.01em; color: var(--txt); text-decoration: none;
   display: inline-flex; align-items: center; gap: 11px;
 }
-.brand-plane { display: block; flex: 0 0 auto; }
+.brand-plane { display: block; flex: 0 0 auto; width: 30px; height: 30px;
+  border-radius: 8px; overflow: hidden; }
 .nav-links { display: flex; gap: 30px; margin-left: auto; }
 .nav-links a {
   font-size: 15px; color: var(--txt-2); text-decoration: none; letter-spacing: -0.01em;

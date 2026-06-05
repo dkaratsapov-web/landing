@@ -6,12 +6,13 @@ const NAV_LINKS = [
   ['Кейсы', '#cases'], ['Контакты', '#contacts'],
 ];
 
-/* Логотип — салатовый бумажный самолётик (гранёный оригами), боксless. */
+/* Логотип — оригинальный SVG (бумажный самолётик #D6FF41 на белом). */
 function BrandPlane() {
   return (
-    <svg className="brand-plane" width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
-      <polygon points="22,2 2.5,9.5 10.5,12.5" fill="#c4f53e" />
-      <polygon points="22,2 10.5,12.5 11,22" fill="#8fbf1e" />
+    <svg className="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true">
+      <rect width="50" height="50" fill="white" />
+      <path d="M10 10L15.9638 37L26.1716 27.8423L15.5899 15.8478L31.6941 24.9609L40 21.2817L10 10Z" fill="#D6FF41" />
+      <path d="M32 27.434L28.4629 39V27.83L24.2459 23L32 27.434ZM23 34.98L26.3208 39V31.9694L23 34.98Z" fill="#D6FF41" />
     </svg>
   );
 }
