@@ -216,9 +216,9 @@ function About() {
           </div>
         </div>
         <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          <div style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', aspectRatio: '4 / 3',
+          <div style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden', aspectRatio: '3 / 4',
             border: '1px solid var(--line)', background: 'var(--tile-b)' }}>
-            <image-slot id="about-photo" placeholder="Перетащите фото (Москва-Сити, MacBook)" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
+            <image-slot id="about-photo" src="assets/about-work.jpg" placeholder="Фото за работой" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
           </div>
           <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28,
             padding: '36px', background: 'var(--tile-card)', border: '1px solid var(--line)', borderRadius: 'var(--r-lg)' }}>
