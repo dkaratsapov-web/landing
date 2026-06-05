@@ -15,8 +15,10 @@
 
 :root {
   /* ---------- FONT FAMILIES ---------- */
-  --font-display: "SF Pro Display", system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
-  --font-text:    "SF Pro Text", system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+  /* Rubik — softer, rounded letterforms with full Cyrillic. Placed first so the
+     soft look is consistent on every platform (system-ui only as a fallback). */
+  --font-display: "Rubik", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-text:    "Rubik", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* ---------- BRAND / ACCENT ---------- */
   --action-blue:        #0066cc;  /* the single interactive color */

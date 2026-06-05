@@ -32,9 +32,10 @@ function Nav({ onCta }) {
         </button>
       </div>
       {open && (
-        <div style={{ position: 'absolute', top: 64, left: 0, right: 0, background: 'rgba(8,8,10,0.96)',
-          backdropFilter: 'blur(20px)', borderBottom: '1px solid var(--line)', padding: '14px 22px 22px',
-          display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div style={{ position: 'absolute', top: 68, left: 0, right: 0, background: 'rgba(8,8,10,0.96)',
+          backdropFilter: 'blur(20px)', border: '1px solid var(--line)', borderRadius: 16,
+          padding: '10px 16px 16px', display: 'flex', flexDirection: 'column', gap: 4,
+          boxShadow: '0 14px 40px rgba(0,0,0,0.5)' }}>
           {NAV_LINKS.map(([t, h]) => (
             <a key={h} href={h} onClick={(e) => go(e, h)}
                style={{ color: 'var(--txt)', textDecoration: 'none', fontSize: 18, padding: '12px 0',
