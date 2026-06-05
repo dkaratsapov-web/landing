@@ -388,3 +388,11 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .case-head, .case-card.featured .case-head { grid-template-columns: 1fr !important; }
   .case-thumb { grid-row: auto; max-width: 160px; }
 }
+
+/* ---------- Wave section dividers ---------- */
+.wave-svg { animation: waveSlide var(--wave-spd, 15s) linear infinite; }
+@keyframes waveSlide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) { .wave-svg { animation: none !important; } }

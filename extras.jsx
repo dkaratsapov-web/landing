@@ -66,4 +66,30 @@ function Quotes() {
   );
 }
 
-Object.assign(window, { Atmos, Quotes });
+/* ---------- SectionWave: animated SVG wave divider between sections ---------- */
+function SectionWave({ from = '#08080a', to = '#0d0d0f', height = 88, speed = 15 }) {
+  const gid = 'wv' + from.replace(/#/g, '') + to.replace(/#/g, '');
+  return (
+    <div style={{ position: 'relative', height, overflow: 'hidden',
+      background: from, flexShrink: 0, lineHeight: 0, marginTop: -1, zIndex: 2 }}>
+      <svg className="wave-svg" viewBox="0 0 2880 88" preserveAspectRatio="none"
+        style={{ '--wave-spd': speed + 's', position: 'absolute', bottom: 0, left: 0, width: '200%', height: '100%' }}>
+        <defs>
+          <linearGradient id={gid} x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="var(--accent-bright)" stopOpacity="0" />
+            <stop offset="50%" stopColor="var(--accent-bright)" stopOpacity="0.28" />
+            <stop offset="100%" stopColor="var(--accent-bright)" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d="M0,44 C240,14 480,74 720,44 C960,14 1200,74 1440,44 C1680,14 1920,74 2160,44 C2400,14 2640,74 2880,44 L2880,88 L0,88 Z"
+          fill={to} opacity="0.3" />
+        <path d="M0,60 C360,30 720,88 1080,60 C1440,30 1800,88 2160,60 C2520,30 2880,88 2880,60 L2880,88 L0,88 Z"
+          fill={to} />
+        <path d="M0,60 C360,30 720,88 1080,60 C1440,30 1800,88 2160,60 C2520,30 2880,88 2880,60"
+          fill="none" stroke={`url(#${gid})`} strokeWidth="1.5" />
+      </svg>
+    </div>
+  );
+}
+
+Object.assign(window, { Atmos, Quotes, SectionWave });
