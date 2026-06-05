@@ -155,7 +155,7 @@ function Process() {
               </div>
               <div style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 600, color: 'var(--txt-3)',
               letterSpacing: '0.06em', marginBottom: 10 }}>{p.n}</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 21, fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 10px' }}>{p.title}</h3>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 21, fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 10px', color: 'var(--txt)' }}>{p.title}</h3>
               <p className="muted" style={{ margin: 0, fontSize: 15, lineHeight: 1.5 }}>{p.desc}</p>
             </div>
           )}
