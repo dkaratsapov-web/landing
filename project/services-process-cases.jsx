@@ -173,14 +173,14 @@ function CaseCard({ c, idx, open, onToggle, featured }) {
       <div className="case-head" role="button" tabIndex={0} onClick={onToggle}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}>
         <div className="case-thumb" onClick={stop}>
-          <image-slot id={'case-photo-' + idx} placeholder="Фото проекта" shape="rounded" radius="11"></image-slot>
+          <image-slot id={'case-photo-' + idx} src={c.photo} placeholder="Фото проекта" shape="rounded" radius="11"></image-slot>
         </div>
         <div>
           <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 10, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
             {featured && <span className="chip accent" style={{ padding: '4px 11px', fontSize: 12 }}>Кейс месяца</span>}
             <span>{c.field}</span>
           </div>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: featured ? 30 : 24, fontWeight: 600, letterSpacing: '-0.01em', margin: 0 }}>{c.client}</h3>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: featured ? 30 : 24, fontWeight: 600, letterSpacing: '-0.01em', margin: 0, color: 'var(--txt)' }}>{c.client}</h3>
           <p className="muted" style={{ margin: '12px 0 0', fontSize: featured ? 17 : 16, lineHeight: 1.5, maxWidth: 560 }}>{c.summary}</p>
         </div>
         <div className="case-metric" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 14 }}>
@@ -201,8 +201,8 @@ function CaseCard({ c, idx, open, onToggle, featured }) {
               </div>
             )}
           </div>
-          <div style={{ marginTop: 24, color: 'var(--txt-2)', fontSize: 14, fontStyle: 'normal' }}>
-            Я реализовал этот проект лично — от аудита до итоговых заявок.
+          <div style={{ marginTop: 24, color: 'var(--txt-2)', fontSize: 14, fontStyle: 'italic', borderLeft: '2px solid var(--accent-soft-bd)', paddingLeft: 14 }}>
+            {c.note}
           </div>
         </div>
       </div>
