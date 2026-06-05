@@ -78,10 +78,10 @@ const phoneValid = (raw) => raw.replace(/\D/g, '').length === 11;
 /* ---------- DATA (faithful to ТЗ) ---------- */
 
 const STATS = [
-  { value: 7,   suffix: '+',  label: 'лет в интернет-маркетинге' },
-  { value: 150, suffix: '+',  label: 'проектов веду лично' },
-  { value: 50,  suffix: '%',  label: 'клиентов приходят по рекомендации' },
-  { value: 90,  suffix: '%',  label: 'фиксируют рост конверсии' },
+  { value: 9,  suffix: '+',     label: 'лет в маркетинге' },
+  { value: 70, suffix: '%',     label: 'клиентов приходят по рекомендации' },
+  { value: 3,  suffix: '+ млн', label: 'в месяц — оборот рекламных кабинетов' },
+  { value: 50, suffix: '+',     label: 'инструментов для роста' },
 ];
 
 const SERVICES = [
