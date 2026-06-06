@@ -1,0 +1,14 @@
+{
+  "name": "landing",
+  "version": "1.0.0",
+  "description": "Лендинг Даниила Карацапова — статический сайт, собирается из JSX.",
+  "private": true,
+  "scripts": {
+    "build": "rm -rf dist && cp -r project dist && node project/build.mjs project dist"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-react": "^7.24.0",
+    "terser": "^5.30.0"
+  }
+}
