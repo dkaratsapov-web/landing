@@ -175,6 +175,11 @@ h2.section-title {
   position: relative;
   display: inline-flex; align-items: center;
 }
+/* Невидимый «мостик» через зазор — чтобы дропдаун не пропадал при наведении */
+.nav-item-drop::after {
+  content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  width: 240px; height: 20px; /* перекрывает 14px зазор до меню */
+}
 .nav-drop-trigger {
   display: inline-flex; align-items: center; gap: 5px;
   font-size: 15px; color: var(--txt-2); text-decoration: none; letter-spacing: -0.01em;
