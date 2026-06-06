@@ -61,7 +61,7 @@ function Audit() {
           {f.sent ? <SuccessPanel onReset={f.reset} title="Готово!" text="Я получил заявку и перезвоню лично, чтобы договориться об аудите." /> :
 
           <form onSubmit={f.submit} noValidate>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 22px' }}>Заказать аудит</h3>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 22px', color: 'var(--txt)' }}>Заказать аудит</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
                 <Field label="Как вас зовут" error={f.err.name}>
                   <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
@@ -96,7 +96,7 @@ function SuccessPanel({ title, text, onReset }) {
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 22 }}>
         <IconCheck size={32} style={{ color: 'var(--accent-ink)' }} />
       </div>
-      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 12px' }}>{title}</h3>
+      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 12px', color: 'var(--txt)' }}>{title}</h3>
       <p className="muted" style={{ fontSize: 16, lineHeight: 1.5, margin: '0 auto', maxWidth: 320 }}>{text}</p>
       {onReset && <button className="btn btn-ghost btn-sm" style={{ marginTop: 22 }} onClick={onReset}>Отправить ещё одну</button>}
     </div>);
@@ -107,28 +107,36 @@ function SuccessPanel({ title, text, onReset }) {
 function Contacts() {
   const toast = useToast();
   const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.');
+  const K = window.CONTENT.contacts || {};
   return (
     <section id="contacts" className="sec bg-b" style={{ overflow: 'hidden' }}>
       <Atmos glows={[1, 2]} pattern="grid" drifting={true} />
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'flex-start' }}>
         <div className="reveal">
-          <span className="eyebrow">Контакты</span>
-          <h2 className="section-title">Свяжитесь со мной — разберём вашу задачу</h2>
-          <p className="lead" style={{ marginTop: 22 }}>Напишите в Telegram или оставьте номер — я перезвоню лично, без колл-центра и менеджеров.</p>
+          <span className="eyebrow">{K.eyebrow}</span>
+          <h2 className="section-title"><Lines text={K.heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{K.lead}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 32 }}>
-            <a className="contact-row" href="tel:+79963470065"
-            onClick={() => toast('Звонок: +7 (996) 347-00-65')}>
+            <a className="contact-row" href={'tel:' + (K.phoneTel || '')}
+            onClick={() => toast('Звонок: ' + (K.phone || ''))}>
               <span className="icon-tile" style={{ width: 50, height: 50 }}><IconPhone size={22} /></span>
               <div>
                 <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Телефон</div>
-                <div style={{ fontSize: 19, fontWeight: 600 }}>+7 (996) 347-00-65</div>
+                <div style={{ fontSize: 19, fontWeight: 600 }}>{K.phone}</div>
               </div>
             </a>
-            <a className="contact-row" href="https://t.me/Daniil_065" target="_blank" rel="noopener">
+            <a className="contact-row" href={K.telegramUrl} target="_blank" rel="noopener">
               <span className="icon-tile" style={{ width: 50, height: 50 }}><IconSend size={22} /></span>
               <div>
-                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Telegram · Max</div>
-                <div style={{ fontSize: 19, fontWeight: 600 }}>@Daniil_065</div>
+                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Telegram</div>
+                <div style={{ fontSize: 19, fontWeight: 600 }}>{K.telegram}</div>
+              </div>
+            </a>
+            <a className="contact-row" href={K.maxUrl} target="_blank" rel="noopener">
+              <span className="icon-tile" style={{ width: 50, height: 50, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20 }}>M</span>
+              <div>
+                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>MAX</div>
+                <div style={{ fontSize: 19, fontWeight: 600 }}>Написать в MAX</div>
               </div>
             </a>
           </div>
@@ -218,7 +226,7 @@ function QuizModal({ open, onClose }) {
           {phase === 'q' &&
           <div key={step} style={{ animation: 'toastIn .3s ease' }}>
               <div style={{ color: 'var(--txt-3)', fontSize: 14, marginBottom: 12 }}>Вопрос {step + 1} из {total}</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 24px' }}>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 24px', color: 'var(--txt)' }}>
                 {QUIZ_STEPS[step].q}
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -245,7 +253,7 @@ function QuizModal({ open, onClose }) {
 
           {phase === 'form' && !f.sent &&
           <form onSubmit={f.submit} noValidate style={{ animation: 'toastIn .3s ease' }}>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 8px' }}>Куда отправить решение?</h3>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 8px', color: 'var(--txt)' }}>Куда отправить решение?</h3>
               <p className="muted" style={{ margin: '0 0 24px', fontSize: 16 }}>Подберу под ваши ответы и закреплю скидку 10%. Перезвоню лично.</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <Field label="Как вас зовут" error={f.err.name}>

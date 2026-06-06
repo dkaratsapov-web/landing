@@ -30,6 +30,7 @@ const IconPhone = (p) => <Icon {...p} paths={<>
 const IconSend = (p) => <Icon {...p} paths={<>
   <path d="M21 4 3 11l6 2.5L11 20l3.5-6L21 4Z" /><path d="m9 13.5 5.5-5" />
 </>} />;
+const IconPlane = (p) => <Icon {...p} fill="currentColor" sw={0} paths={<path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />} />;
 const IconArrowRight = (p) => <Icon {...p} paths={<><path d="M5 12h14M13 6l6 6-6 6" /></>} />;
 const IconArrowDown = (p) => <Icon {...p} paths={<><path d="M12 5v14M6 13l6 6 6-6" /></>} />;
 const IconChevron = (p) => <Icon {...p} paths={<><path d="m6 9 6 6 6-6" /></>} />;
@@ -53,5 +54,5 @@ Object.assign(window, {
   Icon, IconTarget, IconUsers, IconMonitor, IconChart, IconLayers, IconPhone,
   IconSend, IconArrowRight, IconArrowDown, IconChevron, IconCheck, IconClose,
   IconBolt, IconShield, IconEye, IconHandshake, IconStar, IconQuote, IconSearch,
-  IconClock, IconMap,
+  IconClock, IconMap, IconPlane,
 });

@@ -6,15 +6,22 @@ const ICONS_MAP = {
 };
 const Glyph = ({ name, size }) => {const C = ICONS_MAP[name] || IconBolt;return <C size={size} />;};
 
+/* Подсказка-призыв «листайте» — видна только на мобильных над каруселями. */
+function SwipeHint() {
+  return (
+    <div className="swipe-hint" aria-hidden="true">
+      <span>Листайте</span><IconArrowRight size={16} />
+    </div>
+  );
+}
+
 /* ---------------- SERVICES ---------------- */
 function ServiceHead() {
   return (
     <div className="reveal" style={{ maxWidth: 720, marginBottom: 56 }}>
-      <span className="eyebrow">Что я делаю</span>
-      <h2 className="section-title">Пять направлений.<br />Один ответственный — я</h2>
-      <p className="lead" style={{ marginTop: 22 }}>
-        Не «полный спектр услуг», а конкретные инструменты под вашу задачу. Беру то, что принесёт заявки.
-      </p>
+      <span className="eyebrow">{(window.CONTENT.servicesHead || {}).eyebrow}</span>
+      <h2 className="section-title"><Lines text={(window.CONTENT.servicesHead || {}).heading} /></h2>
+      <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.servicesHead || {}).lead}</p>
     </div>);
 
 }
@@ -73,6 +80,7 @@ function ServicesGrid() {
     <section id="services" className="sec bg-pg">
       <div className="wrap">
         <ServiceHead />
+        <SwipeHint />
         <div className="svc-x-stack" style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           {SERVICES.map((s, i) =>
           <ServiceCard key={i} s={s} open={open === i}
@@ -154,25 +162,67 @@ function Services({ variant }) {
   return <ServicesGrid />;
 }
 
-/* ---------------- WHY ---------------- */
-function Why() {
+/* ---------------- CERTIFICATES ---------------- */
+function Certificates() {
+  const [open, setOpen] = useStateB(-1);
+  const close = () => setOpen(-1);
+  const step = (d) => setOpen((o) => (o + d + CERTS.length) % CERTS.length);
+  useEffectB(() => {
+    if (open < 0) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setOpen(-1);
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    };
+    window.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [open]);
+
+  const c = open >= 0 ? CERTS[open] : null;
   return (
-    <section className="sec bg-b">
+    <section id="certs" className="sec bg-b">
       <div className="wrap">
-        <div className="reveal" style={{ maxWidth: 680, marginBottom: 52 }}>
-          <span className="eyebrow">Почему работают со мной</span>
-          <h2 className="section-title">Без агентской анонимности</h2>
+        <div className="reveal" style={{ maxWidth: 680, marginBottom: 48 }}>
+          <span className="eyebrow">{(window.CONTENT.certsHead || {}).eyebrow}</span>
+          <h2 className="section-title"><Lines text={(window.CONTENT.certsHead || {}).heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.certsHead || {}).lead}</p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
-          {WHY.map((w, i) =>
-          <div key={i} className="reveal" style={{ transitionDelay: i * 60 + 'ms' }}>
-              <span className="icon-tile" style={{ width: 56, height: 56 }}><Glyph name={w.icon} size={26} /></span>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 23, fontWeight: 600, letterSpacing: '-0.01em', margin: '22px 0 12px', color: "rgb(255, 255, 255)" }}>{w.title}</h3>
-              <p className="muted" style={{ margin: 0, fontSize: 17, lineHeight: 1.55 }}>{w.desc}</p>
-            </div>
+        <SwipeHint />
+        <div className="cert-grid">
+          {CERTS.map((it, i) =>
+          <button key={i} type="button" className="cert-card" onClick={() => setOpen(i)} aria-label={'Открыть: ' + it.title}>
+              <span className="cert-thumb">
+                <img src={it.img} alt={it.title} loading="lazy" decoding="async" />
+                <span className="cert-zoom"><IconSearch size={20} /></span>
+              </span>
+              <span className="cert-meta">
+                <span className="cert-title">{it.title}</span>
+                <span className="cert-issuer">{it.issuer}</span>
+              </span>
+            </button>
           )}
         </div>
       </div>
+
+      {c &&
+      <div className="cert-lb" onClick={close} role="dialog" aria-modal="true">
+        <button className="cert-lb-close" onClick={close} aria-label="Закрыть"><IconClose size={26} /></button>
+        <button className="cert-lb-nav prev" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Предыдущий"><IconChevron size={28} /></button>
+        <div className="cert-lb-stage" onClick={(e) => e.stopPropagation()}>
+          <img src={c.img} alt={c.title} />
+          <div className="cert-lb-bar">
+            <div>
+              <div className="cert-lb-title">{c.title}</div>
+              <div className="cert-lb-sub">{c.issuer}</div>
+            </div>
+            <a className="btn btn-fill btn-sm" href={c.file} target="_blank" rel="noopener">
+              Открыть PDF<IconArrowRight size={16} />
+            </a>
+          </div>
+        </div>
+        <button className="cert-lb-nav next" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Следующий"><IconChevron size={28} /></button>
+      </div>}
     </section>);
 
 }
@@ -183,10 +233,11 @@ function Process() {
     <section id="process" className="sec bg-pg">
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 680, marginBottom: 56 }}>
-          <span className="eyebrow">Как я работаю</span>
-          <h2 className="section-title">Прозрачно, по шагам</h2>
-          <p className="lead" style={{ marginTop: 22 }}>Вы всегда понимаете, на каком этапе проект и что я делаю прямо сейчас.</p>
+          <span className="eyebrow">{(window.CONTENT.processHead || {}).eyebrow}</span>
+          <h2 className="section-title"><Lines text={(window.CONTENT.processHead || {}).heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.processHead || {}).lead}</p>
         </div>
+        <SwipeHint />
         <div className="proc-grid proc-chain" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
           {PROCESS.map((p, i) =>
           <div key={i} className="reveal proc-step" style={{ transitionDelay: i * 60 + 'ms', position: 'relative',
@@ -208,45 +259,29 @@ function Process() {
 
 }
 
-/* ---------------- CASES (expandable, with photo + featured) ---------------- */
-function CaseCard({ c, idx, open, onToggle, featured }) {
-  const stop = (e) => e.stopPropagation();
+/* ---------------- CASES (filterable cards) ---------------- */
+function CaseCard({ c, idx }) {
   return (
-    <article className={'card case-card reveal' + (featured ? ' featured' : '')} style={{ transitionDelay: idx * 50 + 'ms' }}>
-      <div className="case-head" role="button" tabIndex={0} onClick={onToggle}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}>
-        <div className="case-thumb" onClick={stop}>
-          <image-slot id={'case-photo-' + idx} src={c.photo} placeholder="Фото проекта" shape="rounded" radius="11"></image-slot>
-        </div>
-        <div>
-          <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 10, display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-            {featured && <span className="chip accent" style={{ padding: '4px 11px', fontSize: 12 }}>Кейс месяца</span>}
-            <span>{c.field}</span>
-          </div>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: featured ? 30 : 24, fontWeight: 600, letterSpacing: '-0.01em', margin: 0, color: 'var(--txt)' }}>{c.client}</h3>
-          <p className="muted" style={{ margin: '12px 0 0', fontSize: featured ? 17 : 16, lineHeight: 1.5, maxWidth: 560 }}>{c.summary}</p>
-        </div>
-        <div className="case-metric" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 14 }}>
-          <div style={{ textAlign: 'right' }}>
-            <div className="case-metric-num">{c.metric}</div>
-            <div style={{ color: 'var(--txt-2)', fontSize: 13, marginTop: 4, maxWidth: 150 }}>{c.metricLabel}</div>
-          </div>
-          <span className={'case-chevron' + (open ? ' open' : '')}><IconChevron size={22} /></span>
-        </div>
+    <article className="kase card" style={{ '--d': idx }}>
+      <div className="kase-photo">
+        <image-slot id={'kase-' + c.id} src={c.img} placeholder="Фото проекта" shape="rounded" radius="0"></image-slot>
+        {c.badge && <span className="kase-badge">{c.badge}</span>}
+        <span className="kase-geo"><IconMap size={13} />{c.geo}</span>
       </div>
-      <div className="case-body" style={{ maxHeight: open ? 420 : 0 }}>
-        <div style={{ padding: '4px 24px 28px', borderTop: '1px solid var(--line)', marginTop: 0 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 18, paddingTop: 24 }}>
-            {c.details.map(([k, v], i) =>
-            <div key={i}>
-                <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 6 }}>{k}</div>
-                <div style={{ fontSize: 16, fontWeight: 600, color: 'var(--txt)' }}>{v}</div>
-              </div>
-            )}
-          </div>
-          <div style={{ marginTop: 24, color: 'var(--txt-2)', fontSize: 14, fontStyle: 'italic', borderLeft: '2px solid var(--accent-soft-bd)', paddingLeft: 14 }}>
-            {c.note}
-          </div>
+      <div className="kase-content">
+        <div className="kase-field">{c.field}</div>
+        <h3 className="kase-name">{c.client}</h3>
+        <p className="kase-summary">{c.summary}</p>
+        <div className="kase-metrics">
+          {c.metrics.map(([v, l], k) =>
+          <div className="kase-metric" key={k}>
+              <div className="kase-metric-v">{v}</div>
+              <div className="kase-metric-l">{l}</div>
+            </div>
+          )}
+        </div>
+        <div className="kase-chips">
+          {c.services.map((s, k) => <span className="kase-chip" key={k}>{s}</span>)}
         </div>
       </div>
     </article>);
@@ -254,23 +289,32 @@ function CaseCard({ c, idx, open, onToggle, featured }) {
 }
 
 function Cases({ onCta }) {
-  const [open, setOpen] = useStateB(0);
+  const [filter, setFilter] = useStateB('all');
+  const count = (id) => id === 'all' ? CASES.length : CASES.filter((c) => c.tags.includes(id)).length;
+  const list = CASES.filter((c) => filter === 'all' || c.tags.includes(filter));
   return (
-    <section id="cases" className="sec bg-b" style={{ overflow: 'hidden' }}>
+    <section id="cases" className="sec bg-b" style={{ overflow: 'hidden', marginTop: -1 }}>
       <Atmos glows={[1, 2, 3]} pattern="dots" />
       <div className="wrap">
-        <div className="reveal" style={{ maxWidth: 780, marginBottom: 48 }}>
-          <span className="eyebrow">Кейсы · доказательства</span>
-          <h2 className="section-title">Результат в цифрах,<br />а не в красивых отчётах</h2>
-          <p className="lead" style={{ marginTop: 22 }}>Раскройте карточку — внутри метрики, сроки и каналы. Без «мы реализовали»: я реализовал.</p>
+        <div className="reveal" style={{ maxWidth: 820, marginBottom: 30 }}>
+          <span className="eyebrow">{(window.CONTENT.casesHead || {}).eyebrow}</span>
+          <h2 className="section-title"><Lines text={(window.CONTENT.casesHead || {}).heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.casesHead || {}).lead}</p>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          {CASES.map((c, i) =>
-          <CaseCard key={i} c={c} idx={i} featured={i === 0} open={open === i} onToggle={() => setOpen(open === i ? -1 : i)} />
+        <div className="kase-tabs" role="tablist">
+          {CASE_FILTERS.map((f) =>
+          <button key={f.id} type="button" role="tab" aria-selected={filter === f.id}
+            className={'kase-tab' + (filter === f.id ? ' on' : '')} onClick={() => setFilter(f.id)}>
+              {f.label}<span className="kase-tab-n">{count(f.id)}</span>
+            </button>
           )}
         </div>
-        <div className="reveal" style={{ marginTop: 40 }}>
-          <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => {e.preventDefault();onCta();}}>
+        <SwipeHint />
+        <div className="kase-grid" key={filter}>
+          {list.map((c, i) => <CaseCard key={c.id} c={c} idx={i} />)}
+        </div>
+        <div style={{ marginTop: 44 }}>
+          <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
             Обсудить похожую задачу<IconArrowRight size={18} />
           </a>
         </div>
@@ -279,4 +323,4 @@ function Cases({ onCta }) {
 
 }
 
-Object.assign(window, { Services, Why, Process, Cases });
+Object.assign(window, { Services, Certificates, Process, Cases });

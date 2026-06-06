@@ -37,6 +37,29 @@ function AccentSwatches({ value, onChange }) {
 
 }
 
+/* Уведомление о cookie — показывается один раз, выбор хранится в localStorage. */
+function CookieNotice() {
+  const [show, setShow] = useStateApp(false);
+  React.useEffect(() => {
+    let ok = false;
+    try { ok = !!localStorage.getItem('ck-accept'); } catch (e) {}
+    if (!ok) setShow(true);
+  }, []);
+  if (!show) return null;
+  const accept = () => {
+    try { localStorage.setItem('ck-accept', '1'); } catch (e) {}
+    setShow(false);
+  };
+  return (
+    <div className="cookie-bar" role="dialog" aria-live="polite">
+      <p className="cookie-text">
+        Мы используем файлы cookie, чтобы улучшить работу сайта. К сайту подключён сервис веб-аналитики Яндекс.Метрика, использующий cookie-файлы.
+      </p>
+      <button type="button" className="cookie-ok" onClick={accept}>ок</button>
+    </div>);
+
+}
+
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [quizOpen, setQuizOpen] = useStateApp(false);
@@ -70,7 +93,7 @@ function App() {
       <SectionWave from="#0d0d0f" to="#08080a" speed={13} />
       <Services variant={t.servicesVariant} />
       <SectionWave from="#08080a" to="#151517" speed={18} />
-      <Why />
+      <Certificates />
       <SectionWave from="#151517" to="#08080a" speed={14} />
       <Process data-comment-anchor="a0b41ccc3a-h3-158-15" />
       <SectionWave from="#08080a" to="#151517" speed={16} />
@@ -84,6 +107,7 @@ function App() {
       <SectionWave from="#151517" to="#000000" speed={15} />
       <Footer onCta={scrollToContacts} />
       <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
+      <CookieNotice />
 
       <TweaksPanel>
         <TweakSection label="Главный экран (Hero)" />
@@ -103,4 +127,15 @@ function App() {
 
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+/* Load editable content (content.json) before first render. content-default.js
+   already set window.CONTENT as a baked fallback, so the site renders even if
+   the fetch fails. applyContent() refreshes the data arrays from CONTENT. */
+function boot() {
+  if (typeof applyContent === 'function') applyContent();
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+}
+fetch('content.json', { cache: 'no-store' })
+  .then((r) => (r.ok ? r.json() : null))
+  .then((c) => { if (c && typeof c === 'object') window.CONTENT = c; })
+  .catch(() => {})
+  .finally(boot);

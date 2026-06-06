@@ -170,6 +170,57 @@ h2.section-title {
 .nav-cta { margin-left: 8px; }
 .nav-burger { display: none; margin-left: auto; background: none; border: none; color: var(--txt); cursor: pointer; padding: 6px; }
 
+/* Dropdown в навигации */
+.nav-item-drop {
+  position: relative;
+  display: inline-flex; align-items: center;
+}
+.nav-drop-trigger {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 15px; color: var(--txt-2); text-decoration: none; letter-spacing: -0.01em;
+  transition: color .18s ease; cursor: pointer;
+}
+.nav-item-drop:hover .nav-drop-trigger { color: var(--txt); }
+.nav-chevron {
+  transition: transform .2s ease;
+  color: currentColor; opacity: .6;
+}
+.nav-item-drop:hover .nav-chevron { transform: rotate(180deg); }
+.nav-dropdown {
+  position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
+  min-width: 220px;
+  background: rgba(12,12,14,0.96); backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--line-strong); border-radius: 14px;
+  padding: 8px;
+  display: flex; flex-direction: column; gap: 2px;
+  opacity: 0; pointer-events: none;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity .2s ease, transform .2s cubic-bezier(.2,.8,.2,1);
+  z-index: 80;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+}
+.nav-dropdown::before {
+  content: ""; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  width: 12px; height: 6px;
+  background: rgba(12,12,14,0.96); clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+.nav-item-drop:hover .nav-dropdown {
+  opacity: 1; pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-drop-link {
+  display: block; padding: 10px 14px; border-radius: 8px;
+  font-size: 14px; color: var(--txt-2); text-decoration: none;
+  transition: background .15s ease, color .15s ease;
+  white-space: nowrap;
+}
+.nav-drop-link:first-child {
+  color: var(--accent-bright);
+  font-weight: 600;
+}
+.nav-drop-link:hover { background: rgba(255,255,255,0.06); color: var(--txt); }
+
 /* ---------- Stats ---------- */
 .stat-num {
   font-family: var(--font-display); font-weight: 600;
