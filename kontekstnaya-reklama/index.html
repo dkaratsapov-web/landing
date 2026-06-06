@@ -35,21 +35,30 @@
 <div class="page">
 
 <!-- ===================== НАВИГАЦИЯ ===================== -->
-<div class="nav-shell">
-  <nav class="nav">
-    <a class="nav-logo" href="/">
-      <svg class="navplane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>
+<nav class="nav" id="siteNav">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>
       Даниил Карацапов
     </a>
-    <ul class="nav-links">
-      <li><a href="#about">Что это</a></li>
-      <li><a href="#preim">Преимущества</a></li>
-      <li><a href="#uslugi">Услуги</a></li>
-      <li><a href="#portfolio">Кейсы</a></li>
-      <li><a href="#faq">Вопросы</a></li>
-    </ul>
-    <a class="btn btn-lime nav-cta" href="#contacts">Обсудить задачу</a>
-  </nav>
+    <div class="nav-links">
+      <a href="#about">Что это</a>
+      <a href="#preim">Преимущества</a>
+      <a href="#uslugi">Услуги</a>
+      <a href="#portfolio">Кейсы</a>
+      <a href="#faq">Вопросы</a>
+    </div>
+    <a class="btn btn-lime btn-sm nav-cta" href="#contacts">Обсудить задачу</a>
+    <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="#about">Что это</a>
+  <a href="#preim">Преимущества</a>
+  <a href="#uslugi">Услуги</a>
+  <a href="#portfolio">Кейсы</a>
+  <a href="#faq">Вопросы</a>
+  <a class="btn btn-lime" href="#contacts">Обсудить задачу</a>
 </div>
 
 <!-- ===================== HERO ===================== -->
@@ -488,6 +497,25 @@
 </div>
 
 <script>
+  // Шапка: эффект при скролле + мобильное меню (как на главной)
+  (function () {
+    const nav = document.getElementById('siteNav');
+    const burger = document.getElementById('navBurger');
+    const mobile = document.getElementById('navMobile');
+    const onScroll = () => { if (nav) nav.classList.toggle('scrolled', window.scrollY > 24); };
+    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+    if (burger && mobile) {
+      const toggle = (open) => {
+        const o = open ?? !mobile.classList.contains('open');
+        mobile.classList.toggle('open', o);
+        burger.classList.toggle('open', o);
+        document.body.style.overflow = o ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+    }
+  })();
+
   // Reveal + stagger при скролле
   (function () {
     const targets = document.querySelectorAll('.reveal, .stagger');
