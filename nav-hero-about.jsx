@@ -2,13 +2,11 @@
 const { useState: useStateA, useEffect: useEffectA, useRef: useRefA } = React;
 
 const NAV_LINKS = [
-  ['Обо мне', '#about'],
-  ['Услуги', '#services', [
+  ['Услуги', '/kontekstnaya-reklama/', [
     ['Контекстная реклама', '/kontekstnaya-reklama/'],
   ]],
-  ['Как работаю', '#process'],
   ['Кейсы', '/keysy/'],
-  ['Контакты', '#contacts'],
+  ['Контакты', '/contacts/'],
 ];
 
 /* Логотип — оригинальный SVG (бумажный самолётик #D6FF41, прозрачный фон). */
@@ -41,7 +39,7 @@ function Nav({ onCta }) {
           {NAV_LINKS.map(([t, h, sub]) =>
             sub ? (
               <div key={h} className="nav-item-drop">
-                <a href={h} onClick={(e) => go(e, h)} className="nav-drop-trigger">
+                <a href={h} onClick={h.startsWith('/') ? undefined : ((e) => go(e, h))} className="nav-drop-trigger">
                   {t}<svg className="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </a>
                 <div className="nav-dropdown">
