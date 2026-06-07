@@ -645,11 +645,11 @@
     const targets = document.querySelectorAll('.reveal, .stagger');
     const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0.14 }) : null;
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' }) : null;
     if (io) { targets.forEach(t => io.observe(t)); }
     else { targets.forEach(t => t.classList.add('in')); }
-    // страховка
-    setTimeout(() => targets.forEach(t => t.classList.add('in')), 2600);
+    // страховка: если что-то не сработало (узкий экран, быстрый скролл) — показываем
+    setTimeout(() => targets.forEach(t => t.classList.add('in')), 2000);
   })();
 
   // Count-up для чисел в hero (запускается при появлении)
