@@ -479,7 +479,13 @@ h3 { font-weight: 600; }
   .section { padding: 72px 0; }
   .section-sm { padding: 60px 0; }
   .section-head { margin-bottom: 40px; }
-  .feat-grid, .case-grid, .calc, .steps-grid { grid-template-columns: 1fr; }
+  .case-grid, .calc, .steps-grid { grid-template-columns: 1fr; }
+  /* Преимущества — горизонтальный скролл на мобильном */
+  .feat-grid { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin: 0 -18px; padding: 4px 18px 14px; scrollbar-width: none; }
+  .feat-grid::-webkit-scrollbar { display: none; }
+  .feat-card { flex: 0 0 80%; max-width: 300px; min-height: 0; scroll-snap-align: start; }
 
   .hero { padding: 104px 0 40px; }
   .hero .lead { margin: 24px 0 30px; }
