@@ -58,7 +58,6 @@
   <a href="#uslugi">Услуги</a>
   <a href="#portfolio">Кейсы</a>
   <a href="#faq">Вопросы</a>
-  <a class="btn btn-lime" href="#contacts">Обсудить задачу</a>
 </div>
 
 <!-- ===================== HERO ===================== -->
@@ -602,7 +601,6 @@
         const o = open ?? !mobile.classList.contains('open');
         mobile.classList.toggle('open', o);
         burger.classList.toggle('open', o);
-        document.body.style.overflow = o ? 'hidden' : '';
       };
       burger.addEventListener('click', () => toggle());
       mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
