@@ -465,9 +465,12 @@ h3 { font-weight: 600; }
   min-height: 4.5em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .kase-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px;
   margin-top: 2px; padding-top: 16px; border-top: 1px solid var(--line); }
+.kase-metric { display: flex; flex-direction: column; }
 .kase-metric-v { font-family: var(--font); font-weight: 600; letter-spacing: -0.02em;
-  color: var(--lime-bright); font-size: 26px; line-height: 1.05; }
-.kase-metric-l { color: var(--muted-2); font-size: 12.5px; line-height: 1.35; margin-top: 5px; }
+  color: var(--lime-bright); font-size: 26px; line-height: 1.05;
+  min-height: 2.1em; display: flex; align-items: flex-start; }
+.kase-metric-l { color: var(--muted-2); font-size: 12.5px; line-height: 1.35; margin-top: 5px;
+  min-height: 2.7em; }
 .kase-chips { display: flex; flex-wrap: wrap; gap: 7px; }
 .kase-chip { font-size: 12px; color: var(--muted); padding: 5px 11px; border-radius: var(--r-pill);
   background: rgba(255,255,255,0.04); border: 1px solid var(--line); }
