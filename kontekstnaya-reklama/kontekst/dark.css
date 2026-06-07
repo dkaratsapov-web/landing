@@ -247,8 +247,23 @@ h3 { font-weight: 600; }
 .qa-body p { margin: 0; color: var(--muted); font-size: 16px; line-height: 1.5; }
 @media (prefers-reduced-motion: reduce) { .chip .dot, .qa-card:hover .qa-ic-spin svg { animation: none; } }
 
-/* ---------- Примеры объявлений (поиск + РСЯ) ---------- */
-.search-demo { max-width: 720px; }
+/* ---------- Слайдер примеров объявлений (поиск + РСЯ) ---------- */
+.ad-slider { position: relative; }
+.ad-slider-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 12px;
+  scrollbar-width: none; -ms-overflow-style: none; }
+.ad-slider-track::-webkit-scrollbar { display: none; }
+.ad-slide { flex: 0 0 auto; width: clamp(260px, 38vw, 380px); scroll-snap-align: start; display: flex; flex-direction: column; }
+.ad-slide-name { font-size: 15px; font-weight: 600; color: var(--ink); margin-top: 16px; }
+.ad-slide-desc { font-size: 12.5px; color: var(--muted); line-height: 1.4; margin-top: 5px; }
+.ad-slide .sd-ad, .ad-slide .fmt-card { height: 100%; }
+.ad-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%;
+  background: var(--surface-2); border: 1px solid var(--line-2); color: var(--ink); display: grid; place-items: center;
+  cursor: pointer; transition: background .2s ease, border-color .2s ease, transform .2s ease; z-index: 2; }
+.ad-arrow:hover { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); transform: translateY(-50%) scale(1.06); }
+.ad-arrow-prev { left: -22px; }
+.ad-arrow-next { right: -22px; }
+@media (max-width: 720px) { .ad-arrow { display: none; } .ad-slide { width: clamp(240px, 78vw, 320px); } }
+
 .sd-ad { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 22px 24px;
   transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease; }
 .sd-ad:hover { transform: translateY(-4px); border-color: var(--line-2); }
@@ -261,7 +276,6 @@ h3 { font-weight: 600; }
 .sd-links a { font-size: 13.5px; color: #6ea8ff; cursor: pointer; transition: color .2s ease; }
 .sd-links a:hover { color: var(--lime); text-decoration: underline; }
 
-.formats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .fmt-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px;
   transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, background .3s ease; }
 .fmt-card:hover { transform: translateY(-6px); border-color: var(--line-2); background: var(--surface-2); }
@@ -291,8 +305,6 @@ h3 { font-weight: 600; }
 .fmt-prod { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 .fmt-prod .p-img { height: 50px; border-radius: 6px; background: linear-gradient(135deg, var(--surface-3), var(--surface-2)); border: 1px solid var(--line); }
 .fmt-prod .p-price { font-size: 11px; font-weight: 600; color: var(--lime); }
-@media (max-width: 1000px) { .formats { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .formats { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .fmt-video::before { animation: none; } }
 
 /* ---------- Цитаты ---------- */
