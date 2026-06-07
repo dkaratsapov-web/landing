@@ -65,6 +65,10 @@ function ServiceCard({ s, open, onToggle }) {
                 <a className="btn btn-fill btn-sm svc-x-cta" href="#contacts">
                   Обсудить задачу<IconArrowRight size={16} />
                 </a>
+                {s.url &&
+                <a className="btn btn-ghost btn-sm svc-x-cta" href={s.url} style={{ marginTop: 10 }}>
+                  Подробнее об услуге<IconArrowRight size={16} />
+                </a>}
               </div>
             </div>
           </div>
