@@ -59,11 +59,19 @@ function Nav({ onCta }) {
             )
           )}
         </div>
-        <a className="btn btn-fill btn-sm nav-cta" href="#contacts"
-           onClick={(e) => { e.preventDefault(); onCta(); }}>Обсудить задачу</a>
-        <button className="nav-burger" onClick={() => setOpen(o => !o)} aria-label="Меню">
-          {open ? <IconClose size={22} /> : <Icon paths={<><path d="M4 7h16M4 12h16M4 17h16" /></>} size={22} />}
-        </button>
+        <div className="nav-actions">
+          <a className="nav-ic nav-ic-tg" href="https://t.me/Daniil_065" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+          </a>
+          <a className="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener" aria-label="MAX">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5.5 17V7l6.5 6 6.5-6v10"/></svg>
+          </a>
+          <a className="btn btn-fill btn-sm nav-cta" href="#contacts"
+             onClick={(e) => { e.preventDefault(); onCta(); }}>Обсудить задачу</a>
+          <button className="nav-burger" onClick={() => setOpen(o => !o)} aria-label="Меню">
+            {open ? <IconClose size={22} /> : <Icon paths={<><path d="M4 7h16M4 12h16M4 17h16" /></>} size={22} />}
+          </button>
+        </div>
       </div>
       {open && (
         <div style={{ position: 'absolute', top: 68, left: 0, right: 0, background: 'rgba(8,8,10,0.96)',
