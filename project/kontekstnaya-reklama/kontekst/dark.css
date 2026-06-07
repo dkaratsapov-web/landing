@@ -790,3 +790,19 @@ h3 { font-weight: 600; }
   .reveal, .stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
   .bg-fx .glow, .marquee-track { animation: none !important; }
 }
+
+/* ===== Двойные фильтры кейсов: услуга + ниша ===== */
+.kase-filters { display: flex; flex-direction: column; gap: 14px; margin-bottom: 30px; }
+.kase-filter-group { display: flex; align-items: flex-start; gap: 16px; }
+.kase-filter-label {
+  flex: 0 0 auto; min-width: 64px; padding-top: 9px;
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted-2); display: flex; align-items: center; gap: 8px; white-space: nowrap;
+}
+.kase-filter-label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); flex: 0 0 auto; }
+.kase-filter-group .kase-tabs { margin-bottom: 0; flex: 1 1 auto; }
+@media (max-width: 720px) {
+  .kase-filter-group { flex-direction: column; gap: 8px; }
+  .kase-filter-label { padding-top: 0; }
+  .kase-filter-group .kase-tabs { margin: 0 -18px; padding: 0 18px 4px; }
+}
