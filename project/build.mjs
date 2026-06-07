@@ -113,51 +113,67 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
 <!-- PRELOADER START -->
-<div id="preloader" style="position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;pointer-events:all;">
-  <svg id="preloader-plane" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 50" width="60" height="60" style="position:fixed;bottom:10%;right:10%;transform-origin:center center;will-change:transform,opacity;">
+<div id="preloader" style="position:fixed;inset:0;z-index:99999;background:#0a0a0a;overflow:hidden;pointer-events:all;">
+  <svg id="preloader-plane" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 50" width="60" height="60" style="position:fixed;left:0;top:0;transform-origin:center center;will-change:transform,opacity;">
     <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/>
     <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/>
   </svg>
 </div>
-<style>
-#preloader { transition: opacity 0.5s ease; }
-@keyframes planeLoop {
-  0%   { transform: translate(0,0) rotate(-30deg) scale(1); }
-  12%  { transform: translate(-35vw,-25vh) rotate(-80deg) scale(0.9); }
-  25%  { transform: translate(-60vw,-10vh) rotate(-150deg) scale(1.1); }
-  37%  { transform: translate(-45vw,15vh) rotate(-210deg) scale(0.95); }
-  50%  { transform: translate(-20vw,30vh) rotate(-280deg) scale(1.05); }
-  62%  { transform: translate(-55vw,5vh) rotate(-340deg) scale(0.9); }
-  75%  { transform: translate(-70vw,-20vh) rotate(-400deg) scale(1); }
-  88%  { transform: translate(-40vw,-30vh) rotate(-450deg) scale(1.1); }
-  100% { transform: translate(-20vw,-5vh) rotate(-500deg) scale(1); }
-}
-@keyframes planeZoom {
-  0%   { transform: translate(-20vw,-5vh) rotate(-500deg) scale(1) perspective(400px) translateZ(0); opacity:1; }
-  100% { transform: translate(-20vw,-5vh) rotate(-500deg) scale(25) perspective(400px) translateZ(300px); opacity:0; }
-}
-#preloader-plane.phase1 { animation: planeLoop 2.5s cubic-bezier(0.45,0.05,0.55,0.95) forwards; }
-#preloader-plane.phase2 { animation: planeZoom 1s ease-in forwards; }
-</style>
+<style>#preloader { transition: opacity 0.45s ease; }</style>
 <script>
 (function(){
-  document.body.style.overflow='hidden';
   var overlay=document.getElementById('preloader');
   var plane=document.getElementById('preloader-plane');
-  plane.classList.add('phase1');
-  setTimeout(function(){
-    plane.classList.remove('phase1');
-    void plane.offsetWidth;
-    plane.classList.add('phase2');
-  }, 2500);
-  setTimeout(function(){
+  if(!overlay||!plane) return;
+  document.body.style.overflow='hidden';
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=innerWidth,H=innerHeight;
+  window.addEventListener('resize',function(){W=innerWidth;H=innerHeight;});
+  var SIZE=60, OFFSET=9.5;            // SVG nose points ~ -9.5deg, compensate
+  var T_LOOP=3200, T_ZOOM=950, T_FADE=450;
+  function easeIO(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function loopPos(t){
+    var e=easeIO(t);
+    var dx=(0.95-0.45*e)*W;           // drift from bottom-right edge to centre
+    var dy=(1.10-0.62*e)*H;
+    var amp=0.22*H*Math.sin(Math.PI*t);  // loop radius swells then shrinks
+    var ang=2*Math.PI*2*t-Math.PI/2;     // two smooth loops
+    return {x:dx+amp*Math.cos(ang)*1.1, y:dy+amp*Math.sin(ang)};
+  }
+  function setT(x,y,deg,sc){
+    plane.style.transform='translate('+(x-SIZE/2)+'px,'+(y-SIZE/2)+'px) rotate('+deg+'deg) scale('+sc+')';
+  }
+  function finish(){
     overlay.style.opacity='0';
     overlay.style.pointerEvents='none';
     document.body.style.overflow='';
-  }, 3500);
-  setTimeout(function(){
-    overlay.parentNode && overlay.parentNode.removeChild(overlay);
-  }, 4000);
+    setTimeout(function(){overlay.parentNode&&overlay.parentNode.removeChild(overlay);},T_FADE);
+  }
+  if(reduce){ finish(); return; }
+  var lastHeading=0,t0=null;
+  function frame(ts){
+    if(t0===null)t0=ts;
+    var el=ts-t0;
+    if(el<=T_LOOP){
+      var t=el/T_LOOP;
+      var p=loopPos(t), p2=loopPos(Math.min(1,t+0.004));
+      var heading=Math.atan2(p2.y-p.y,p2.x-p.x)*180/Math.PI; // nose follows velocity
+      lastHeading=heading;
+      var sc=1+0.08*Math.sin(2*Math.PI*2*t);
+      setT(p.x,p.y,heading+OFFSET,sc);
+      requestAnimationFrame(frame);
+    } else if(el<=T_LOOP+T_ZOOM){
+      var z=(el-T_LOOP)/T_ZOOM, ez=z*z;  // accelerate toward viewer
+      var end=loopPos(1);
+      var cx=end.x+(W/2-end.x)*z;
+      var cy=end.y+(H/2-end.y)*z;
+      setT(cx,cy,lastHeading+OFFSET,1+27*ez); // keep course, no flip
+      if(z>0.7)overlay.style.opacity=String(1-(z-0.7)/0.3);
+      requestAnimationFrame(frame);
+    } else { finish(); }
+  }
+  var s=loopPos(0); setT(s.x,s.y,OFFSET,1); // place before first paint
+  requestAnimationFrame(frame);
 })();
 </script>
 <!-- PRELOADER END -->
