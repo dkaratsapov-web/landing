@@ -167,8 +167,14 @@ h2.section-title {
   transition: color .18s ease; cursor: pointer;
 }
 .nav-links a:hover { color: var(--txt); }
-.nav-cta { margin-left: 8px; }
-.nav-burger { display: none; margin-left: auto; background: none; border: none; color: var(--txt); cursor: pointer; padding: 6px; }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+.nav-cta { margin-left: 0; }
+.nav-ic { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; color: #fff; text-decoration: none; flex: none; transition: transform .2s ease, filter .2s ease; }
+.nav-ic:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.nav-ic svg { width: 20px; height: 20px; }
+.nav-ic-tg { background: #29A9EB; }
+.nav-ic-max { background: linear-gradient(135deg, #0A84FF, #6E56F7); }
+.nav-burger { display: none; margin-left: 0; background: none; border: none; color: var(--txt); cursor: pointer; padding: 6px; }
 
 /* Dropdown в навигации */
 .nav-item-drop {
@@ -469,6 +475,8 @@ h2.section-title {
   .nav { width: calc(100% - 24px); top: 10px; }
   .nav .wrap { padding: 0 16px; gap: 14px; }
   .nav-links { display: none; }
+  .nav-actions { margin-left: auto; }
+  .nav-cta { display: none; }
   .nav-burger { display: inline-flex; }
   /* collapse two-column section grids */
   .two-col { grid-template-columns: 1fr !important; gap: 40px !important; }
