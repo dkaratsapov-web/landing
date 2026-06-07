@@ -61,6 +61,7 @@ writeFileSync(join(outDir, 'content-default.js'),
 copyFileSync(join(srcDir, 'admin.html'), join(outDir, 'admin.html'));
 
 const scriptTags = [
+  '  <script defer src="lead-config.js"></script>',
   '  <script defer src="content-default.js"></script>',
   '  <script defer src="tweaks-panel.js"></script>',
   '  <script defer src="image-slot.js"></script>',

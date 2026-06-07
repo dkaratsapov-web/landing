@@ -4,5 +4,5 @@
    2) LEAD_TG_CHAT  — ваш chat_id (узнать можно у бота @userinfobot, прислав ему /start).
    Пока значения пустые, форма откроет WhatsApp с уже заполненным текстом заявки,
    чтобы ни одна заявка не потерялась. */
-window.LEAD_TG_TOKEN = '';
-window.LEAD_TG_CHAT  = '';
+window.LEAD_TG_TOKEN = '8654349126:AAFmE3aAx1oSimX-1-fxSmNGiK_OaoKlt5Y';
+window.LEAD_TG_CHAT  = '-4686927278';
