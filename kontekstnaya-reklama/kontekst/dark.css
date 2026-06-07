@@ -514,37 +514,40 @@ h3 { font-weight: 600; }
   opacity: 0; animation: kaseIn .5s cubic-bezier(.16,.7,.3,1) forwards;
   animation-delay: calc(var(--d) * 70ms); }
 .kfull.hide { display: none; }
-.kfull-head { display: grid; grid-template-columns: 360px 1fr; gap: 0; }
-.kfull-photo { position: relative; background: var(--surface-2); border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); overflow: hidden; min-height: 260px; }
+.kfull-head { display: grid; grid-template-columns: 320px 1fr; gap: 0; }
+.kfull-photo { position: relative; background: var(--surface-2); border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); overflow: hidden; min-height: 200px; }
 .kfull-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.kfull-intro { padding: 28px 30px; display: flex; flex-direction: column; gap: 14px; }
-.kfull-name { font-family: var(--font); font-size: 28px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin: -4px 0 0; }
-.kfull-lead { color: var(--muted); font-size: 16px; line-height: 1.6; margin: 0; }
-.kfull-meta { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.kfull-intro { padding: 20px 26px; display: flex; flex-direction: column; gap: 10px; }
+.kfull-name { font-family: var(--font); font-size: 24px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin: -2px 0 0; }
+.kfull-lead { color: var(--muted); font-size: 14.5px; line-height: 1.5; margin: 0; }
+.kfull-meta { display: flex; flex-direction: column; gap: 7px; margin-top: 2px; }
 .kfull-meta-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.kfull-meta-l { color: var(--muted-2); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; flex: 0 0 auto; min-width: 64px; }
-.kfull-meta-v { color: var(--ink-2); font-size: 15px; }
-.kfull-body { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 26px 30px; border-top: 1px solid var(--line); }
-.kfull-col { display: flex; flex-direction: column; gap: 14px; }
-.kfull-h { font-family: var(--font); font-size: 16px; font-weight: 600; color: var(--ink); margin: 0; }
-.kfull-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.kfull-list li { position: relative; padding-left: 26px; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
-.kfull-list li::before { position: absolute; left: 0; top: 1px; font-size: 14px; line-height: 1.4; }
+.kfull-meta-l { color: var(--muted-2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; flex: 0 0 auto; min-width: 64px; }
+.kfull-meta-v { color: var(--ink-2); font-size: 14px; }
+.kfull-body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 18px 26px; border-top: 1px solid var(--line); }
+.kfull-col { display: flex; flex-direction: column; gap: 9px; }
+.kfull-h { font-family: var(--font); font-size: 14.5px; font-weight: 600; color: var(--ink); margin: 0; }
+.kfull-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.kfull-list li { position: relative; padding-left: 24px; color: var(--muted); font-size: 13.5px; line-height: 1.4; }
+.kfull-list li::before { position: absolute; left: 0; top: 1px; font-size: 13px; line-height: 1.35; }
 .kfull-list.neg li::before { content: "✕"; color: #ff6b6b; }
 .kfull-list.pos li::before { content: "✓"; color: var(--lime-bright); }
 .kfull-lower { display: grid; grid-template-columns: 1.25fr 1fr; border-top: 1px solid var(--line); }
-.kfull-side { padding: 26px 30px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 24px; }
-.kfull-works { padding: 26px 30px; display: flex; flex-direction: column; gap: 14px; }
-.kfull-works-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; counter-reset: kw; }
-.kfull-works-list > li { position: relative; padding-left: 34px; counter-increment: kw; }
+.kfull-side { padding: 18px 26px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; }
+.kfull-works { padding: 18px 26px; display: flex; flex-direction: column; gap: 10px; }
+.kfull-works-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; counter-reset: kw; }
+.kfull-works-list > li { position: relative; padding-left: 30px; counter-increment: kw; }
 .kfull-works-list > li::before { content: counter(kw); position: absolute; left: 0; top: 0;
-  width: 24px; height: 24px; border-radius: 50%; background: var(--lime); color: var(--lime-ink);
-  font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.kfull-works-list > li > strong { display: block; color: var(--ink); font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-.kfull-works-list > li > ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
-.kfull-works-list > li > ul > li { position: relative; padding-left: 18px; color: var(--muted); font-size: 14px; line-height: 1.5; }
-.kfull-works-list > li > ul > li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--lime-glow); }
-.kfull-chips { padding: 0 30px 26px; }
+  width: 21px; height: 21px; border-radius: 50%; background: var(--lime); color: var(--lime-ink);
+  font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.kfull-works-list > li > strong { display: block; color: var(--ink); font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+.kfull-works-list > li > ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.kfull-works-list > li > ul > li { position: relative; padding-left: 16px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+.kfull-works-list > li > ul > li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--lime-glow); }
+.kfull-chips { padding: 0 26px 18px; }
+.kfull-side .kase-metrics { gap: 10px 14px; padding-top: 12px; }
+.kfull-side .kase-metric-v { font-size: 22px; min-height: 0; }
+.kfull-side .kase-metric-l { font-size: 12px; min-height: 0; margin-top: 3px; }
 .kfull-details { display: none; }
 .kfull.open .kfull-details { display: block; }
 .kfull-toggle {
