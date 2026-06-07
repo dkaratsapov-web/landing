@@ -607,6 +607,18 @@ h3 { font-weight: 600; }
     margin: 0 -18px; padding: 4px 18px 14px; scrollbar-width: none; }
   .feat-grid::-webkit-scrollbar { display: none; }
   .feat-card { flex: 0 0 80%; max-width: 300px; min-height: 0; scroll-snap-align: start; }
+  /* Стоимость — горизонтальный скролл на мобильном */
+  .cost-grid { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin: 0 -18px; padding: 4px 18px 14px; scrollbar-width: none; }
+  .cost-grid::-webkit-scrollbar { display: none; }
+  .cost-card { flex: 0 0 86%; max-width: 340px; scroll-snap-align: start; }
+  /* Услуги — горизонтальный скролл на мобильном */
+  .svc-grid { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin: 0 -18px; padding: 4px 18px 14px; scrollbar-width: none; }
+  .svc-grid::-webkit-scrollbar { display: none; }
+  .svc-card { flex: 0 0 86%; max-width: 340px; scroll-snap-align: start; }
 
   .hero { padding: 104px 0 40px; }
   .hero .lead { margin: 24px 0 30px; }
