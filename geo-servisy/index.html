@@ -40,9 +40,11 @@
     <polyline id="pl-trailline" fill="none" stroke="url(#pl-trail)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     <!-- symmetric top-view paper plane, nose -> +x (right) -->
     <g id="pl-plane" filter="url(#pl-shadow)">
-      <polygon points="46,0 -42,-34 -20,0" fill="#E4FF66"/>
-      <polygon points="46,0 -20,0 -42,34" fill="#B7E32E"/>
-      <line x1="46" y1="0" x2="-20" y2="0" stroke="#90B91E" stroke-width="1.4" stroke-linecap="round"/>
+      <polygon points="84,0 -60,-44 -24,-3" fill="#E4FF66"/>
+      <polygon points="84,0 -60,44 -24,3" fill="#AAD92B"/>
+      <polygon points="84,0 -24,-3 -24,3" fill="#C6EE3C"/>
+      <polygon points="-24,-3 -46,0 -24,3" fill="#8FBB24"/>
+      <line x1="84" y1="0" x2="-24" y2="0" stroke="#6F9214" stroke-width="1.4" stroke-linecap="round"/>
     </g>
   </svg>
 </div>
@@ -60,7 +62,7 @@
   var W=innerWidth,H=innerHeight;
   function size(){W=innerWidth;H=innerHeight;stage.setAttribute('viewBox','0 0 '+W+' '+H);}
   size(); window.addEventListener('resize',size);
-  var BASE=0.7;
+  var BASE=0.5;
   var T_LOOP=3600, T_ZOOM=1000, T_FADE=500;
   function easeIO(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
   function loopPos(t){
