@@ -250,7 +250,8 @@ h3 { font-weight: 600; }
 /* ---------- Слайдер примеров объявлений (поиск + РСЯ) ---------- */
 .ad-slider { position: relative; }
 .ad-slider-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 12px;
-  scrollbar-width: none; -ms-overflow-style: none; }
+  scrollbar-width: none; -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scroll-padding-left: 4px; }
 .ad-slider-track::-webkit-scrollbar { display: none; }
 .ad-slide { flex: 0 0 auto; width: clamp(260px, 38vw, 380px); scroll-snap-align: start; display: flex; flex-direction: column; }
 .ad-slide-name { font-size: 15px; font-weight: 600; color: var(--ink); margin-top: 16px; }
@@ -420,7 +421,7 @@ h3 { font-weight: 600; }
 /* ---------- Адаптив ---------- */
 @media (max-width: 1000px) {
   .hero-grid { grid-template-columns: 1fr; gap: 44px; }
-  .hero-visual { max-width: 520px; }
+  .hero-visual { max-width: 520px; margin: 0 auto; width: 100%; }
   .def-grid { grid-template-columns: 1fr; gap: 40px; }
   .feat-grid { grid-template-columns: repeat(2, 1fr); }
   .cost-grid, .svc-grid { grid-template-columns: 1fr; }
@@ -428,12 +429,42 @@ h3 { font-weight: 600; }
   .steps-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
-  .wrap { padding: 0 22px; }
-  .section { padding: 76px 0; }
+  .wrap { padding: 0 18px; }
+  .section { padding: 72px 0; }
+  .section-sm { padding: 60px 0; }
+  .section-head { margin-bottom: 40px; }
   .feat-grid, .case-grid, .calc, .steps-grid { grid-template-columns: 1fr; }
-  .hero-stats { gap: 28px; }
-  .final-card { padding: 56px 24px; }
+
+  .hero { padding: 104px 0 40px; }
+  .hero .lead { margin: 24px 0 30px; }
+  .btn-row .btn { flex: 1 1 auto; justify-content: center; }
+  .hero-stats { gap: 22px 28px; margin-top: 40px; }
+  .hero-stats .stat { flex: 1 1 calc(50% - 28px); min-width: 0; }
+
+  /* hero-визуал: убираем фикс-пропорцию, чтобы выдача не обрезалась */
+  .hero-img { aspect-ratio: auto; padding: 20px 16px; }
+  .float-badge { position: static; left: auto; right: auto; bottom: auto; margin-top: 18px; }
+  .serp-kpi { position: static; align-self: flex-start; margin-top: 2px; animation: none; }
+
+  /* компактнее паддинги карточек */
+  .card { padding: 24px; }
+  .cost-card { padding: 28px 22px; }
+  .svc-card { padding: 28px 22px; }
+  .svc-card h3, .cost-card h3 { font-size: 22px; }
+  .final-card { padding: 52px 22px; }
+  .final-card p { font-size: 17px; }
+  .faq-item summary { padding: 20px; font-size: 17px; gap: 16px; }
+  .faq-item .answer { padding: 0 20px 22px; font-size: 15px; }
+
+  .quote blockquote { font-size: clamp(23px, 6.5vw, 32px); }
+  .marquee-item { font-size: 20px; gap: 14px; }
+  .marquee-track { gap: 40px; }
+
   .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+}
+@media (max-width: 400px) {
+  .hero-stats .stat .num { font-size: 26px; }
+  .hero-stats { gap: 18px 22px; }
 }
 
 /* ---------- Reveal-анимации ---------- */
