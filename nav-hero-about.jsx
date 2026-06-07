@@ -70,10 +70,23 @@ function Nav({ onCta }) {
           backdropFilter: 'blur(20px)', border: '1px solid var(--line)', borderRadius: 16,
           padding: '10px 16px 16px', display: 'flex', flexDirection: 'column', gap: 4,
           boxShadow: '0 14px 40px rgba(0,0,0,0.5)' }}>
-          {NAV_LINKS.map(([t, h]) => (
-            <a key={h} href={h} onClick={(e) => go(e, h)}
-               style={{ color: 'var(--txt)', textDecoration: 'none', fontSize: 18, padding: '12px 0',
-                 borderBottom: '1px solid var(--line)' }}>{t}</a>
+          {NAV_LINKS.map(([t, h, sub]) => (
+            <React.Fragment key={h}>
+              <a href={h} onClick={(e) => go(e, h)}
+                 style={{ color: 'var(--txt)', textDecoration: 'none', fontSize: 18, padding: '12px 0',
+                   borderBottom: sub ? 'none' : '1px solid var(--line)' }}>{t}</a>
+              {sub && sub.map(([st, sh]) => (
+                sh.startsWith('/') ? (
+                  <a key={sh} href={sh}
+                     style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 16, padding: '10px 0 10px 18px',
+                       borderBottom: '1px solid var(--line)' }}>{st}</a>
+                ) : (
+                  <a key={sh} href={sh} onClick={(e) => go(e, sh)}
+                     style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 16, padding: '10px 0 10px 18px',
+                       borderBottom: '1px solid var(--line)' }}>{st}</a>
+                )
+              ))}
+            </React.Fragment>
           ))}
         </div>
       )}
