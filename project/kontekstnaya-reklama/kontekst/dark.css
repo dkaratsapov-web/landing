@@ -147,9 +147,8 @@ h3 { font-weight: 600; }
   opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s cubic-bezier(.2,.8,.2,1); z-index: 80; box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
 .nav-dropdown::before { content: ""; position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 12px; height: 6px; background: rgba(12,12,14,0.96); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
 .nav-item-drop:hover .nav-dropdown { opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0); }
-.nav-drop-link { display: block; padding: 10px 14px; border-radius: 8px; font-size: 14px; color: var(--muted); white-space: nowrap; transition: background .15s ease, color .15s ease; }
-.nav-drop-link:first-child { color: var(--lime-bright); font-weight: 600; }
-.nav-drop-link:hover { background: rgba(214,255,65,0.12); color: var(--lime-bright); }
+.nav-drop-link { display: block; padding: 10px 14px; border-radius: 8px; font-size: 14px; color: var(--ink); white-space: nowrap; transition: color .15s ease; }
+.nav-drop-link:hover { color: var(--lime-bright); }
 /* Страница-заглушка */
 .stub { max-width: 720px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
 .stub-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: var(--r-pill);

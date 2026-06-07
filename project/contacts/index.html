@@ -53,18 +53,18 @@
     <defs>
       <linearGradient id="pl-trail" gradientUnits="userSpaceOnUse">
         <stop offset="0" stop-color="#D6FF41" stop-opacity="0"/>
-        <stop offset="1" stop-color="#D6FF41" stop-opacity="0.6"/>
+        <stop offset="1" stop-color="#D6FF41" stop-opacity="0.5"/>
       </linearGradient>
       <filter id="pl-shadow" x="-60%" y="-60%" width="220%" height="220%">
-        <feDropShadow dx="0" dy="7" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+        <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#000" flood-opacity="0.4"/>
       </filter>
     </defs>
-    <polyline id="pl-trailline" fill="none" stroke="url(#pl-trail)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline id="pl-trailline" fill="none" stroke="url(#pl-trail)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- symmetric top-view paper plane, nose -> +x (right) -->
     <g id="pl-plane" filter="url(#pl-shadow)">
-      <polygon points="42,0 -46,-25 -7,0" fill="#E9FF8C"/>
-      <polygon points="42,0 -7,0 -27,23" fill="#AEDB2C"/>
-      <polygon points="-7,0 -46,-25 -27,23" fill="#C8F23E"/>
-      <line x1="42" y1="0" x2="-27" y2="23" stroke="#8FB81F" stroke-width="1.2" stroke-linecap="round"/>
+      <polygon points="46,0 -42,-34 -20,0" fill="#E4FF66"/>
+      <polygon points="46,0 -20,0 -42,34" fill="#B7E32E"/>
+      <line x1="46" y1="0" x2="-20" y2="0" stroke="#90B91E" stroke-width="1.4" stroke-linecap="round"/>
     </g>
   </svg>
 </div>
@@ -82,10 +82,10 @@
   var W=innerWidth,H=innerHeight;
   function size(){W=innerWidth;H=innerHeight;stage.setAttribute('viewBox','0 0 '+W+' '+H);}
   size(); window.addEventListener('resize',size);
-  var BASE=0.78;                      // plane base scale
+  var BASE=0.7;
   var T_LOOP=3600, T_ZOOM=1000, T_FADE=500;
   function easeIO(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
-  function loopPos(t){                // smooth 2-loop spiral, bottom-right -> centre
+  function loopPos(t){
     var e=easeIO(t);
     var dx=(0.96-0.46*e)*W;
     var dy=(1.12-0.64*e)*H;
@@ -98,7 +98,7 @@
     setTimeout(function(){overlay.parentNode&&overlay.parentNode.removeChild(overlay);},T_FADE);
   }
   if(reduce){finish();return;}
-  var pts=[],MAXP=28,t0=null,lastHeading=0;
+  var pts=[],MAXP=26,t0=null,lastHeading=0;
   function draw(x,y,deg,sc){
     plane.setAttribute('transform','translate('+x+' '+y+') rotate('+deg+') scale('+sc+')');
   }
@@ -117,11 +117,11 @@
       var p=loopPos(t),p2=loopPos(Math.min(1,t+0.004));
       var heading=Math.atan2(p2.y-p.y,p2.x-p.x)*180/Math.PI; // nose follows velocity
       lastHeading=heading;
-      var sc=BASE*(1+0.06*Math.sin(2*Math.PI*2*t));
+      var sc=BASE*(1+0.05*Math.sin(2*Math.PI*2*t));
       pushTrail(p.x,p.y); draw(p.x,p.y,heading,sc);
       requestAnimationFrame(frame);
     } else if(el<=T_LOOP+T_ZOOM){
-      var z=(el-T_LOOP)/T_ZOOM,ez=z*z;                       // accelerate at viewer
+      var z=(el-T_LOOP)/T_ZOOM,ez=z*z;
       var end=loopPos(1);
       var cx=end.x+(W/2-end.x)*z, cy=end.y+(H/2-end.y)*z;
       draw(cx,cy,lastHeading,BASE*(1+26*ez));
