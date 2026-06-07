@@ -7,7 +7,7 @@ const NAV_LINKS = [
     ['Контекстная реклама', '/kontekstnaya-reklama/'],
   ]],
   ['Как работаю', '#process'],
-  ['Кейсы', '#cases'],
+  ['Кейсы', '/keysy/'],
   ['Контакты', '#contacts'],
 ];
 
@@ -54,6 +54,8 @@ function Nav({ onCta }) {
                   )}
                 </div>
               </div>
+            ) : h.startsWith('/') ? (
+              <a key={h} href={h}>{t}</a>
             ) : (
               <a key={h} href={h} onClick={(e) => go(e, h)}>{t}</a>
             )
@@ -80,7 +82,7 @@ function Nav({ onCta }) {
           boxShadow: '0 14px 40px rgba(0,0,0,0.5)' }}>
           {NAV_LINKS.map(([t, h, sub]) => (
             <React.Fragment key={h}>
-              <a href={h} onClick={(e) => go(e, h)}
+              <a href={h} onClick={h.startsWith('/') ? (() => setOpen(false)) : ((e) => go(e, h))}
                  style={{ color: 'var(--txt)', textDecoration: 'none', fontSize: 18, padding: '12px 0',
                    borderBottom: sub ? 'none' : '1px solid var(--line)' }}>{t}</a>
               {sub && sub.map(([st, sh]) => (
