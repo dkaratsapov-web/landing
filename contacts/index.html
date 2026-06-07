@@ -47,6 +47,55 @@
 </style>
 </head>
 <body>
+<!-- PRELOADER START -->
+<div id="preloader" style="position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;align-items:center;justify-content:center;pointer-events:all;">
+  <svg id="preloader-plane" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 50" width="60" height="60" style="position:fixed;bottom:10%;right:10%;transform-origin:center center;will-change:transform,opacity;">
+    <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/>
+    <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/>
+  </svg>
+</div>
+<style>
+#preloader { transition: opacity 0.5s ease; }
+@keyframes planeLoop {
+  0%   { transform: translate(0,0) rotate(-30deg) scale(1); }
+  12%  { transform: translate(-35vw,-25vh) rotate(-80deg) scale(0.9); }
+  25%  { transform: translate(-60vw,-10vh) rotate(-150deg) scale(1.1); }
+  37%  { transform: translate(-45vw,15vh) rotate(-210deg) scale(0.95); }
+  50%  { transform: translate(-20vw,30vh) rotate(-280deg) scale(1.05); }
+  62%  { transform: translate(-55vw,5vh) rotate(-340deg) scale(0.9); }
+  75%  { transform: translate(-70vw,-20vh) rotate(-400deg) scale(1); }
+  88%  { transform: translate(-40vw,-30vh) rotate(-450deg) scale(1.1); }
+  100% { transform: translate(-20vw,-5vh) rotate(-500deg) scale(1); }
+}
+@keyframes planeZoom {
+  0%   { transform: translate(-20vw,-5vh) rotate(-500deg) scale(1) perspective(400px) translateZ(0); opacity:1; }
+  100% { transform: translate(-20vw,-5vh) rotate(-500deg) scale(25) perspective(400px) translateZ(300px); opacity:0; }
+}
+#preloader-plane.phase1 { animation: planeLoop 2.5s cubic-bezier(0.45,0.05,0.55,0.95) forwards; }
+#preloader-plane.phase2 { animation: planeZoom 1s ease-in forwards; }
+</style>
+<script>
+(function(){
+  document.body.style.overflow='hidden';
+  var overlay=document.getElementById('preloader');
+  var plane=document.getElementById('preloader-plane');
+  plane.classList.add('phase1');
+  setTimeout(function(){
+    plane.classList.remove('phase1');
+    void plane.offsetWidth;
+    plane.classList.add('phase2');
+  }, 2500);
+  setTimeout(function(){
+    overlay.style.opacity='0';
+    overlay.style.pointerEvents='none';
+    document.body.style.overflow='';
+  }, 3500);
+  setTimeout(function(){
+    overlay.parentNode && overlay.parentNode.removeChild(overlay);
+  }, 4000);
+})();
+</script>
+<!-- PRELOADER END -->
 
 <div class="bg-fx">
   <div class="glow g1"></div>
