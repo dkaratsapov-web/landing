@@ -592,7 +592,15 @@ h3 { font-weight: 600; }
   .section { padding: 56px 0; }
   .section-sm { padding: 44px 0; }
   .section-head { margin-bottom: 40px; }
-  .calc, .steps-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  /* Пример расчёта бюджета — компактнее на мобильном */
+  .calc { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+  .calc .cell { padding: 14px 16px; border-radius: var(--r-sm); }
+  .calc .cell .k { font-size: 12.5px; line-height: 1.35; }
+  .calc .cell .v { font-size: 22px; margin-top: 4px; }
+  .calc .cell.full .v { font-size: 26px; }
+  .wrap-narrow .eyebrow.center { margin-bottom: 16px; }
+  .wrap-narrow .btn-row { margin-top: 18px !important; }
   /* Портфолио — табы скроллятся, карточки в карусель на мобильном */
   .scroll-hint { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px;
     color: var(--lime-bright); font-size: 13.5px; font-weight: 600; }
