@@ -785,6 +785,7 @@
     groups.forEach(g => {
       const grp = g.dataset.group;
       g.querySelectorAll('.kase-tab').forEach(tab => tab.addEventListener('click', () => {
+        if (g._dragged) return; // не выбирать таб, если это было перетаскивание
         g.querySelectorAll('.kase-tab').forEach(t => { t.classList.remove('on'); t.setAttribute('aria-selected', 'false'); });
         tab.classList.add('on'); tab.setAttribute('aria-selected', 'true');
         state[grp] = tab.dataset.filter;
@@ -797,6 +798,27 @@
         e.preventDefault();
         g.scrollLeft += e.deltaY;
       }, { passive: false });
+      // ПК: перетаскивание табов курсором (drag-to-scroll)
+      let down = false, startX = 0, startScroll = 0;
+      g.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'touch') return; // на тач — нативный скролл
+        down = true; g._dragged = false;
+        startX = e.clientX; startScroll = g.scrollLeft;
+        g.classList.add('dragging');
+      });
+      g.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 4) g._dragged = true;
+        g.scrollLeft = startScroll - dx;
+      });
+      const endDrag = () => {
+        if (!down) return;
+        down = false; g.classList.remove('dragging');
+        setTimeout(() => { g._dragged = false; }, 0); // сброс после клика
+      };
+      g.addEventListener('pointerup', endDrag);
+      g.addEventListener('pointerleave', endDrag);
     });
   })();
 

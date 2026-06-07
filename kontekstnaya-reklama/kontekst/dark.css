@@ -474,8 +474,10 @@ h3 { font-weight: 600; }
 .svc-steps .idx { font-weight: 600; color: var(--lime); font-size: 14px; flex: none; width: 30px; }
 
 /* ---------- Портфолио (фильтруемые кейсы — как на главной) ---------- */
-.kase-tabs { display: flex; flex-wrap: nowrap; gap: 10px; margin-bottom: 28px; overflow-x: auto; scrollbar-width: none; }
+.kase-tabs { display: flex; flex-wrap: nowrap; gap: 10px; margin-bottom: 28px; overflow-x: auto; scrollbar-width: none; cursor: grab; }
 .kase-tabs::-webkit-scrollbar { display: none; }
+.kase-tabs.dragging { cursor: grabbing; scroll-behavior: auto; user-select: none; }
+.kase-tabs.dragging .kase-tab { pointer-events: none; }
 .scroll-hint { display: none; }
 .kase-tab {
   display: inline-flex; align-items: center; gap: 8px; cursor: pointer; flex: 0 0 auto; white-space: nowrap;
