@@ -202,7 +202,6 @@ h3 { font-weight: 600; }
 
 /* ---------- HERO ---------- */
 .hero { padding: 96px 0 60px; }
-.hero > .wrap { padding-left: 32px; padding-right: 32px; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
 .hero h1 { font-size: clamp(40px, 6vw, 76px); letter-spacing: -0.02em; line-height: 1.04; }
 .hero .lead { color: var(--muted); font-size: 21px; line-height: 1.5; letter-spacing: -0.01em; max-width: 480px; margin: 26px 0 36px; }
