@@ -203,6 +203,7 @@ h3 { font-weight: 600; }
 
 /* ---------- HERO ---------- */
 .hero { padding: 96px 0 60px; }
+.hero > .wrap { padding-left: 32px; padding-right: 32px; }
 .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
 .hero h1 { font-size: clamp(40px, 6vw, 76px); letter-spacing: -0.02em; line-height: 1.04; }
 .hero .lead { color: var(--muted); font-size: 21px; line-height: 1.5; letter-spacing: -0.01em; max-width: 480px; margin: 26px 0 36px; }
@@ -213,7 +214,7 @@ h3 { font-weight: 600; }
 
 .hero-visual { position: relative; }
 .hero-img { width: 100%; aspect-ratio: 4/4.6; border-radius: var(--r-xl); border: 1px solid var(--line-2); overflow: hidden;
-  background: linear-gradient(160deg, var(--surface-2), var(--surface)); display: flex; flex-direction: column; justify-content: center; padding: 26px 26px 70px; position: relative; }
+  background: linear-gradient(160deg, var(--surface-2), var(--surface)); display: flex; flex-direction: column; justify-content: flex-start; padding: 24px 26px 70px; position: relative; }
 .hero-img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 70% 18%, rgba(182,240,30,0.12), transparent 55%); pointer-events: none; }
 .float-badge { position: absolute; left: 22px; right: 22px; bottom: 22px; display: inline-flex; align-items: flex-start; gap: 10px; z-index: 4;
   background: rgba(10,11,10,0.82); backdrop-filter: blur(10px); border: 1px solid var(--line-2); border-radius: 14px; padding: 11px 15px; font-size: 13.5px; font-weight: 600; line-height: 1.35; }
@@ -222,6 +223,12 @@ h3 { font-weight: 600; }
 
 /* ---------- Мокап поисковой выдачи (контекстная реклама) ---------- */
 .serp { position: relative; z-index: 1; width: 100%; display: flex; flex-direction: column; gap: 13px; }
+.serp-top { display: flex; align-items: center; gap: 7px; padding-bottom: 3px; }
+.serp-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); flex: none; }
+.serp-dot:nth-child(1) { background: #ff5f56; opacity: .75; }
+.serp-dot:nth-child(2) { background: #ffbd2e; opacity: .75; }
+.serp-dot:nth-child(3) { background: #27c93f; opacity: .75; }
+.serp-addr { margin-left: 8px; flex: 1; font-size: 12px; color: var(--muted-2); background: rgba(255,255,255,0.05); border: 1px solid var(--line); border-radius: var(--r-pill); padding: 4px 12px; }
 .serp-bar { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.06); border: 1px solid var(--line-2);
   border-radius: var(--r-pill); padding: 11px 14px; }
 .serp-bar svg { width: 16px; height: 16px; color: var(--muted); flex: none; }
