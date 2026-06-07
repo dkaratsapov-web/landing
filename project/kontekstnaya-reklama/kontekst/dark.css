@@ -806,3 +806,6 @@ h3 { font-weight: 600; }
   .kase-filter-label { padding-top: 0; }
   .kase-filter-group .kase-tabs { margin: 0 -18px; padding: 0 18px 4px; }
 }
+
+/* Теги-чипы под цифрами в хедере страницы кейсов */
+.kase-hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
