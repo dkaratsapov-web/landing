@@ -239,7 +239,7 @@ function StatBlock({ s }) {
   const ref = useRefA(null);
   const [active, setActive] = useStateA(false);
   useEffectA(() => {
-    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setActive(true); io.disconnect(); } }, { threshold: 0.5 });
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setActive(true); io.disconnect(); } }, { threshold: 0.3 });
     if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
   }, []);
