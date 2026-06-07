@@ -129,7 +129,7 @@ function HeroSplit({ portrait, onCta }) {
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
       <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap hero-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 56,
-        alignItems: 'center', padding: '32px 32px 60px' }}>
+        alignItems: 'center', paddingTop: 32, paddingBottom: 60 }}>
         <div className="hero-copy">
           <span className="eyebrow reveal in">{H.eyebrow}</span>
           <h1 className="display reveal in" style={{ fontSize: 'clamp(40px, 6vw, 76px)' }}>
@@ -165,7 +165,7 @@ function HeroOverlay({ portrait, onCta }) {
           backgroundSize: 'cover', backgroundPosition: 'center 22%', filter: 'saturate(0.96)' }} />
         <div style={{ position: 'absolute', inset: 0, background:
           'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 38%, rgba(0,0,0,0.82) 100%)' }} />
-        <div className="wrap" style={{ position: 'relative', padding: '64px 32px 100px' }}>
+        <div className="wrap" style={{ position: 'relative', paddingTop: 64, paddingBottom: 100 }}>
           <span className="eyebrow reveal in">Даниил Карацапов · интернет-маркетолог</span>
           <h1 className="display reveal in" style={{ fontSize: 'clamp(40px, 7vw, 88px)', maxWidth: 900 }}>
             Маркетинг, который делаю <span style={{ color: 'var(--accent-bright)' }}>я сам</span>
@@ -192,14 +192,14 @@ function HeroEditorial({ portrait, onCta }) {
   return (
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
       <Atmos glows={[2, 3]} pattern="dots" />
-      <div className="wrap" style={{ padding: '70px 32px 0' }}>
+      <div className="wrap" style={{ paddingTop: 70 }}>
         <span className="eyebrow reveal in">Даниил Карацапов · интернет-маркетолог</span>
         <h1 className="display reveal in" style={{ fontSize: 'clamp(42px, 8.5vw, 120px)', lineHeight: 0.98, letterSpacing: '-0.03em' }}>
           Маркетинг,<br />который делаю <span style={{ color: 'var(--accent-bright)' }}>я&nbsp;сам</span>
         </h1>
       </div>
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'end',
-        padding: '44px 32px 0' }}>
+        paddingTop: 44 }}>
         <div className="reveal in">
           <PortraitFrame portrait={portrait} short />
         </div>

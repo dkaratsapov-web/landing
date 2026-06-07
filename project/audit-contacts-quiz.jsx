@@ -337,7 +337,7 @@ function QuizTeaser({ onOpen }) {
 function Footer({ onCta }) {
   return (
     <footer className="footer">
-      <div className="wrap" style={{ padding: '64px 32px 40px' }}>
+      <div className="wrap" style={{ paddingTop: 64, paddingBottom: 40 }}>
         <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 40, paddingBottom: 40,
           borderBottom: '1px solid var(--line)' }}>
           <div>
