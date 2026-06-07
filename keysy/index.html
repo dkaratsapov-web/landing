@@ -790,6 +790,13 @@
         state[grp] = tab.dataset.filter;
         apply();
       }));
+      // ПК: вертикальное колесо мыши прокручивает табы по горизонтали
+      g.addEventListener('wheel', (e) => {
+        if (g.scrollWidth <= g.clientWidth) return;
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+        e.preventDefault();
+        g.scrollLeft += e.deltaY;
+      }, { passive: false });
     });
   })();
 
