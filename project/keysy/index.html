@@ -25,10 +25,15 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/109681858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 <style>
-  .cases-hero-grid { display: grid; grid-template-columns: 1fr 440px; gap: 48px; align-items: center; }
-  .lead-card { padding: 24px; }
+  .cases-hero-grid { display: grid; grid-template-columns: 1fr 560px; gap: 48px; align-items: stretch; }
+  .lead-card { padding: 28px; display: flex; flex-direction: column; }
   .lead-title { font-size: 24px; margin: 0 0 5px; }
   .lead-sub { color: var(--muted); font-size: 14px; line-height: 1.45; margin: 0 0 16px; }
+  #leadForm { display: flex; flex-direction: column; flex: 1; }
+  #leadForm .lead-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  #leadForm .field.grow { flex: 1; }
+  #leadForm .field.grow textarea { flex: 1; height: 100%; }
+  #leadForm .field.grow { display: flex; flex-direction: column; }
   #leadForm .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 11px; }
   #leadForm label { color: var(--ink-2); font-size: 13.5px; font-weight: 600; }
   #leadForm .opt { color: var(--muted-2); font-weight: 400; font-size: 12px; }
@@ -63,6 +68,7 @@
   @media (max-width: 640px) {
     .lead-card { padding: 24px 20px; }
     .lead-title { font-size: 23px; }
+    #leadForm .lead-row { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -132,14 +138,16 @@
         <h2 class="lead-title">Разобрать ваш проект</h2>
         <p class="lead-sub">Оставьте заявку — посмотрю ваш проект и расскажу, что можно улучшить. Перезвоню лично.</p>
         <form id="leadForm" novalidate>
-          <div class="field">
-            <label for="lf-name">Имя <span class="opt">(необязательно)</span></label>
-            <input type="text" id="lf-name" name="name" autocomplete="name" placeholder="Как к вам обращаться">
-          </div>
-          <div class="field">
-            <label for="lf-phone">Телефон <span class="req">*</span></label>
-            <input type="tel" id="lf-phone" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" required>
-            <span class="field-err" id="lf-phone-err">Укажите телефон для связи</span>
+          <div class="lead-row">
+            <div class="field">
+              <label for="lf-name">Имя <span class="opt">(необязательно)</span></label>
+              <input type="text" id="lf-name" name="name" autocomplete="name" placeholder="Как к вам обращаться">
+            </div>
+            <div class="field">
+              <label for="lf-phone">Телефон <span class="req">*</span></label>
+              <input type="tel" id="lf-phone" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" required>
+              <span class="field-err" id="lf-phone-err">Укажите телефон для связи</span>
+            </div>
           </div>
           <div class="field">
             <label for="lf-site">Ссылка на сайт <span class="opt">(необязательно)</span></label>
@@ -153,7 +161,7 @@
               <label class="radio"><input type="radio" name="access" value="Рекламы пока нет"><span>Рекламы пока нет</span></label>
             </div>
           </div>
-          <div class="field">
+          <div class="field grow">
             <label for="lf-comment">Комментарий <span class="opt">(необязательно)</span></label>
             <textarea id="lf-comment" name="comment" rows="3" placeholder="Коротко о задаче или вопросе"></textarea>
           </div>
