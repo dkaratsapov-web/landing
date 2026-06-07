@@ -12,7 +12,24 @@ function Field({ label, children, error }) {
 
 }
 
-function useLeadForm(toast, successMsg) {
+/* Отправка заявки в Telegram (Bot API). Фолбэк — WhatsApp с готовым текстом. */
+async function sendLeadTelegram(text) {
+  const TOKEN = window.LEAD_TG_TOKEN || '';
+  const CHAT = window.LEAD_TG_CHAT || '';
+  if (TOKEN && CHAT) {
+    try {
+      const r = await fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT, text: text, disable_web_page_preview: true })
+      });
+      if (r.ok) return true;
+    } catch (e) {}
+  }
+  try { window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank'); } catch (e) {}
+  return true;
+}
+
+function useLeadForm(toast, successMsg, source) {
   const [v, setV] = useStateC({ name: '', phone: '', task: '', consent: true });
   const [err, setErr] = useStateC({});
   const [sent, setSent] = useStateC(false);
@@ -29,6 +46,12 @@ function useLeadForm(toast, successMsg) {
     if (!v.consent) next.consent = 'Нужно согласие на обработку данных';
     setErr(next);
     if (Object.keys(next).length) return;
+    const text =
+      '🟢 Новая заявка с сайта' + (source ? ' (' + source + ')' : '') + '\n' +
+      '👤 Имя: ' + (v.name || '—') + '\n' +
+      '📞 Телефон: ' + (v.phone || '—') +
+      (v.task ? '\n💬 Задача: ' + v.task : '');
+    sendLeadTelegram(text);
     setSent(true);
     toast(successMsg);
   };
@@ -38,7 +61,7 @@ function useLeadForm(toast, successMsg) {
 /* ---------------- AUDIT (lead magnet) ---------------- */
 function Audit() {
   const toast = useToast();
-  const f = useLeadForm(toast, 'Заявка на аудит отправлена. Я перезвоню лично.');
+  const f = useLeadForm(toast, 'Заявка на аудит отправлена. Я перезвоню лично.', 'Аудит');
   return (
     <section id="audit" className="sec bg-pg">
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center' }}>
@@ -106,7 +129,7 @@ function SuccessPanel({ title, text, onReset }) {
 /* ---------------- CONTACTS ---------------- */
 function Contacts() {
   const toast = useToast();
-  const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.');
+  const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.', 'Контакты');
   const K = window.CONTENT.contacts || {};
   return (
     <section id="contacts" className="sec bg-b" style={{ overflow: 'hidden' }}>
@@ -180,7 +203,7 @@ function QuizModal({ open, onClose }) {
   const [step, setStep] = useStateC(0);
   const [ans, setAns] = useStateC({});
   const [phase, setPhase] = useStateC('q'); // q | form | done
-  const f = useLeadForm(toast, 'Заявка отправлена. Скидка 10% закреплена за вами.');
+  const f = useLeadForm(toast, 'Заявка отправлена. Скидка 10% закреплена за вами.', 'Квиз');
 
   useEffectC(() => {
     if (open) {setStep(0);setAns({});setPhase('q');f.reset();}
