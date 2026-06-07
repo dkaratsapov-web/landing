@@ -134,6 +134,7 @@
           <span class="chip"><span class="dot"></span>В приложениях и видео</span>
         </div>
       </div>
+      <div class="def-right">
       <div class="qa-stack stagger">
         <div class="card hover qa-card">
           <div class="qa-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
@@ -150,9 +151,8 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <p class="eyebrow" style="margin: 64px 0 24px;">Примеры и форматы объявлений</p>
+    <p class="eyebrow" style="margin: 40px 0 20px;">Примеры и форматы объявлений</p>
     <div class="ad-slider reveal">
       <button class="ad-arrow ad-arrow-prev" id="adPrev" aria-label="Предыдущий пример">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
@@ -216,6 +216,8 @@
       <button class="ad-arrow ad-arrow-next" id="adNext" aria-label="Следующий пример">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
       </button>
+    </div>
+      </div>
     </div>
   </div>
 </section>
@@ -615,6 +617,8 @@
     const quotes = document.querySelectorAll('.quote blockquote');
     quotes.forEach((bq) => {
       bq.dataset.full = bq.textContent;
+      // Резервируем высоту по полному тексту, чтобы блок не «прыгал» при печати
+      bq.style.minHeight = bq.offsetHeight + 'px';
       bq.textContent = '';
       const w = bq.closest('.quote'); if (w) w.classList.add('typing');
     });
