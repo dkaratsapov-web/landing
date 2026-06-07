@@ -648,6 +648,15 @@ h3 { font-weight: 600; }
     margin: 0 -18px; padding: 4px 18px 16px; scrollbar-width: none; }
   .kase-grid::-webkit-scrollbar { display: none; }
   .kase { flex: 0 0 100%; max-width: none; scroll-snap-align: center; }
+  /* Карточки кейсов — мельче шрифт, чтобы весь текст помещался */
+  .kase-content { padding: 20px; gap: 11px; }
+  .kase-field { font-size: 11.5px; min-height: 2.4em; }
+  .kase-name { font-size: 20px; min-height: 2.3em; }
+  .kase-summary { font-size: 13.5px; line-height: 1.45; min-height: 4.35em; }
+  .kase-metrics { gap: 12px 14px; padding-top: 14px; }
+  .kase-metric-v { font-size: 22px; min-height: 2em; }
+  .kase-metric-l { font-size: 11.5px; min-height: 3em; }
+  .kase-chip { font-size: 11.5px; padding: 4px 10px; }
   /* Преимущества — горизонтальный скролл на мобильном */
   .feat-grid { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
