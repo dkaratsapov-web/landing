@@ -343,16 +343,45 @@
     </div>
 
     <div class="wrap-narrow reveal" style="margin:30px auto 0; padding:0;">
-      <p class="eyebrow center" style="justify-content:center;">Пример расчёта бюджета</p>
-      <div class="calc">
-        <div class="cell full"><div class="k">Вы выделяете на контекстную рекламу</div><div class="v">200 000 ₽ / мес.</div></div>
-        <div class="cell"><div class="k">Оплата моей работы</div><div class="v">30 000 ₽</div></div>
-        <div class="cell accent"><div class="k">Будет потрачено в Яндексе</div><div class="v">170 000 ₽</div></div>
+      <p class="eyebrow center" style="justify-content:center;">Калькулятор бюджета</p>
+      <div class="calc2">
+        <div class="calc2-budget">
+          <span class="calc2-budget-lbl">Ваш бюджет на контекстную рекламу</span>
+          <span class="calc2-budget-val" id="calcBudget">200 000 ₽ / мес.</span>
+        </div>
+        <input type="range" class="calc2-range" id="calcRange" min="50000" max="500000" step="10000" value="200000" aria-label="Бюджет на контекстную рекламу">
+        <div class="calc2-ticks"><span>50 тыс. ₽</span><span>500 тыс. ₽</span></div>
+        <div class="calc2-split" aria-hidden="true">
+          <span class="calc2-split-spend" id="calcBarSpend"></span>
+          <span class="calc2-split-fee" id="calcBarFee"></span>
+        </div>
+        <div class="calc2-rows">
+          <div class="calc2-row"><span class="dot spend"></span>Уходит в Яндекс Директ<b id="calcSpend">170 000 ₽</b></div>
+          <div class="calc2-row"><span class="dot fee"></span>Оплата моей работы<b id="calcFee">30 000 ₽</b></div>
+          <div class="calc2-row accent"><span class="dot zero"></span>Наценка агентства<b>0 ₽</b></div>
+        </div>
       </div>
       <div class="btn-row" style="justify-content:center; margin-top:30px;">
         <a class="btn btn-lime" href="#contacts">Рассчитать под мою нишу <span class="arr">→</span></a>
       </div>
     </div>
+    <script>
+    (function(){
+      var r=document.getElementById('calcRange'); if(!r) return;
+      var fmt=function(n){return Math.round(n).toLocaleString('ru-RU')+' ₽';};
+      function upd(){
+        var b=+r.value, fee=Math.round(b*0.15/1000)*1000, spend=b-fee;
+        document.getElementById('calcBudget').textContent=b.toLocaleString('ru-RU')+' ₽ / мес.';
+        document.getElementById('calcSpend').textContent=fmt(spend);
+        document.getElementById('calcFee').textContent=fmt(fee);
+        var sp=spend/b*100;
+        document.getElementById('calcBarSpend').style.width=sp+'%';
+        document.getElementById('calcBarFee').style.width=(100-sp)+'%';
+        r.style.setProperty('--p',((b-r.min)/(r.max-r.min)*100)+'%');
+      }
+      r.addEventListener('input',upd); upd();
+    })();
+    </script>
   </div>
 </section>
 
