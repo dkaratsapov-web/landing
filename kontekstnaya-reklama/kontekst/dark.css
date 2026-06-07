@@ -411,6 +411,7 @@ h3 { font-weight: 600; }
 
 /* ---------- Портфолио (фильтруемые кейсы — как на главной) ---------- */
 .kase-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+.scroll-hint { display: none; }
 .kase-tab {
   display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
   font-family: var(--font); font-size: 14px; font-weight: 600; letter-spacing: -0.01em;
@@ -593,6 +594,10 @@ h3 { font-weight: 600; }
   .section-head { margin-bottom: 40px; }
   .calc, .steps-grid { grid-template-columns: 1fr; }
   /* Портфолио — табы скроллятся, карточки в карусель на мобильном */
+  .scroll-hint { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px;
+    color: var(--lime-bright); font-size: 13.5px; font-weight: 600; }
+  .scroll-hint svg { animation: hintSwipe 1.4s ease-in-out infinite; }
+  @keyframes hintSwipe { 0%,100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
   .kase-tabs { flex-wrap: nowrap; overflow-x: auto; margin: 0 -18px 16px; padding: 0 18px 4px; scrollbar-width: none; }
   .kase-tabs::-webkit-scrollbar { display: none; }
   .kase-tab { flex: 0 0 auto; }
@@ -600,7 +605,7 @@ h3 { font-weight: 600; }
     scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
     margin: 0 -18px; padding: 4px 18px 16px; scrollbar-width: none; }
   .kase-grid::-webkit-scrollbar { display: none; }
-  .kase { flex: 0 0 86%; max-width: 340px; scroll-snap-align: start; }
+  .kase { flex: 0 0 100%; max-width: none; scroll-snap-align: center; }
   /* Преимущества — горизонтальный скролл на мобильном */
   .feat-grid { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
