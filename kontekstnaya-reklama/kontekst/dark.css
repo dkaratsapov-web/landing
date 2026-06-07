@@ -4,24 +4,24 @@
    ============================================================ */
 
 :root {
-  --bg:        #0a0b0a;
-  --bg-2:      #0e100e;
-  --surface:   #151814;
-  --surface-2: #1b1f1a;
-  --surface-3: #232821;
+  --bg:        #08080a;
+  --bg-2:      #0d0d0f;
+  --surface:   #151517;
+  --surface-2: #1c1c1e;
+  --surface-3: #232325;
   --line:      rgba(255,255,255,0.09);
   --line-2:    rgba(255,255,255,0.16);
 
-  --lime:        #c5f33e;
-  --lime-bright: #b6f01e;
+  --lime:        #b6f01e;
+  --lime-bright: #c4f53e;
   --lime-deep:   #9bd420;
   --lime-ink:    #0c1402;
   --lime-glow:   rgba(182,240,30,0.30);
 
-  --ink:    #ffffff;
+  --ink:    #f5f5f7;
   --ink-2:  #e7eae4;
-  --muted:  #9aa097;
-  --muted-2:#6c7268;
+  --muted:  #a1a1a6;
+  --muted-2:#6e6e73;
 
   --r-sm: 12px;
   --r-md: 18px;
@@ -29,7 +29,7 @@
   --r-xl: 34px;
   --r-pill: 999px;
 
-  --sp-section: 120px;
+  --sp-section: 76px;
   --maxw: 1440px;
 
   --font: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -72,7 +72,7 @@ a { color: inherit; text-decoration: none; }
 .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(20px, 4vw, 60px); }
 .wrap-narrow { max-width: 920px; }
 .section { padding: var(--sp-section) 0; position: relative; }
-.section-sm { padding: 84px 0; }
+.section-sm { padding: 60px 0; }
 
 /* ---------- Типографика ---------- */
 h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.02em; line-height: 1.04; }
@@ -476,8 +476,8 @@ h3 { font-weight: 600; }
 }
 @media (max-width: 640px) {
   .wrap { padding: 0 18px; }
-  .section { padding: 72px 0; }
-  .section-sm { padding: 60px 0; }
+  .section { padding: 56px 0; }
+  .section-sm { padding: 44px 0; }
   .section-head { margin-bottom: 40px; }
   .case-grid, .calc, .steps-grid { grid-template-columns: 1fr; }
   /* Преимущества — горизонтальный скролл на мобильном */
@@ -520,9 +520,9 @@ h3 { font-weight: 600; }
 }
 
 /* ---------- Reveal-анимации ---------- */
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1); }
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.16,.7,.3,1), transform .7s cubic-bezier(.16,.7,.3,1); }
 .reveal.in { opacity: 1; transform: none; }
-.stagger > * { opacity: 0; transform: translateY(26px); transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1); }
+.stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.16,.7,.3,1), transform .7s cubic-bezier(.16,.7,.3,1); }
 .stagger.in > * { opacity: 1; transform: none; }
 .stagger.in > *:nth-child(1) { transition-delay: .04s; }
 .stagger.in > *:nth-child(2) { transition-delay: .12s; }
