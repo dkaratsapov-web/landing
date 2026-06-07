@@ -137,11 +137,9 @@ h3 { font-weight: 600; }
 .nav-cta { margin-left: 0; }
 .btn-sm { padding: 11px 20px; font-size: 15px; }
 .nav-actions { display: flex; align-items: center; gap: 8px; }
-.nav-ic { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; color: #fff; text-decoration: none; flex: none; transition: transform .2s ease, filter .2s ease; }
-.nav-ic:hover { transform: translateY(-1px); filter: brightness(1.08); }
-.nav-ic svg { width: 20px; height: 20px; }
-.nav-ic-tg { background: #29A9EB; }
-.nav-ic-max { background: linear-gradient(135deg, #0A84FF, #6E56F7); }
+.nav-ic { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--lime); color: var(--lime-ink); text-decoration: none; flex: none; transition: transform .2s ease, filter .2s ease; }
+.nav-ic:hover { transform: translateY(-1px); filter: brightness(1.06); }
+.nav-ic svg { width: 19px; height: 19px; }
 
 /* Бургер */
 .nav-burger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; border-radius: 8px; margin-left: auto; }
