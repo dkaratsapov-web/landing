@@ -315,7 +315,7 @@ function Footer({ onCta }) {
         <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 40, paddingBottom: 40,
           borderBottom: '1px solid var(--line)' }}>
           <div>
-            <a className="brand" href="#top" style={{ fontSize: 20 }}><span className="dot">ДК</span>Даниил Карацапов</a>
+            <a className="brand" href="#top" style={{ fontSize: 20 }}><BrandPlane />Даниил Карацапов</a>
             <p className="muted" style={{ margin: '18px 0 0', fontSize: 15, lineHeight: 1.55, maxWidth: 300 }}>
               Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.
             </p>
