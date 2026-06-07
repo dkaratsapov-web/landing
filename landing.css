@@ -700,9 +700,15 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 .svc-x.open { border-color: var(--accent-soft-bd); }
 .svc-x > * { position: relative; z-index: 1; }
 
-.svc-x-head { width: 100%; display: grid; grid-template-columns: auto 400px 1fr auto;
+.svc-x-head { width: 100%; display: grid; grid-template-columns: auto 400px 1fr auto auto;
   align-items: center; gap: 22px; background: transparent; border: none; cursor: pointer;
   color: var(--txt); padding: 24px 28px; text-align: left; }
+.svc-x-more { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font-size: 14px; font-weight: 600; color: var(--accent-bright); text-decoration: none;
+  padding: 8px 14px; border: 1px solid var(--accent-soft-bd, rgba(214,255,65,0.3));
+  border-radius: var(--r-pill, 999px); transition: background .2s ease, transform .1s ease; }
+.svc-x-more:hover { background: rgba(214,255,65,0.12); }
+.svc-x-more:active { transform: scale(0.97); }
 .svc-x-icon { transition: transform .3s cubic-bezier(.16,.7,.3,1); }
 .svc-x:hover .svc-x-icon { transform: translateY(-2px) scale(1.06); }
 .svc-x-titles { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
@@ -749,11 +755,12 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 .svc-x-cta { margin-top: 4px; }
 
 @media (max-width: 720px) {
-  .svc-x-head { grid-template-columns: auto 1fr auto; gap: 16px; padding: 20px; }
+  .svc-x-head { grid-template-columns: auto 1fr auto auto; gap: 12px; padding: 20px; }
   /* в свёрнутой карточке опускаем нижнюю границу — больше воздуха снизу */
   .svc-x:not(.open) .svc-x-head { padding-bottom: 30px; }
   .svc-x-result { display: none; }
   .svc-x-titles { min-width: 0; }
+  .svc-x-more { padding: 7px 11px; font-size: 13px; }
   .svc-x-inner { padding: 4px 20px 22px; }
   .svc-x-detail { grid-template-columns: 1fr; gap: 22px; }
   .svc-x-list { grid-template-columns: 1fr; }
