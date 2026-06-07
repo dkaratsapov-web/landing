@@ -428,7 +428,7 @@ h3 { font-weight: 600; }
 }
 .kase-tab.on .kase-tab-n { background: rgba(0,0,0,0.18); }
 
-.kase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 22px; }
+.kase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 22px; align-items: start; }
 .kase { padding: 0; overflow: hidden; display: flex; flex-direction: column;
   opacity: 0; animation: kaseIn .5s cubic-bezier(.16,.7,.3,1) forwards;
   animation-delay: calc(var(--d) * 70ms); }
@@ -456,12 +456,15 @@ h3 { font-weight: 600; }
 .kase-geo .i { color: var(--lime-bright); }
 .kase-content { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
 .kase-field { color: var(--lime-bright); font-size: 13px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.04em; }
+  text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.3;
+  min-height: 2.6em; display: flex; align-items: flex-end; }
 .kase-name { font-family: var(--font); font-size: 24px; font-weight: 600;
-  letter-spacing: -0.01em; color: var(--ink); margin: -6px 0 0; }
-.kase-summary { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0; }
+  letter-spacing: -0.01em; color: var(--ink); margin: -6px 0 0; line-height: 1.15;
+  min-height: 2.3em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.kase-summary { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0;
+  min-height: 4.5em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .kase-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px;
-  margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+  margin-top: 2px; padding-top: 16px; border-top: 1px solid var(--line); }
 .kase-metric-v { font-family: var(--font); font-weight: 600; letter-spacing: -0.02em;
   color: var(--lime-bright); font-size: 26px; line-height: 1.05; }
 .kase-metric-l { color: var(--muted-2); font-size: 12.5px; line-height: 1.35; margin-top: 5px; }
@@ -638,7 +641,7 @@ h3 { font-weight: 600; }
   .kase-tabs::-webkit-scrollbar { display: none; }
   .kase-tab { flex: 0 0 auto; }
   .kase-grid { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
-    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; align-items: start;
     margin: 0 -18px; padding: 4px 18px 16px; scrollbar-width: none; }
   .kase-grid::-webkit-scrollbar { display: none; }
   .kase { flex: 0 0 100%; max-width: none; scroll-snap-align: center; }
