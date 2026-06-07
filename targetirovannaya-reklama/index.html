@@ -35,23 +35,39 @@
 }
 .icon-tile svg { width: 22px; height: 22px; }
 
-/* Бейдж «частный специалист» в hero */
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 10px;
-  background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r-pill);
-  padding: 7px 16px 7px 7px; font-size: 13px; font-weight: 600; color: var(--ink-2);
-  margin-bottom: 22px;
-}
-.hero-tag .av {
-  width: 24px; height: 24px; border-radius: 50%; background: var(--lime); color: var(--lime-ink);
-  display: grid; place-items: center; font-weight: 800; font-size: 12px; flex: none;
-}
-
-/* VK-мок в hero-visual */
+/* Мок рекламных кабинетов в hero-visual */
 .vk-mock {
   width: 100%; aspect-ratio: 4/4.4; border-radius: var(--r-xl); border: 1px solid var(--line-2); overflow: hidden;
-  background: linear-gradient(160deg, var(--surface-2), var(--surface)); position: relative; padding: 20px;
+  background: linear-gradient(160deg, var(--surface-2), var(--surface)); position: relative; padding: 22px;
 }
+.ads-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; position: relative; z-index: 1; }
+.ads-head-title { font-size: 14px; font-weight: 700; color: var(--ink); }
+.ads-live { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; color: var(--muted); }
+.ads-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 0 rgba(182,240,30,0.6); animation: adsPulse 1.8s infinite; }
+@keyframes adsPulse { 0%{box-shadow:0 0 0 0 rgba(182,240,30,0.5)} 70%{box-shadow:0 0 0 7px rgba(182,240,30,0)} 100%{box-shadow:0 0 0 0 rgba(182,240,30,0)} }
+.ads-platforms { display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1; }
+.ads-card { background: var(--surface-3); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.ads-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.ads-logo { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; flex: none; font-size: 12px; font-weight: 800; color: #fff; }
+.ads-logo.vk { background: #0077FF; }
+.ads-logo.tg { background: #2AABEE; }
+.ads-card-name { flex: 1; font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.ads-card-name span { display: block; font-size: 11px; font-weight: 500; color: var(--muted-2); margin-top: 2px; }
+.ads-status { font-size: 10px; font-weight: 700; color: var(--lime); background: rgba(182,240,30,0.12); border-radius: var(--r-pill); padding: 4px 10px; flex: none; }
+.ads-metrics { display: flex; gap: 8px; }
+.ads-metrics > div { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.ads-metrics b { font-size: 16px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+.ads-metrics span { font-size: 10px; color: var(--muted-2); }
+.ads-bar { height: 5px; border-radius: 5px; background: var(--surface-2); margin-top: 12px; overflow: hidden; }
+.ads-bar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--lime), #d6ff66); }
+.ads-total {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 12px; padding: 12px 14px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(182,240,30,0.14), rgba(182,240,30,0.04));
+  border: 1px solid rgba(182,240,30,0.25); position: relative; z-index: 1;
+}
+.ads-total span { font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.ads-total b { font-size: 20px; font-weight: 800; color: var(--lime); letter-spacing: -0.01em; }
 .vk-mock::after {
   content: ""; position: absolute; inset: 0;
   background: radial-gradient(circle at 70% 18%, rgba(182,240,30,0.10), transparent 55%);
@@ -192,96 +208,6 @@
 </style>
 </head>
 <body>
-<!-- PRELOADER START -->
-<div id="preloader" style="position:fixed;inset:0;z-index:99999;overflow:hidden;pointer-events:all;background:radial-gradient(120% 120% at 70% 30%,#15170d 0%,#0a0a0a 60%);">
-  <svg id="pl-stage" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none" style="position:absolute;inset:0;">
-    <defs>
-      <linearGradient id="pl-trail" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#D6FF41" stop-opacity="0"/>
-        <stop offset="1" stop-color="#D6FF41" stop-opacity="0.5"/>
-      </linearGradient>
-      <filter id="pl-shadow" x="-60%" y="-60%" width="220%" height="220%">
-        <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#000" flood-opacity="0.4"/>
-      </filter>
-    </defs>
-    <polyline id="pl-trailline" fill="none" stroke="url(#pl-trail)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    <!-- symmetric top-view paper plane, nose -> +x (right) -->
-    <g id="pl-plane" filter="url(#pl-shadow)">
-      <polygon points="84,0 -60,-44 -24,-3" fill="#E4FF66"/>
-      <polygon points="84,0 -60,44 -24,3" fill="#AAD92B"/>
-      <polygon points="84,0 -24,-3 -24,3" fill="#C6EE3C"/>
-      <polygon points="-24,-3 -46,0 -24,3" fill="#8FBB24"/>
-      <line x1="84" y1="0" x2="-24" y2="0" stroke="#6F9214" stroke-width="1.4" stroke-linecap="round"/>
-    </g>
-  </svg>
-</div>
-<style>#preloader{transition:opacity .5s ease}</style>
-<script>
-(function(){
-  var overlay=document.getElementById('preloader');
-  var stage=document.getElementById('pl-stage');
-  var plane=document.getElementById('pl-plane');
-  var trail=document.getElementById('pl-trailline');
-  var grad=document.getElementById('pl-trail');
-  if(!overlay||!plane) return;
-  document.body.style.overflow='hidden';
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W=innerWidth,H=innerHeight;
-  function size(){W=innerWidth;H=innerHeight;stage.setAttribute('viewBox','0 0 '+W+' '+H);}
-  size(); window.addEventListener('resize',size);
-  var BASE=0.5;
-  var T_LOOP=3600, T_ZOOM=1000, T_FADE=500;
-  function easeIO(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
-  function loopPos(t){
-    var e=easeIO(t);
-    var dx=(0.96-0.46*e)*W;
-    var dy=(1.12-0.64*e)*H;
-    var amp=0.23*H*Math.sin(Math.PI*t);
-    var ang=2*Math.PI*2*t-Math.PI/2;
-    return {x:dx+amp*Math.cos(ang)*1.15, y:dy+amp*Math.sin(ang)};
-  }
-  function finish(){
-    overlay.style.opacity='0';overlay.style.pointerEvents='none';document.body.style.overflow='';
-    setTimeout(function(){overlay.parentNode&&overlay.parentNode.removeChild(overlay);},T_FADE);
-  }
-  if(reduce){finish();return;}
-  var pts=[],MAXP=26,t0=null,lastHeading=0;
-  function draw(x,y,deg,sc){
-    plane.setAttribute('transform','translate('+x+' '+y+') rotate('+deg+') scale('+sc+')');
-  }
-  function pushTrail(x,y){
-    pts.push(x+','+y); if(pts.length>MAXP)pts.shift();
-    trail.setAttribute('points',pts.join(' '));
-    var a=pts[0].split(','),b=pts[pts.length-1].split(',');
-    grad.setAttribute('x1',a[0]);grad.setAttribute('y1',a[1]);
-    grad.setAttribute('x2',b[0]);grad.setAttribute('y2',b[1]);
-  }
-  function frame(ts){
-    if(t0===null)t0=ts;
-    var el=ts-t0;
-    if(el<=T_LOOP){
-      var t=el/T_LOOP;
-      var p=loopPos(t),p2=loopPos(Math.min(1,t+0.004));
-      var heading=Math.atan2(p2.y-p.y,p2.x-p.x)*180/Math.PI; // nose follows velocity
-      lastHeading=heading;
-      var sc=BASE*(1+0.05*Math.sin(2*Math.PI*2*t));
-      pushTrail(p.x,p.y); draw(p.x,p.y,heading,sc);
-      requestAnimationFrame(frame);
-    } else if(el<=T_LOOP+T_ZOOM){
-      var z=(el-T_LOOP)/T_ZOOM,ez=z*z;
-      var end=loopPos(1);
-      var cx=end.x+(W/2-end.x)*z, cy=end.y+(H/2-end.y)*z;
-      draw(cx,cy,lastHeading,BASE*(1+26*ez));
-      trail.style.opacity=String(1-z);
-      if(z>0.6)overlay.style.opacity=String(1-(z-0.6)/0.4);
-      requestAnimationFrame(frame);
-    } else { finish(); }
-  }
-  var s=loopPos(0); draw(s.x,s.y,0,BASE);
-  requestAnimationFrame(frame);
-})();
-</script>
-<!-- PRELOADER END -->
 
 <div class="bg-fx">
   <div class="glow g1"></div>
@@ -338,11 +264,7 @@
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-text">
-        <div class="hero-tag reveal">
-          <span class="av">Д</span>
-          Частный специалист · работаю напрямую
-        </div>
-        <p class="eyebrow reveal">Таргетированная реклама · VK Ads</p>
+        <p class="eyebrow reveal">Таргетированная реклама · VK Ads + Telegram Ads</p>
         <h1 class="reveal">Реклама ВКонтакте, которая приносит <span class="accent">заявки</span>, а не просто показы</h1>
         <p class="lead reveal">97 млн пользователей ВКонтакте. Помогу привлечь именно тех, кому нужен ваш продукт — без посредников и наценки агентства.</p>
         <div class="btn-row reveal">
@@ -365,34 +287,44 @@
         </div>
       </div>
       <div class="hero-visual reveal">
-        <div class="vk-mock">
-          <div class="vk-top">
-            <span class="vk-dot"></span><span class="vk-dot"></span><span class="vk-dot"></span>
-            <span class="vk-addr">vk.com · Лента новостей</span>
+        <div class="vk-mock ads-mock">
+          <div class="ads-head">
+            <span class="ads-head-title">Рекламные кабинеты</span>
+            <span class="ads-live"><i></i>Открутка идёт</span>
           </div>
-          <div class="vk-feed">
-            <div class="vk-post">
-              <div class="vk-post-head">
-                <div class="vk-post-ava">К</div>
-                <div class="vk-post-meta">
-                  <div class="vk-post-name">Кухни на заказ <span class="vk-post-label">Реклама</span></div>
-                  <div class="vk-post-time">Сегодня</div>
-                </div>
+          <div class="ads-platforms">
+            <div class="ads-card">
+              <div class="ads-card-top">
+                <span class="ads-logo vk">VK</span>
+                <div class="ads-card-name">VK Ads<span>Лента, Клипы, сообщества</span></div>
+                <span class="ads-status">Активна</span>
               </div>
-              <div class="vk-post-text">Кухня мечты — за 30 дней. Бесплатный дизайн-проект и замер при обращении до конца месяца.</div>
-              <div class="vk-post-img">📷 Фото кухни</div>
-              <div class="vk-post-btn">Узнать цену</div>
-            </div>
-            <div class="vk-post">
-              <div class="vk-post-head">
-                <div class="vk-post-ava" style="background:var(--surface-3); color:var(--ink-2);">Д</div>
-                <div class="vk-post-meta">
-                  <div class="vk-post-name">Даниил — интернет-маркетолог</div>
-                  <div class="vk-post-time">Создаёт ваши кампании</div>
-                </div>
+              <div class="ads-metrics">
+                <div><b>1 248</b><span>показов</span></div>
+                <div><b>37</b><span>заявок</span></div>
+                <div><b>198&nbsp;₽</b><span>за лид</span></div>
               </div>
-              <div class="vk-post-text">Точный таргетинг по интересам, гео, сообществам и look-alike аудиториям. Результат — с первых дней открутки.</div>
+              <div class="ads-bar"><i style="width:78%"></i></div>
             </div>
+            <div class="ads-card">
+              <div class="ads-card-top">
+                <span class="ads-logo tg">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+                </span>
+                <div class="ads-card-name">Telegram Ads<span>Каналы по вашей тематике</span></div>
+                <span class="ads-status">Активна</span>
+              </div>
+              <div class="ads-metrics">
+                <div><b>892</b><span>показа</span></div>
+                <div><b>24</b><span>заявки</span></div>
+                <div><b>171&nbsp;₽</b><span>за лид</span></div>
+              </div>
+              <div class="ads-bar"><i style="width:64%"></i></div>
+            </div>
+          </div>
+          <div class="ads-total">
+            <span>Заявок за неделю</span>
+            <b>+61</b>
           </div>
           <div class="float-badge">
             <span class="ic" aria-hidden="true">
