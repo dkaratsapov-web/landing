@@ -221,15 +221,11 @@ h2.section-title {
 }
 .nav-drop-link {
   display: block; padding: 10px 14px; border-radius: 8px;
-  font-size: 14px; color: var(--txt-2); text-decoration: none;
-  transition: background .15s ease, color .15s ease;
+  font-size: 14px; color: var(--txt); text-decoration: none;
+  transition: color .15s ease;
   white-space: nowrap;
 }
-.nav-drop-link:first-child {
-  color: var(--accent-bright);
-  font-weight: 600;
-}
-.nav-drop-link:hover { background: rgba(214,255,65,0.12); color: var(--accent-bright); }
+.nav-drop-link:hover { color: var(--accent-bright); }
 
 /* ---------- Stats ---------- */
 .stat-num {
