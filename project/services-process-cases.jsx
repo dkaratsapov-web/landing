@@ -34,15 +34,19 @@ function ServiceCard({ s, open, onToggle }) {
   };
   return (
     <article className={'card svc-x' + (open ? ' open' : '')} onMouseMove={onMove}>
-      <button className="svc-x-head" onClick={onToggle} aria-expanded={open}>
+      <div className="svc-x-head" onClick={onToggle} role="button" tabIndex={0} aria-expanded={open}>
         <span className="icon-tile svc-x-icon"><Glyph name={s.icon} size={24} /></span>
         <span className="svc-x-titles">
           <span className="svc-x-name">{s.name}</span>
           <span className="svc-x-tag">{s.tag}</span>
         </span>
         <span className="svc-x-result">{s.result}</span>
+        {s.url &&
+        <a className="svc-x-more" href={s.url} onClick={(e) => e.stopPropagation()}>
+          Подробнее<IconArrowRight size={15} />
+        </a>}
         <span className={'svc-x-chev' + (open ? ' open' : '')}><IconChevron size={22} /></span>
-      </button>
+      </div>
       <div className="svc-x-body">
         <div className="svc-x-clip">
           <div className="svc-x-inner">
@@ -65,10 +69,6 @@ function ServiceCard({ s, open, onToggle }) {
                 <a className="btn btn-fill btn-sm svc-x-cta" href="#contacts">
                   Обсудить задачу<IconArrowRight size={16} />
                 </a>
-                {s.url &&
-                <a className="btn btn-ghost btn-sm svc-x-cta" href={s.url} style={{ marginTop: 10 }}>
-                  Подробнее об услуге<IconArrowRight size={16} />
-                </a>}
               </div>
             </div>
           </div>
