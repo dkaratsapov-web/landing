@@ -592,7 +592,35 @@ h3 { font-weight: 600; }
   .section { padding: 56px 0; }
   .section-sm { padding: 44px 0; }
   .section-head { margin-bottom: 40px; }
-  .steps-grid { grid-template-columns: 1fr; }
+  /* Этапы работы — горизонтальный скролл + анимация на мобильном */
+  .steps-grid { display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin: 0 -18px; padding: 6px 18px 16px; scrollbar-width: none;
+    counter-reset: step; }
+  .steps-grid::-webkit-scrollbar { display: none; }
+  .step { flex: 0 0 78%; max-width: 320px; scroll-snap-align: center; }
+  /* Бегущий блик по номеру этапа */
+  .step .n {
+    background: linear-gradient(100deg, var(--lime) 0%, var(--lime) 35%, #eaffb0 50%, var(--lime) 65%, var(--lime) 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    animation: stepShine 2.6s linear infinite;
+  }
+  /* Светящаяся полоса, «протекающая» по карточке снизу */
+  .step::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--lime), transparent);
+    transform: translateX(-100%); animation: stepSweep 2.8s ease-in-out infinite; }
+  .step:nth-child(2)::after { animation-delay: .4s; }
+  .step:nth-child(3)::after { animation-delay: .8s; }
+  .step:nth-child(4)::after { animation-delay: 1.2s; }
+  .step:nth-child(5)::after { animation-delay: 1.6s; }
+  @keyframes stepShine { 0% { background-position: 120% 0; } 100% { background-position: -120% 0; } }
+  @keyframes stepSweep { 0% { transform: translateX(-100%); } 55%,100% { transform: translateX(100%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .step .n { animation: none; }
+    .step::after { animation: none; opacity: 0; }
+  }
   /* Пример расчёта бюджета — компактнее на мобильном */
   .calc { grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
   .calc .cell { padding: 14px 16px; border-radius: var(--r-sm); }
