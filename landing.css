@@ -754,6 +754,8 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 
 @media (max-width: 720px) {
   .svc-x-head { grid-template-columns: auto 1fr auto; gap: 16px; padding: 20px; }
+  /* в свёрнутой карточке опускаем нижнюю границу — больше воздуха снизу */
+  .svc-x:not(.open) .svc-x-head { padding-bottom: 30px; }
   .svc-x-result { display: none; }
   .svc-x-titles { min-width: 0; }
   .svc-x-inner { padding: 4px 20px 22px; }
