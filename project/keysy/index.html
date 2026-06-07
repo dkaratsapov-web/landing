@@ -744,7 +744,6 @@
         btn.setAttribute('aria-expanded', String(open));
         const txt = btn.querySelector('.kfull-toggle-txt');
         if (txt) txt.textContent = open ? 'Свернуть кейс' : 'Смотреть полный кейс';
-        if (!open) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
   })();
