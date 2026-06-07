@@ -18,11 +18,14 @@ async function sendLeadTelegram(text) {
   const CHAT = window.LEAD_TG_CHAT || '';
   if (TOKEN && CHAT) {
     try {
-      const r = await fetch('https://api.telegram.org/bot' + TOKEN + '/sendMessage', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT, text: text, disable_web_page_preview: true })
-      });
-      if (r.ok) return true;
+      // GET без кастомных заголовков — не вызывает CORS-preflight
+      const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage'
+        + '?chat_id=' + encodeURIComponent(CHAT)
+        + '&disable_web_page_preview=true'
+        + '&text=' + encodeURIComponent(text);
+      const r = await fetch(url);
+      const j = await r.json().catch(() => ({}));
+      if (r.ok && j && j.ok) return true;
     } catch (e) {}
   }
   try { window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank'); } catch (e) {}
