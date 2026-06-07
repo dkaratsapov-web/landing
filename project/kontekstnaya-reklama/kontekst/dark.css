@@ -532,7 +532,9 @@ h3 { font-weight: 600; }
 .kfull-list li::before { position: absolute; left: 0; top: 1px; font-size: 14px; line-height: 1.4; }
 .kfull-list.neg li::before { content: "✕"; color: #ff6b6b; }
 .kfull-list.pos li::before { content: "✓"; color: var(--lime-bright); }
-.kfull-works { padding: 26px 30px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; }
+.kfull-lower { display: grid; grid-template-columns: 1.25fr 1fr; border-top: 1px solid var(--line); }
+.kfull-side { padding: 26px 30px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 24px; }
+.kfull-works { padding: 26px 30px; display: flex; flex-direction: column; gap: 14px; }
 .kfull-works-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; counter-reset: kw; }
 .kfull-works-list > li { position: relative; padding-left: 34px; counter-increment: kw; }
 .kfull-works-list > li::before { content: counter(kw); position: absolute; left: 0; top: 0;
@@ -561,9 +563,11 @@ h3 { font-weight: 600; }
   .kfull-head { grid-template-columns: 1fr; }
   .kfull-photo { aspect-ratio: 16 / 10; min-height: 0; border-right: none; }
   .kfull-body { grid-template-columns: 1fr; gap: 22px; }
+  .kfull-lower { grid-template-columns: 1fr; }
+  .kfull-side { border-left: none; border-top: 1px solid var(--line); }
 }
 @media (max-width: 640px) {
-  .kfull-intro, .kfull-body, .kfull-works { padding: 20px 16px; gap: 12px; }
+  .kfull-intro, .kfull-body, .kfull-works, .kfull-side { padding: 20px 16px; gap: 12px; }
   .kfull-chips { padding: 0 16px 20px; }
   .kfull-name { font-size: 22px; }
   .kfull-lead { font-size: 14.5px; }
