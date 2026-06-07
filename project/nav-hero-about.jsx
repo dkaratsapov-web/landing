@@ -4,6 +4,9 @@ const { useState: useStateA, useEffect: useEffectA, useRef: useRefA } = React;
 const NAV_LINKS = [
   ['Услуги', '/kontekstnaya-reklama/', [
     ['Контекстная реклама', '/kontekstnaya-reklama/'],
+    ['Разработка сайтов', '/razrabotka-sajtov/'],
+    ['Таргетированная реклама', '/targetirovannaya-reklama/'],
+    ['GEO-сервисы', '/geo-servisy/'],
   ]],
   ['Кейсы', '/keysy/'],
   ['Контакты', '/contacts/'],
