@@ -627,6 +627,12 @@ h3 { font-weight: 600; }
 .marquee-item { display: inline-flex; align-items: center; gap: 18px; font-size: 26px; font-weight: 600; letter-spacing: -0.01em; color: var(--muted); white-space: nowrap; }
 .marquee-item .star { color: var(--lime); }
 @keyframes scrollx { to { transform: translateX(-50%); } }
+/* Бегущая строка-предупреждение */
+.warn-marquee { padding: 16px 0; background: var(--surface); }
+.warn-marquee .marquee-track { gap: 48px; animation-duration: 34s; }
+.warn-marquee .marquee-item { font-size: 15px; font-weight: 600; color: var(--ink-2); gap: 12px; }
+.warn-marquee .warn-ic { width: 22px; height: 22px; border-radius: 50%; background: var(--lime); color: var(--lime-ink); display: inline-grid; place-items: center; flex: none; }
+.warn-marquee .warn-ic svg { width: 12px; height: 12px; }
 
 /* ---------- FAQ ---------- */
 .faq-list { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
