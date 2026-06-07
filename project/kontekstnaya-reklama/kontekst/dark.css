@@ -447,10 +447,7 @@ h3 { font-weight: 600; }
 .calc2-range::-webkit-slider-thumb:active { transform: scale(1.15); }
 .calc2-range::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--lime); border: 3px solid #0a0a0a; cursor: pointer; }
 .calc2-ticks { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted-2); margin-top: 9px; }
-.calc2-split { display: flex; height: 10px; border-radius: 6px; overflow: hidden; margin: 24px 0 8px; background: var(--surface-3); }
-.calc2-split-spend { background: var(--lime); transition: width .15s ease; }
-.calc2-split-fee { background: #6f8f1f; transition: width .15s ease; }
-.calc2-rows { display: flex; flex-direction: column; }
+.calc2-rows { display: flex; flex-direction: column; margin-top: 22px; }
 .calc2-row { display: flex; align-items: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--muted); }
 .calc2-row:last-child { border-bottom: 0; }
 .calc2-row b { margin-left: auto; font-size: 21px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; }

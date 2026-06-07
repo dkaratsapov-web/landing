@@ -349,16 +349,11 @@
           <span class="calc2-budget-lbl">Ваш бюджет на контекстную рекламу</span>
           <span class="calc2-budget-val" id="calcBudget">200 000 ₽ / мес.</span>
         </div>
-        <input type="range" class="calc2-range" id="calcRange" min="50000" max="500000" step="10000" value="200000" aria-label="Бюджет на контекстную рекламу">
-        <div class="calc2-ticks"><span>50 тыс. ₽</span><span>500 тыс. ₽</span></div>
-        <div class="calc2-split" aria-hidden="true">
-          <span class="calc2-split-spend" id="calcBarSpend"></span>
-          <span class="calc2-split-fee" id="calcBarFee"></span>
-        </div>
+        <input type="range" class="calc2-range" id="calcRange" min="50000" max="1000000" step="10000" value="200000" aria-label="Бюджет на контекстную рекламу">
+        <div class="calc2-ticks"><span>50 тыс. ₽</span><span>1 млн ₽</span></div>
         <div class="calc2-rows">
           <div class="calc2-row"><span class="dot spend"></span>Уходит в Яндекс Директ<b id="calcSpend">170 000 ₽</b></div>
           <div class="calc2-row"><span class="dot fee"></span>Оплата моей работы<b id="calcFee">30 000 ₽</b></div>
-          <div class="calc2-row accent"><span class="dot zero"></span>Наценка агентства<b>0 ₽</b></div>
         </div>
       </div>
       <div class="btn-row" style="justify-content:center; margin-top:30px;">
@@ -370,13 +365,12 @@
       var r=document.getElementById('calcRange'); if(!r) return;
       var fmt=function(n){return Math.round(n).toLocaleString('ru-RU')+' ₽';};
       function upd(){
-        var b=+r.value, fee=Math.round(b*0.15/1000)*1000, spend=b-fee;
+        var b=+r.value;
+        var fee=30000 + (b>500000 ? Math.floor((b-500000)/100000)*5000 : 0);
+        var spend=b-fee;
         document.getElementById('calcBudget').textContent=b.toLocaleString('ru-RU')+' ₽ / мес.';
         document.getElementById('calcSpend').textContent=fmt(spend);
         document.getElementById('calcFee').textContent=fmt(fee);
-        var sp=spend/b*100;
-        document.getElementById('calcBarSpend').style.width=sp+'%';
-        document.getElementById('calcBarFee').style.width=(100-sp)+'%';
         r.style.setProperty('--p',((b-r.min)/(r.max-r.min)*100)+'%');
       }
       r.addEventListener('input',upd); upd();
