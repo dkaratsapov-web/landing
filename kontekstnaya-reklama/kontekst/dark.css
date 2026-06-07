@@ -504,15 +504,34 @@ h3 { font-weight: 600; }
 .kfull-works-list > li > ul > li { position: relative; padding-left: 18px; color: var(--muted); font-size: 14px; line-height: 1.5; }
 .kfull-works-list > li > ul > li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--lime-glow); }
 .kfull-chips { padding: 0 30px 26px; }
+.kfull-details { display: none; }
+.kfull.open .kfull-details { display: block; }
+.kfull-toggle {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  margin-top: 6px; padding: 11px 20px; border-radius: var(--r-pill);
+  background: var(--surface-2); border: 1px solid var(--line-2); color: var(--ink);
+  font-family: var(--font); font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.kfull-toggle:hover { border-color: var(--lime); color: var(--lime-bright); }
+.kfull-toggle-i { transition: transform .25s ease; flex: 0 0 auto; }
+.kfull.open .kfull-toggle-i { transform: rotate(180deg); }
+.kfull.open .kfull-toggle { background: var(--lime); border-color: transparent; color: var(--lime-ink); }
+.kfull.open .kfull-toggle:hover { color: var(--lime-ink); }
 @media (max-width: 860px) {
   .kfull-head { grid-template-columns: 1fr; }
   .kfull-photo { aspect-ratio: 16 / 10; min-height: 0; border-right: none; }
   .kfull-body { grid-template-columns: 1fr; gap: 22px; }
 }
 @media (max-width: 640px) {
-  .kfull-intro, .kfull-body, .kfull-works { padding: 22px 18px; }
-  .kfull-chips { padding: 0 18px 22px; }
-  .kfull-name { font-size: 24px; }
+  .kfull-intro, .kfull-body, .kfull-works { padding: 20px 16px; gap: 12px; }
+  .kfull-chips { padding: 0 16px 20px; }
+  .kfull-name { font-size: 22px; }
+  .kfull-lead { font-size: 14.5px; }
+  .kfull-meta-row { gap: 8px; }
+  .kfull-meta-l { min-width: 0; }
+  .kase-metrics { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .kfull-toggle { width: 100%; justify-content: center; }
 }
 @media (prefers-reduced-motion: reduce) { .kfull { animation: none; opacity: 1; } }
 
