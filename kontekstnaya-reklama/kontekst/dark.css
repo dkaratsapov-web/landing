@@ -629,12 +629,20 @@ h3 { font-weight: 600; }
 .marquee-item { display: inline-flex; align-items: center; gap: 18px; font-size: 26px; font-weight: 600; letter-spacing: -0.01em; color: var(--muted); white-space: nowrap; }
 .marquee-item .star { color: var(--lime); }
 @keyframes scrollx { to { transform: translateX(-50%); } }
-/* Бегущая строка-предупреждение */
-.warn-marquee { padding: 16px 0; background: var(--surface); }
-.warn-marquee .marquee-track { gap: 48px; animation-duration: 34s; }
+/* Бегущая строка-предупреждение — лента-тикер */
+.warn-marquee { position: relative; padding: 15px 0;
+  background: linear-gradient(90deg, rgba(182,240,30,0.06), rgba(182,240,30,0.02) 50%, rgba(182,240,30,0.06));
+  border-top: 1px solid rgba(182,240,30,0.22); border-bottom: 1px solid rgba(182,240,30,0.22); }
+/* мягкое затухание по краям ленты */
+.warn-marquee::before, .warn-marquee::after { content: ""; position: absolute; top: 0; bottom: 0; width: 90px; z-index: 2; pointer-events: none; }
+.warn-marquee::before { left: 0; background: linear-gradient(90deg, var(--bg), transparent); }
+.warn-marquee::after { right: 0; background: linear-gradient(270deg, var(--bg), transparent); }
+.warn-marquee .marquee-track { gap: 56px; animation-duration: 60s; }
 .warn-marquee .marquee-item { font-size: 15px; font-weight: 600; color: var(--ink-2); gap: 12px; }
-.warn-marquee .warn-ic { width: 22px; height: 22px; border-radius: 50%; background: var(--lime); color: var(--lime-ink); display: inline-grid; place-items: center; flex: none; }
-.warn-marquee .warn-ic svg { width: 12px; height: 12px; }
+.warn-marquee .warn-hl { color: var(--lime-bright); font-weight: 700; }
+.warn-marquee .warn-sep { color: var(--lime); font-weight: 700; padding: 0 2px; }
+.warn-marquee .warn-ic { width: 24px; height: 24px; border-radius: 50%; background: var(--lime); color: var(--lime-ink); display: inline-grid; place-items: center; flex: none; box-shadow: 0 0 0 4px rgba(182,240,30,0.12); }
+.warn-marquee .warn-ic svg { width: 13px; height: 13px; }
 
 /* ---------- FAQ ---------- */
 .faq-list { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
