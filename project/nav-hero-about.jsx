@@ -129,7 +129,7 @@ function HeroSplit({ portrait, onCta }) {
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
       <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap hero-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 56,
-        alignItems: 'center', padding: '32px 32px 60px' }}>
+        alignItems: 'start', padding: '32px 32px 60px' }}>
         <div className="hero-copy">
           <span className="eyebrow reveal in">{H.eyebrow}</span>
           <h1 className="display reveal in" style={{ fontSize: 'clamp(40px, 6vw, 76px)' }}>
@@ -227,7 +227,7 @@ function HeroEditorial({ portrait, onCta }) {
 function PortraitFrame({ portrait, short }) {
   return (
     <div style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
-      aspectRatio: short ? '4 / 3' : '4 / 5', background: 'var(--tile-c)',
+      aspectRatio: short ? '4 / 3' : '4 / 4', background: 'var(--tile-c)',
       boxShadow: 'var(--product-shadow)', border: '1px solid var(--line)' }}>
       <img src={portrait} alt="Даниил Карацапов" loading="eager"
         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 18%' }} />
