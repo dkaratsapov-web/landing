@@ -214,7 +214,7 @@ h3 { font-weight: 600; }
 .hero-img { width: 100%; aspect-ratio: 4/4.2; border-radius: var(--r-xl); border: 1px solid var(--line-2); overflow: hidden;
   background: linear-gradient(160deg, var(--surface-2), var(--surface)); display: flex; flex-direction: column; justify-content: flex-start; padding: 24px 26px 58px; position: relative; }
 .hero-img::after { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 70% 18%, rgba(182,240,30,0.12), transparent 55%); pointer-events: none; }
-.float-badge { position: absolute; left: 22px; right: 22px; bottom: 16px; display: inline-flex; align-items: flex-start; gap: 10px; z-index: 4;
+.float-badge { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px;
   background: rgba(10,11,10,0.82); backdrop-filter: blur(10px); border: 1px solid var(--line-2); border-radius: 14px; padding: 11px 15px; font-size: 13.5px; font-weight: 600; line-height: 1.35; }
 .float-badge .ic { width: 22px; height: 22px; border-radius: 50%; background: var(--lime); color: var(--lime-ink); display: grid; place-items: center; flex: none; margin-top: 1px; }
 .float-badge .ic svg { width: 12px; height: 12px; }
