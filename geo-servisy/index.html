@@ -53,6 +53,57 @@
 .plat-chip .pl-logo { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; flex: none; overflow: hidden; }
 .plat-chip .pl-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
+/* ===== Анимированный мокап Яндекс Бизнеса ===== */
+.geoyb { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 28px; align-items: stretch; margin-top: 8px; }
+.geoyb-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
+.geoyb-bar { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+.geoyb-bar-logo { border-radius: 6px; flex: none; }
+.geoyb-bar-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.geoyb-live { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--lime-bright); }
+.geoyb-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); animation: geoybBlink 1.6s ease-in-out infinite; }
+@keyframes geoybBlink { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 var(--lime-glow); } 50% { opacity: .5; box-shadow: 0 0 0 5px transparent; } }
+.geoyb-photos { display: grid; grid-template-columns: repeat(4,1fr); gap: 4px; padding: 4px; }
+.geoyb-photo { height: 74px; border-radius: 8px; background-size: cover; background-position: center; background-color: var(--surface-3); }
+.geoyb-photo.p1 { background-image: url('/assets/cases/nebo.jpg'); }
+.geoyb-photo.p2 { background-image: url('/assets/cases/alankara.jpg'); }
+.geoyb-photo.p3 { background-image: url('/assets/cases/berezka.jpg'); }
+.geoyb-photo.p4 { background-image: url('/assets/cases/royalneva.jpg'); }
+.geoyb-body { padding: 18px; }
+.geoyb-name-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.geoyb-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text); }
+.geoyb-top { font-size: 11px; font-weight: 800; letter-spacing: .03em; color: var(--lime-ink); background: var(--lime); padding: 3px 9px; border-radius: var(--r-pill); animation: geoybPop 2.4s ease-in-out infinite; }
+@keyframes geoybPop { 0%,90%,100% { transform: scale(1); } 95% { transform: scale(1.08); } }
+.geoyb-rate { display: flex; align-items: center; gap: 7px; margin-top: 10px; font-size: 14px; color: var(--muted); }
+.geoyb-rate b { color: var(--text); font-size: 15px; }
+.geoyb-stars { display: inline-flex; gap: 2px; }
+.geoyb-star { width: 16px; height: 16px; fill: #ffc531; opacity: 0; animation: geoybStar .4s ease forwards; }
+.geoyb-star:nth-child(1){animation-delay:.2s}.geoyb-star:nth-child(2){animation-delay:.35s}.geoyb-star:nth-child(3){animation-delay:.5s}.geoyb-star:nth-child(4){animation-delay:.65s}.geoyb-star:nth-child(5){animation-delay:.8s}
+@keyframes geoybStar { from { opacity: 0; transform: scale(.4) rotate(-30deg); } to { opacity: 1; transform: none; } }
+.geoyb-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.geoyb-tag { font-size: 12px; color: var(--muted); background: var(--surface-3); border: 1px solid var(--line); border-radius: var(--r-pill); padding: 5px 11px; }
+.geoyb-actions { display: flex; gap: 10px; margin-top: 16px; }
+.geoyb-btn { font-size: 13px; font-weight: 600; color: var(--text); border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 9px 18px; }
+.geoyb-btn-fill { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); }
+.geoyb-map { margin-top: 16px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.geoyb-map svg { display: block; width: 100%; height: 120px; }
+.geoyb-route { animation: geoybDash 1.1s linear infinite; }
+@keyframes geoybDash { to { stroke-dashoffset: -28; } }
+.geoyb-pin-pulse { fill: var(--lime); transform-origin: center; transform-box: fill-box; animation: geoybPulse 2s ease-out infinite; }
+@keyframes geoybPulse { 0% { transform: scale(1); opacity: .6; } 70%,100% { transform: scale(3.2); opacity: 0; } }
+.geoyb-stats { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 26px; display: flex; flex-direction: column; gap: 20px; }
+.geoyb-stats-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lime-bright); margin: 0; }
+.geoyb-stat-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+.geoyb-stat-top b { color: var(--text); font-size: 16px; font-weight: 700; }
+.geoyb-track { height: 8px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+.geoyb-fill { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--lime-deep), var(--lime-bright)); width: 0; animation: geoybGrow 1.4s cubic-bezier(.2,.8,.2,1) forwards; }
+.geoyb-fill.f1 { animation-delay: .15s; --w: 78%; } .geoyb-fill.f2 { animation-delay: .3s; --w: 92%; }
+.geoyb-fill.f3 { animation-delay: .45s; --w: 70%; } .geoyb-fill.f4 { animation-delay: .6s; --w: 88%; }
+@keyframes geoybGrow { to { width: var(--w); } }
+.geoyb-note { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.geoyb-note b { color: var(--text); font-weight: 600; }
+@media (max-width: 900px) { .geoyb { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .geoyb-live-dot,.geoyb-top,.geoyb-star,.geoyb-route,.geoyb-pin-pulse,.geoyb-fill { animation: none !important; } .geoyb-star{opacity:1} .geoyb-fill{width:var(--w)} }
+
 /* Hero визуал — мокап выдачи гео-сервиса */
 .geo-mock {
   width: 100%; border-radius: var(--r-xl); border: 1px solid var(--line-2); overflow: hidden;
@@ -378,26 +429,80 @@
       <h2>Что такое продвижение <span class="accent">в гео-сервисах</span></h2>
       <p>Люди всё чаще ищут «рядом»: «кофейня рядом», «стоматология в районе», «шиномонтаж рядом». Сервисы показывают подборку компаний — звонки, маршруты и клиентов получают те, кто в топе и с хорошим рейтингом.</p>
     </div>
-    <div class="geo-plat-grid stagger">
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
-        <h3>Яндекс Карты + Бизнес</h3>
-        <p>Максимальный охват, аналитика и платное приоритетное размещение.</p>
+    <div class="geoyb reveal">
+      <!-- Левая часть: карточка компании в Яндекс Бизнес -->
+      <div class="geoyb-card">
+        <div class="geoyb-bar">
+          <img class="geoyb-bar-logo" src="/assets/geo/yandex-business.png" alt="Яндекс Бизнес" width="22" height="22">
+          <span class="geoyb-bar-title">Яндекс Бизнес · карточка компании</span>
+          <span class="geoyb-live"><span class="geoyb-live-dot"></span>онлайн</span>
+        </div>
+
+        <div class="geoyb-photos">
+          <span class="geoyb-photo p1"></span>
+          <span class="geoyb-photo p2"></span>
+          <span class="geoyb-photo p3"></span>
+          <span class="geoyb-photo p4"></span>
+        </div>
+
+        <div class="geoyb-body">
+          <div class="geoyb-name-row">
+            <span class="geoyb-name">Ваша компания</span>
+            <span class="geoyb-top">ТОП-1 в районе</span>
+          </div>
+          <div class="geoyb-rate">
+            <span class="geoyb-stars">
+              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
+            </span>
+            <b>4,9</b><span class="geoyb-rate-sub">· 248 отзывов</span>
+          </div>
+          <div class="geoyb-tags">
+            <span class="geoyb-tag">Открыто до 21:00</span>
+            <span class="geoyb-tag">Рекламная подписка</span>
+          </div>
+          <div class="geoyb-actions">
+            <span class="geoyb-btn geoyb-btn-fill">Позвонить</span>
+            <span class="geoyb-btn">Маршрут</span>
+          </div>
+
+          <div class="geoyb-map">
+            <svg viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true">
+              <rect width="320" height="120" fill="#1a2410"/>
+              <path d="M0 70 H320 M0 40 H320 M80 0 V120 M200 0 V120" stroke="rgba(182,240,30,0.10)" stroke-width="1"/>
+              <path class="geoyb-route" d="M40 95 Q150 70 200 40 T300 25" fill="none" stroke="#b6f01e" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 8"/>
+              <g class="geoyb-pin" transform="translate(200 40)">
+                <circle class="geoyb-pin-pulse" r="7"/>
+                <circle r="6" fill="#b6f01e"/>
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg></span>
-        <h3>2ГИС</h3>
-        <p>Сильный охват в городах и приоритетное размещение в выдаче.</p>
-      </div>
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
-        <h3>Google Карты</h3>
-        <p>Google Business Profile для аудитории, которая ищет в Google.</p>
-      </div>
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-        <h3>Отзовики</h3>
-        <p>Zoon, Flamp, Prodoctorov, Yell и другие — для репутации.</p>
+
+      <!-- Правая часть: рост метрик -->
+      <div class="geoyb-stats">
+        <p class="geoyb-stats-eyebrow">Что даёт карточка в топе</p>
+        <div class="geoyb-stat">
+          <div class="geoyb-stat-top"><span>Звонки из карт</span><b>+128 / мес</b></div>
+          <div class="geoyb-track"><span class="geoyb-fill f1"></span></div>
+        </div>
+        <div class="geoyb-stat">
+          <div class="geoyb-stat-top"><span>Маршруты до точки</span><b>340 / мес</b></div>
+          <div class="geoyb-track"><span class="geoyb-fill f2"></span></div>
+        </div>
+        <div class="geoyb-stat">
+          <div class="geoyb-stat-top"><span>Переходы на сайт</span><b>+86 %</b></div>
+          <div class="geoyb-track"><span class="geoyb-fill f3"></span></div>
+        </div>
+        <div class="geoyb-stat">
+          <div class="geoyb-stat-top"><span>Рейтинг и отзывы</span><b>4,2 → 4,9</b></div>
+          <div class="geoyb-track"><span class="geoyb-fill f4"></span></div>
+        </div>
+        <p class="geoyb-note">Заполняю и веду карточки в <b>Яндекс Бизнес</b>, <b>Яндекс Картах</b>, <b>2ГИС</b> и <b>Google</b> — вывожу в топ, работаю с отзывами и рейтингом. Витрина, которая приводит клиентов 24/7.</p>
       </div>
     </div>
   </div>
