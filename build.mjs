@@ -83,6 +83,11 @@ for (const page of STATIC_PAGES) {
   }
 }
 
+// Static assets (images, icons) — mirror the whole assets/ tree to dist.
+import { cpSync } from 'node:fs';
+const assetsSrc = join(srcDir, 'assets');
+if (existsSync(assetsSrc)) cpSync(assetsSrc, join(outDir, 'assets'), { recursive: true });
+
 const scriptTags = [
   '  <script defer src="lead-config.js"></script>',
   '  <script defer src="content-default.js"></script>',
