@@ -347,7 +347,7 @@ h2.section-title {
 /* ---------- Services: full-width snap carousel on phones ---------- */
 @media (max-width: 640px) {
   .svc-x-stack {
-    flex-direction: row !important; align-items: flex-start;
+    flex-direction: row !important; align-items: stretch;
     gap: 12px !important; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
     margin: 0 -22px; padding: 0 16px;
