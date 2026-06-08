@@ -494,7 +494,9 @@ h2.section-title {
 }
 @media (max-width: 620px) {
   .proc-grid { grid-template-columns: 1fr !important; }
-  .stat-grid { grid-template-columns: 1fr 1fr !important; }
+  .stat-grid { grid-template-columns: 1fr 1fr !important; padding: 20px !important; gap: 16px !important; }
+  .stat-num { font-size: 28px !important; }
+  .stat-label { font-size: 12px !important; margin-top: 4px !important; }
   .quiz-teaser { grid-template-columns: 1fr !important; }
   .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   .display { font-size: clamp(34px, 11vw, 56px) !important; }
