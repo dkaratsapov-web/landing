@@ -277,7 +277,7 @@ function CaseCard({ c, idx }) {
       </div>
       <div className="kase-content">
         <div className="kase-field">{c.field}</div>
-        <h3 className="kase-name">{c.client}</h3>
+        <h3 className="kase-name"><span data-nosnippet>{c.client}</span></h3>
         <p className="kase-summary">{c.summary}</p>
         <div className="kase-metrics">
           {c.metrics.map(([v, l], k) =>
