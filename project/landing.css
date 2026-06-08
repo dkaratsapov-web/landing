@@ -899,3 +899,22 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   to   { transform: translateX(-50%); }
 }
 @media (prefers-reduced-motion: reduce) { .wave-svg { animation: none !important; } }
+
+/* ---------------- QUIZ FAB (floating "Рассчитать проект") ---------------- */
+.quiz-fab {
+  position: fixed; left: 24px; bottom: 24px; z-index: 60;
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 14px 22px; border: none; cursor: pointer;
+  background: var(--accent-bright, #b6f01e); color: #0c1402;
+  font-family: inherit; font-weight: 700; font-size: 15px;
+  border-radius: var(--r-pill, 999px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,0,0,0.05);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+  animation: quizFabIn .4s ease both .6s;
+}
+.quiz-fab:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,0,0,0.55); background: var(--accent, #c4f53e); }
+.quiz-fab:active { transform: translateY(0) scale(0.98); }
+.quiz-fab-ic { display: inline-flex; }
+@keyframes quizFabIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+/* Desktop-only */
+@media (max-width: 900px) { .quiz-fab { display: none; } }

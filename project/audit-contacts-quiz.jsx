@@ -307,27 +307,13 @@ function QuizModal({ open, onClose }) {
 
 }
 
-/* ---------------- QUIZ TEASER ---------------- */
-function QuizTeaser({ onOpen }) {
+/* ---------------- QUIZ FAB (floating button) ---------------- */
+function QuizFab({ onOpen }) {
   return (
-    <section className="sec-tight bg-pg">
-      <div className="wrap">
-        <div className="reveal quiz-teaser" style={{ background: 'var(--tile-card)', border: '1px solid var(--line)',
-          borderRadius: 'var(--r-lg)', padding: 'clamp(26px, 3.5vw, 40px)', display: 'grid',
-          gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'center' }}>
-          <div>
-            <h2 className="section-title" style={{ fontSize: 'clamp(28px, 3.5vw, 40px)' }}>Не знаете, с чего начать?</h2>
-            <p className="lead" style={{ marginTop: 16, maxWidth: 520 }}>
-              Ответьте на 4 вопроса — я пойму вашу задачу и предложу решение.
-            </p>
-          </div>
-          <button className="btn btn-fill btn-lg" onClick={onOpen} style={{ whiteSpace: 'nowrap' }}>
-            Пройти квиз<IconArrowRight size={18} />
-          </button>
-        </div>
-      </div>
-    </section>);
-
+    <button className="quiz-fab" onClick={onOpen} aria-label="Рассчитать проект">
+      <span className="quiz-fab-ic"><IconBolt size={18} /></span>
+      Рассчитать проект
+    </button>);
 }
 
 /* ---------------- FOOTER ---------------- */
