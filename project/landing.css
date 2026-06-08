@@ -703,9 +703,12 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @media (max-width: 640px) {
   .kase-photo { aspect-ratio: 16 / 8; }
   .kase-content { padding: 14px 16px; gap: 9px; }
-  .kase-name { font-size: 19px; }
-  .kase-summary { font-size: 13px; min-height: 0; -webkit-line-clamp: unset; overflow: visible; display: block; }
+  /* фикс. высоты, чтобы строки/блоки во всех карточках были на одном уровне */
+  .kase-field { min-height: 2.6em; display: flex; align-items: flex-start; }
+  .kase-name { font-size: 19px; min-height: 2.3em; }
+  .kase-summary { font-size: 13px; min-height: 5.6em; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
   .kase-metrics { gap: 10px 12px; padding-top: 10px; }
+  .kase-metric { min-height: 3.4em; }
   .kase-metric-v { font-size: 20px; }
   .kase-metric-l { font-size: 11px; }
   .kase-chip { font-size: 11px; padding: 4px 9px; }
