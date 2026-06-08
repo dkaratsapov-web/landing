@@ -58,6 +58,10 @@ writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p
 // Favicon (lime paper plane) — copy verbatim.
 copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
 
+// SEO: robots.txt and sitemap.xml.
+copyFileSync(join(srcDir, 'robots.txt'), join(outDir, 'robots.txt'));
+copyFileSync(join(srcDir, 'sitemap.xml'), join(outDir, 'sitemap.xml'));
+
 // Editable content: ship content.json (fetched at runtime / edited via /admin)
 // and regenerate content-default.js (baked fallback loaded before the app).
 const contentJson = readFileSync(join(srcDir, 'content.json'), 'utf8');
@@ -86,11 +90,17 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Даниил Карацапов — интернет-маркетолог | Контекст, таргет, сайты</title>
-  <meta name="description" content="Частный интернет-маркетолог Даниил Карацапов. Контекстная реклама, таргет, разработка сайтов. Работаю лично, отвечаю за результат." />
-  <meta property="og:title" content="Даниил Карацапов — интернет-маркетолог" />
-  <meta property="og:description" content="Маркетинг, который делаю я сам — от стратегии до заявок." />
+  <title>Даниил Карацапов — маркетолог | Контекстная реклама, таргет, GEO-продвижение</title>
+  <meta name="description" content="Маркетолог с 9+ лет опыта. Контекстная реклама в Яндекс Директ, таргет VK Ads, продвижение в Яндекс Картах. Работаю лично — без посредников. Заявки с первой недели." />
+  <link rel="canonical" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
+  <meta property="og:title" content="Даниил Карацапов — маркетолог" />
+  <meta property="og:description" content="Контекстная реклама, таргет VK Ads, GEO-продвижение. 9+ лет, 70+ ниш. Без посредников, результат с первой недели." />
+  <meta property="og:url" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Даниил Карацапов — маркетолог" />
+  <meta name="twitter:description" content="Контекстная реклама, таргет, GEO. 9+ лет, без посредников." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -103,6 +113,20 @@ const html = `<!DOCTYPE html>
 
   <script defer src="${REACT}" crossorigin="anonymous"></script>
   <script defer src="${REACTDOM}" crossorigin="anonymous"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Даниил Карацапов — маркетолог",
+    "description": "Контекстная реклама в Яндекс Директ, таргетированная реклама VK Ads, продвижение в гео-сервисах",
+    "url": "https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/",
+    "founder": {"@type": "Person", "name": "Даниил Карацапов"},
+    "areaServed": "RU",
+    "availableLanguage": "Russian",
+    "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "availableLanguage": "Russian"}
+  }
+  </script>
 
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">

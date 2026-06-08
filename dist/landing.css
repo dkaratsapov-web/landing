@@ -304,37 +304,59 @@ h2.section-title {
   .cert-card { flex: 0 0 70%; max-width: 250px; scroll-snap-align: start; }
 }
 
-/* ---------- Swipe hint (mobile-only animated "Листайте →") ---------- */
+/* ---------- Swipe hint (mobile-only, text-free swipe animation) ---------- */
 .swipe-hint { display: none; }
 @media (max-width: 640px) {
   .swipe-hint {
-    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 16px;
-    padding: 7px 14px; border-radius: var(--r-pill);
+    display: inline-flex; align-items: center; gap: 5px; margin-bottom: 14px;
+    padding: 6px 12px; border-radius: var(--r-pill);
     background: var(--accent-soft); border: 1px solid var(--accent-soft-bd);
-    color: var(--accent-bright); font-size: 13px; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--accent-bright);
   }
-  .swipe-hint .i { width: 16px; height: 16px; animation: swipeNudge 1.3s ease-in-out infinite; }
+  .swipe-hint .swipe-dot {
+    width: 5px; height: 5px; border-radius: 50%; background: currentColor;
+    opacity: .35; animation: swipeDot 1.3s ease-in-out infinite;
+  }
+  .swipe-hint .swipe-dot:nth-child(1) { animation-delay: 0s; }
+  .swipe-hint .swipe-dot:nth-child(2) { animation-delay: .15s; }
+  .swipe-hint .swipe-dot:nth-child(3) { animation-delay: .3s; }
+  .swipe-hint .i { width: 15px; height: 15px; animation: swipeNudge 1.3s ease-in-out infinite; }
 }
 @keyframes swipeNudge {
   0%, 100% { transform: translateX(0); opacity: .55; }
-  50% { transform: translateX(7px); opacity: 1; }
+  50% { transform: translateX(6px); opacity: 1; }
 }
-@media (prefers-reduced-motion: reduce) { .swipe-hint .i { animation: none; opacity: 1; } }
+@keyframes swipeDot {
+  0%, 100% { opacity: .35; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .swipe-hint .i, .swipe-hint .swipe-dot { animation: none; opacity: 1; }
+}
 
-/* ---------- Services / Cases: horizontal snap carousel on phones ---------- */
+/* ---------- Services: full-width snap carousel on phones ---------- */
 @media (max-width: 640px) {
-  .svc-x-stack, .case-list {
+  .svc-x-stack {
     flex-direction: row !important; align-items: flex-start;
+    gap: 12px !important; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    margin: 0 -22px; padding: 0 16px;
+    scroll-padding-left: 16px;
+    scrollbar-width: none;
+  }
+  .svc-x-stack::-webkit-scrollbar { display: none; }
+  /* calc(100vw - 32px) = экран минус отступы 16px с каждой стороны */
+  .svc-x { flex: 0 0 calc(100vw - 32px); max-width: calc(100vw - 32px); scroll-snap-align: start; }
+  /* Cases keep carousel */
+  .case-list {
+    flex-direction: row !important; align-items: stretch;
     gap: 14px !important; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
-    margin: 0 -22px; padding: 4px 22px 16px;
+    margin: 0 -22px; padding: 4px 22px 10px;
     scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
   }
-  .svc-x-stack::-webkit-scrollbar, .case-list::-webkit-scrollbar { height: 6px; }
-  .svc-x-stack::-webkit-scrollbar-thumb, .case-list::-webkit-scrollbar-thumb {
-    background: var(--line-strong); border-radius: 3px;
-  }
-  .svc-x { flex: 0 0 84%; max-width: 320px; scroll-snap-align: start; }
+  .case-list::-webkit-scrollbar { height: 6px; }
+  .case-list::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
   .case-card { flex: 0 0 86%; max-width: 340px; scroll-snap-align: start; }
 }
 .cert-card {
@@ -487,18 +509,24 @@ h2.section-title {
 }
 @media (max-width: 620px) {
   .proc-grid { grid-template-columns: 1fr !important; }
-  .stat-grid { grid-template-columns: 1fr 1fr !important; }
+  .stat-grid { grid-template-columns: 1fr 1fr !important; padding: 20px !important; gap: 16px !important; }
+  .stat-num { font-size: 28px !important; }
+  .stat-label { font-size: 12px !important; margin-top: 4px !important; }
   .quiz-teaser { grid-template-columns: 1fr !important; }
   .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
   .display { font-size: clamp(34px, 11vw, 56px) !important; }
 }
 @media (max-width: 480px) {
   .wrap { padding: 0 16px; }
-  .sec { padding: 48px 0; }
-  .sec-tight { padding: 32px 0; }
+  .sec { padding: 36px 0; }
+  .sec-tight { padding: 24px 0; }
+  #certs.sec { padding-bottom: 16px; }
+  #process.sec, #process.sec-tight { padding-top: 20px; padding-bottom: 16px; }
+  #about.sec { padding-bottom: 16px; }
+  #services.sec { padding-top: 20px; }
   /* компактные паддинги карточек/секций (перебиваем inline-стили) */
   .card { padding: 22px !important; }
-  .hero-split-grid { padding: 24px 16px 44px !important; }
+  .hero-split-grid { padding: 24px 16px 20px !important; }
   .quiz-teaser { padding: clamp(20px, 5vw, 56px) !important; }
   .footer-grid { gap: 24px !important; }
   .lead { font-size: 16px; }
@@ -576,6 +604,11 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 .quote-item {
   position: absolute; inset: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 18px;
+}
+
+@media (max-width: 640px) {
+  .quotes-stage { min-height: 360px; }
+  .quote-text { font-size: 22px; line-height: 1.25; }
 }
 .quote-mark {
   font-family: var(--font-display); font-size: 120px; line-height: 0.6;
@@ -666,6 +699,20 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 .kase-chips { display: flex; flex-wrap: wrap; gap: 7px; }
 .kase-chip { font-size: 12px; color: var(--txt-2); padding: 5px 11px; border-radius: var(--r-pill);
   background: rgba(255,255,255,0.04); border: 1px solid var(--line); }
+
+@media (max-width: 640px) {
+  .kase-photo { aspect-ratio: 16 / 8; }
+  .kase-content { padding: 14px 16px; gap: 9px; }
+  /* фикс. высоты, чтобы строки/блоки во всех карточках были на одном уровне */
+  .kase-field { min-height: 2.6em; display: flex; align-items: flex-start; }
+  .kase-name { font-size: 19px; min-height: 2.3em; }
+  .kase-summary { font-size: 13px; min-height: 5.6em; -webkit-line-clamp: 4; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+  .kase-metrics { gap: 10px 12px; padding-top: 10px; }
+  .kase-metric { min-height: 3.4em; }
+  .kase-metric-v { font-size: 20px; }
+  .kase-metric-l { font-size: 11px; }
+  .kase-chip { font-size: 11px; padding: 4px 9px; }
+}
 
 @media (prefers-reduced-motion: reduce) { .kase { animation: none; opacity: 1; } }
 
@@ -763,9 +810,27 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .svc-x-result { display: none; }
   .svc-x-titles { min-width: 0; }
   .svc-x-more { padding: 7px 11px; font-size: 13px; }
-  .svc-x-inner { padding: 4px 20px 22px; }
-  .svc-x-detail { grid-template-columns: 1fr; gap: 22px; }
-  .svc-x-list { grid-template-columns: 1fr; }
+  .svc-x-inner { padding: 4px 16px 16px; }
+  .svc-x-detail { grid-template-columns: 1fr; gap: 14px; }
+  .svc-x-list { grid-template-columns: 1fr; gap: 5px 0; }
+  .svc-x-list li { font-size: 13.5px; }
+  .svc-x-label { font-size: 11px; margin-bottom: 6px; }
+}
+
+/* На узких телефонах — grid: icon | title+tag | chevron */
+@media (max-width: 480px) {
+  .svc-x-head {
+    display: grid;
+    grid-template-columns: 44px 1fr 28px;
+    gap: 16px;
+    padding: 20px;
+    align-items: start;
+  }
+  .svc-x-name   { font-size: 17px; line-height: 1.3; }
+  .svc-x-tag    { font-size: 11.5px; }
+  .svc-x-result { display: none; }
+  .svc-x-more   { display: none; }
+  .svc-x-meta-val { font-size: 14px; line-height: 1.4; word-break: break-word; }
 }
 
 @media (prefers-reduced-motion: reduce) {
