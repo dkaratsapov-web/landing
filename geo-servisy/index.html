@@ -447,7 +447,7 @@
       <h2>Что такое продвижение <span class="accent">в гео-сервисах</span></h2>
       <p>Люди всё чаще ищут «рядом»: «кофейня рядом», «стоматология в районе», «шиномонтаж рядом». Сервисы показывают подборку компаний — звонки, маршруты и клиентов получают те, кто в топе и с хорошим рейтингом.</p>
     </div>
-    <div class="gmap reveal" id="gmapMock" data-query="ваша услуга · москва">
+    <div class="gmap reveal" id="gmapMock" data-query="ресторан москва">
       <!-- Левая панель: поиск + список -->
       <div class="gmap-panel">
         <div class="gmap-search">
@@ -484,21 +484,39 @@
       <!-- Правая часть: карта -->
       <div class="gmap-canvas">
         <svg class="gmap-bg" viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <rect width="400" height="460" fill="#e9efe6"/>
+          <rect width="400" height="460" fill="#eceee8"/>
+          <!-- кварталы застройки -->
+          <g fill="#e0e4db">
+            <rect x="20" y="20" width="70" height="48" rx="3"/><rect x="100" y="24" width="56" height="40" rx="3"/>
+            <rect x="250" y="18" width="60" height="46" rx="3"/><rect x="320" y="30" width="58" height="52" rx="3"/>
+            <rect x="30" y="120" width="62" height="50" rx="3"/><rect x="300" y="120" width="70" height="56" rx="3"/>
+            <rect x="24" y="300" width="66" height="54" rx="3"/><rect x="310" y="290" width="64" height="58" rx="3"/>
+            <rect x="40" y="390" width="74" height="48" rx="3"/><rect x="290" y="392" width="80" height="46" rx="3"/>
+            <rect x="150" y="40" width="40" height="34" rx="3"/><rect x="210" y="40" width="34" height="34" rx="3"/>
+          </g>
           <!-- парки -->
-          <path d="M-10 60 Q60 40 120 80 T260 70 L300 130 Q200 160 120 150 T-10 170Z" fill="#cfe6c0" opacity="0.8"/>
-          <circle cx="330" cy="380" r="70" fill="#cfe6c0" opacity="0.7"/>
-          <!-- река -->
-          <path d="M-10 250 Q120 230 180 300 T420 320 L420 360 Q260 340 180 360 T-10 300Z" fill="#a9d4ec"/>
-          <!-- дороги -->
-          <g stroke="#ffffff" stroke-width="8" opacity="0.9" fill="none">
-            <path d="M0 120 H400 M0 220 H400 M0 340 H400 M70 0 V460 M180 0 V460 M300 0 V460"/>
+          <path d="M-10 50 Q70 30 140 70 Q120 120 60 130 Q10 120 -10 150Z" fill="#cfe6bf" opacity="0.9"/>
+          <circle cx="340" cy="380" r="66" fill="#cfe6bf" opacity="0.85"/>
+          <ellipse cx="120" cy="370" rx="48" ry="34" fill="#cfe6bf" opacity="0.8"/>
+          <!-- Москва-река (S-образный изгиб) -->
+          <path d="M-10 210 Q70 200 110 250 Q150 305 230 300 Q300 296 330 250 Q352 214 410 220 L410 250 Q350 246 332 286 Q300 332 224 332 Q140 336 104 280 Q74 232 -10 244 Z" fill="#a7d2ec"/>
+          <!-- крупные радиальные проспекты -->
+          <g stroke="#ffffff" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.95">
+            <path d="M168 211 L20 40 M168 211 L210 -10 M168 211 L380 70 M168 211 L410 250 M168 211 L300 440 M168 211 L120 460 M168 211 L-10 330"/>
           </g>
-          <g stroke="#dfe6db" stroke-width="2.5" fill="none">
-            <path d="M0 170 H400 M0 290 H400 M125 0 V460 M240 0 V460 M350 0 V460"/>
+          <!-- садовое и бульварное кольцо -->
+          <g fill="none" stroke="#ffffff" stroke-width="8" opacity="0.9">
+            <ellipse cx="168" cy="211" rx="150" ry="138"/>
           </g>
-          <!-- кольцо -->
-          <ellipse cx="200" cy="240" rx="150" ry="150" fill="none" stroke="#ffd27a" stroke-width="9" opacity="0.85"/>
+          <g fill="none" stroke="#ffffff" stroke-width="6" opacity="0.85">
+            <ellipse cx="168" cy="211" rx="78" ry="70"/>
+          </g>
+          <!-- второстепенные улицы -->
+          <g stroke="#dde2d7" stroke-width="2.4" fill="none">
+            <path d="M0 95 H400 M0 160 H400 M0 360 H400 M0 410 H400 M60 0 V460 M250 0 V460 M340 0 V460"/>
+          </g>
+          <!-- центральная площадь / Кремль -->
+          <rect x="150" y="194" width="36" height="30" rx="4" fill="#d8cfa6"/>
         </svg>
 
         <!-- маркеры -->
