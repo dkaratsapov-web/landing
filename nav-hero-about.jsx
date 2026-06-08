@@ -269,7 +269,7 @@ function About() {
   const A = window.CONTENT.about || {};
   const paras = A.paragraphs || [];
   const chips = A.chips || [];
-  const chipIcons = [IconMap, IconClock];
+  const chipIcons = [IconMap, IconClock, IconHandshake];
   return (
     <section id="about" className="sec bg-a">
       <div className="wrap two-col about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'stretch' }}>
