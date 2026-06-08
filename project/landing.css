@@ -331,7 +331,7 @@ h2.section-title {
     scrollbar-width: none;
   }
   .svc-x-stack::-webkit-scrollbar { display: none; }
-  .svc-x { flex: 0 0 100%; max-width: 100%; scroll-snap-align: start; margin: 0; border-radius: 0; border-left: none; border-right: none; }
+  .svc-x { flex: 0 0 100%; max-width: 100%; scroll-snap-align: start; }
   /* Cases keep carousel */
   .case-list {
     flex-direction: row !important; align-items: stretch;
@@ -789,8 +789,8 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .svc-x-head {
     display: grid;
     grid-template-columns: 44px 1fr 28px;
-    gap: 10px;
-    padding: 16px;
+    gap: 16px;
+    padding: 20px;
     align-items: start;
   }
   .svc-x-name   { font-size: 17px; line-height: 1.3; }
