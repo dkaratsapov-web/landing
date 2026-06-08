@@ -410,11 +410,11 @@ h3 { font-weight: 600; }
 
 /* ---------- Преимущества ---------- */
 .feat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-.feat-card { display: flex; flex-direction: column; min-height: 260px; }
+.feat-card { display: flex; flex-direction: column; padding: 24px; }
 .feat-card .num { font-size: 15px; font-weight: 600; color: var(--lime); letter-spacing: 0.04em; }
-.feat-card h3 { font-size: 22px; margin: 18px 0 12px; }
+.feat-card h3 { font-size: 22px; margin: 12px 0 8px; }
 .feat-card p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
-.feat-card .spacer { flex: 1; }
+.feat-card .spacer { display: none; }
 
 /* ---------- Стоимость ---------- */
 .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
