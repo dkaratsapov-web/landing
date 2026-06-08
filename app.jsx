@@ -101,11 +101,11 @@ function App() {
       <Cases onCta={scrollToContacts} />
       <SectionWave from="#151517" to="#08080a" speed={13} />
       <Audit />
-      {t.showQuiz && <QuizTeaser onOpen={() => setQuizOpen(true)} />}
       <SectionWave from="#08080a" to="#151517" speed={17} />
       <Contacts />
       <SectionWave from="#151517" to="#000000" speed={15} />
       <Footer onCta={scrollToContacts} />
+      {t.showQuiz && <QuizFab onOpen={() => setQuizOpen(true)} />}
       <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
       <CookieNotice />
 
