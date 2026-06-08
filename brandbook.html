@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Брендбук — Даниил Карацапов</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black:        #0a0b0a;
+    --dark:         #111211;
+    --card:         #181918;
+    --surface:      #222322;
+    --surface2:     #2a2b2a;
+    --line:         rgba(255,255,255,0.09);
+    --line-strong:  rgba(255,255,255,0.16);
+
+    --accent:        #b6f01e;
+    --accent-bright: #c4f53e;
+    --accent-dark:   #8ec818;
+    --accent-ink:    #0c1402;
+    --accent-soft:   rgba(182,240,30,0.12);
+    --accent-soft-bd:rgba(182,240,30,0.28);
+
+    --white:  #ffffff;
+    --txt:    rgba(255,255,255,0.92);
+    --txt-2:  rgba(255,255,255,0.55);
+    --txt-3:  rgba(255,255,255,0.32);
+
+    --font:   'Nunito', system-ui, sans-serif;
+
+    --r-xs:  5px;
+    --r-sm:  8px;
+    --r-md:  12px;
+    --r-lg:  18px;
+    --r-xl:  24px;
+    --r-pill:9999px;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--black);
+    color: var(--txt);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .page { page-break-after: always; break-after: page; min-height: 100vh; }
+    .no-print { display: none !important; }
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wrap { max-width: 1000px; margin: 0 auto; width: 100%; }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--black);
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .cover-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .cover-logo svg { width: 56px; height: 56px; }
+  .cover-logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .cover-logo-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--txt-2);
+    letter-spacing: 0;
+    margin-top: 2px;
+  }
+
+  .cover-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0;
+  }
+  .cover-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-bright);
+    margin-bottom: 24px;
+  }
+  .cover-title {
+    font-size: clamp(48px, 6vw, 80px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 28px;
+  }
+  .cover-title span { color: var(--accent); }
+  .cover-desc {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--txt-2);
+    max-width: 500px;
+    line-height: 1.6;
+  }
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .cover-version {
+    font-size: 13px;
+    color: var(--txt-3);
+  }
+
+  /* decorative grid */
+  .cover-grid {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  /* ── SECTION PAGES ── */
+  .section-page {
+    background: var(--dark);
+    justify-content: flex-start;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 52px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-num {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--r-sm);
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .page-sub {
+    font-size: 14px;
+    color: var(--txt-3);
+    margin-left: auto;
+    font-weight: 400;
+  }
+
+  /* ── LABEL ── */
+  .label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt-3);
+    margin-bottom: 12px;
+  }
+
+  /* ── SECTION SUBTITLE ── */
+  .h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 20px;
+    margin-top: 40px;
+    letter-spacing: -0.01em;
+  }
+  .h2:first-child { margin-top: 0; }
+
+  /* ── LOGO PAGE ── */
+  .logo-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .logo-box {
+    border-radius: var(--r-lg);
+    padding: 48px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+  .logo-box.dark  { background: var(--black); border: 1px solid var(--line); }
+  .logo-box.light { background: #f5f5f7; }
+  .logo-box.accent-bg { background: var(--accent); }
+  .logo-box.mid   { background: var(--card); border: 1px solid var(--line); }
+
+  .logo-inline {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-inline svg { width: 40px; height: 40px; }
+  .logo-inline-text {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--white);
+  }
+  .logo-box.light .logo-inline-text { color: #0a0b0a; }
+  .logo-box.accent-bg .logo-inline-text { color: var(--accent-ink); }
+  .logo-inline-text-dark { color: #0a0b0a; }
+
+  .logo-mark-only svg { width: 48px; height: 48px; }
+
+  .logo-rules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .rule-box {
+    border-radius: var(--r-md);
+    padding: 20px;
+    border: 1px solid var(--line);
+    background: var(--card);
+  }
+  .rule-box.do { border-color: rgba(182,240,30,0.3); }
+  .rule-box.dont { border-color: rgba(255,80,80,0.25); }
+  .rule-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .rule-tag.do { color: var(--accent-bright); }
+  .rule-tag.dont { color: #ff5050; }
+  .rule-text { font-size: 14px; color: var(--txt-2); line-height: 1.5; }
+
+  /* ── COLOR PAGE ── */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .color-card {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .color-swatch {
+    height: 100px;
+  }
+  .color-info {
+    padding: 14px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: none;
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+  }
+  .color-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .color-hex {
+    font-size: 12px;
+    color: var(--txt-3);
+    font-family: 'Courier New', monospace;
+  }
+  .color-role {
+    font-size: 11px;
+    color: var(--txt-3);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* ── TYPE PAGE ── */
+  .type-sample {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+  .type-sample + .type-sample { margin-top: 12px; }
+  .type-meta {
+    font-size: 11px;
+    color: var(--txt-3);
+    font-family: 'Courier New', monospace;
+    margin-bottom: 10px;
+    letter-spacing: 0.04em;
+  }
+  .t-hero-demo {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--white);
+  }
+  .t-display-demo {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+  }
+  .t-h3-demo {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--white);
+  }
+  .t-lead-demo {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--txt-2);
+  }
+  .t-body-demo {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--txt-2);
+  }
+  .t-caption-demo {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--txt-3);
+  }
+  .t-fine-demo {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--txt-3);
+  }
+
+  /* ── WEIGHT GRID ── */
+  .weight-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .weight-box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .weight-sample {
+    font-size: 28px;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .weight-label { font-size: 11px; color: var(--txt-3); }
+
+  /* ── BUTTON PAGE ── */
+  .btn-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .bb-btn-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font); font-size: 16px; font-weight: 700;
+    border: none; border-radius: var(--r-pill);
+    padding: 13px 26px; cursor: default;
+  }
+  .bb-btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--txt);
+    font-family: var(--font); font-size: 16px; font-weight: 600;
+    border: 1px solid var(--line-strong); border-radius: var(--r-pill);
+    padding: 12px 26px; cursor: default;
+  }
+  .bb-btn-tg {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
+    background: #2ca5e0;
+    color: #fff;
+    font-family: var(--font); font-size: 16px; font-weight: 600;
+    border: none; border-radius: var(--r-pill);
+    padding: 13px 26px; cursor: default;
+  }
+  .bb-btn-link {
+    display: inline-flex; align-items: center;
+    gap: 6px;
+    color: var(--accent-bright);
+    font-size: 16px; font-weight: 600;
+    background: none; border: none; cursor: default;
+  }
+
+  /* ── COMPONENTS ── */
+  .component-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    padding: 28px;
+  }
+
+  .comp-label { font-size: 11px; color: var(--txt-3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+
+  /* chip */
+  .bb-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-soft-bd);
+    color: var(--accent-bright);
+    border-radius: var(--r-pill);
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .bb-chip-plain {
+    display: inline-flex;
+    align-items: center;
+    background: var(--surface2);
+    color: var(--txt-2);
+    border-radius: var(--r-pill);
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+  }
+
+  /* stat */
+  .bb-stat { text-align: center; }
+  .bb-stat-num { font-size: 36px; font-weight: 800; color: var(--accent-bright); letter-spacing: -0.03em; }
+  .bb-stat-label { font-size: 13px; color: var(--txt-2); margin-top: 4px; }
+
+  /* eyebrow */
+  .bb-eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--accent-bright);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* card */
+  .bb-kase-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .bb-kase-photo {
+    height: 110px;
+    background: linear-gradient(135deg, #1a2f1a, #0e1a0e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+  }
+  .bb-kase-body { padding: 16px; }
+  .bb-kase-field { font-size: 12px; color: var(--accent-bright); font-weight: 600; margin-bottom: 6px; }
+  .bb-kase-name { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .bb-kase-metric-val { font-size: 22px; font-weight: 800; color: var(--accent-bright); }
+  .bb-kase-metric-l { font-size: 11px; color: var(--txt-3); }
+
+  /* service card */
+  .bb-svc-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    padding: 24px;
+  }
+  .bb-svc-icon {
+    width: 44px; height: 44px;
+    background: var(--accent-soft);
+    border-radius: var(--r-md);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .bb-svc-name { font-size: 18px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .bb-svc-tag { font-size: 12px; color: var(--txt-3); margin-bottom: 12px; }
+  .bb-svc-result { font-size: 14px; color: var(--txt-2); line-height: 1.5; }
+
+  /* ── ICONS PAGE ── */
+  .icons-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .icon-tile {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .icon-tile svg { width: 22px; height: 22px; color: var(--accent-bright); }
+  .icon-tile-label { font-size: 10px; color: var(--txt-3); text-align: center; line-height: 1.3; }
+
+  /* ── VOICE / TONE ── */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .voice-box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 24px;
+  }
+  .voice-box.do  { border-top: 3px solid var(--accent); }
+  .voice-box.dont { border-top: 3px solid #ff5050; }
+  .voice-box-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .voice-box.do   .voice-box-tag { color: var(--accent-bright); }
+  .voice-box.dont .voice-box-tag { color: #ff5050; }
+  .voice-example {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--txt-2);
+  }
+  .voice-example strong { color: var(--white); }
+
+  /* ── SPACING PAGE ── */
+  .spacing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .spacing-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .spacing-bar-wrap { width: 260px; height: 20px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+  .spacing-bar { height: 100%; background: var(--accent); border-radius: 4px; }
+  .spacing-name { font-size: 13px; font-family: 'Courier New', monospace; color: var(--txt-2); width: 90px; }
+  .spacing-val  { font-size: 13px; color: var(--txt-3); width: 40px; }
+
+  /* ── RADIUS PAGE ── */
+  .radius-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .radius-demo {
+    background: var(--card);
+    border: 1px solid var(--line);
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+  }
+  .radius-label { font-size: 11px; color: var(--txt-3); text-align: center; }
+  .radius-name { font-size: 12px; color: var(--txt-2); font-family: 'Courier New', monospace; text-align: center; margin-top: 6px; }
+
+  /* ── PHOTO STYLE ── */
+  .photo-guidelines {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .photo-box {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .photo-preview {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: var(--surface);
+  }
+  .photo-preview.do-bg {
+    background: linear-gradient(135deg, #1a2a1a, #0d1a0d);
+  }
+  .photo-preview.dont-bg {
+    background: linear-gradient(135deg, #2a2a1a, #1a1a0d);
+    filter: saturate(0.3);
+  }
+  .photo-info {
+    padding: 16px 20px;
+    background: var(--card);
+  }
+
+  /* ── CONTACTS / END PAGE ── */
+  .end-page {
+    background: var(--black);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .end-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .end-logo svg { width: 72px; height: 72px; }
+  .end-title {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--white);
+  }
+  .end-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .end-contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 18px;
+    color: var(--txt-2);
+  }
+  .end-contact span { color: var(--accent-bright); font-weight: 600; }
+  .end-footer {
+    font-size: 13px;
+    color: var(--txt-3);
+  }
+
+  /* ── GRID LINES deco ── */
+  .deco-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image:
+      linear-gradient(var(--white) 1px, transparent 1px),
+      linear-gradient(90deg, var(--white) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ ОБЛОЖКА -->
+<div class="page cover">
+  <div class="deco-lines"></div>
+
+  <!-- Logo -->
+  <div class="cover-logo">
+    <svg viewBox="0 0 50 50" fill="none">
+      <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#b6f01e"/>
+      <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#b6f01e"/>
+    </svg>
+    <div>
+      <div class="cover-logo-text">Даниил Карацапов</div>
+      <div class="cover-logo-sub">Интернет-маркетолог</div>
+    </div>
+  </div>
+
+  <!-- Center -->
+  <div class="cover-center">
+    <div class="cover-eyebrow">Фирменный стиль · 2026</div>
+    <div class="cover-title">Бренд<span>бук</span></div>
+    <div class="cover-desc">Руководство по визуальному стилю, голосу бренда и правилам применения фирменных элементов.</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="cover-footer">
+    <div class="cover-version">Версия 1.0 · Июнь 2026</div>
+    <div style="font-size:13px;color:var(--txt-3);">карацапов-даниил-маркетинг.рф</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ СОДЕРЖАНИЕ -->
+<div class="page section-page">
+  <div class="page-header">
+    <div class="page-num" style="background:var(--surface2);color:var(--txt-2);">≡</div>
+    <div class="page-title">Содержание</div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);">
+      <div>
+        <div style="font-size:12px;color:var(--accent-bright);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">01</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);">Логотип</div>
+      </div>
+      <div style="font-size:14px;color:var(--txt-3);">Знак, версии, охранная зона, запреты</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);">
+      <div>
+        <div style="font-size:12px;color:var(--accent-bright);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">02</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);">Фирменные цвета</div>
+      </div>
+      <div style="font-size:14px;color:var(--txt-3);">Акцент, фоны, текст, применение</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);">
+      <div>
+        <div style="font-size:12px;color:var(--accent-bright);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">03</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);">Типографика</div>
+      </div>
+      <div style="font-size:14px;color:var(--txt-3);">Гарнитура, шкала, начертания</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);">
+      <div>
+        <div style="font-size:12px;color:var(--accent-bright);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">04</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);">UI-компоненты</div>
+      </div>
+      <div style="font-size:14px;color:var(--txt-3);">Кнопки, чипы, карточки, статы</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);">
+      <div>
+        <div style="font-size:12px;color:var(--accent-bright);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">05</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);">Отступы и радиусы</div>
+      </div>
+      <div style="font-size:14px;color:var(--txt-3);">Система сеток, 8px baseline</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;border-bottom:1px solid var(--line);">
+      <div>
+        <div style="font-size:12px;color:var(--accent-bright);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">06</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);">Голос бренда</div>
+      </div>
+      <div style="font-size:14px;color:var(--txt-3);">Тон, стиль общения, примеры</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0;">
+      <div>
+        <div style="font-size:12px;color:var(--accent-bright);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">07</div>
+        <div style="font-size:20px;font-weight:700;color:var(--white);">Контакты</div>
+      </div>
+      <div style="font-size:14px;color:var(--txt-3);">Мессенджеры, сайт, соцсети</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 01 ЛОГОТИП -->
+<div class="page section-page">
+  <div class="page-header">
+    <div class="page-num">01</div>
+    <div class="page-title">Логотип</div>
+    <div class="page-sub">Знак и версии</div>
+  </div>
+
+  <div class="h2">Фирменный знак</div>
+  <div style="font-size:14px;color:var(--txt-2);margin-bottom:28px;line-height:1.7;">
+    Логотип — бумажный самолётик, стилизованный под бизнес-вектор: траектория полёта отражает движение от точки А к цели. Акцентный жёлто-зелёный (#b6f01e) — сигнальный, запоминающийся, нетипичный для маркетинговой ниши.
+  </div>
+
+  <div class="logo-showcase">
+    <div class="logo-box dark">
+      <div class="label">На тёмном фоне · основная версия</div>
+      <div class="logo-inline">
+        <svg viewBox="0 0 50 50" fill="none">
+          <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#b6f01e"/>
+          <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#b6f01e"/>
+        </svg>
+        <div class="logo-inline-text">Даниил Карацапов</div>
+      </div>
+      <div class="label" style="margin-bottom:4px;">Только знак</div>
+      <svg width="48" height="48" viewBox="0 0 50 50" fill="none">
+        <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#b6f01e"/>
+        <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#b6f01e"/>
+      </svg>
+    </div>
+    <div class="logo-box light">
+      <div class="label" style="color:#666;">На светлом фоне</div>
+      <div class="logo-inline">
+        <svg viewBox="0 0 50 50" fill="none">
+          <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#7cb800"/>
+          <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#7cb800"/>
+        </svg>
+        <div class="logo-inline-text" style="color:#111;">Даниил Карацапов</div>
+      </div>
+      <div class="label" style="margin-bottom:4px;color:#666;">Знак адаптируется — темнее на свету</div>
+    </div>
+    <div class="logo-box accent-bg">
+      <div class="label" style="color:rgba(12,20,2,0.6);">На акцентном фоне</div>
+      <div class="logo-inline">
+        <svg viewBox="0 0 50 50" fill="none">
+          <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#0c1402"/>
+          <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#0c1402"/>
+        </svg>
+        <div class="logo-inline-text" style="color:#0c1402;">Даниил Карацапов</div>
+      </div>
+    </div>
+    <div class="logo-box mid">
+      <div class="label">В навигации · компактная версия</div>
+      <div class="logo-inline" style="gap:10px;">
+        <svg width="30" height="30" viewBox="0 0 50 50" fill="none">
+          <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#b6f01e"/>
+          <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#b6f01e"/>
+        </svg>
+        <div style="font-size:18px;font-weight:700;color:var(--white);letter-spacing:-0.02em;">Даниил Карацапов</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h2">Правила использования</div>
+  <div class="logo-rules">
+    <div class="rule-box do">
+      <div class="rule-tag do">✓ Можно</div>
+      <div class="rule-text">Использовать на тёмном, светлом и акцентном фоне с адаптацией цвета знака.</div>
+    </div>
+    <div class="rule-box dont">
+      <div class="rule-tag dont">✗ Нельзя</div>
+      <div class="rule-text">Менять пропорции знака, поворачивать его, накладывать поверх пёстрых фото без подложки.</div>
+    </div>
+    <div class="rule-box do">
+      <div class="rule-tag do">✓ Можно</div>
+      <div class="rule-text">Использовать только знак (без текста) в аватарке, иконке приложения, favicon.</div>
+    </div>
+    <div class="rule-box dont">
+      <div class="rule-tag dont">✗ Нельзя</div>
+      <div class="rule-text">Перекрашивать знак в другие цвета, добавлять тень, обводку или эффекты.</div>
+    </div>
+  </div>
+
+  <div class="h2">Охранная зона</div>
+  <div style="font-size:14px;color:var(--txt-2);line-height:1.7;">
+    Минимальное свободное пространство вокруг логотипа — ширина самолётика-знака (≈ 1× высоты). Никаких других объектов в этой зоне.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 02 ЦВЕТА -->
+<div class="page section-page">
+  <div class="page-header">
+    <div class="page-num">02</div>
+    <div class="page-title">Фирменные цвета</div>
+    <div class="page-sub">Палитра и применение</div>
+  </div>
+
+  <div class="h2">Акцентный цвет</div>
+  <div style="font-size:14px;color:var(--txt-2);margin-bottom:24px;line-height:1.7;">
+    Электрический жёлто-зелёный — главная точка внимания. Используется на CTA-кнопках, метриках, выделениях в тексте. Не перегружать — акцент работает из-за контраста.
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-bottom:40px;">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#b6f01e;display:flex;align-items:flex-end;padding:16px;">
+        <span style="font-size:13px;font-weight:700;color:#0c1402;">Основной акцент</span>
+      </div>
+      <div class="color-info">
+        <div class="color-name">Accent</div>
+        <div class="color-hex">#b6f01e</div>
+        <div class="color-role">CTA-кнопки, бейджи, фоновые акценты, выделения в H1</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#c4f53e;"></div>
+      <div class="color-info">
+        <div class="color-name">Accent Bright</div>
+        <div class="color-hex">#c4f53e</div>
+        <div class="color-role">Ссылки, иконки, цифры ROI на тёмном</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#0c1402;border:1px solid var(--line);"></div>
+      <div class="color-info">
+        <div class="color-name">Accent Ink</div>
+        <div class="color-hex">#0c1402</div>
+        <div class="color-role">Текст на акцентном фоне</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h2">Фоновая палитра</div>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background:#000000;border:1px solid var(--line);"></div>
+      <div class="color-info">
+        <div class="color-name">Black</div>
+        <div class="color-hex">#000000</div>
+        <div class="color-role">Навигация, оверлеи</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#0a0b0a;border:1px solid var(--line);"></div>
+      <div class="color-info">
+        <div class="color-name">Page BG</div>
+        <div class="color-hex">#0a0b0a</div>
+        <div class="color-role">Главный фон страницы</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#181918;border:1px solid var(--line);"></div>
+      <div class="color-info">
+        <div class="color-name">Card</div>
+        <div class="color-hex">#181918</div>
+        <div class="color-role">Карточки, модалки</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background:#2a2b2a;border:1px solid var(--line);"></div>
+      <div class="color-info">
+        <div class="color-name">Surface 2</div>
+        <div class="color-hex">#2a2b2a</div>
+        <div class="color-role">Вложенные элементы, табы</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="h2">Текстовые оттенки</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;">
+      <div style="font-size:20px;color:rgba(255,255,255,0.92);font-weight:600;margin-bottom:8px;">Aa</div>
+      <div style="font-size:11px;color:var(--txt-3);font-family:monospace;">rgba(255,255,255,0.92)</div>
+      <div style="font-size:11px;color:var(--txt-3);margin-top:4px;">Основной текст</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;">
+      <div style="font-size:20px;color:rgba(255,255,255,0.55);font-weight:600;margin-bottom:8px;">Aa</div>
+      <div style="font-size:11px;color:var(--txt-3);font-family:monospace;">rgba(255,255,255,0.55)</div>
+      <div style="font-size:11px;color:var(--txt-3);margin-top:4px;">Вторичный текст</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;">
+      <div style="font-size:20px;color:rgba(255,255,255,0.32);font-weight:600;margin-bottom:8px;">Aa</div>
+      <div style="font-size:11px;color:var(--txt-3);font-family:monospace;">rgba(255,255,255,0.32)</div>
+      <div style="font-size:11px;color:var(--txt-3);margin-top:4px;">Третичный / подписи</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;">
+      <div style="font-size:20px;color:rgba(255,255,255,0.16);font-weight:600;margin-bottom:8px;">Aa</div>
+      <div style="font-size:11px;color:var(--txt-3);font-family:monospace;">rgba(255,255,255,0.16)</div>
+      <div style="font-size:11px;color:var(--txt-3);margin-top:4px;">Разделители, линии</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 03 ТИПОГРАФИКА -->
+<div class="page section-page">
+  <div class="page-header">
+    <div class="page-num">03</div>
+    <div class="page-title">Типографика</div>
+    <div class="page-sub">Nunito · Google Fonts</div>
+  </div>
+
+  <div class="h2">Гарнитура — Nunito</div>
+  <div style="font-size:14px;color:var(--txt-2);margin-bottom:28px;line-height:1.7;">
+    Nunito — округлая гуманистическая гротеска с отличной читаемостью на экране. Поддерживает полный кириллический набор. Используется для всех текстов: заголовков, тела, подписей.
+  </div>
+
+  <div class="weight-grid">
+    <div class="weight-box">
+      <div class="weight-sample" style="font-weight:300;">Аа</div>
+      <div class="weight-label">Light 300</div>
+    </div>
+    <div class="weight-box">
+      <div class="weight-sample" style="font-weight:400;">Аа</div>
+      <div class="weight-label">Regular 400</div>
+    </div>
+    <div class="weight-box">
+      <div class="weight-sample" style="font-weight:600;">Аа</div>
+      <div class="weight-label">SemiBold 600</div>
+    </div>
+    <div class="weight-box">
+      <div class="weight-sample" style="font-weight:700;">Аа</div>
+      <div class="weight-label">Bold 700</div>
+    </div>
+    <div class="weight-box">
+      <div class="weight-sample" style="font-weight:800;">Аа</div>
+      <div class="weight-label">ExtraBold 800</div>
+    </div>
+  </div>
+
+  <div class="h2">Шкала размеров</div>
+
+  <div class="type-sample">
+    <div class="type-meta">Hero · 52–80px · weight 800 · tracking −0.03em · H1</div>
+    <div class="t-hero-demo">Маркетинг, который<br>делаю <span style="color:var(--accent);">я сам</span></div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-meta">Display LG · 36–44px · weight 700 · tracking −0.02em · H2</div>
+    <div class="t-display-demo">Результат в цифрах,<br>а не в красивых отчётах</div>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-meta">Display MD · 26px · weight 600 · tracking −0.01em · H3</div>
+    <div class="t-h3-demo">Весь маркетинг — в одних руках</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+    <div class="type-sample">
+      <div class="type-meta">Lead · 20px · weight 400 · Подзаголовок, лид</div>
+      <div class="t-lead-demo">Помогаю малому бизнесу привлекать клиентов без посредников.</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-meta">Body · 17px · weight 400 · Основной текст</div>
+      <div class="t-body-demo">Каждый проект веду лично — от аудита до результата. Никаких «наших специалистов» и менеджеров.</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+    <div class="type-sample">
+      <div class="type-meta">Caption · 14px · weight 400 · Подписи, метки</div>
+      <div class="t-caption-demo">Яндекс Директ · Настройка и ведение · от 50 000 ₽</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-meta">Fine · 12px · weight 400 · Правовые тексты</div>
+      <div class="t-fine-demo">Нажимая кнопку, вы соглашаетесь на обработку персональных данных в соответствии с политикой конфиденциальности.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 04 КОМПОНЕНТЫ -->
+<div class="page section-page">
+  <div class="page-header">
+    <div class="page-num">04</div>
+    <div class="page-title">UI-компоненты</div>
+    <div class="page-sub">Кнопки, чипы, карточки</div>
+  </div>
+
+  <div class="h2">Кнопки</div>
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:32px;margin-bottom:12px;">
+    <div class="btn-showcase">
+      <div>
+        <div class="label" style="margin-bottom:8px;">Primary · Акцент</div>
+        <button class="bb-btn-primary">Обсудить задачу</button>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:8px;">Ghost · Вторичная</div>
+        <button class="bb-btn-ghost">Смотреть кейсы →</button>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:8px;">Telegram</div>
+        <button class="bb-btn-tg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+          Telegram
+        </button>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:8px;">Link · Текстовая</div>
+        <button class="bb-btn-link">Все кейсы →</button>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--txt-3);border-top:1px solid var(--line);padding-top:16px;">
+      Радиус: pill (9999px) · Шрифт: Nunito 700 · Состояния: hover (opacity 0.9), active (scale 0.95)
+    </div>
+  </div>
+
+  <div class="h2">Чипы и метки</div>
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;margin-bottom:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+    <span class="bb-chip">Яндекс Директ</span>
+    <span class="bb-chip">VK Ads</span>
+    <span class="bb-chip">Разработка сайта</span>
+    <span class="bb-chip-plain">Москва</span>
+    <span class="bb-chip-plain">ROI 322%</span>
+    <span style="display:inline-flex;align-items:center;background:var(--accent);color:var(--accent-ink);border-radius:var(--r-pill);padding:3px 10px;font-size:12px;font-weight:800;letter-spacing:0.02em;">Новый</span>
+  </div>
+
+  <div class="h2">Карточки</div>
+  <div class="component-grid">
+    <!-- Service card -->
+    <div>
+      <div class="comp-label">Карточка услуги</div>
+      <div class="bb-svc-card">
+        <div class="bb-svc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c4f53e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="bb-svc-name">Контекстная реклама</div>
+        <div class="bb-svc-tag">Yandex Ads · Google Ads</div>
+        <div class="bb-svc-result">Настрою и веду Яндекс Директ — целевые заявки с первых дней.</div>
+        <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:14px;">
+          <div style="font-size:13px;color:var(--txt-3);">Запуск за 3–5 дней</div>
+          <div style="font-size:13px;color:var(--accent-bright);font-weight:600;">от 50 000 ₽</div>
+        </div>
+      </div>
+    </div>
+    <!-- Stat block -->
+    <div>
+      <div class="comp-label">Блок статистики</div>
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="bb-stat">
+          <div class="bb-stat-num">9<span style="font-size:24px;">+</span></div>
+          <div class="bb-stat-label">лет в маркетинге</div>
+        </div>
+        <div class="bb-stat">
+          <div class="bb-stat-num">70<span style="font-size:20px;">%</span></div>
+          <div class="bb-stat-label">клиентов — по рекомендации</div>
+        </div>
+        <div class="bb-stat">
+          <div class="bb-stat-num">3<span style="font-size:18px;">+ млн</span></div>
+          <div class="bb-stat-label">оборот кабинетов/мес</div>
+        </div>
+        <div class="bb-stat">
+          <div class="bb-stat-num">50<span style="font-size:20px;">+</span></div>
+          <div class="bb-stat-label">инструментов роста</div>
+        </div>
+      </div>
+    </div>
+    <!-- Case card -->
+    <div>
+      <div class="comp-label">Карточка кейса</div>
+      <div class="bb-kase-card">
+        <div class="bb-kase-photo">📊</div>
+        <div class="bb-kase-body">
+          <div class="bb-kase-field">Lounge Bar · Москва</div>
+          <div class="bb-kase-name">Привлечение гостей в премиальный бар</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+            <div><div class="bb-kase-metric-val">+90%</div><div class="bb-kase-metric-l">бронирований</div></div>
+            <div><div class="bb-kase-metric-val">ROI 520%</div><div class="bb-kase-metric-l">рекламы</div></div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:6px;flex-wrap:wrap;">
+            <span class="bb-chip" style="font-size:11px;padding:3px 8px;">Яндекс Директ</span>
+            <span class="bb-chip" style="font-size:11px;padding:3px 8px;">Яндекс Бизнес</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Eyebrow + heading -->
+    <div>
+      <div class="comp-label">Eyebrow + заголовок секции</div>
+      <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:32px;">
+        <div class="bb-eyebrow">Кейсы · доказательства</div>
+        <div style="font-size:28px;font-weight:800;color:var(--white);letter-spacing:-0.02em;line-height:1.1;margin-bottom:12px;">Результат в цифрах,<br>а не в отчётах</div>
+        <div style="font-size:15px;color:var(--txt-2);line-height:1.6;">Все цифры — из реальных проектов. Без приукрашивания.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 05 ОТСТУПЫ И РАДИУСЫ -->
+<div class="page section-page">
+  <div class="page-header">
+    <div class="page-num">05</div>
+    <div class="page-title">Отступы и радиусы</div>
+    <div class="page-sub">8px baseline grid</div>
+  </div>
+
+  <div class="h2">Система отступов</div>
+  <div style="font-size:14px;color:var(--txt-2);margin-bottom:24px;line-height:1.7;">
+    Все отступы кратны 4px. Шаг сетки — 8px. Секционные отступы — 60–80px на десктопе, 36px на мобильном.
+  </div>
+
+  <div class="spacing-list">
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-xxs</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:4px;"></div></div>
+      <div class="spacing-val">4px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Иконка ↔ текст, значки</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-xs</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:8px;"></div></div>
+      <div class="spacing-val">8px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Внутри чипов, тегов</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-sm</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:12px;"></div></div>
+      <div class="spacing-val">12px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Gap между чипами</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-md</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:17px;"></div></div>
+      <div class="spacing-val">16–17px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Стандартный gap в сетке</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-lg</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:24px;"></div></div>
+      <div class="spacing-val">24px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Padding карточек</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-xl</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:32px;"></div></div>
+      <div class="spacing-val">32px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Внутри секций</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-xxl</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:48px;"></div></div>
+      <div class="spacing-val">48px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Между блоками</div>
+    </div>
+    <div class="spacing-row">
+      <div class="spacing-name">--sp-section</div>
+      <div class="spacing-bar-wrap"><div class="spacing-bar" style="width:80px;"></div></div>
+      <div class="spacing-val">80px</div>
+      <div style="font-size:13px;color:var(--txt-3);">Вертикальный padding секций</div>
+    </div>
+  </div>
+
+  <div class="h2">Радиусы скругления</div>
+  <div class="radius-grid">
+    <div>
+      <div class="radius-demo" style="border-radius:5px;"><div class="radius-label">—</div></div>
+      <div class="radius-name">--r-xs<br>5px</div>
+    </div>
+    <div>
+      <div class="radius-demo" style="border-radius:8px;"><div class="radius-label">—</div></div>
+      <div class="radius-name">--r-sm<br>8px</div>
+    </div>
+    <div>
+      <div class="radius-demo" style="border-radius:12px;"><div class="radius-label">—</div></div>
+      <div class="radius-name">--r-md<br>12px</div>
+    </div>
+    <div>
+      <div class="radius-demo" style="border-radius:18px;"><div class="radius-label">—</div></div>
+      <div class="radius-name">--r-lg<br>18px</div>
+    </div>
+    <div>
+      <div class="radius-demo" style="border-radius:24px;"><div class="radius-label">—</div></div>
+      <div class="radius-name">--r-xl<br>24px</div>
+    </div>
+    <div>
+      <div class="radius-demo" style="border-radius:9999px;"><div class="radius-label">—</div></div>
+      <div class="radius-name">--r-pill<br>∞</div>
+    </div>
+  </div>
+
+  <div class="h2">Когда применять</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;">
+      <div style="font-size:12px;color:var(--accent-bright);font-weight:700;margin-bottom:8px;">r-pill (∞)</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.5;">Кнопки, чипы, бейджи, теги</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;">
+      <div style="font-size:12px;color:var(--accent-bright);font-weight:700;margin-bottom:8px;">r-xl / r-lg (24/18px)</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.5;">Карточки, модалки, секции</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;">
+      <div style="font-size:12px;color:var(--accent-bright);font-weight:700;margin-bottom:8px;">r-md / r-sm (12/8px)</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.5;">Иконки, поля ввода, вложенные элементы</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 06 ГОЛОС БРЕНДА -->
+<div class="page section-page">
+  <div class="page-header">
+    <div class="page-num">06</div>
+    <div class="page-title">Голос бренда</div>
+    <div class="page-sub">Тон, стиль, примеры</div>
+  </div>
+
+  <div class="h2">Характер бренда</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:36px;">
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🎯</div>
+      <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;">Прямой</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.5;">Говорим прямо. Без маркетинговых штампов и расплывчатых обещаний.</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">📊</div>
+      <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;">Доказательный</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.5;">Цифры, а не слова. Каждое утверждение подкреплено реальным результатом.</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🤝</div>
+      <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;">Человечный</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.5;">Это конкретный человек, а не агентство. Личная ответственность.</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">⚡</div>
+      <div style="font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;">Уверенный</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.5;">Не «постараемся» — а «запускаем за 3 дня». Конкретные сроки и цены.</div>
+    </div>
+  </div>
+
+  <div class="h2">Как писать — примеры</div>
+  <div class="voice-grid">
+    <div class="voice-box do">
+      <div class="voice-box-tag">✓ Так</div>
+      <div class="voice-example"><strong>«Настрою контекстную рекламу в Яндекс Директ. Первые заявки — за 1–3 дня. Настройка от 50 000 ₽.»</strong><br><br>Конкретно. Цена. Срок.</div>
+    </div>
+    <div class="voice-box dont">
+      <div class="voice-box-tag">✗ Не так</div>
+      <div class="voice-example"><strong>«Мы предоставляем полный спектр услуг по продвижению вашего бизнеса в интернете с максимальной эффективностью.»</strong><br><br>Ничего конкретного.</div>
+    </div>
+    <div class="voice-box do">
+      <div class="voice-box-tag">✓ Так</div>
+      <div class="voice-example"><strong>«Я веду каждый проект лично. Вы всегда знаете, кто делает вашу рекламу.»</strong><br><br>«Я» — не «мы». Личная ответственность.</div>
+    </div>
+    <div class="voice-box dont">
+      <div class="voice-box-tag">✗ Не так</div>
+      <div class="voice-example"><strong>«Наша команда профессионалов готова взять ваш проект и вывести его на новый уровень.»</strong><br><br>Анонимная команда. Клише.</div>
+    </div>
+    <div class="voice-box do">
+      <div class="voice-box-tag">✓ Так</div>
+      <div class="voice-example"><strong>«ROI 322% за 6 месяцев. Набор в группы вырос на 42%.»</strong><br><br>Цифры говорят сами за себя.</div>
+    </div>
+    <div class="voice-box dont">
+      <div class="voice-box-tag">✗ Не так</div>
+      <div class="voice-example"><strong>«Значительно увеличили количество заявок и улучшили показатели эффективности рекламы.»</strong><br><br>Неизмеримо. Пустые слова.</div>
+    </div>
+  </div>
+
+  <div class="h2">Тональность по каналу</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;">
+      <div style="font-size:13px;color:var(--accent-bright);font-weight:700;margin-bottom:8px;">Сайт</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.6;">Деловой, уверенный, с цифрами. Минимум эпитетов, максимум фактов. Обращение на «вы».</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;">
+      <div style="font-size:13px;color:var(--accent-bright);font-weight:700;margin-bottom:8px;">Telegram-канал</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.6;">Чуть свободнее. Инсайты, кейсы, личные наблюдения. Без официоза, но без панибратства.</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;">
+      <div style="font-size:13px;color:var(--accent-bright);font-weight:700;margin-bottom:8px;">Личная переписка</div>
+      <div style="font-size:13px;color:var(--txt-2);line-height:1.6;">Живой, конкретный, быстрый. Отвечаю в течение часа. Без шаблонных ответов.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ 07 КОНТАКТЫ -->
+<div class="page end-page">
+  <div class="deco-lines"></div>
+
+  <div class="end-logo">
+    <svg width="72" height="72" viewBox="0 0 50 50" fill="none">
+      <path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#b6f01e"/>
+      <path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#b6f01e"/>
+    </svg>
+    <div class="end-title">Даниил Карацапов</div>
+    <div style="font-size:18px;color:var(--txt-2);">Частный интернет-маркетолог</div>
+  </div>
+
+  <div class="end-contacts">
+    <div class="end-contact">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color:var(--accent-bright);"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+      <span>@Daniil_065</span>
+    </div>
+    <div class="end-contact">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-bright);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.88 3.4 2 2 0 0 1 3.88 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>+7 (996) 347-00-65</span>
+    </div>
+    <div class="end-contact">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--accent-bright);"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span>карацапов-даниил-маркетинг.рф</span>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:48px;">
+    <span class="bb-chip">Контекстная реклама</span>
+    <span class="bb-chip">Таргет VK Ads</span>
+    <span class="bb-chip">Разработка сайтов</span>
+    <span class="bb-chip">GEO-продвижение</span>
+    <span class="bb-chip">Сквозная аналитика</span>
+  </div>
+
+  <div class="end-footer">
+    Брендбук v1.0 · Даниил Карацапов · 2026<br>
+    Все элементы защищены авторским правом
+  </div>
+</div>
+
+</body>
+</html>
