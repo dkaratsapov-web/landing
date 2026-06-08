@@ -54,7 +54,7 @@ function useLeadForm(toast, successMsg, source) {
       '👤 Имя: ' + (v.name || '—') + '\n' +
       '📞 Телефон: ' + (v.phone || '—') +
       (v.task ? '\n💬 Задача: ' + v.task : '');
-    sendLeadTelegram(text);
+    sendLeadTelegram(text).catch(() => {});
     setSent(true);
     toast(successMsg);
   };
@@ -151,14 +151,14 @@ function Contacts() {
                 <div style={{ fontSize: 19, fontWeight: 600 }}>{K.phone}</div>
               </div>
             </a>
-            <a className="contact-row" href={K.telegramUrl} target="_blank" rel="noopener">
+            <a className="contact-row" href={K.telegramUrl} target="_blank" rel="noopener noreferrer">
               <span className="icon-tile" style={{ width: 50, height: 50 }}><IconSend size={22} /></span>
               <div>
                 <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Telegram</div>
                 <div style={{ fontSize: 19, fontWeight: 600 }}>{K.telegram}</div>
               </div>
             </a>
-            <a className="contact-row" href={K.maxUrl} target="_blank" rel="noopener">
+            <a className="contact-row" href={K.maxUrl} target="_blank" rel="noopener noreferrer">
               <span className="icon-tile" style={{ width: 50, height: 50, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20 }}>M</span>
               <div>
                 <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>MAX</div>
@@ -355,7 +355,7 @@ function Footer({ onCta }) {
             <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 16 }}>Связь</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <a href="tel:+79963470065" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>+7 (996) 347-00-65</a>
-              <a href="https://t.me/Daniil_065" target="_blank" rel="noopener" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>Telegram @Daniil_065</a>
+              <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>Telegram @Daniil_065</a>
               <a href="#contacts" onClick={(e) => {e.preventDefault();onCta();}} style={{ color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 15 }}>Обсудить задачу</a>
             </div>
           </div>

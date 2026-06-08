@@ -48,6 +48,8 @@ copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
 copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
 copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
 copyFileSync(join(srcDir, 'dark.css'), join(outDir, 'dark.css'));
+copyFileSync(join(srcDir, 'landing.css'), join(outDir, 'landing.css'));
+copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
 
 // Custom domain for GitHub Pages. IDN «карацапов-даниил-маркетинг.рф» in
 // punycode (ASCII) form. Emitting it on every build keeps the domain bound.
