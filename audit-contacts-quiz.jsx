@@ -187,8 +187,10 @@ function Contacts() {
 
 /* ---------------- MEET IN PERSON (map) ---------------- */
 function MeetInPerson() {
+  const [open, setOpen] = useStateC(false);
   return (
     <div className="reveal card meet-card" id="meet-in-person">
+      <MeetModal open={open} onClose={() => setOpen(false)} />
       <h3 className="meet-title">Или давайте встретимся лично!</h3>
       <p className="meet-sub">
         Готов приехать на встречу и обсудить проект вживую — выезжаю по&nbsp;
@@ -235,10 +237,111 @@ function MeetInPerson() {
         <span className="meet-tag"><IconCar size={15} />Выезд на встречу</span>
       </div>
 
-      <a className="btn btn-fill btn-lg meet-btn" href="#contact-fallback"
-        onClick={(e) => { e.preventDefault(); const el = document.querySelector('.contact-row'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}>
+      <button type="button" className="btn btn-fill btn-lg meet-btn" onClick={() => setOpen(true)}>
         Назначить встречу<IconArrowRight size={18} />
-      </a>
+      </button>
+    </div>);
+}
+
+/* ---------------- MEET MODAL (booking form) ---------------- */
+function MeetModal({ open, onClose }) {
+  const toast = useToast();
+  const f = useLeadForm(toast, 'Заявка на встречу отправлена. Я свяжусь и согласую время.', 'Встреча');
+  useEffectC(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+  if (!open) return null;
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(0,0,0,0.6)',
+      backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
+      animation: 'toastIn .3s ease' }}>
+      <div onClick={(e) => e.stopPropagation()} className="card" style={{ background: 'var(--tile-b)',
+        width: 'min(480px, 100%)', maxHeight: '90vh', overflowY: 'auto', borderColor: 'var(--line-strong)', padding: 32 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, marginBottom: 8 }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 23, fontWeight: 600, margin: 0, color: '#fff' }}>Назначить встречу</h3>
+          <button onClick={onClose} aria-label="Закрыть" style={{ background: 'none', border: 'none', color: 'var(--txt-2)', cursor: 'pointer', padding: 4, marginTop: -2 }}>
+            <IconClose size={22} />
+          </button>
+        </div>
+        {f.sent ? <SuccessPanel onReset={f.reset} title="Спасибо!" text="Заявка на встречу у меня. Свяжусь лично и согласуем удобное время и место." /> :
+          <form onSubmit={f.submit} noValidate>
+            <p className="muted" style={{ margin: '0 0 22px', fontSize: 15 }}>Оставьте контакты — согласуем время и место встречи (Тверская / Московская область).</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <Field label="Как вас зовут" error={f.err.name}>
+                <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
+              </Field>
+              <Field label="Телефон" error={f.err.phone}>
+                <input className={'input' + (f.err.phone ? ' err' : '')} value={f.v.phone} onChange={f.set('phone')} placeholder="+7 (___) ___-__-__" inputMode="tel" />
+              </Field>
+              <Field label="Город / удобное место (необязательно)">
+                <input className="input" value={f.v.task} onChange={f.set('task')} placeholder="Например: Тверь, центр" />
+              </Field>
+              <label className="consent">
+                <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
+                <span>Согласен на обработку персональных данных.</span>
+              </label>
+              {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
+              <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
+                Записаться на встречу<IconArrowRight size={18} />
+              </button>
+            </div>
+          </form>
+        }
+      </div>
+    </div>);
+}
+
+/* ---------------- LEAD MODAL (Обсудить задачу) ---------------- */
+function LeadModal({ open, onClose }) {
+  const toast = useToast();
+  const f = useLeadForm(toast, 'Заявка отправлена. Я свяжусь лично.', 'Обсудить задачу');
+  useEffectC(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+  if (!open) return null;
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(0,0,0,0.6)',
+      backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
+      animation: 'toastIn .3s ease' }}>
+      <div onClick={(e) => e.stopPropagation()} className="card" style={{ background: 'var(--tile-b)',
+        width: 'min(480px, 100%)', maxHeight: '90vh', overflowY: 'auto', borderColor: 'var(--line-strong)', padding: 32 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 16, marginBottom: 8 }}>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 23, fontWeight: 600, margin: 0, color: '#fff' }}>Расскажите о задаче</h3>
+          <button onClick={onClose} aria-label="Закрыть" style={{ background: 'none', border: 'none', color: 'var(--txt-2)', cursor: 'pointer', padding: 4, marginTop: -2 }}>
+            <IconClose size={22} />
+          </button>
+        </div>
+        {f.sent ? <SuccessPanel onReset={f.reset} title="Спасибо!" text="Заявка у меня. Свяжусь лично, отвечу на вопросы и предложу решение." /> :
+          <form onSubmit={f.submit} noValidate>
+            <p className="muted" style={{ margin: '0 0 22px', fontSize: 15 }}>Оставьте заявку — я свяжусь лично, отвечу на вопросы и предложу решение.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <Field label="Как вас зовут" error={f.err.name}>
+                <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
+              </Field>
+              <Field label="Телефон" error={f.err.phone}>
+                <input className={'input' + (f.err.phone ? ' err' : '')} value={f.v.phone} onChange={f.set('phone')} placeholder="+7 (___) ___-__-__" inputMode="tel" />
+              </Field>
+              <Field label="Задача (необязательно)">
+                <textarea className="textarea" value={f.v.task} onChange={f.set('task')} placeholder="Коротко о задаче или вопросе" />
+              </Field>
+              <label className="consent">
+                <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
+                <span>Согласен на обработку персональных данных.</span>
+              </label>
+              {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
+              <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
+                Обсудить мой проект<IconArrowRight size={18} />
+              </button>
+            </div>
+          </form>
+        }
+      </div>
     </div>);
 }
 

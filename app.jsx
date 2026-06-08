@@ -63,6 +63,7 @@ function CookieNotice() {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [quizOpen, setQuizOpen] = useStateApp(false);
+  const [leadOpen, setLeadOpen] = useStateApp(false);
   useReveal();
 
   // фоновые узоры можно отключить
@@ -82,7 +83,7 @@ function App() {
     r.setProperty('--accent-soft-bd', th.softBd);
   }, [t.accent]);
 
-  const scrollToContacts = () => document.querySelector('#contacts')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToContacts = () => setLeadOpen(true);
 
   return (
     <ToastProvider>
@@ -107,6 +108,7 @@ function App() {
       <Footer onCta={scrollToContacts} />
       {t.showQuiz && <QuizFab onOpen={() => setQuizOpen(true)} />}
       <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
+      <LeadModal open={leadOpen} onClose={() => setLeadOpen(false)} />
       <CookieNotice />
 
       <TweaksPanel>
