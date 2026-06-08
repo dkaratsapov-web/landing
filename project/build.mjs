@@ -44,6 +44,11 @@ for (const f of JSX_FILES) results.push(await compile(f));
 // image-slot.js is already plain JS — copy verbatim.
 copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
 
+// Root-level assets shared by static pages.
+copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
+copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
+copyFileSync(join(srcDir, 'dark.css'), join(outDir, 'dark.css'));
+
 // Custom domain for GitHub Pages. IDN «карацапов-даниил-маркетинг.рф» in
 // punycode (ASCII) form. Emitting it on every build keeps the domain bound.
 writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai\n', 'utf8');
