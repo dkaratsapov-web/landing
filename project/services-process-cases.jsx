@@ -44,10 +44,10 @@ function ServiceCard({ s, open, onToggle }) {
           <span className="svc-x-tag">{s.tag}</span>
         </span>
         <span className="svc-x-result">{s.result}</span>
-        {s.url &&
-        <a className="svc-x-more" href={s.url} onClick={(e) => e.stopPropagation()}>
-          Подробнее<IconArrowRight size={15} />
-        </a>}
+        {s.url
+          ? <a className="svc-x-more" href={s.url} onClick={(e) => e.stopPropagation()}>Подробнее<IconArrowRight size={15} /></a>
+          : <span className="svc-x-more" aria-hidden="true" style={{visibility:'hidden',pointerEvents:'none'}}>Подробнее<IconArrowRight size={15} /></span>
+        }
         <span className={'svc-x-chev' + (open ? ' open' : '')}><IconChevron size={22} /></span>
       </div>
       <div className="svc-x-body">
