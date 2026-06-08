@@ -1,5 +1,7 @@
 import sharp from 'sharp';
-import { mkdirSync } from 'fs';
+import { mkdirSync, existsSync } from 'fs';
+
+const CASES = 'project/assets/cases';
 
 const OUT = 'creatives';
 mkdirSync(OUT, { recursive: true });
@@ -32,31 +34,44 @@ function wrap(text, size, weight, maxW) {
   return lines;
 }
 
-function creative(d, idx) {
+const IMGH = 520; // photo band height
+
+async function creative(d, idx) {
   const maxW = W - PAD * 2;
   const parts = [];
-  // background
-  parts.push(`<rect width="${W}" height="${H}" fill="${BG}"/>`);
-  // accent glow top-right
-  parts.push(`<defs><radialGradient id="g" cx="80%" cy="0%" r="70%">
-    <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.16"/>
-    <stop offset="100%" stop-color="${ACCENT}" stop-opacity="0"/></radialGradient></defs>`);
-  parts.push(`<rect width="${W}" height="${H}" fill="url(#g)"/>`);
-  // thin border frame
-  parts.push(`<rect x="28" y="28" width="${W-56}" height="${H-56}" rx="22" fill="none" stroke="#2a2b2a" stroke-width="2"/>`);
+  const hasPhoto = !!d.photo && existsSync(d.photo);
+  parts.push(`<defs>
+    <radialGradient id="g" cx="80%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="${ACCENT}" stop-opacity="0"/></radialGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${BG}" stop-opacity="0"/>
+      <stop offset="55%" stop-color="${BG}" stop-opacity="0"/>
+      <stop offset="100%" stop-color="${BG}" stop-opacity="1"/></linearGradient>
+    <linearGradient id="topscrim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/></linearGradient></defs>`);
 
-  // header row
+  if (!hasPhoto) {
+    // fallback branded photo band
+    parts.push(`<rect x="0" y="0" width="${W}" height="${IMGH}" fill="${SURFACE}"/>`);
+    parts.push(`<rect x="0" y="0" width="${W}" height="${IMGH}" fill="url(#g)"/>`);
+  }
+  // gradient that fades photo into the background
+  parts.push(`<rect x="0" y="0" width="${W}" height="${IMGH}" fill="url(#fade)"/>`);
+  parts.push(`<rect x="0" y="0" width="${W}" height="200" fill="url(#topscrim)"/>`);
+
+  // header row (over photo)
   parts.push(`<circle cx="${PAD+8}" cy="98" r="8" fill="${ACCENT}"/>`);
   parts.push(`<text x="${PAD+30}" y="107" font-family="Nunito" font-weight="700" font-size="26" letter-spacing="2" fill="${WHITE}">ДАНИИЛ КАРАЦАПОВ</text>`);
-  parts.push(`<text x="${W-PAD}" y="107" text-anchor="end" font-family="Nunito" font-weight="600" font-size="22" letter-spacing="1" fill="${MUTED}">КЕЙС ${String(idx).padStart(2,'0')}/18</text>`);
 
   // eyebrow (niche · city)
-  let y = 250;
+  let y = IMGH + 70;
   parts.push(`<text x="${PAD}" y="${y}" font-family="Nunito" font-weight="700" font-size="30" letter-spacing="1" fill="${ACCENT}">${esc(d.eyebrow.toUpperCase())}</text>`);
 
   // headline
-  y += 90;
-  const hSize = d.headline.length > 60 ? 62 : 72;
+  y += 80;
+  const hSize = d.headline.length > 48 ? 56 : 64;
   const hLines = wrap(d.headline, hSize, 800, maxW);
   for (const ln of hLines) {
     parts.push(`<text x="${PAD}" y="${y}" font-family="Nunito" font-weight="800" font-size="${hSize}" fill="${WHITE}">${esc(ln)}</text>`);
@@ -86,7 +101,20 @@ function creative(d, idx) {
   parts.push(`<text x="${W-PAD}" y="${H-PAD}" text-anchor="end" font-family="Nunito" font-weight="700" font-size="24" fill="${ACCENT}">карацапов-даниил-маркетинг.рф</text>`);
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${parts.join('')}</svg>`;
-  return sharp(Buffer.from(svg)).png().toFile(`${OUT}/post-${String(idx).padStart(2,'0')}.png`);
+
+  const layers = [];
+  if (hasPhoto) {
+    const photoBuf = await sharp(d.photo)
+      .resize(W, IMGH, { fit: 'cover', position: 'attention' })
+      .toBuffer();
+    layers.push({ input: photoBuf, top: 0, left: 0 });
+  }
+  layers.push({ input: Buffer.from(svg), top: 0, left: 0 });
+
+  return sharp({ create: { width: W, height: H, channels: 4, background: BG } })
+    .composite(layers)
+    .png()
+    .toFile(`${OUT}/post-${String(idx).padStart(2,'0')}.png`);
 }
 
 const data = [
@@ -164,5 +192,10 @@ const data = [
     {v:'351%', l:'ROI'} ] },
 ];
 
-await Promise.all(data.map((d, i) => creative(d, i + 1)));
+const photos = ['school','profildoors','tosun','okna','mebeline','ipapa','nebo','artlife',
+  'bmclinic','kaspack','berezka','karkas','alankara','ledizoj','zojefina','mishlenium',
+  'blondinki','royalneva'];
+data.forEach((d, i) => { d.photo = `${CASES}/${photos[i]}.jpg`; });
+
+for (let i = 0; i < data.length; i++) await creative(data[i], i + 1);
 console.log('done', data.length);
