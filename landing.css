@@ -334,7 +334,7 @@ h2.section-title {
   .svc-x-stack::-webkit-scrollbar-thumb, .case-list::-webkit-scrollbar-thumb {
     background: var(--line-strong); border-radius: 3px;
   }
-  .svc-x { flex: 0 0 84%; max-width: 320px; scroll-snap-align: start; }
+  .svc-x { flex: 0 0 88%; max-width: none; scroll-snap-align: start; }
   .case-card { flex: 0 0 86%; max-width: 340px; scroll-snap-align: start; }
 }
 .cert-card {
@@ -768,30 +768,27 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .svc-x-result { display: none; }
   .svc-x-titles { min-width: 0; }
   .svc-x-more { padding: 7px 11px; font-size: 13px; }
-  .svc-x-inner { padding: 4px 20px 16px; }
+  .svc-x-inner { padding: 4px 16px 16px; }
   .svc-x-detail { grid-template-columns: 1fr; gap: 14px; }
   .svc-x-list { grid-template-columns: 1fr; gap: 5px 0; }
   .svc-x-list li { font-size: 13.5px; }
   .svc-x-label { font-size: 11px; margin-bottom: 6px; }
 }
 
-/* На узких телефонах — flex-wrap: icon+title в первой строке, кнопка во второй */
+/* На узких телефонах — grid: icon | title+tag | chevron */
 @media (max-width: 480px) {
   .svc-x-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 18px 50px 16px 18px;
-    position: relative;
+    display: grid;
+    grid-template-columns: 44px 1fr 28px;
+    gap: 10px;
+    padding: 16px;
+    align-items: start;
   }
-  .svc-x-icon   { flex: 0 0 auto; }
-  .svc-x-titles { flex: 1 1 0; min-width: 0; }
-  .svc-x-name   { font-size: 18px; }
-  .svc-x-tag    { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
+  .svc-x-name   { font-size: 17px; line-height: 1.3; }
+  .svc-x-tag    { font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
   .svc-x-result { display: none; }
-  .svc-x-chev   { position: absolute; top: 18px; right: 14px; }
-  .svc-x-more   { flex: 0 0 auto; margin-left: 0; }
+  .svc-x-more   { display: none; }
+  .svc-x-meta-val { font-size: 14px; line-height: 1.4; word-break: break-word; }
 }
 
 @media (prefers-reduced-motion: reduce) {
