@@ -145,7 +145,7 @@ function Contacts() {
           <ul className="contact-perks">
             {[
               { ic: <IconCheck size={18} />, t: 'Отвечаю лично', s: 'без менеджеров и колл-центра' },
-              { ic: <IconClock size={18} />, t: 'В среднем за 60 минут', s: 'отвечаю в рабочее время' },
+              { ic: <IconBolt size={18} />, t: 'Без агентской наценки', s: 'плата только за работу' },
               { ic: <IconShield size={18} />, t: 'С 2017 года, 70+ ниш', s: 'опыт в разных сферах бизнеса' },
             ].map((p, i) =>
               <li key={i} className="contact-perk">
