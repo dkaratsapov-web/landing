@@ -41,19 +41,22 @@ async function creative(d, idx) {
     <radialGradient id="gl" cx="75%" cy="0%" r="75%">
       <stop offset="0%" stop-color="${ACCENT}" stop-opacity="0.18"/>
       <stop offset="100%" stop-color="${ACCENT}" stop-opacity="0"/></radialGradient>
-    <linearGradient id="ov" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#000"  stop-opacity="0.50"/>
-      <stop offset="22%"  stop-color="#000"  stop-opacity="0"/>
-      <stop offset="38%"  stop-color="${BG}" stop-opacity="0"/>
-      <stop offset="55%"  stop-color="${BG}" stop-opacity="0.95"/>
-      <stop offset="65%"  stop-color="${BG}" stop-opacity="1"/>
-      <stop offset="100%" stop-color="${BG}" stop-opacity="1"/></linearGradient></defs>`);
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${BG}" stop-opacity="0"/>
+      <stop offset="52%" stop-color="${BG}" stop-opacity="0"/>
+      <stop offset="100%" stop-color="${BG}" stop-opacity="1"/></linearGradient>
+    <linearGradient id="topscrim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.60"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0"/></linearGradient></defs>`);
 
   if (!hasPhoto) {
-    parts.push(`<rect width="${W}" height="${H}" fill="${SURFACE}"/>`);
-    parts.push(`<rect width="${W}" height="${H}" fill="url(#gl)"/>`);
+    parts.push(`<rect width="${W}" height="${IMGH}" fill="${SURFACE}"/>`);
+    parts.push(`<rect width="${W}" height="${IMGH}" fill="url(#gl)"/>`);
   }
-  parts.push(`<rect width="${W}" height="${H}" fill="url(#ov)"/>`);
+  parts.push(`<rect x="0" y="0" width="${W}" height="${IMGH}" fill="url(#fade)"/>`);
+  parts.push(`<rect x="0" y="0" width="${W}" height="220"   fill="url(#topscrim)"/>`);
+  // bottom half bg
+  parts.push(`<rect x="0" y="${IMGH}" width="${W}" height="${H-IMGH}" fill="${BG}"/>`);
 
   // ── header (over photo) ───────────────────────────────────
   parts.push(`<circle cx="${PAD+8}" cy="96" r="8" fill="${ACCENT}"/>`);
@@ -117,7 +120,7 @@ async function creative(d, idx) {
   const layers = [];
   if (hasPhoto) {
     const photoBuf = await sharp(d.photo)
-      .resize(W, H, { fit: 'cover', position: 'centre' })
+      .resize(W, IMGH, { fit: 'cover', position: 'attention' })
       .toBuffer();
     layers.push({ input: photoBuf, top: 0, left: 0 });
   }
