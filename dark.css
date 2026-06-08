@@ -747,10 +747,18 @@ h3 { font-weight: 600; }
   .wrap-narrow .eyebrow.center { margin-bottom: 16px; }
   .wrap-narrow .btn-row { margin-top: 18px !important; }
   /* Портфолио — табы скроллятся, карточки в карусель на мобильном */
-  .scroll-hint { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px;
-    color: var(--lime-bright); font-size: 13.5px; font-weight: 600; }
+  .scroll-hint { display: inline-flex; align-items: center; gap: 5px; margin: 0 0 14px;
+    padding: 6px 12px; border-radius: var(--r-pill);
+    background: rgba(182,240,30,0.13); border: 1px solid rgba(182,240,30,0.30);
+    color: var(--lime-bright); }
   .scroll-hint svg { animation: hintSwipe 1.4s ease-in-out infinite; }
+  .scroll-hint .swipe-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor;
+    opacity: .35; animation: hintDot 1.4s ease-in-out infinite; }
+  .scroll-hint .swipe-dot:nth-child(1) { animation-delay: 0s; }
+  .scroll-hint .swipe-dot:nth-child(2) { animation-delay: .15s; }
+  .scroll-hint .swipe-dot:nth-child(3) { animation-delay: .3s; }
   @keyframes hintSwipe { 0%,100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+  @keyframes hintDot { 0%,100% { opacity: .35; transform: translateX(0); } 50% { opacity: 1; transform: translateX(3px); } }
   .kase-tabs { flex-wrap: nowrap; overflow-x: auto; margin: 0 -18px 16px; padding: 0 18px 4px; scrollbar-width: none; }
   .kase-tabs::-webkit-scrollbar { display: none; }
   .kase-tab { flex: 0 0 auto; }

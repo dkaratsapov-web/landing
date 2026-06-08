@@ -10,7 +10,10 @@ const Glyph = ({ name, size }) => {const C = ICONS_MAP[name] || IconBolt;return 
 function SwipeHint() {
   return (
     <div className="swipe-hint" aria-hidden="true">
-      <span>Листайте</span><IconArrowRight size={16} />
+      <span className="swipe-dot"></span>
+      <span className="swipe-dot"></span>
+      <span className="swipe-dot"></span>
+      <IconArrowRight size={15} />
     </div>
   );
 }
