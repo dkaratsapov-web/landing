@@ -232,9 +232,13 @@ function MeetInPerson() {
       </div>
 
       <div className="meet-tags">
-        <span className="meet-tag"><IconMap size={15} />Тверская область</span>
-        <span className="meet-tag"><IconMap size={15} />Московская область</span>
-        <span className="meet-tag"><IconCar size={15} />Выезд на встречу</span>
+        <div className="meet-tags-row">
+          <span className="meet-tag"><IconMap size={15} />Тверская область</span>
+          <span className="meet-tag"><IconMap size={15} />Московская область</span>
+        </div>
+        <div className="meet-tags-row">
+          <span className="meet-tag"><IconCar size={15} />Выезд на встречу</span>
+        </div>
       </div>
 
       <button type="button" className="btn btn-fill btn-lg meet-btn" onClick={() => setOpen(true)}>

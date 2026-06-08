@@ -1,5 +1,6 @@
 /* extras.jsx — animated background atmosphere + rotating quotes. Exported to window. */
-const { useState: useStateE, useEffect: useEffectE, useRef: useRefE } = React;
+const { useState: useStateE, useEffect: useEffectE, useRef: useRefE,
+  useMemo: useMemoE, useCallback: useCallbackE } = React;
 
 /* ---------- Atmos: drifting glows + pattern, sits behind a section ---------- */
 function Atmos({ glows = [1, 2], pattern = 'dots', drifting = false }) {
@@ -13,30 +14,21 @@ function Atmos({ glows = [1, 2], pattern = 'dots', drifting = false }) {
 
 /* ---------- Quotes: auto-rotating, animated (content from CONTENT.quotes) ---------- */
 /* Each quote in content.json is { text, hl, author, role }; hl is the substring
-   to highlight. Convert to [char, isHighlighted] pairs for the typewriter. */
-function quoteChars(q) {
-  const t = (q && q.text) || '';
-  const hl = (q && q.hl) || '';
-  const at = hl ? t.indexOf(hl) : -1;
-  const chars = [];
-  for (let k = 0; k < t.length; k++) {
-    chars.push([t[k], at >= 0 && k >= at && k < at + hl.length]);
-  }
-  return chars;
-}
+   to highlight. */
 
-function Quotes() {
-  const [i, setI] = useStateE(0);
+/* Typewriter body — isolated in its own component so the per-character ticks
+   re-render ONLY this subtree, never the animated background (Atmos) or the
+   dots. The visible text is built from 3 string segments (pre / highlight /
+   post) instead of one <span> per character, so each tick touches at most a
+   few text nodes — this is the difference between smooth and janky on phones. */
+function QuoteBody({ q, paused, onAdvance }) {
   const [typed, setTyped] = useStateE(0);
-  const [paused, setPaused] = useStateE(false);
-  const QUOTES = (window.CONTENT && window.CONTENT.quotes) || [];
-  const head = (window.CONTENT && window.CONTENT.quotesHead) || {};
-  if (!QUOTES.length) return null;
-  const q = QUOTES[Math.min(i, QUOTES.length - 1)];
-
-  const chars = quoteChars(q);
-  const total = chars.length;
+  const text = (q && q.text) || '';
+  const hl = (q && q.hl) || '';
+  const total = text.length;
   const done = typed >= total;
+  const at = hl ? text.indexOf(hl) : -1;
+  const hlEnd = at >= 0 ? at + hl.length : -1;
 
   // Type the active quote out, one character at a time.
   useEffectE(() => {
@@ -48,36 +40,62 @@ function Quotes() {
       if (n >= total) clearInterval(id);
     }, 42);
     return () => clearInterval(id);
-  }, [i, total]);
+  }, [q, total]);
 
   // Once typed (and not hovered), hold for a beat, then advance to the next.
   useEffectE(() => {
     if (!done || paused) return;
-    const id = setTimeout(() => setI((p) => (p + 1) % QUOTES.length), 2800);
+    const id = setTimeout(onAdvance, 2800);
     return () => clearTimeout(id);
-  }, [done, paused]);
+  }, [done, paused, onAdvance]);
+
+  // Split the revealed substring into plain / highlighted / plain segments.
+  let pre = '', mid = '', post = '';
+  if (at < 0) {
+    pre = text.slice(0, typed);
+  } else {
+    pre = text.slice(0, Math.min(typed, at));
+    if (typed > at) mid = text.slice(at, Math.min(typed, hlEnd));
+    if (typed > hlEnd) post = text.slice(hlEnd, typed);
+  }
+
+  return (
+    <figure className="quote-item active">
+      <div className="quote-mark" aria-hidden="true">“</div>
+      <blockquote className="quote-text">
+        {pre}{mid && <span className="hl">{mid}</span>}{post}
+        <span className={'type-caret' + (done ? ' done' : '')} aria-hidden="true" />
+      </blockquote>
+      <figcaption className="quote-author" style={{ opacity: done ? 1 : 0 }}>
+        <span className="rule" /><b>{q.author}</b><span>·&nbsp;{q.role}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+function Quotes() {
+  const [i, setI] = useStateE(0);
+  const [paused, setPaused] = useStateE(false);
+  const QUOTES = (window.CONTENT && window.CONTENT.quotes) || [];
+  const head = (window.CONTENT && window.CONTENT.quotesHead) || {};
+  if (!QUOTES.length) return null;
+  const q = QUOTES[Math.min(i, QUOTES.length - 1)];
+
+  const advance = useCallbackE(() => setI((p) => (p + 1) % QUOTES.length), [QUOTES.length]);
+  // Stable element so parent re-renders (on quote change) don't restart the
+  // background animation.
+  const bg = useMemoE(() => <Atmos glows={[1, 3]} pattern="grid" drifting={true} />, []);
 
   return (
     <section className="sec quotes-sec bg-b" style={{ overflow: 'hidden' }}>
-      <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
+      {bg}
       <div className="wrap wrap-narrow" style={{ maxWidth: 1000 }}
         onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: 8 }}>
           <span className="eyebrow center">{head.eyebrow || 'Во что я верю'}</span>
         </div>
         <div className="quotes-stage">
-          <figure className="quote-item active">
-            <div className="quote-mark" aria-hidden="true">“</div>
-            <blockquote className="quote-text">
-              {chars.slice(0, typed).map(([ch, hl], k) =>
-                hl ? <span key={k} className="hl">{ch}</span> : <React.Fragment key={k}>{ch}</React.Fragment>
-              )}
-              <span className={'type-caret' + (done ? ' done' : '')} aria-hidden="true" />
-            </blockquote>
-            <figcaption className="quote-author" style={{ opacity: done ? 1 : 0 }}>
-              <span className="rule" /><b>{q.author}</b><span>·&nbsp;{q.role}</span>
-            </figcaption>
-          </figure>
+          <QuoteBody key={i} q={q} paused={paused} onAdvance={advance} />
         </div>
         <div className="quote-dots">
           {QUOTES.map((_, idx) => (
