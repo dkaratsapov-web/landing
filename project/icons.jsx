@@ -49,10 +49,11 @@ const IconQuote = (p) => <Icon {...p} paths={<>
 const IconSearch = (p) => <Icon {...p} paths={<><circle cx="11" cy="11" r="6" /><path d="m20 20-3.5-3.5" /></>} />;
 const IconClock = (p) => <Icon {...p} paths={<><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></>} />;
 const IconMap = (p) => <Icon {...p} paths={<><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z" /><circle cx="12" cy="10" r="2.5" /></>} />;
+const IconCar = (p) => <Icon {...p} paths={<><path d="M5 13l1.5-4.5A2 2 0 0 1 8.4 7h7.2a2 2 0 0 1 1.9 1.5L19 13M5 13h14v4H5zM5 17v2M19 17v2" /><circle cx="8" cy="14.5" r="0.6" fill="currentColor" /><circle cx="16" cy="14.5" r="0.6" fill="currentColor" /></>} />;
 
 Object.assign(window, {
   Icon, IconTarget, IconUsers, IconMonitor, IconChart, IconLayers, IconPhone,
   IconSend, IconArrowRight, IconArrowDown, IconChevron, IconCheck, IconClose,
   IconBolt, IconShield, IconEye, IconHandshake, IconStar, IconQuote, IconSearch,
-  IconClock, IconMap, IconPlane,
+  IconClock, IconMap, IconCar, IconPlane,
 });

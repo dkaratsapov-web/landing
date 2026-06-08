@@ -918,3 +918,42 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @keyframes quizFabIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 /* Desktop-only */
 @media (max-width: 900px) { .quiz-fab { display: none; } }
+
+/* ---------------- MEET IN PERSON (animated map) ---------------- */
+.meet-card { padding: 36px; display: flex; flex-direction: column; }
+.meet-title { font-family: var(--font-display); font-size: 24px; font-weight: 600; margin: 0 0 10px; color: #fff; }
+.meet-sub { color: var(--txt-2); font-size: 15px; line-height: 1.6; margin: 0 0 24px; }
+.meet-map { position: relative; width: 100%; border-radius: var(--r-md, 14px); overflow: hidden;
+  background: radial-gradient(120% 120% at 70% 0%, rgba(182,240,30,0.07), transparent 60%), #0e0f0d;
+  border: 1px solid var(--line); }
+.meet-map svg { display: block; width: 100%; height: auto; }
+
+.meet-region { stroke: rgba(182,240,30,0.45); stroke-width: 1.5; }
+.meet-region-tver { fill: rgba(182,240,30,0.08); animation: meetGlow 4s ease-in-out infinite; }
+.meet-region-msk  { fill: rgba(182,240,30,0.13); animation: meetGlow 4s ease-in-out infinite 1.2s; }
+@keyframes meetGlow { 0%,100% { fill-opacity: .6; } 50% { fill-opacity: 1; } }
+
+.meet-route { fill: none; stroke: var(--accent-bright, #b6f01e); stroke-width: 2.2; stroke-linecap: round;
+  stroke-dasharray: 7 9; animation: meetDash 1.1s linear infinite; opacity: .85; }
+@keyframes meetDash { to { stroke-dashoffset: -32; } }
+
+.meet-mover { offset-path: path('M135 110 Q210 90 285 175'); animation: meetMove 3.4s ease-in-out infinite; }
+.meet-mover-dot { fill: var(--accent-bright, #b6f01e); }
+@keyframes meetMove { 0% { offset-distance: 0%; } 55% { offset-distance: 100%; } 100% { offset-distance: 100%; } }
+
+.meet-pin-core { fill: var(--accent-bright, #b6f01e); }
+.meet-pulse { fill: var(--accent-bright, #b6f01e); transform-origin: center; transform-box: fill-box;
+  animation: meetPulse 2s ease-out infinite; }
+.meet-pin-2 .meet-pulse { animation-delay: 1s; }
+@keyframes meetPulse { 0% { transform: scale(1); opacity: .55; } 70%,100% { transform: scale(3.4); opacity: 0; } }
+.meet-label { fill: #fff; font-family: var(--font-display); font-size: 15px; font-weight: 700; }
+
+.meet-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 26px; }
+.meet-tag { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; font-size: 13.5px; font-weight: 600;
+  color: var(--accent-bright, #b6f01e); background: rgba(182,240,30,0.08);
+  border: 1px solid rgba(182,240,30,0.25); border-radius: var(--r-pill, 999px); }
+.meet-btn { width: 100%; margin-top: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .meet-region, .meet-route, .meet-mover, .meet-pulse { animation: none !important; }
+}

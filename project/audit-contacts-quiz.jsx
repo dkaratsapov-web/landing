@@ -167,37 +167,67 @@ function Contacts() {
             </a>
           </div>
         </div>
-        <div className="reveal card" style={{ padding: 36 }} id="contact-form">
-          {f.sent ? <SuccessPanel onReset={f.reset} title="Спасибо!" text="Заявка у меня. Я перезвоню лично и предложу время для разговора." /> :
-
-          <form onSubmit={f.submit} noValidate>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 6px', color: "rgb(255, 255, 255)" }}>Заказать звонок</h3>
-              <p className="muted" style={{ margin: '0 0 22px', fontSize: 15 }}>Я перезвоню лично</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-                <Field label="Как вас зовут" error={f.err.name}>
-                  <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
-                </Field>
-                <Field label="Телефон" error={f.err.phone}>
-                  <input className={'input' + (f.err.phone ? ' err' : '')} value={f.v.phone} onChange={f.set('phone')} placeholder="+7 (___) ___-__-__" inputMode="tel" />
-                </Field>
-                <Field label="Задача (необязательно)">
-                  <textarea className="textarea" value={f.v.task} onChange={f.set('task')} placeholder="О чём хотите поговорить" />
-                </Field>
-                <label className="consent">
-                  <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
-                  <span>Согласен на обработку персональных данных.</span>
-                </label>
-                {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
-                <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
-                  Жду звонка<IconPhone size={18} />
-                </button>
-              </div>
-            </form>
-          }
-        </div>
+        <MeetInPerson />
       </div>
     </section>);
 
+}
+
+/* ---------------- MEET IN PERSON (map) ---------------- */
+function MeetInPerson() {
+  return (
+    <div className="reveal card meet-card" id="meet-in-person">
+      <h3 className="meet-title">Или давайте встретимся лично!</h3>
+      <p className="meet-sub">
+        Готов приехать на встречу и обсудить проект вживую — выезжаю по&nbsp;
+        <span className="accent">Тверской</span> и <span className="accent">Московской</span> областям.
+        Иногда один разговор за чашкой кофе заменяет десяток переписок.
+      </p>
+
+      <div className="meet-map">
+        <svg viewBox="0 0 460 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Карта выезда: Тверская и Московская области">
+          {/* region: Тверская */}
+          <path className="meet-region meet-region-tver"
+            d="M70 70 L150 50 L210 78 L205 130 L150 165 L92 150 L58 110 Z" />
+          {/* region: Московская */}
+          <path className="meet-region meet-region-msk"
+            d="M205 130 L210 78 L300 95 L360 140 L350 215 L270 245 L205 205 L185 160 Z" />
+
+          {/* travel route */}
+          <path className="meet-route" d="M135 110 Q210 90 285 175" />
+          {/* moving vehicle */}
+          <g className="meet-mover">
+            <circle r="9" className="meet-mover-dot" />
+            <path d="M-4 0h8M0 -4v8" stroke="#0c1402" strokeWidth="1.6" strokeLinecap="round" />
+          </g>
+
+          {/* pin: Тверь */}
+          <g className="meet-pin" transform="translate(135 110)">
+            <circle className="meet-pulse" r="6" />
+            <circle className="meet-pin-core" r="6" />
+          </g>
+          <text x="135" y="92" className="meet-label" textAnchor="middle">Тверь</text>
+
+          {/* pin: Москва */}
+          <g className="meet-pin meet-pin-2" transform="translate(285 175)">
+            <circle className="meet-pulse" r="7" />
+            <circle className="meet-pin-core" r="7" />
+          </g>
+          <text x="285" y="157" className="meet-label" textAnchor="middle">Москва</text>
+        </svg>
+      </div>
+
+      <div className="meet-tags">
+        <span className="meet-tag"><IconMap size={15} />Тверская область</span>
+        <span className="meet-tag"><IconMap size={15} />Московская область</span>
+        <span className="meet-tag"><IconCar size={15} />Выезд на встречу</span>
+      </div>
+
+      <a className="btn btn-fill btn-lg meet-btn" href="#contact-fallback"
+        onClick={(e) => { e.preventDefault(); const el = document.querySelector('.contact-row'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}>
+        Назначить встречу<IconArrowRight size={18} />
+      </a>
+    </div>);
 }
 
 /* ---------------- QUIZ MODAL ---------------- */
