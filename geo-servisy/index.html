@@ -53,56 +53,64 @@
 .plat-chip .pl-logo { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; flex: none; overflow: hidden; }
 .plat-chip .pl-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-/* ===== Анимированный мокап Яндекс Бизнеса ===== */
-.geoyb { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 28px; align-items: stretch; margin-top: 8px; }
-.geoyb-card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r-lg); overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
-.geoyb-bar { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
-.geoyb-bar-logo { border-radius: 6px; flex: none; }
-.geoyb-bar-title { font-size: 14px; font-weight: 600; color: var(--text); }
-.geoyb-live { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--lime-bright); }
-.geoyb-live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); animation: geoybBlink 1.6s ease-in-out infinite; }
-@keyframes geoybBlink { 0%,100% { opacity: 1; box-shadow: 0 0 0 0 var(--lime-glow); } 50% { opacity: .5; box-shadow: 0 0 0 5px transparent; } }
-.geoyb-photos { display: grid; grid-template-columns: repeat(4,1fr); gap: 4px; padding: 4px; }
-.geoyb-photo { height: 74px; border-radius: 8px; background-size: cover; background-position: center; background-color: var(--surface-3); }
-.geoyb-photo.p1 { background-image: url('/assets/cases/nebo.jpg'); }
-.geoyb-photo.p2 { background-image: url('/assets/cases/alankara.jpg'); }
-.geoyb-photo.p3 { background-image: url('/assets/cases/berezka.jpg'); }
-.geoyb-photo.p4 { background-image: url('/assets/cases/royalneva.jpg'); }
-.geoyb-body { padding: 18px; }
-.geoyb-name-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.geoyb-name { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text); }
-.geoyb-top { font-size: 11px; font-weight: 800; letter-spacing: .03em; color: var(--lime-ink); background: var(--lime); padding: 3px 9px; border-radius: var(--r-pill); animation: geoybPop 2.4s ease-in-out infinite; }
-@keyframes geoybPop { 0%,90%,100% { transform: scale(1); } 95% { transform: scale(1.08); } }
-.geoyb-rate { display: flex; align-items: center; gap: 7px; margin-top: 10px; font-size: 14px; color: var(--muted); }
-.geoyb-rate b { color: var(--text); font-size: 15px; }
-.geoyb-stars { display: inline-flex; gap: 2px; }
-.geoyb-star { width: 16px; height: 16px; fill: #ffc531; opacity: 0; animation: geoybStar .4s ease forwards; }
-.geoyb-star:nth-child(1){animation-delay:.2s}.geoyb-star:nth-child(2){animation-delay:.35s}.geoyb-star:nth-child(3){animation-delay:.5s}.geoyb-star:nth-child(4){animation-delay:.65s}.geoyb-star:nth-child(5){animation-delay:.8s}
-@keyframes geoybStar { from { opacity: 0; transform: scale(.4) rotate(-30deg); } to { opacity: 1; transform: none; } }
-.geoyb-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.geoyb-tag { font-size: 12px; color: var(--muted); background: var(--surface-3); border: 1px solid var(--line); border-radius: var(--r-pill); padding: 5px 11px; }
-.geoyb-actions { display: flex; gap: 10px; margin-top: 16px; }
-.geoyb-btn { font-size: 13px; font-weight: 600; color: var(--text); border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 9px 18px; }
-.geoyb-btn-fill { background: var(--lime); color: var(--lime-ink); border-color: var(--lime); }
-.geoyb-map { margin-top: 16px; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
-.geoyb-map svg { display: block; width: 100%; height: 120px; }
-.geoyb-route { animation: geoybDash 1.1s linear infinite; }
-@keyframes geoybDash { to { stroke-dashoffset: -28; } }
-.geoyb-pin-pulse { fill: var(--lime); transform-origin: center; transform-box: fill-box; animation: geoybPulse 2s ease-out infinite; }
-@keyframes geoybPulse { 0% { transform: scale(1); opacity: .6; } 70%,100% { transform: scale(3.2); opacity: 0; } }
-.geoyb-stats { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 26px; display: flex; flex-direction: column; gap: 20px; }
-.geoyb-stats-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--lime-bright); margin: 0; }
-.geoyb-stat-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; color: var(--muted); margin-bottom: 8px; }
-.geoyb-stat-top b { color: var(--text); font-size: 16px; font-weight: 700; }
-.geoyb-track { height: 8px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
-.geoyb-fill { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--lime-deep), var(--lime-bright)); width: 0; animation: geoybGrow 1.4s cubic-bezier(.2,.8,.2,1) forwards; }
-.geoyb-fill.f1 { animation-delay: .15s; --w: 78%; } .geoyb-fill.f2 { animation-delay: .3s; --w: 92%; }
-.geoyb-fill.f3 { animation-delay: .45s; --w: 70%; } .geoyb-fill.f4 { animation-delay: .6s; --w: 88%; }
-@keyframes geoybGrow { to { width: var(--w); } }
-.geoyb-note { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
-.geoyb-note b { color: var(--text); font-weight: 600; }
-@media (max-width: 900px) { .geoyb { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { .geoyb-live-dot,.geoyb-top,.geoyb-star,.geoyb-route,.geoyb-pin-pulse,.geoyb-fill { animation: none !important; } .geoyb-star{opacity:1} .geoyb-fill{width:var(--w)} }
+/* ===== Анимированный мокап Яндекс Карт ===== */
+.gmap { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 0; align-items: stretch; margin-top: 8px; border: 1px solid var(--line-2); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.45); background: var(--surface); min-height: 430px; }
+/* левая панель */
+.gmap-panel { background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+.gmap-search { display: flex; align-items: center; gap: 10px; margin: 14px; padding: 11px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-pill); }
+.gmap-search-pin img { display: block; border-radius: 5px; }
+.gmap-query { flex: 1; font-size: 15px; color: var(--text); white-space: nowrap; overflow: hidden; }
+.gmap-typed { color: var(--text); }
+.gmap-typed .hl { color: var(--lime-bright); font-weight: 600; }
+.gmap-caret { display: inline-block; width: 2px; height: 1.05em; background: var(--lime); margin-left: 1px; vertical-align: -2px; animation: gmBlink 1s steps(1) infinite; }
+.gmap.searched .gmap-caret { opacity: 0; animation: none; }
+@keyframes gmBlink { 50% { opacity: 0; } }
+.gmap-go { flex: none; width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer; background: var(--lime); color: var(--lime-ink); display: grid; place-items: center; transition: transform .15s ease, box-shadow .2s ease; }
+.gmap.searching .gmap-go { animation: gmClick .45s ease; }
+@keyframes gmClick { 30% { transform: scale(.82); box-shadow: 0 0 0 6px var(--lime-glow); } 100% { transform: scale(1); } }
+.gmap-tabs { display: flex; gap: 18px; padding: 0 18px 10px; border-bottom: 1px solid var(--line); }
+.gmap-tab { font-size: 14px; color: var(--muted-2); padding-bottom: 6px; }
+.gmap-tab.active { color: var(--text); font-weight: 600; box-shadow: inset 0 -2px 0 var(--lime); }
+.gmap-list { padding: 8px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
+.gmap-item { padding: 12px 14px; border-radius: 12px; opacity: 0; transform: translateY(10px); transition: opacity .45s ease, transform .45s ease, background .25s ease; }
+.gmap.results .gmap-item { opacity: 1; transform: none; }
+.gmap.results .gmap-item:nth-child(2) { transition-delay: .12s; }
+.gmap.results .gmap-item:nth-child(3) { transition-delay: .24s; }
+.gmap-item-head { display: flex; align-items: center; gap: 10px; }
+.gmap-item-name { font-size: 16px; font-weight: 700; color: var(--text); }
+.gmap-item-name.gmap-muted { font-weight: 600; color: var(--muted); }
+.gmap-top { font-size: 10px; font-weight: 800; letter-spacing: .03em; color: var(--lime-ink); background: var(--lime); padding: 2px 7px; border-radius: var(--r-pill); }
+.gmap-item-rate { margin-top: 5px; font-size: 13px; color: var(--muted); }
+.gmap-item-rate b { color: #ffc531; }
+.gmap-item-rate.gmap-dim b { color: var(--muted); }
+.gmap-item-meta { margin-top: 4px; font-size: 12px; color: var(--muted-2); }
+.gmap-thumbs { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; margin-top: 10px; }
+.gmap-thumbs span { height: 52px; border-radius: 7px; background-size: cover; background-position: center; }
+.gmap-thumbs .t1 { background-image: url('/assets/cases/nebo.jpg'); }
+.gmap-thumbs .t2 { background-image: url('/assets/cases/alankara.jpg'); }
+.gmap-thumbs .t3 { background-image: url('/assets/cases/royalneva.jpg'); }
+.gmap-item--you { border: 1px solid transparent; }
+.gmap.picked .gmap-item--you { background: var(--lime-glow); border-color: var(--lime); }
+/* карта */
+.gmap-canvas { position: relative; overflow: hidden; min-height: 320px; }
+.gmap-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gmap-marker { position: absolute; transform: translate(-50%, -100%) scale(.3); opacity: 0; transition: opacity .4s ease, transform .45s cubic-bezier(.2,1.5,.4,1); }
+.gmap.results .gmap-marker { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+.gmap.results .gmap-marker--c:nth-of-type(3) { transition-delay: .1s; }
+.gmap.results .gmap-marker--c:nth-of-type(4) { transition-delay: .2s; }
+.gmap.results .gmap-marker--c:nth-of-type(5) { transition-delay: .3s; }
+.gmap-marker-dot { position: relative; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); display: grid; place-items: center; box-shadow: 0 3px 8px rgba(0,0,0,.35); }
+.gmap-marker-dot::after { content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--lime); }
+.gmap-dot-grey { width: 20px; height: 20px; background: #6b6f66; }
+.gmap-dot-grey::after { border-top-color: #6b6f66; }
+.gmap-marker-pulse { position: absolute; left: 50%; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); transform: translate(-50%,0); opacity: .5; }
+.gmap.picked .gmap-marker--you .gmap-marker-pulse { animation: gmPulse 1.8s ease-out infinite; }
+@keyframes gmPulse { 0% { transform: translate(-50%,0) scale(1); opacity: .5; } 70%,100% { transform: translate(-50%,0) scale(3); opacity: 0; } }
+.gmap-marker-label { position: absolute; left: 50%; top: -8px; transform: translate(-50%,-100%); white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--lime-ink); background: var(--lime); padding: 4px 9px; border-radius: var(--r-pill); opacity: 0; transition: opacity .3s ease .2s; box-shadow: 0 3px 8px rgba(0,0,0,.3); }
+.gmap.picked .gmap-marker--you .gmap-marker-label { opacity: 1; }
+.gmap-cursor { position: absolute; left: 50%; top: 55%; filter: drop-shadow(0 2px 3px rgba(0,0,0,.4)); transition: left .7s cubic-bezier(.5,0,.2,1), top .7s cubic-bezier(.5,0,.2,1); pointer-events: none; z-index: 5; }
+@media (max-width: 900px) { .gmap { grid-template-columns: 1fr; } .gmap-panel { border-right: none; border-bottom: 1px solid var(--line); } }
+@media (prefers-reduced-motion: reduce) { .gmap-item,.gmap-marker { opacity: 1 !important; transform: translate(-50%,-100%) !important; } .gmap-item{transform:none!important} .gmap-caret{display:none} }
 
 /* Hero визуал — мокап выдачи гео-сервиса */
 .geo-mock {
@@ -160,15 +168,21 @@
 }
 .geo-mini-pin { position: absolute; transform: translate(-50%,-100%); display: flex; flex-direction: column; align-items: center; }
 .geo-mini-pin .mph {
-  width: 28px; height: 28px; border-radius: 50% 50% 50% 0; transform: rotate(45deg);
+  position: relative; width: 28px; height: 28px; border-radius: 50%;
   display: grid; place-items: center; font-weight: 800; font-size: 11px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-.geo-mini-pin .mph span { transform: rotate(-45deg); }
+.geo-mini-pin .mph::after {
+  content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%);
+  border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid currentColor;
+}
 .geo-mini-pin.pml { left: 40%; top: 55%; }
 .geo-mini-pin.pml .mph { background: var(--lime); color: var(--lime-ink); }
+.geo-mini-pin.pml .mph span { color: var(--lime-ink); }
+.geo-mini-pin.pml .mph::after { border-top-color: var(--lime); }
 .geo-mini-pin.pmr1 { left: 62%; top: 45%; }
 .geo-mini-pin.pmr2 { left: 28%; top: 72%; }
 .geo-mini-pin.pmr1 .mph, .geo-mini-pin.pmr2 .mph { background: var(--surface-3); color: var(--muted); border: 1px solid var(--line-2); }
+.geo-mini-pin.pmr1 .mph::after, .geo-mini-pin.pmr2 .mph::after { border-top-color: var(--surface-3); }
 .geo-mini-pulse {
   position: absolute; top: 0; left: 50%; width: 28px; height: 28px; border-radius: 50%;
   transform: translate(-50%, 0); background: var(--lime); opacity: 0;
@@ -433,80 +447,75 @@
       <h2>Что такое продвижение <span class="accent">в гео-сервисах</span></h2>
       <p>Люди всё чаще ищут «рядом»: «кофейня рядом», «стоматология в районе», «шиномонтаж рядом». Сервисы показывают подборку компаний — звонки, маршруты и клиентов получают те, кто в топе и с хорошим рейтингом.</p>
     </div>
-    <div class="geoyb reveal">
-      <!-- Левая часть: карточка компании в Яндекс Бизнес -->
-      <div class="geoyb-card">
-        <div class="geoyb-bar">
-          <img class="geoyb-bar-logo" src="/assets/geo/yandex-business.png" alt="Яндекс Бизнес" width="22" height="22">
-          <span class="geoyb-bar-title">Яндекс Бизнес · карточка компании</span>
-          <span class="geoyb-live"><span class="geoyb-live-dot"></span>онлайн</span>
+    <div class="gmap reveal" id="gmapMock" data-query="ваша услуга · москва">
+      <!-- Левая панель: поиск + список -->
+      <div class="gmap-panel">
+        <div class="gmap-search">
+          <span class="gmap-search-pin"><img src="/assets/geo/yandex-maps.png" alt="" width="20" height="20"></span>
+          <span class="gmap-query"><span class="gmap-typed"></span><span class="gmap-caret"></span></span>
+          <button class="gmap-go" type="button" aria-label="Найти">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
         </div>
-
-        <div class="geoyb-photos">
-          <span class="geoyb-photo p1"></span>
-          <span class="geoyb-photo p2"></span>
-          <span class="geoyb-photo p3"></span>
-          <span class="geoyb-photo p4"></span>
-        </div>
-
-        <div class="geoyb-body">
-          <div class="geoyb-name-row">
-            <span class="geoyb-name">Ваша компания</span>
-            <span class="geoyb-top">ТОП-1 в районе</span>
+        <div class="gmap-tabs"><span class="gmap-tab active">Места</span><span class="gmap-tab">Подборки</span></div>
+        <div class="gmap-list">
+          <div class="gmap-item gmap-item--you">
+            <div class="gmap-item-head">
+              <span class="gmap-item-name">Ваша компания</span>
+              <span class="gmap-top">ТОП-1</span>
+            </div>
+            <div class="gmap-item-rate"><b>★ 4,9</b><span>· 248 отзывов · Открыто</span></div>
+            <div class="gmap-item-meta">Ср. чек: от 3000 ₽ · 320 м от вас</div>
+            <div class="gmap-thumbs"><span class="t1"></span><span class="t2"></span><span class="t3"></span></div>
           </div>
-          <div class="geoyb-rate">
-            <span class="geoyb-stars">
-              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
-              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
-              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
-              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
-              <svg viewBox="0 0 24 24" class="geoyb-star"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1L12 2z"/></svg>
-            </span>
-            <b>4,9</b><span class="geoyb-rate-sub">· 248 отзывов</span>
+          <div class="gmap-item">
+            <div class="gmap-item-head"><span class="gmap-item-name gmap-muted">Конкурент А</span></div>
+            <div class="gmap-item-rate gmap-dim"><b>★ 4,3</b><span>· 91 отзыв</span></div>
+            <div class="gmap-item-meta">Ср. чек: от 3000 ₽</div>
           </div>
-          <div class="geoyb-tags">
-            <span class="geoyb-tag">Открыто до 21:00</span>
-            <span class="geoyb-tag">Рекламная подписка</span>
-          </div>
-          <div class="geoyb-actions">
-            <span class="geoyb-btn geoyb-btn-fill">Позвонить</span>
-            <span class="geoyb-btn">Маршрут</span>
-          </div>
-
-          <div class="geoyb-map">
-            <svg viewBox="0 0 320 120" preserveAspectRatio="none" aria-hidden="true">
-              <rect width="320" height="120" fill="#1a2410"/>
-              <path d="M0 70 H320 M0 40 H320 M80 0 V120 M200 0 V120" stroke="rgba(182,240,30,0.10)" stroke-width="1"/>
-              <path class="geoyb-route" d="M40 95 Q150 70 200 40 T300 25" fill="none" stroke="#b6f01e" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 8"/>
-              <g class="geoyb-pin" transform="translate(200 40)">
-                <circle class="geoyb-pin-pulse" r="7"/>
-                <circle r="6" fill="#b6f01e"/>
-              </g>
-            </svg>
+          <div class="gmap-item">
+            <div class="gmap-item-head"><span class="gmap-item-name gmap-muted">Конкурент Б</span></div>
+            <div class="gmap-item-rate gmap-dim"><b>★ 3,8</b><span>· 34 отзыва</span></div>
+            <div class="gmap-item-meta">Ср. чек: от 2500 ₽</div>
           </div>
         </div>
       </div>
 
-      <!-- Правая часть: рост метрик -->
-      <div class="geoyb-stats">
-        <p class="geoyb-stats-eyebrow">Что даёт карточка в топе</p>
-        <div class="geoyb-stat">
-          <div class="geoyb-stat-top"><span>Звонки из карт</span><b>+128 / мес</b></div>
-          <div class="geoyb-track"><span class="geoyb-fill f1"></span></div>
-        </div>
-        <div class="geoyb-stat">
-          <div class="geoyb-stat-top"><span>Маршруты до точки</span><b>340 / мес</b></div>
-          <div class="geoyb-track"><span class="geoyb-fill f2"></span></div>
-        </div>
-        <div class="geoyb-stat">
-          <div class="geoyb-stat-top"><span>Переходы на сайт</span><b>+86 %</b></div>
-          <div class="geoyb-track"><span class="geoyb-fill f3"></span></div>
-        </div>
-        <div class="geoyb-stat">
-          <div class="geoyb-stat-top"><span>Рейтинг и отзывы</span><b>4,2 → 4,9</b></div>
-          <div class="geoyb-track"><span class="geoyb-fill f4"></span></div>
-        </div>
-        <p class="geoyb-note">Заполняю и веду карточки в <b>Яндекс Бизнес</b>, <b>Яндекс Картах</b>, <b>2ГИС</b> и <b>Google</b> — вывожу в топ, работаю с отзывами и рейтингом. Витрина, которая приводит клиентов 24/7.</p>
+      <!-- Правая часть: карта -->
+      <div class="gmap-canvas">
+        <svg class="gmap-bg" viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="460" fill="#e9efe6"/>
+          <!-- парки -->
+          <path d="M-10 60 Q60 40 120 80 T260 70 L300 130 Q200 160 120 150 T-10 170Z" fill="#cfe6c0" opacity="0.8"/>
+          <circle cx="330" cy="380" r="70" fill="#cfe6c0" opacity="0.7"/>
+          <!-- река -->
+          <path d="M-10 250 Q120 230 180 300 T420 320 L420 360 Q260 340 180 360 T-10 300Z" fill="#a9d4ec"/>
+          <!-- дороги -->
+          <g stroke="#ffffff" stroke-width="8" opacity="0.9" fill="none">
+            <path d="M0 120 H400 M0 220 H400 M0 340 H400 M70 0 V460 M180 0 V460 M300 0 V460"/>
+          </g>
+          <g stroke="#dfe6db" stroke-width="2.5" fill="none">
+            <path d="M0 170 H400 M0 290 H400 M125 0 V460 M240 0 V460 M350 0 V460"/>
+          </g>
+          <!-- кольцо -->
+          <ellipse cx="200" cy="240" rx="150" ry="150" fill="none" stroke="#ffd27a" stroke-width="9" opacity="0.85"/>
+        </svg>
+
+        <!-- маркеры -->
+        <span class="gmap-marker gmap-marker--you" style="left:42%; top:46%;">
+          <span class="gmap-marker-pulse"></span>
+          <span class="gmap-marker-dot"><svg viewBox="0 0 24 24" fill="#0c1402" width="13" height="13"><path d="M12 2 9.1 9.1 2 9.8l5.4 4.7L5.6 22 12 18l6.4 4-1.8-7.5L22 9.8l-7.1-.7L12 2z"/></svg></span>
+          <span class="gmap-marker-label">Ваша компания · 4,9</span>
+        </span>
+        <span class="gmap-marker gmap-marker--c" style="left:64%; top:30%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
+        <span class="gmap-marker gmap-marker--c" style="left:72%; top:58%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
+        <span class="gmap-marker gmap-marker--c" style="left:28%; top:64%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
+        <span class="gmap-marker gmap-marker--c" style="left:54%; top:72%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
+
+        <!-- курсор -->
+        <span class="gmap-cursor" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 2l14 7-6 2-2 6L5 2z" fill="#fff" stroke="#0c1402" stroke-width="1.4" stroke-linejoin="round"/></svg>
+        </span>
       </div>
     </div>
   </div>
@@ -952,5 +961,72 @@
   })();
 </script>
 <script defer src="/lead-modal.js"></script>
+<script>
+(function () {
+  var root = document.getElementById('gmapMock');
+  if (!root) return;
+  var typedEl = root.querySelector('.gmap-typed');
+  var cursor = root.querySelector('.gmap-cursor');
+  var goBtn = root.querySelector('.gmap-go');
+  var youItem = root.querySelector('.gmap-item--you');
+  var youMarker = root.querySelector('.gmap-marker--you');
+  var query = root.getAttribute('data-query') || 'ваша услуга · москва';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var running = false;
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+  function place(el, target) {
+    if (!el || !target) return;
+    var cr = root.getBoundingClientRect(), tr = target.getBoundingClientRect();
+    el.style.left = (tr.left - cr.left + tr.width / 2) + 'px';
+    el.style.top = (tr.top - cr.top + tr.height / 2) + 'px';
+  }
+  function renderTyped(n) {
+    var sub = query.slice(0, n);
+    var sp = sub.indexOf(' ');
+    if (sp > 0 && n > sp) {
+      typedEl.innerHTML = '<span class="hl">' + sub.slice(0, sp) + '</span>' + sub.slice(sp);
+    } else {
+      typedEl.innerHTML = '<span class="hl">' + sub + '</span>';
+    }
+  }
+
+  async function run() {
+    if (running) return; running = true;
+    while (true) {
+      root.classList.remove('results', 'picked', 'searched', 'searching');
+      typedEl.innerHTML = '';
+      cursor.style.opacity = '0';
+      if (reduce) { renderTyped(query.length); root.classList.add('searched', 'results', 'picked'); return; }
+      await sleep(700);
+      for (var i = 1; i <= query.length; i++) { renderTyped(i); await sleep(70 + Math.random() * 50); }
+      await sleep(450);
+      cursor.style.opacity = '1';
+      place(cursor, goBtn);
+      await sleep(750);
+      root.classList.add('searching');
+      await sleep(220);
+      root.classList.add('searched');
+      await sleep(250);
+      root.classList.add('results');
+      await sleep(900);
+      place(cursor, youItem);
+      await sleep(750);
+      root.classList.add('picked');
+      place(cursor, youMarker);
+      await sleep(2600);
+      cursor.style.opacity = '0';
+      await sleep(600);
+    }
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); run(); } });
+    }, { threshold: 0.3 });
+    io.observe(root);
+  } else { run(); }
+})();
+</script>
 </body>
 </html>
