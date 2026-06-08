@@ -142,6 +142,18 @@ function Contacts() {
           <span className="eyebrow">{K.eyebrow}</span>
           <h2 className="section-title"><Lines text={K.heading} /></h2>
           <p className="lead" style={{ marginTop: 22 }}>{K.lead}</p>
+          <ul className="contact-perks">
+            {[
+              { ic: <IconCheck size={18} />, t: 'Отвечаю лично', s: 'без менеджеров и колл-центра' },
+              { ic: <IconClock size={18} />, t: 'В среднем за 60 минут', s: 'отвечаю в рабочее время' },
+              { ic: <IconShield size={18} />, t: 'С 2017 года, 70+ ниш', s: 'опыт в разных сферах бизнеса' },
+            ].map((p, i) =>
+              <li key={i} className="contact-perk">
+                <span className="contact-perk-ic">{p.ic}</span>
+                <span><b>{p.t}</b><span className="contact-perk-sub">{p.s}</span></span>
+              </li>
+            )}
+          </ul>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 32, flex: 1, justifyContent: 'flex-end' }}>
             <a className="contact-row" href={'tel:' + (K.phoneTel || '')}
             onClick={() => toast('Звонок: ' + (K.phone || ''))}>

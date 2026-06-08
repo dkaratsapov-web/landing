@@ -71,6 +71,18 @@ writeFileSync(join(outDir, 'content-default.js'),
   + contentJson + ';\n', 'utf8');
 copyFileSync(join(srcDir, 'admin.html'), join(outDir, 'admin.html'));
 
+// Static sub-pages (plain HTML, not processed) — copy verbatim so their
+// edits always reach dist. build.mjs does not transform these.
+const STATIC_PAGES = ['kontekstnaya-reklama', 'targetirovannaya-reklama',
+  'geo-servisy', 'keysy', 'razrabotka-sajtov', 'contacts'];
+for (const page of STATIC_PAGES) {
+  const src = join(srcDir, page, 'index.html');
+  if (existsSync(src)) {
+    mkdirSync(join(outDir, page), { recursive: true });
+    copyFileSync(src, join(outDir, page, 'index.html'));
+  }
+}
+
 const scriptTags = [
   '  <script defer src="lead-config.js"></script>',
   '  <script defer src="content-default.js"></script>',
