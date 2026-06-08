@@ -320,9 +320,12 @@ function Cases({ onCta }) {
         <div className="kase-grid" key={filter}>
           {list.map((c, i) => <CaseCard key={c.id} c={c} idx={i} />)}
         </div>
-        <div style={{ marginTop: 44 }}>
+        <div style={{ marginTop: 44, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
           <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
             Обсудить похожую задачу<IconArrowRight size={18} />
+          </a>
+          <a className="btn btn-dark btn-lg" href="/keysy/">
+            Смотреть больше кейсов<IconArrowRight size={18} />
           </a>
         </div>
       </div>
