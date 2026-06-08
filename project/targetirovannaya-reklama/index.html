@@ -192,7 +192,7 @@
 /* Адаптив */
 @media (max-width: 1000px) {
   .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .vk-info-grid { grid-template-columns: 1fr; }
+  .vk-info-grid { grid-template-columns: repeat(2, 1fr); }
   .facts-row { grid-template-columns: 1fr 1fr; }
   .facts-row .fact-cell:nth-child(2) { border-right: none; }
   .facts-row .fact-cell:nth-child(1),
@@ -202,6 +202,9 @@
   .why-grid { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 14px; margin: 0 -16px; padding: 2px 16px 6px; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .why-grid::-webkit-scrollbar { display: none; }
   .why-card { flex: 0 0 80%; scroll-snap-align: start; }
+  .vk-info-grid { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 14px; margin: 0 -16px; padding: 2px 16px 6px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .vk-info-grid::-webkit-scrollbar { display: none; }
+  .vk-info-card { flex: 0 0 82%; scroll-snap-align: start; }
   .facts-row { grid-template-columns: 1fr; }
   .fact-cell { border-right: none !important; border-bottom: 1px solid var(--line); }
   .fact-cell:last-child { border-bottom: none; }
