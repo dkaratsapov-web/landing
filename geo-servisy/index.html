@@ -37,70 +37,88 @@
 .icon-tile.sm { width: 44px; height: 44px; border-radius: 13px; }
 .icon-tile.sm svg { width: 20px; height: 20px; }
 
-/* Hero: бейдж + строка доверия */
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 10px; background: var(--surface);
-  border: 1px solid var(--line-2); border-radius: var(--r-pill); padding: 8px 16px 8px 8px;
-  font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 26px;
+/* Hero: платформы */
+.plat-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 36px; }
+.plat-chip {
+  display: inline-flex; align-items: center; gap: 9px; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-pill); padding: 9px 16px; font-size: 14px; font-weight: 600; color: var(--ink-2);
+  transition: border-color .2s ease;
 }
-.hero-tag .av {
-  width: 26px; height: 26px; border-radius: 50%; background: var(--lime); color: var(--lime-ink);
-  display: grid; place-items: center; font-weight: 800; font-size: 13px; flex: none;
-}
-.trust { margin-top: 44px; }
-.trust .trust-label { font-size: 13px; color: var(--muted-2); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 16px; }
-.trust-row { display: flex; flex-wrap: wrap; gap: 12px; }
-.trust-chip {
-  display: inline-flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--r-pill); padding: 11px 18px; font-size: 15px; font-weight: 600; color: var(--ink-2);
-}
-.trust-chip .dotc { width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; flex: none; font-size: 12px; font-weight: 800; }
-.trust-chip .ya { background: #ffdb4d; color: #1a1a1a; }
-.trust-chip .yb { background: #fc3f1d; color: #fff; }
-.trust-chip .gis { background: #1ba345; color: #fff; }
-.trust-chip .gg { background: #fff; color: #1a73e8; }
+.plat-chip:hover { border-color: var(--line-2); }
+.plat-chip .pl-logo { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; flex: none; overflow: hidden; }
 
-/* Hero визуал — стилизованная карта */
-.hero-map {
-  width: 100%; aspect-ratio: 4/4.4; border-radius: var(--r-xl); border: 1px solid var(--line-2); overflow: hidden;
-  position: relative; background:
-    radial-gradient(circle at 70% 18%, rgba(182,240,30,0.10), transparent 50%),
-    linear-gradient(160deg, var(--surface-2), var(--surface));
+/* Hero визуал — мокап выдачи гео-сервиса */
+.geo-mock {
+  width: 100%; border-radius: var(--r-xl); border: 1px solid var(--line-2); overflow: hidden;
+  background: var(--surface); display: flex; flex-direction: column;
 }
-.hero-map .roads {
-  position: absolute; inset: 0; opacity: 0.5;
+.geo-mock-search {
+  display: flex; align-items: center; gap: 10px; padding: 14px 18px;
+  border-bottom: 1px solid var(--line); background: var(--surface-2);
+  font-size: 14px; color: var(--ink-2); font-weight: 500;
+}
+.geo-mock-search svg { color: var(--muted-2); flex: none; }
+.geo-mock-search .gs-hl { color: var(--lime-bright); font-weight: 600; }
+.geo-mock-count { font-size: 12px; color: var(--muted-2); padding: 8px 18px; border-bottom: 1px solid var(--line); }
+.geo-res {
+  display: flex; gap: 14px; padding: 16px 18px; border-bottom: 1px solid var(--line);
+  transition: background .15s ease;
+}
+.geo-res:last-child { border-bottom: none; }
+.geo-res:hover { background: var(--surface-2); }
+.geo-res-pos {
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 13px; font-weight: 700; flex: none; margin-top: 2px;
+  background: var(--surface-3); color: var(--muted);
+}
+.geo-res.geo-res-top .geo-res-pos { background: var(--lime); color: var(--lime-ink); }
+.geo-res-info { flex: 1; min-width: 0; }
+.geo-res-name { font-size: 15px; font-weight: 700; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.geo-top-badge { font-size: 10px; font-weight: 800; color: var(--lime-ink); background: var(--lime); border-radius: var(--r-pill); padding: 2px 8px; letter-spacing: 0.04em; }
+.geo-res-stars { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.geo-res-stars .star { color: #f5a623; }
+.geo-res-stars b { color: var(--ink-2); }
+.geo-res-meta { font-size: 12px; color: var(--muted-2); margin-top: 4px; display: flex; gap: 10px; flex-wrap: wrap; }
+.geo-res-meta b { color: var(--lime-bright); }
+.geo-res-actions { display: flex; flex-direction: column; gap: 6px; flex: none; }
+.geo-act-btn {
+  padding: 5px 12px; border-radius: var(--r-pill); font-size: 12px; font-weight: 600;
+  border: 1px solid var(--line-2); background: var(--surface-3); color: var(--ink-2);
+  white-space: nowrap; cursor: default;
+}
+.geo-res.geo-res-top .geo-act-btn.geo-act-call { background: var(--lime); border-color: var(--lime); color: var(--lime-ink); }
+.geo-mock-map-mini {
+  height: 110px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(circle at 55% 40%, rgba(182,240,30,0.08), transparent 60%),
+    linear-gradient(160deg, var(--surface-2), #0e0f0d);
+  border-top: 1px solid var(--line);
+}
+.geo-mock-map-mini .roads-mini {
+  position: absolute; inset: 0; opacity: 0.4;
   background-image:
     linear-gradient(90deg, transparent 49%, var(--line-2) 49%, var(--line-2) 51%, transparent 51%),
-    linear-gradient(transparent 49%, var(--line-2) 49%, var(--line-2) 51%, transparent 51%),
-    linear-gradient(35deg, transparent 49.4%, var(--line) 49.4%, var(--line) 50.6%, transparent 50.6%);
-  background-size: 120px 120px, 120px 120px, 200px 200px;
+    linear-gradient(transparent 49%, var(--line-2) 49%, var(--line-2) 51%, transparent 51%);
+  background-size: 80px 80px;
 }
-.hero-map .pin { position: absolute; display: flex; flex-direction: column; align-items: center; transform: translate(-50%,-100%); }
-.hero-map .pin .head {
-  width: 38px; height: 38px; border-radius: 50% 50% 50% 0; transform: rotate(45deg);
-  display: grid; place-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+.geo-mini-pin { position: absolute; transform: translate(-50%,-100%); display: flex; flex-direction: column; align-items: center; }
+.geo-mini-pin .mph {
+  width: 28px; height: 28px; border-radius: 50% 50% 50% 0; transform: rotate(45deg);
+  display: grid; place-items: center; font-weight: 800; font-size: 11px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-.hero-map .pin .head span { transform: rotate(-45deg); font-weight: 800; font-size: 14px; }
-.hero-map .pin.top .head { background: var(--lime); color: var(--lime-ink); }
-.hero-map .pin.alt .head { background: var(--surface-3); color: var(--muted); border: 1px solid var(--line-2); }
-.hero-map .pin.p1 { left: 38%; top: 40%; }
-.hero-map .pin.p2 { left: 64%; top: 30%; }
-.hero-map .pin.p3 { left: 30%; top: 70%; }
-.hero-map .pin.p4 { left: 72%; top: 66%; }
-.hero-map .pin.top .pulse {
-  position: absolute; top: 0; left: 50%; width: 38px; height: 38px; border-radius: 50%;
-  transform: translate(-50%,0); background: var(--lime); opacity: 0.35; animation: geoPulse 2.2s ease-out infinite;
+.geo-mini-pin .mph span { transform: rotate(-45deg); }
+.geo-mini-pin.pml { left: 40%; top: 55%; }
+.geo-mini-pin.pml .mph { background: var(--lime); color: var(--lime-ink); }
+.geo-mini-pin.pmr1 { left: 62%; top: 45%; }
+.geo-mini-pin.pmr2 { left: 28%; top: 72%; }
+.geo-mini-pin.pmr1 .mph, .geo-mini-pin.pmr2 .mph { background: var(--surface-3); color: var(--muted); border: 1px solid var(--line-2); }
+.geo-mini-pulse {
+  position: absolute; top: 0; left: 50%; width: 28px; height: 28px; border-radius: 50%;
+  transform: translate(-50%, 0); background: var(--lime); opacity: 0;
+  animation: geoPulse 2.4s ease-out infinite;
 }
-@keyframes geoPulse { 0% { transform: translate(-50%,0) scale(0.6); opacity: 0.5; } 100% { transform: translate(-50%,0) scale(2.4); opacity: 0; } }
-.hero-map .map-card {
-  position: absolute; left: 18px; right: 18px; bottom: 18px; background: rgba(10,11,10,0.82);
-  backdrop-filter: blur(10px); border: 1px solid var(--line-2); border-radius: var(--r-md); padding: 16px 18px;
-}
-.hero-map .map-card .mc-top { display: flex; align-items: center; gap: 10px; }
-.hero-map .map-card .badge-top { font-size: 11px; font-weight: 800; color: var(--lime-ink); background: var(--lime); border-radius: var(--r-pill); padding: 3px 9px; }
-.hero-map .map-card .mc-name { font-weight: 700; font-size: 15px; }
-.hero-map .map-card .mc-meta { color: var(--muted); font-size: 13px; margin-top: 6px; display: flex; gap: 14px; }
-.hero-map .map-card .mc-meta b { color: var(--lime); }
+.geo-mini-pin.pml .geo-mini-pulse { opacity: 0.4; }
+@keyframes geoPulse { 0% { transform: translate(-50%,0) scale(0.5); opacity: 0.5; } 100% { transform: translate(-50%,0) scale(2.6); opacity: 0; } }
 
 /* Платформы (что такое гео) */
 .geo-plat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
@@ -256,33 +274,88 @@
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-text">
-        <span class="hero-tag reveal"><span class="av">Д</span> Частный специалист · веду проект лично</span>
-        <h1 class="reveal">Продвижение в гео-сервисах: клиенты с <span class="accent">Яндекс Карт</span>, 2ГИС и Google</h1>
-        <p class="lead reveal">Когда рядом ищут ваш товар или услугу — помогу, чтобы находили именно вас. Вывожу карточку бизнеса в топ на картах и привожу звонки, маршруты и визиты в офлайн-точку.</p>
+        <p class="eyebrow reveal">Продвижение в гео-сервисах · Яндекс Карты, 2ГИС и Google</p>
+        <h1 class="reveal">Клиенты с карт: <span class="accent">вывожу бизнес</span> в топ гео-сервисов</h1>
+        <p class="lead reveal">Когда рядом ищут ваш товар или услугу — помогу, чтобы находили именно вас. Вывожу карточку в топ и привожу звонки, маршруты и визиты в офлайн-точку.</p>
         <div class="btn-row reveal">
           <a class="btn btn-lime" href="#contacts">Получить бесплатный аудит карточек <span class="arr">→</span></a>
           <a class="btn btn-ghost" href="https://t.me/Daniil_065" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg> Telegram</a>
         </div>
-        <div class="trust reveal">
-          <div class="trust-label">Работаю с площадками</div>
-          <div class="trust-row">
-            <span class="trust-chip"><span class="dotc ya">Я</span> Яндекс Карты</span>
-            <span class="trust-chip"><span class="dotc yb">Б</span> Яндекс Бизнес</span>
-            <span class="trust-chip"><span class="dotc gis">2</span> 2ГИС</span>
-            <span class="trust-chip"><span class="dotc gg">G</span> Google Карты</span>
-          </div>
+        <div class="plat-row reveal">
+          <!-- Яндекс Карты -->
+          <span class="plat-chip">
+            <span class="pl-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="7" fill="#FC3F1D"/><text x="12" y="17" text-anchor="middle" font-size="14" font-weight="900" fill="#fff" font-family="Arial, sans-serif">Я</text></svg></span>
+            Яндекс Карты
+          </span>
+          <!-- Яндекс Бизнес -->
+          <span class="plat-chip">
+            <span class="pl-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="7" fill="#FC3F1D"/><text x="12" y="16.5" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" font-family="Arial, sans-serif">ЯБ</text></svg></span>
+            Яндекс Бизнес
+          </span>
+          <!-- 2ГИС -->
+          <span class="plat-chip">
+            <span class="pl-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="7" fill="#1BA345"/><text x="12" y="17" text-anchor="middle" font-size="13" font-weight="900" fill="#fff" font-family="Arial, sans-serif">2</text></svg></span>
+            2ГИС
+          </span>
+          <!-- Google Карты -->
+          <span class="plat-chip">
+            <span class="pl-logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="7" fill="#fff"/><text x="12" y="17" text-anchor="middle" font-size="14" font-weight="900" fill="#4285F4" font-family="Arial, sans-serif">G</text></svg></span>
+            Google Карты
+          </span>
         </div>
       </div>
       <div class="hero-visual reveal">
-        <div class="hero-map">
-          <div class="roads"></div>
-          <div class="pin alt p2"><div class="head"><span>2</span></div></div>
-          <div class="pin alt p3"><div class="head"><span>3</span></div></div>
-          <div class="pin alt p4"><div class="head"><span>4</span></div></div>
-          <div class="pin top p1"><div class="pulse"></div><div class="head"><span>1</span></div></div>
-          <div class="map-card">
-            <div class="mc-top"><span class="badge-top">ТОП-1</span><span class="mc-name">Ваш бизнес</span></div>
-            <div class="mc-meta"><span>★ <b>4.9</b> рейтинг</span><span><b>+128</b> звонков/мес</span><span><b>340</b> маршрутов</span></div>
+        <div class="geo-mock">
+          <div class="geo-mock-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+            <span><span class="gs-hl">кофейня</span> рядом со мной</span>
+          </div>
+          <div class="geo-mock-count">32 результата · сортировка: рейтинг</div>
+          <!-- Результат 1 — ТОП -->
+          <div class="geo-res geo-res-top">
+            <div class="geo-res-pos">1</div>
+            <div class="geo-res-info">
+              <div class="geo-res-name">Ваш бизнес <span class="geo-top-badge">ТОП-1</span></div>
+              <div class="geo-res-stars"><span class="star">★★★★★</span> <b>4.9</b> · 248 отзывов</div>
+              <div class="geo-res-meta"><b>+128</b> звонков/мес &nbsp;·&nbsp; <b>340</b> маршрутов</div>
+            </div>
+            <div class="geo-res-actions">
+              <div class="geo-act-btn geo-act-call">Позвонить</div>
+              <div class="geo-act-btn">Маршрут</div>
+            </div>
+          </div>
+          <!-- Результат 2 -->
+          <div class="geo-res">
+            <div class="geo-res-pos">2</div>
+            <div class="geo-res-info">
+              <div class="geo-res-name">Конкурент А</div>
+              <div class="geo-res-stars"><span class="star">★★★★</span>☆ <b>4.3</b> · 91 отзыв</div>
+              <div class="geo-res-meta">+41 звонок/мес · 87 маршрутов</div>
+            </div>
+            <div class="geo-res-actions">
+              <div class="geo-act-btn">Позвонить</div>
+              <div class="geo-act-btn">Маршрут</div>
+            </div>
+          </div>
+          <!-- Результат 3 -->
+          <div class="geo-res">
+            <div class="geo-res-pos">3</div>
+            <div class="geo-res-info">
+              <div class="geo-res-name">Конкурент Б</div>
+              <div class="geo-res-stars"><span class="star">★★★</span>☆☆ <b>3.8</b> · 34 отзыва</div>
+              <div class="geo-res-meta">+17 звонков/мес · 43 маршрута</div>
+            </div>
+            <div class="geo-res-actions">
+              <div class="geo-act-btn">Позвонить</div>
+              <div class="geo-act-btn">Маршрут</div>
+            </div>
+          </div>
+          <!-- Мини-карта -->
+          <div class="geo-mock-map-mini">
+            <div class="roads-mini"></div>
+            <div class="geo-mini-pin pmr1"><div class="mph"><span>2</span></div></div>
+            <div class="geo-mini-pin pmr2"><div class="mph"><span>3</span></div></div>
+            <div class="geo-mini-pin pml"><div class="geo-mini-pulse"></div><div class="mph"><span>1</span></div></div>
           </div>
         </div>
       </div>
@@ -762,5 +835,6 @@
     });
   })();
 </script>
+<script src="../kontekstnaya-reklama/kontekst/lead-modal.js"></script>
 </body>
 </html>
