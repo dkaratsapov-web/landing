@@ -173,7 +173,7 @@ h2.section-title {
 .nav-ic { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--accent-bright); color: var(--accent-ink); text-decoration: none; flex: none; transition: transform .2s ease, filter .2s ease; }
 .nav-ic:hover { transform: translateY(-1px); filter: brightness(1.06); }
 .nav-ic svg { width: 19px; height: 19px; }
-.nav-burger { display: none; margin-left: 0; background: none; border: none; color: var(--txt); cursor: pointer; padding: 6px; }
+.nav-burger { display: none; margin-left: 0; background: none; border: none; color: var(--txt); cursor: pointer; padding: 9px; }
 
 /* Dropdown в навигации */
 .nav-item-drop {
