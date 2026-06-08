@@ -236,7 +236,7 @@ function QuizModal({ open, onClose }) {
   const [step, setStep] = useStateC(0);
   const [ans, setAns] = useStateC({});
   const [phase, setPhase] = useStateC('q'); // q | form | done
-  const f = useLeadForm(toast, 'Заявка отправлена. Скидка 10% закреплена за вами.', 'Квиз');
+  const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.', 'Квиз');
 
   useEffectC(() => {
     if (open) {setStep(0);setAns({});setPhase('q');f.reset();}
@@ -265,11 +265,7 @@ function QuizModal({ open, onClose }) {
         width: 'min(560px, 100%)', maxHeight: '90vh', overflowY: 'auto', borderColor: 'var(--line-strong)' }}>
         <div style={{ padding: '22px 28px', borderBottom: '1px solid var(--line)', display: 'flex',
           alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, background: 'var(--tile-b)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span className="chip" style={{ padding: '6px 12px', color: 'var(--accent-bright)', borderColor: 'var(--accent-soft-bd)', background: 'var(--accent-soft)' }}>
-              <IconStar size={14} />Скидка 10%
-            </span>
-          </div>
+          <div />
           <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--txt-2)', cursor: 'pointer', padding: 6 }}>
             <IconClose size={22} />
           </button>
@@ -310,7 +306,7 @@ function QuizModal({ open, onClose }) {
           {phase === 'form' && !f.sent &&
           <form onSubmit={f.submit} noValidate style={{ animation: 'toastIn .3s ease' }}>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 8px', color: 'var(--txt)' }}>Куда отправить решение?</h3>
-              <p className="muted" style={{ margin: '0 0 24px', fontSize: 16 }}>Подберу под ваши ответы и закреплю скидку 10%. Перезвоню лично.</p>
+              <p className="muted" style={{ margin: '0 0 24px', fontSize: 16 }}>Подберу решение под ваши ответы и перезвоню лично.</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <Field label="Как вас зовут" error={f.err.name}>
                   <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
@@ -324,13 +320,13 @@ function QuizModal({ open, onClose }) {
                 </label>
                 {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
                 <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
-                  Получить решение со скидкой<IconArrowRight size={18} />
+                  Получить решение<IconArrowRight size={18} />
                 </button>
               </div>
             </form>
           }
 
-          {f.sent && <SuccessPanel title="Скидка 10% — ваша" text="Я получил ответы и закрепил скидку. Перезвоню лично с готовым решением." />}
+          {f.sent && <SuccessPanel title="Готово!" text="Я получил ответы и перезвоню лично с готовым решением." />}
         </div>
       </div>
     </div>);
