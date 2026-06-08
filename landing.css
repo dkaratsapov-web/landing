@@ -726,13 +726,13 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   transition: grid-template-rows .45s cubic-bezier(.16,.7,.3,1); }
 .svc-x.open .svc-x-body { grid-template-rows: 1fr; }
 .svc-x-clip { overflow: hidden; min-height: 0; }
-.svc-x-inner { padding: 4px 28px 28px; }
-.svc-x-detail { display: grid; grid-template-columns: 1.5fr 1fr; gap: 32px;
-  padding-top: 24px; border-top: 1px solid var(--line); }
+.svc-x-inner { padding: 2px 28px 20px; }
+.svc-x-detail { display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px;
+  padding-top: 18px; border-top: 1px solid var(--line); }
 .svc-x-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--txt-3); margin-bottom: 16px; }
+  color: var(--txt-3); margin-bottom: 12px; }
 .svc-x-list { list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+  display: grid; grid-template-columns: 1fr 1fr; gap: 9px 24px; }
 .svc-x-list li { display: flex; gap: 10px; align-items: flex-start;
   font-size: 15px; color: var(--txt-2); line-height: 1.4;
   opacity: 0; transform: translateX(-8px); }
@@ -745,10 +745,10 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @keyframes svcItemIn { to { opacity: 1; transform: none; } }
 .svc-x-list li .i { color: var(--accent-bright); flex: 0 0 auto; margin-top: 2px; }
 
-.svc-x-aside { display: flex; flex-direction: column; gap: 16px;
-  padding: 22px; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd);
+.svc-x-aside { display: flex; flex-direction: column; gap: 12px;
+  padding: 16px 18px; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd);
   border-radius: var(--r-md); align-self: start; }
-.svc-x-meta-row { display: flex; flex-direction: column; gap: 6px; }
+.svc-x-meta-row { display: flex; flex-direction: column; gap: 3px; }
 .svc-x-meta-label { display: inline-flex; align-items: center; gap: 7px;
   font-size: 12px; color: var(--txt-3); text-transform: uppercase; letter-spacing: 0.05em; }
 .svc-x-meta-label .i { width: 14px; height: 14px; color: var(--accent-bright); }
