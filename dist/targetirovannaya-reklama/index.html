@@ -9,7 +9,7 @@
 <meta property="og:description" content="97 млн пользователей ВКонтакте. Помогу привести их в ваш бизнес — без посредников и наценки агентства.">
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dark.css">
+<link rel="stylesheet" href="../kontekstnaya-reklama/kontekst/dark.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script src="/lead-config.js"></script>
 <!-- Yandex.Metrika counter -->
@@ -192,7 +192,7 @@
 /* Адаптив */
 @media (max-width: 1000px) {
   .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .vk-info-grid { grid-template-columns: repeat(2, 1fr); }
+  .vk-info-grid { grid-template-columns: 1fr; }
   .facts-row { grid-template-columns: 1fr 1fr; }
   .facts-row .fact-cell:nth-child(2) { border-right: none; }
   .facts-row .fact-cell:nth-child(1),
@@ -202,9 +202,6 @@
   .why-grid { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 14px; margin: 0 -16px; padding: 2px 16px 6px; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .why-grid::-webkit-scrollbar { display: none; }
   .why-card { flex: 0 0 80%; scroll-snap-align: start; }
-  .vk-info-grid { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 14px; margin: 0 -16px; padding: 2px 16px 6px; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .vk-info-grid::-webkit-scrollbar { display: none; }
-  .vk-info-card { flex: 0 0 82%; scroll-snap-align: start; }
   .facts-row { grid-template-columns: 1fr; }
   .fact-cell { border-right: none !important; border-bottom: 1px solid var(--line); }
   .fact-cell:last-child { border-bottom: none; }
@@ -604,8 +601,8 @@
       <p>Реальные проекты с VK Ads. Все цифры взяты из рекламных кабинетов.</p>
     </div>
     <p class="scroll-hint" aria-hidden="true">
-      <span class="swipe-dot"></span><span class="swipe-dot"></span><span class="swipe-dot"></span>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      Листайте кейсы вбок
     </p>
     <div class="kase-grid" id="kaseGrid">
       <article class="kase card" data-tags="site context geo target" style="--d:0">
@@ -672,8 +669,8 @@
       <p>Давайте перейдём к первому шагу прямо сейчас.</p>
     </div>
     <p class="scroll-hint" aria-hidden="true">
-      <span class="swipe-dot"></span><span class="swipe-dot"></span><span class="swipe-dot"></span>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      Листайте этапы вбок
     </p>
     <div class="steps-grid stagger">
       <div class="step"><div class="n">01</div><h3>Анализ</h3><p>Бесплатная консультация, разбор бизнеса и конкурентов.</p></div>
@@ -1068,6 +1065,5 @@
     });
   })();
 </script>
-<script src="/lead-modal.js"></script>
 </body>
 </html>
