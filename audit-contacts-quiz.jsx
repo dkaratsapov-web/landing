@@ -258,8 +258,8 @@ function MeetModal({ open, onClose }) {
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
   if (!open) return null;
-  return (
-    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(0,0,0,0.6)',
+  return ReactDOM.createPortal(
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 400, background: 'rgba(0,0,0,0.6)',
       backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
       animation: 'toastIn .3s ease' }}>
       <div onClick={(e) => e.stopPropagation()} className="card" style={{ background: 'var(--tile-b)',
@@ -295,7 +295,7 @@ function MeetModal({ open, onClose }) {
           </form>
         }
       </div>
-    </div>);
+    </div>, document.body);
 }
 
 /* ---------------- LEAD MODAL (Обсудить задачу) ---------------- */
@@ -309,8 +309,8 @@ function LeadModal({ open, onClose }) {
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
   if (!open) return null;
-  return (
-    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(0,0,0,0.6)',
+  return ReactDOM.createPortal(
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 400, background: 'rgba(0,0,0,0.6)',
       backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
       animation: 'toastIn .3s ease' }}>
       <div onClick={(e) => e.stopPropagation()} className="card" style={{ background: 'var(--tile-b)',
@@ -346,7 +346,7 @@ function LeadModal({ open, onClose }) {
           </form>
         }
       </div>
-    </div>);
+    </div>, document.body);
 }
 
 /* ---------------- QUIZ MODAL ---------------- */
@@ -376,8 +376,8 @@ function QuizModal({ open, onClose }) {
   };
   const pct = phase === 'form' ? 100 : Math.round(step / total * 100);
 
-  return (
-    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 150, background: 'rgba(0,0,0,0.7)',
+  return ReactDOM.createPortal(
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 400, background: 'rgba(0,0,0,0.7)',
       backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20,
       animation: 'toastIn .3s ease' }}>
       <div onClick={(e) => e.stopPropagation()} className="card" style={{ background: 'var(--tile-b)',
@@ -448,7 +448,7 @@ function QuizModal({ open, onClose }) {
           {f.sent && <SuccessPanel title="Готово!" text="Я получил ответы и перезвоню лично с готовым решением." />}
         </div>
       </div>
-    </div>);
+    </div>, document.body);
 
 }
 

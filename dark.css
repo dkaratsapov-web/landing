@@ -417,8 +417,13 @@ h3 { font-weight: 600; }
 .feat-card .spacer { display: none; }
 
 /* ---------- Стоимость ---------- */
-.cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.cost-card { padding: 38px; }
+/* Подсетка: tag → h3 → sub → h4 → список. Строки выравниваются между обеими
+   карточками, поэтому «Что входит в стоимость» и списки стоят на одном уровне
+   даже при разной длине заголовков и описаний. Внутренние отступы задаются
+   margin'ами элементов, row-gap у сетки = 0, чтобы не плодить лишние интервалы. */
+.cost-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; row-gap: 0;
+  grid-auto-rows: max-content; align-items: start; }
+.cost-card { padding: 38px; display: grid; grid-template-rows: subgrid; grid-row: span 5; }
 .cost-card .tag { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--lime); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
 .cost-card .tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); }
 .cost-card h3 { font-size: 27px; margin-bottom: 10px; }
