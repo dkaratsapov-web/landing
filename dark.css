@@ -658,7 +658,7 @@ h3 { font-weight: 600; }
 .faq-item[open] .sign::before, .faq-item[open] .sign::after { background: var(--lime-ink); }
 .faq-item .sign::after { transform: translate(-50%,-50%) rotate(90deg); }
 .faq-item[open] .sign::after { transform: translate(-50%,-50%) rotate(0deg); }
-.faq-item .answer { padding: 0 26px 26px; color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 72ch; }
+.faq-item .answer { padding: 0 26px 26px; color: var(--muted); font-size: 16px; line-height: 1.6; }
 
 /* ---------- Финальный CTA ---------- */
 .final-card { position: relative; border-radius: var(--r-xl); padding: 80px 60px; text-align: center; overflow: hidden;
