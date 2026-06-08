@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кейсы — реальные результаты продвижения | Даниил Карацапов</title>
+<meta name="description" content="Подробные кейсы продвижения: контекстная реклама, таргет, разработка сайтов и GEO-сервисы. Реальные цифры, проблемы клиентов и решения — школа, салоны дверей, коворкинг, рестораны и другие проекты.">
+<meta property="og:title" content="Кейсы — реальные результаты продвижения">
+<meta property="og:description" content="Подробные истории 18 проектов: боли клиента, проделанные работы, выводы и результаты в цифрах.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../kontekstnaya-reklama/kontekst/dark.css">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script src="/lead-config.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109681858', 'ym');
+    ym(109681858, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109681858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<style>
+  .cases-hero-grid { display: grid; grid-template-columns: 1fr 560px; gap: 48px; align-items: stretch; }
+  .cases-hero-grid .section-head { display: flex; flex-direction: column; height: 100%; }
+  .cases-hero-grid .section-head > p:last-child { margin-top: auto; }
+  .lead-card { padding: 28px; display: flex; flex-direction: column; }
+  .lead-title { font-size: 24px; margin: 0 0 5px; }
+  .lead-sub { color: var(--muted); font-size: 14px; line-height: 1.45; margin: 0 0 16px; }
+  #leadForm { display: flex; flex-direction: column; flex: 1; }
+  #leadForm .lead-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  #leadForm .field.grow { flex: 1; }
+  #leadForm .field.grow textarea { flex: 1; height: 100%; }
+  #leadForm .field.grow { display: flex; flex-direction: column; }
+  #leadForm .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 11px; }
+  #leadForm label { color: var(--ink-2); font-size: 13.5px; font-weight: 600; }
+  #leadForm .opt { color: var(--muted-2); font-weight: 400; font-size: 12px; }
+  #leadForm .req { color: var(--lime-bright); }
+  #leadForm input[type="text"], #leadForm input[type="tel"], #leadForm textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--r-sm);
+    color: var(--ink); font-family: var(--font); font-size: 15px; padding: 10px 14px; transition: border-color .18s ease; }
+  #leadForm input:focus, #leadForm textarea:focus { outline: none; border-color: var(--lime); }
+  #leadForm input::placeholder, #leadForm textarea::placeholder { color: var(--muted-2); }
+  #leadForm textarea { resize: vertical; min-height: 54px; }
+  #leadForm .radio-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  #leadForm .radio { position: relative; display: inline-flex; }
+  #leadForm .radio input { position: absolute; opacity: 0; pointer-events: none; }
+  #leadForm .radio span { display: inline-flex; align-items: center; padding: 7px 13px; border-radius: var(--r-pill);
+    background: var(--bg); border: 1px solid var(--line-2); color: var(--muted); font-size: 13px; cursor: pointer; transition: all .15s ease; }
+  #leadForm .radio input:checked + span { background: var(--lime); border-color: transparent; color: var(--lime-ink); font-weight: 600; }
+  #leadForm .field-err { display: none; color: #ff6b6b; font-size: 12.5px; }
+  #leadForm .field.invalid .field-err { display: block; }
+  #leadForm .field.invalid input { border-color: #ff6b6b; }
+  #leadForm button[type="submit"] { margin-top: 4px; padding-top: 14px; padding-bottom: 14px; }
+  .lead-note { color: var(--muted-2); font-size: 11.5px; line-height: 1.4; margin: 10px 0 0; text-align: center; }
+  .lead-ok { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 14px 0; }
+  .lead-ok[hidden] { display: none; }
+  .lead-ok-ic { width: 64px; height: 64px; border-radius: 50%; background: rgba(182,240,30,0.14); color: var(--lime-bright);
+    display: flex; align-items: center; justify-content: center; }
+  .lead-ok h3 { margin: 0; font-size: 22px; }
+  .lead-ok p { color: var(--muted); font-size: 15px; line-height: 1.55; margin: 0; max-width: 320px; }
+  @media (max-width: 980px) {
+    .cases-hero-grid { grid-template-columns: 1fr; gap: 36px; }
+    .lead-card { max-width: 520px; }
+  }
+  @media (max-width: 640px) {
+    .lead-card { padding: 24px 20px; }
+    .lead-title { font-size: 23px; }
+    #leadForm .lead-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-fx">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="grid"></div>
+</div>
+
+<div class="page">
+
+<!-- ===================== НАВИГАЦИЯ ===================== -->
+<nav class="nav" id="siteNav">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>
+      Даниил Карацапов
+    </a>
+    <div class="nav-links">
+      <div class="nav-item-drop">
+        <a href="/kontekstnaya-reklama/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav-dropdown">
+          <a href="/kontekstnaya-reklama/" class="nav-drop-link">Контекстная реклама</a>
+          <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a>
+          <a href="/targetirovannaya-reklama/" class="nav-drop-link">Таргетированная реклама</a>
+          <a href="/geo-servisy/" class="nav-drop-link">GEO-сервисы</a>
+        </div>
+      </div>
+      <a href="/keysy/">Кейсы</a>
+      <a href="/contacts/">Контакты</a>
+    </div>
+    <div class="nav-actions">
+      <a class="nav-ic nav-ic-tg" href="https://t.me/Daniil_065" target="_blank" rel="noopener" aria-label="Telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+      </a>
+      <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener" aria-label="MAX">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
+      </a>
+      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/">Обсудить задачу</a>
+      <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/kontekstnaya-reklama/">Услуги</a>
+  <a href="/kontekstnaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Контекстная реклама</a>
+  <a href="/razrabotka-sajtov/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Разработка сайтов</a>
+  <a href="/targetirovannaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Таргетированная реклама</a>
+  <a href="/geo-servisy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">GEO-сервисы</a>
+  <a href="/keysy/">Кейсы</a>
+  <a href="/contacts/">Контакты</a>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<header id="top" class="hero" data-screen-label="Hero" style="padding-bottom: 0;">
+  <div class="wrap">
+    <div class="cases-hero-grid">
+      <div class="section-head reveal" style="max-width: 620px; margin-bottom: 0;">
+        <p class="eyebrow">Кейсы · доказательства</p>
+        <h1>Реальные проекты — <span class="accent">боли, решения и цифры</span></h1>
+        <p>Здесь — подробные истории 18 проектов из разных ниш: с какими проблемами пришёл клиент, что именно мы сделали и какие результаты это дало. Без воды — только то, что было на самом деле.</p>
+      </div>
+
+      <div class="lead-card card reveal">
+        <h2 class="lead-title">Разобрать ваш проект</h2>
+        <p class="lead-sub">Оставьте заявку — посмотрю ваш проект и расскажу, что можно улучшить. Перезвоню лично.</p>
+        <form id="leadForm" novalidate>
+          <div class="lead-row">
+            <div class="field">
+              <label for="lf-name">Имя <span class="opt">(необязательно)</span></label>
+              <input type="text" id="lf-name" name="name" autocomplete="name" placeholder="Как к вам обращаться">
+            </div>
+            <div class="field">
+              <label for="lf-phone">Телефон <span class="req">*</span></label>
+              <input type="tel" id="lf-phone" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" required>
+              <span class="field-err" id="lf-phone-err">Укажите телефон для связи</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="lf-site">Ссылка на сайт <span class="opt">(необязательно)</span></label>
+            <input type="text" id="lf-site" name="site" inputmode="url" placeholder="example.ru">
+          </div>
+          <div class="field">
+            <label>Готовы дать доступ в рекламный кабинет? <span class="opt">(необязательно)</span></label>
+            <div class="radio-row">
+              <label class="radio"><input type="radio" name="access" value="Да"><span>Да</span></label>
+              <label class="radio"><input type="radio" name="access" value="Нет"><span>Нет</span></label>
+              <label class="radio"><input type="radio" name="access" value="Рекламы пока нет"><span>Рекламы пока нет</span></label>
+            </div>
+          </div>
+          <div class="field grow">
+            <label for="lf-comment">Комментарий <span class="opt">(необязательно)</span></label>
+            <textarea id="lf-comment" name="comment" rows="3" placeholder="Коротко о задаче или вопросе"></textarea>
+          </div>
+          <button type="submit" class="btn btn-lime" style="width:100%; justify-content:center;">Разобрать мой проект <span class="arr">→</span></button>
+          <p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+        </form>
+        <div class="lead-ok" id="leadOk" hidden>
+          <div class="lead-ok-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <h3>Заявка отправлена!</h3>
+          <p>Спасибо! Я свяжусь с вами в ближайшее время. Если вопрос срочный — напишите мне в Telegram.</p>
+          <a class="btn btn-dark" href="https://t.me/Daniil_065" target="_blank" rel="noopener">Открыть Telegram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== СПИСОК КЕЙСОВ ===================== -->
+<section id="cases-list" class="section" data-screen-label="Кейсы">
+  <div class="wrap">
+    <div class="kase-filters reveal">
+      <div class="kase-filter-group">
+        <span class="kase-filter-label">Услуга</span>
+        <div class="kase-tabs" data-group="service" role="tablist">
+          <button type="button" role="tab" class="kase-tab on" data-filter="all" aria-selected="true">Все<span class="kase-tab-n">18</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="context" aria-selected="false">Контекстная реклама<span class="kase-tab-n">18</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="site" aria-selected="false">Разработка сайтов<span class="kase-tab-n">8</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="target" aria-selected="false">Таргетированная реклама<span class="kase-tab-n">4</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="geo" aria-selected="false">GEO-сервисы<span class="kase-tab-n">10</span></button>
+        </div>
+      </div>
+      <div class="kase-filter-group">
+        <span class="kase-filter-label">Ниша</span>
+        <div class="kase-tabs" data-group="niche" role="tablist">
+          <button type="button" role="tab" class="kase-tab on" data-filter="all" aria-selected="true">Все<span class="kase-tab-n">18</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="med" aria-selected="false">Медицина и красота<span class="kase-tab-n">2</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="horeca" aria-selected="false">Рестораны и досуг<span class="kase-tab-n">3</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="eda" aria-selected="false">Еда и доставка<span class="kase-tab-n">2</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="stroy" aria-selected="false">Строительство и ремонт<span class="kase-tab-n">3</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="proizvod" aria-selected="false">Производство и мебель<span class="kase-tab-n">2</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="torg" aria-selected="false">Торговля и e-commerce<span class="kase-tab-n">2</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="edu" aria-selected="false">Образование<span class="kase-tab-n">2</span></button>
+          <button type="button" role="tab" class="kase-tab" data-filter="turizm" aria-selected="false">Туризм и услуги<span class="kase-tab-n">2</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="kfull-grid" id="kaseFullGrid">
+      <article class="kfull card" id="case-school" data-tags="site context geo target edu" style="--d:0">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/school.jpg" alt="Школа «Дмитровский»" loading="lazy">
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Москва</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Частная школа</div>
+            <h3 class="kfull-name">Школа «Дмитровский»</h3>
+            <p class="kfull-lead">Реализовали полный цикл Digital-маркетинга для частной школы «Дмитровский»: от разработки сайта до настройки рекламы и аналитики. В результате клиент получил стабильный поток заявок от родителей и вырос набор в классы и группы.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Москва</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Сайт устарел и не вызывал доверия у родителей</li><li>Низкий поток заявок на просмотр школы и запись в группы</li><li>Непонятно, какие рекламные каналы реально приносят учеников</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>Разработка нового продающего сайта с понятной структурой и формами заявок</li><li>Запуск рекламы в Яндекс Директ и VK Ads с упором на ценности и УТП школы</li><li>Внедрение сквозной аналитики RoiStat для контроля каждого канала</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Разработка сайта</strong><ul><li>Адаптивный дизайн под ПК и мобильные устройства</li><li>Структура с разделами по программам, ценам и записи на просмотр</li><li>Формы заявок и интеграция с CRM школы</li></ul></li><li><strong>Настройка рекламы</strong><ul><li>Яндекс Директ: анализ конкурентов, аудит проекта, разработка стратегии и медиаплана, сбор семантического ядра, создание кампаний, A/B-тестирование объявлений, мониторинг и отчётность</li><li>VK Реклама: анализ ЦА, создание рекламных креативов с акцентами, подбор аудиторий для таргетинга, ретаргетинг на посетителей группы и сайта</li></ul></li><li><strong>Работа с Яндекс.Бизнес</strong><ul><li>Полное оформление профиля: фото, программы, отзывы реальных родителей</li><li>Оформление рекламной подписки</li><li>Ведение карточки, работа с репутацией и ответы на отзывы</li><li>SEO-оптимизация описаний</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Сбалансированная рекламная стратегия дала стабильный поток заявок от родителей</li><li>Яндекс Директ стал основным источником «тёплых» обращений</li><li>Аналитика RoiStat помогла перераспределить бюджет на самые эффективные каналы</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+400%</div><div class="kase-metric-l">посетителей сайта за 4 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 322%</div><div class="kase-metric-l">за 6 месяцев</div></div><div class="kase-metric"><div class="kase-metric-v">+42%</div><div class="kase-metric-l">набор в классы и группы</div></div><div class="kase-metric"><div class="kase-metric-v">+82</div><div class="kase-metric-l">отзыва в Яндекс Бизнес за полгода</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Сайт</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">SEO</span><span class="kase-chip">RoiStat</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-profildoors" data-tags="context geo target stroy" style="--d:1">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/profildoors.jpg" alt="Профиль Дорс" loading="lazy">
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Москва</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Сеть салонов межкомнатных дверей</div>
+            <h3 class="kfull-name">Профиль Дорс</h3>
+            <p class="kfull-lead">Реализовали комплексную Digital-стратегию для сети салонов межкомнатных дверей «Профиль Дорс»: настроили рекламу сразу в нескольких каналах и связали их единой аналитикой, чтобы видеть реальную окупаемость каждого рубля.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Москва</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Низкая конверсия сайта — посетители не оставляли заявки</li><li>Высокая стоимость привлечения из-за неэффективного распределения рекламного бюджета</li><li>Отсутствие аналитики — было непонятно, какие каналы реально работают</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>Комплексное продвижение во всех ключевых digital-каналах</li><li>Оптимизация конверсии сайта и посадочных страниц</li><li>Полная прозрачность эффективности через Roistat</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Реклама Яндекс Директ</strong><ul><li>Анализ конкурентов и аудит текущего состояния проекта</li><li>Разработка стратегии и медиапланирования</li><li>Сбор и согласование семантического ядра</li><li>Создание рекламных кампаний и A/B-тестирование объявлений</li><li>Мониторинг и отчётность</li></ul></li><li><strong>Реклама VK Ads</strong><ul><li>Анализ целевой аудитории</li><li>Создание рекламных креативов с акцентами</li><li>Подбор аудиторий для таргетинга</li><li>Ретаргетинг на посетителей группы и сайта</li></ul></li><li><strong>Реклама Яндекс Бизнес</strong><ul><li>Полное оформление профиля: 100+ фото дверей в интерьере, прайс-лист с актуальными ценами, отзывы реальных клиентов</li><li>Оформление рекламной подписки, ведение и поддержание актуальности карточки</li><li>Удаление негатива, работа с репутацией, ответы на отзывы, SEO-оптимизация описаний</li></ul></li><li><strong>Настройка Roistat</strong><ul><li>Интеграция с CRM и рекламными каналами</li><li>Отслеживание звонков и заявок</li><li>Расчёт ROI по каждому каналу и настройка сквозной аналитики</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Сбалансированная рекламная стратегия даёт стабильный поток заявок</li><li>Яндекс Директ стал важным источником «тёплых» лидов</li><li>Аналитика Roistat позволила сократить неэффективные расходы на 38%</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+45%</div><div class="kase-metric-l">продаж за 2 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">+4,6%</div><div class="kase-metric-l">конверсия сайта</div></div><div class="kase-metric"><div class="kase-metric-v">−38%</div><div class="kase-metric-l">стоимость лида (CPL)</div></div><div class="kase-metric"><div class="kase-metric-v">ДРР 7,3%</div><div class="kase-metric-l">доля рекламных расходов</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">RoiStat</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-tosun" data-tags="site context turizm" style="--d:2">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/tosun.jpg" alt="To Sun Travel" loading="lazy">
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Анталия, Турция</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Сервис трансферов</div>
+            <h3 class="kfull-name">To Sun Travel</h3>
+            <p class="kfull-lead">Разработали продающий сайт и запустили рекламные кампании в Google Ads для сервиса трансферов «To Sun Travel». В результате клиент получил рост заявок и бронирований трансферов по Турции.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Google Ads</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Анталия, Турция</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Не было удобного сайта — клиенты не могли быстро забронировать трансфер онлайн</li><li>Низкая видимость в поиске — компания не попадала в топ выдачи Google</li><li>Мало заявок — без рекламы работало только «сарафанное радио»</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>Сайт с адаптацией на 3 языка (русский, немецкий, английский), удобной формой бронирования и адаптивным дизайном</li><li>Настройка Google Ads с таргетингом на туристов, ищущих трансферы в Анталии и соседних городах</li><li>Оптимизация рекламы под ключевые запросы</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Разработка лендинга</strong><ul><li>Адаптивный дизайн под ПК и смартфоны</li><li>Удобная форма бронирования с выбором маршрута</li><li>Интеграция онлайн-оплаты и чата для связи</li></ul></li><li><strong>Настройка Google Ads</strong><ul><li>Подбор более 2 500 ключевых запросов</li><li>Создание рекламных объявлений с призывом к бронированию</li><li>Настройка геотаргетинга на Турцию, англо- и русскоязычных туристов</li></ul></li><li><strong>Аналитика и оптимизация</strong><ul><li>Отслеживание конверсий через Google Analytics</li><li>A/B-тестирование объявлений и посадочной страницы</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Сайт стал главным инструментом продаж — клиенты бронируют трансфер за 1 минуту</li><li>Google Ads помог привлечь целевой трафик с высокой конверсией</li><li>Бизнес масштабируется — клиент планирует расширение на другие регионы Турции</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+85%</div><div class="kase-metric-l">заявок за первые 2 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">ROAS 450%</div><div class="kase-metric-l">за первые 3 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">65%</div><div class="kase-metric-l">трафика из поиска Google Ads</div></div><div class="kase-metric"><div class="kase-metric-v">−18%</div><div class="kase-metric-l">затрат на рекламу после оптимизации</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Сайт</span><span class="kase-chip">Google Ads</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-okna" data-tags="context target stroy" style="--d:3">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/okna.jpg" alt="Окна Люкс" loading="lazy">
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Тверь</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Производство пластиковых окон</div>
+            <h3 class="kfull-name">Окна Люкс</h3>
+            <p class="kfull-lead">Компания занимается производством и установкой пластиковых окон. Перед нами стояла задача увеличить поток заявок и узнаваемость бренда в Твери — мы запустили рекламу в Яндекс Директ и VK Ads, оформили сообщество во ВКонтакте и связали всё сквозной аналитикой.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">Оформление сообщества ВКонтакте</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Тверь</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Низкий поток заявок из интернета</li><li>Отсутствие чёткой стратегии продвижения в соцсетях</li><li>Непонятно, какие каналы приносят заказы</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>Запуск контекстной рекламы в Яндекс Директ</li><li>Продающее оформление сообщества ВКонтакте и запуск таргетированной рекламы</li><li>Настройка сквозной аналитики RoiStat для отслеживания ROI</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Оптимизация сайта</strong><ul><li>Полный аудит сайта</li><li>ТЗ по оптимизации сайта под продвижение</li></ul></li><li><strong>Настройка рекламы в Яндекс Директе</strong><ul><li>Анализ конкурентов и аудит текущего состояния проекта</li><li>Разработка стратегии и медиапланирования, сбор семантического ядра</li><li>Создание рекламных кампаний, A/B-тестирование объявлений, мониторинг и отчётность</li></ul></li><li><strong>Оформление сообщества ВКонтакте</strong><ul><li>Разработка визуального стиля</li><li>Наполнение контентом: отзывы, примеры работ, полезные статьи</li></ul></li><li><strong>Таргетированная реклама VK Ads</strong><ul><li>Сегментация аудитории — владельцы жилья, новостройки, ремонт</li><li>A/B-тестирование креативов</li><li>Ретаргетинг на посетителей сайта</li></ul></li><li><strong>Настройка сквозной аналитики RoiStat</strong><ul><li>Интеграция с CRM</li><li>Отслеживание звонков и заявок с разных источников</li><li>Оптимизация кампаний на основе данных</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Увеличили поток заявок и снизили стоимость лида</li><li>Повысили доверие к бренду за счёт оформленных социальных сетей</li><li>Дали клиенту полную прозрачность по эффективности рекламы</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">ROI 220%</div><div class="kase-metric-l">рекламы</div></div><div class="kase-metric"><div class="kase-metric-v">−30%</div><div class="kase-metric-l">стоимость лида (CPL)</div></div><div class="kase-metric"><div class="kase-metric-v">40%</div><div class="kase-metric-l">заказов из VK Ads</div></div><div class="kase-metric"><div class="kase-metric-v">+1200</div><div class="kase-metric-l">подписчиков в группе ВК</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">Сообщество ВКонтакте</span><span class="kase-chip">RoiStat</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-mebeline" data-tags="site context proizvod" style="--d:0">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/mebeline.jpg" alt="Mebeline" loading="lazy">
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Костанай, Казахстан</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Производитель мебели</div>
+            <h3 class="kfull-name">Mebeline</h3>
+            <p class="kfull-lead">«Mebeline» — производитель качественной мебели в Костанае. Клиенту требовался современный продающий сайт с каталогом и эффективное продвижение в интернете — мы разработали сайт и настроили рекламу в Google Ads.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Google Ads</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Костанай, Казахстан</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Не было сайта — клиенты не могли ознакомиться с ассортиментом онлайн</li><li>Низкая узнаваемость бренда в интернете</li><li>Заказы поступали только через офлайн-рекомендации и соцсети — рекламные каналы не использовались</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>Разработка сайта с удобным каталогом и системой заказов</li><li>Запуск контекстной рекламы в Google Ads для привлечения целевого трафика</li><li>Оптимизация кампаний под ключевые запросы покупателей мебели</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Разработка сайта</strong><ul><li>Адаптивный дизайн под ПК и мобильные устройства</li><li>Каталог с фильтрами по категориям, ценам и материалам</li><li>Форма заказа и обратного звонка</li><li>Интеграция с CRM для учёта заявок</li></ul></li><li><strong>Настройка Google Ads</strong><ul><li>Анализ ключевых запросов: «купить мебель в Костанае», «мебель на заказ» и др.</li><li>Создание рекламных кампаний в Поиске и КМС</li><li>Настройка ремаркетинга для возврата ушедших посетителей</li><li>A/B-тестирование объявлений и ставок</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Сайт стал главным инструментом продаж</li><li>Google Ads привлёк новых клиентов, которые раньше не знали о бренде</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+85%</div><div class="kase-metric-l">заявок за первые 2 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 340%</div><div class="kase-metric-l">рекламы</div></div><div class="kase-metric"><div class="kase-metric-v">4 500+</div><div class="kase-metric-l">посещений сайта в месяц</div></div><div class="kase-metric"><div class="kase-metric-v">1 500 000 ₸</div><div class="kase-metric-l">средняя стоимость заказа</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Сайт</span><span class="kase-chip">Google Ads</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-ipapa" data-tags="context geo torg" style="--d:1">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/ipapa.jpg" alt="iPapa" loading="lazy">
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Тверь</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Магазин техники Apple</div>
+            <h3 class="kfull-name">iPapa</h3>
+            <p class="kfull-lead">Для официального реселлера Apple в Твери «Айпапа» мы разработали комплексную стратегию продвижения — от рекламы в Яндекс Директ и оптимизации Яндекс Бизнес до точного расчёта ROI по каждой модели техники.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Тверь</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Высокая конкуренция с федеральными сетями</li><li>Низкая конверсия сайта при дорогом трафике</li><li>Непонимание реальной эффективности рекламных каналов</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>Упор на уникальное предложение магазина</li><li>Спецпредложения для разных сегментов покупателей</li><li>Точный расчёт ROI по каждому продукту через RoiStat</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Яндекс Директ</strong><ul><li>Анализ конкурентов и аудит текущего состояния проекта</li><li>Разработка стратегии и медиапланирования, сбор семантического ядра</li><li>Создание рекламных кампаний, A/B-тестирование объявлений, мониторинг и отчётность</li></ul></li><li><strong>Яндекс Бизнес</strong><ul><li>Заполнение карточки, добавление фото, оформление рекламной подписки</li><li>Ведение и поддержание актуальности карточки</li><li>Удаление негатива, работа с репутацией, ответы на отзывы</li></ul></li><li><strong>Внедрение RoiStat</strong><ul><li>Интеграция с CRM магазина, Яндекс Метрикой и call-трекингом</li><li>Отслеживание звонков и заявок</li><li>Отчётность по ROI для каждой модели техники, анализ эффективности акций и точная стоимость лида</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Увеличили средний чек за счёт апселлинга</li><li>Снизили процент возвратов благодаря точному таргетингу</li><li>Оптимизировали рекламный бюджет на 35%</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+53%</div><div class="kase-metric-l">продаж</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 420%</div><div class="kase-metric-l">рекламы</div></div><div class="kase-metric"><div class="kase-metric-v">33%</div><div class="kase-metric-l">лидов даёт Яндекс Бизнес</div></div><div class="kase-metric"><div class="kase-metric-v">−45%</div><div class="kase-metric-l">стоимость заявки (CPL)</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">RoiStat</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-nebo" data-tags="context geo horeca" style="--d:2">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/nebo.jpg" alt="Nebo Lounge" loading="lazy">
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Москва</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Lounge Bar</div>
+            <h3 class="kfull-name">Nebo Lounge</h3>
+            <p class="kfull-lead">Разработали комплексную стратегию привлечения гостей для премиального Lounge Bar «Nebo Lounge»: «умную» рекламу с акцентом на будние спецпредложения и точную аналитику по каждому каналу.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Москва</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Пустой бар в будни — низкая заполняемость вне пятницы и субботы</li><li>Дорогие лиды — стоимость привлечения через рекламу не окупалась</li><li>Не было понимания, какие рекламные каналы работают, а какие нет</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>«Умная» реклама с акцентом на будние спецпредложения</li><li>Локальное продвижение через Яндекс Бизнес и Яндекс Директ</li><li>Точный анализ эффективности каждого канала через RoiStat</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Реклама Яндекс Директ</strong><ul><li>Анализ конкурентов и аудит текущего состояния проекта</li><li>Разработка стратегии и медиапланирования, сбор семантического ядра</li><li>Создание рекламных кампаний, A/B-тестирование объявлений, мониторинг и отчётность</li></ul></li><li><strong>Реклама Яндекс Бизнес</strong><ul><li>Заполнение карточки, добавление фото, оформление рекламной подписки</li><li>Ведение и поддержание актуальности карточки</li><li>Удаление негатива, работа с репутацией, ответы на отзывы</li></ul></li><li><strong>Внедрение RoiStat</strong><ul><li>Настройка сквозной аналитики по всем рекламным каналам</li><li>Контроль ROI и эффективности кампаний</li><li>Автоматический учёт заявок и звонков</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Получили новых гостей уже в первые дни</li><li>Выровняли посещаемость — теперь бар заполнен даже по вторникам</li><li>Автоматизировали отчётность — клиент видит эффективность в реальном времени</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+90%</div><div class="kase-metric-l">бронирований за 4 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 520%</div><div class="kase-metric-l">с учётом повторных визитов</div></div><div class="kase-metric"><div class="kase-metric-v">170+</div><div class="kase-metric-l">броней в месяц из Директа</div></div><div class="kase-metric"><div class="kase-metric-v">40%</div><div class="kase-metric-l">новых клиентов из Яндекс Бизнес</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">RoiStat</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-artlife" data-tags="site context geo turizm" style="--d:3">
+        <div class="kfull-head">
+          <div class="kfull-photo"><img src="../assets/cases/artlife.jpg" alt="Art Life Cloud" loading="lazy"><span class="kase-badge">Продвижение стартапа</span>
+            <span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Сочи</span>
+          </div>
+          <div class="kfull-intro">
+            <div class="kase-field">Коворкинг</div>
+            <h3 class="kfull-name">Art Life Cloud</h3>
+            <p class="kfull-lead">Комплексное продвижение современного коворкинга «Art Life Cloud» в центре Сочи — с нуля. В результате клиент получил сайт с онлайн-бронированием, стабильный поток арендаторов и узнаваемость среди фрилансеров и предпринимателей.</p>
+            <div class="kfull-meta">
+              <div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">SEO-оптимизация</span><span class="kase-chip">SMM</span><span class="kase-chip">Яндекс Бизнес</span></div></div>
+              <div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Сочи</span></div>
+            </div>
+            <button type="button" class="kfull-toggle" aria-expanded="false">
+              <span class="kfull-toggle-txt">Смотреть полный кейс</span>
+              <svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="kfull-details">
+          <div class="kfull-body">
+            <div class="kfull-col">
+              <h4 class="kfull-h">Боли клиента</h4>
+              <ul class="kfull-list neg"><li>Не было сайта — клиенты не могли узнать о ценах и забронировать место онлайн</li><li>Низкая осведомлённость — коворкинг не был представлен в цифровом пространстве</li><li>Пустые места из-за слабого маркетинга</li><li>Плохая репутация — не было отзывов и был низкий рейтинг в Яндекс Бизнес</li></ul>
+            </div>
+            <div class="kfull-col">
+              <h4 class="kfull-h">Решение</h4>
+              <ul class="kfull-list pos"><li>Создание сайта с онлайн-бронированием</li><li>Запуск таргетированной рекламы в VK и Яндекс Директ</li><li>SMM-стратегия для вовлечения аудитории</li><li>Оптимизация Яндекс Бизнес — повышение рейтинга и сбор отзывов</li></ul>
+            </div>
+          </div>
+          <div class="kfull-lower">
+            <div class="kfull-works">
+              <h4 class="kfull-h">Проделанные работы</h4>
+              <ol class="kfull-works-list"><li><strong>Разработка сайта</strong><ul><li>Лендинг с адаптивным дизайном под ПК и смартфоны</li><li>Онлайн-бронирование мест</li><li>SEO-оптимизация под ключевые запросы</li></ul></li><li><strong>Настройка рекламы</strong><ul><li>Яндекс Директ: анализ конкурентов, аудит проекта, разработка стратегии и медиаплана, сбор семантического ядра, создание кампаний, A/B-тестирование объявлений, мониторинг и отчётность</li><li>VK Реклама: таргет на фрилансеров, предпринимателей и стартапы; форматы — карусели, сторис, lead-формы</li></ul></li><li><strong>SMM-продвижение</strong><ul><li>Ведение Telegram и VK: посты о событиях, отзывы клиентов, сторис с экскурсиями</li><li>Контент-стратегия: кейсы резидентов, преимущества коворкинга, life-контент</li></ul></li><li><strong>Работа с Яндекс.Бизнес</strong><ul><li>Заполнение карточки, добавление фото</li><li>Сбор отзывов — раздача скидок за честные оценки</li><li>Ответы на негатив и улучшение репутации</li></ul></li></ol>
+            </div>
+            <div class="kfull-side">
+              <div class="kfull-col">
+                <h4 class="kfull-h">Выводы</h4>
+                <ul class="kfull-list pos"><li>Сайт стал основным каналом продаж — клиенты бронируют места онлайн</li><li>Реклама привлекла целевую аудиторию — выросло число бронирований</li><li>SMM повысил лояльность — рост подписчиков и вовлечённости</li><li>Яндекс Бизнес в топе — коворкинг теперь чаще рекомендуют</li></ul>
+              </div>
+              <div class="kfull-col">
+                <h4 class="kfull-h">Результаты в цифрах</h4>
+                <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+80%</div><div class="kase-metric-l">бронирований</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 400%</div><div class="kase-metric-l">за 5 месяцев</div></div><div class="kase-metric"><div class="kase-metric-v">+250%</div><div class="kase-metric-l">посетителей сайта за 3 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">+50%</div><div class="kase-metric-l">постоянная заполняемость пространства</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="kase-chips kfull-chips"><span class="kase-chip">Сайт</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">VK Ads</span><span class="kase-chip">SEO</span><span class="kase-chip">SMM</span><span class="kase-chip">Яндекс Бизнес</span></div>
+        </div>
+      </article>
+      <article class="kfull card" id="case-bmclinic" data-tags="med context geo" style="--d:0">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/bmclinic.jpg" alt="BM Clinic" loading="lazy" onerror="this.remove()" style="object-position: center top;"><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Москва</span></div>
+          <div class="kfull-intro"><div class="kase-field">Многопрофильная клиника</div><h3 class="kfull-name">BM Clinic</h3><p class="kfull-lead">Реализовали комплексную стратегию digital-продвижения для многопрофильного медицинского центра «BM Clinic»: загрузили специалистов, подняли онлайн-записи и взяли под контроль рекламные расходы.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Москва</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Низкая заполняемость врачебных талонов</li><li>Высокая конкуренция среди частных клиник Москвы</li><li>Отсутствие аналитики по эффективности рекламы</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Приоритет на востребованные услуги — диагностика, анализы, узкие специалисты</li><li>Акцент на преимущества — современное оборудование и квалифицированные врачи</li><li>Полный контроль за рекламными расходами</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Яндекс Директ (медицинский таргетинг)</strong><ul><li>Анализ конкурентов и аудит проекта</li><li>Стратегия и медиапланирование, сбор семантического ядра</li><li>Создание кампаний, A/B-тестирование объявлений, мониторинг и отчётность</li></ul></li><li><strong>Яндекс Бизнес</strong><ul><li>Заполнение карточки, фото, оформление рекламной подписки</li><li>Ведение карточки, работа с репутацией и ответы на отзывы</li></ul></li><li><strong>Внедрение RoiStat</strong><ul><li>Интеграция с CRM и рекламными каналами</li><li>Отслеживание звонков и заявок, расчёт ROI по каждому каналу</li><li>Настройка сквозной аналитики</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Оптимизировали загрузку специалистов — врачи работают без «окон»</li><li>Увеличили повторные обращения на 40% через систему напоминаний</li><li>Сократили неэффективные расходы на рекламу на 28%</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+120%</div><div class="kase-metric-l">записей на приём</div></div><div class="kase-metric"><div class="kase-metric-v">5 900 ₽</div><div class="kase-metric-l">средний чек (+25%)</div></div><div class="kase-metric"><div class="kase-metric-v">55%</div><div class="kase-metric-l">онлайн-записей через Яндекс Бизнес</div></div><div class="kase-metric"><div class="kase-metric-v">−28%</div><div class="kase-metric-l">неэффективных расходов на рекламу</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+      </article>
+      <article class="kfull card" id="case-kaspack" data-tags="proizvod site context geo" style="--d:1">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/kaspack.jpg" alt="Kaspack" loading="lazy" onerror="this.remove()"><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Тверь</span></div>
+          <div class="kfull-intro"><div class="kase-field">Производство упаковки</div><h3 class="kfull-name">Kaspack</h3><p class="kfull-lead">Полный цикл digital-продвижения для производителя упаковочных материалов «Kaspack»: сайт-витрина производства, B2B-реклама и прозрачный учёт заявок.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Тверь</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Устаревший сайт не отражал производственные мощности</li><li>Реклама не работала на нужную аудиторию (оптовики, производители)</li><li>Невозможно было отследить, какие каналы приносят заказы</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Сайт как витрина производства с техническими характеристиками</li><li>Специализированный B2B-таргетинг</li><li>Прозрачная система учёта заявок</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Разработка сайта</strong><ul><li>Адаптивный дизайн под ПК, планшеты и смартфоны</li><li>Первичная SEO-оптимизация, формы заказа и обратного звонка</li><li>Интеграция с CRM для учёта заявок</li></ul></li><li><strong>Яндекс Директ</strong><ul><li>Анализ конкурентов и аудит проекта</li><li>Стратегия и медиапланирование, сбор семантического ядра</li><li>Создание кампаний, A/B-тестирование, мониторинг и отчётность</li></ul></li><li><strong>Яндекс Бизнес</strong><ul><li>Заполнение карточки, фото, рекламная подписка</li><li>Ведение карточки, работа с репутацией и отзывами</li></ul></li><li><strong>Внедрение RoiStat</strong><ul><li>Интеграция с CRM и каналами, отслеживание звонков и заявок</li><li>Расчёт ROI и настройка сквозной аналитики</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Сайт стал основным каналом привлечения оптовых клиентов</li><li>Увеличили средний чек за счёт комплексных решений</li><li>Снизили нагрузку на отдел продаж за счёт автоматизации</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+150%</div><div class="kase-metric-l">заявок от B2B-клиентов</div></div><div class="kase-metric"><div class="kase-metric-v">−60%</div><div class="kase-metric-l">стоимость лида (CPL)</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 520%</div><div class="kase-metric-l">рекламы</div></div><div class="kase-metric"><div class="kase-metric-v">35%</div><div class="kase-metric-l">клиентов сделали повторный заказ</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+      </article>
+      <article class="kfull card" id="case-berezka" data-tags="horeca context geo" style="--d:2">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/berezka.jpg" alt="Берёзка Шале" loading="lazy" onerror="this.remove()"><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Рублёво-Успенское шоссе, МО</span></div>
+          <div class="kfull-intro"><div class="kase-field">Премиальный ресторан</div><h3 class="kfull-name">Берёзка Шале</h3><p class="kfull-lead">Стратегия привлечения гостей для премиального ресторана «Берёзка Шале» на Рублёвке: выровняли посещаемость в будни и вывели ресторан в ТОП по ключевым запросам.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Рублёво-Успенское шоссе, МО</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Низкая заполняемость в будни — основной поток только по выходным</li><li>Недостаточная узнаваемость — ресторан не находили в поиске</li><li>Дорогое привлечение — высокая стоимость лида в традиционных СМИ</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Премиум-таргетинг на аудиторию Рублёвки</li><li>Акцент на уникальность — шале-концепция и сезонные предложения</li><li>Оптимизация удобства сайта и посадочных страниц</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Реклама Яндекс Директ</strong><ul><li>Анализ конкурентов и аудит проекта</li><li>Стратегия и медиапланирование, сбор семантического ядра</li><li>Создание кампаний, A/B-тестирование, мониторинг и отчётность</li></ul></li><li><strong>Реклама Яндекс Бизнес</strong><ul><li>Заполнение карточки, фото, рекламная подписка</li><li>Ведение карточки, работа с репутацией и ответы на отзывы</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Автоматизировали 60% бронирований через онлайн-систему</li><li>Яндекс Директ стал важным источником «тёплых» лидов</li><li>Выровняли посещаемость — ресторан заполнен даже по будням</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+110%</div><div class="kase-metric-l">бронирований за 5 месяцев</div></div><div class="kase-metric"><div class="kase-metric-v">65%</div><div class="kase-metric-l">новых гостей из Яндекс Бизнес</div></div><div class="kase-metric"><div class="kase-metric-v">ТОП-3</div><div class="kase-metric-l">по запросу «рестораны на Рублёвке»</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span></div></div>
+      </article>
+      <article class="kfull card" id="case-karkas" data-tags="stroy context" style="--d:3">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/karkas.jpg" alt="Каркасные Дома" loading="lazy" onerror="this.remove()"><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Тверь</span></div>
+          <div class="kfull-intro"><div class="kase-field">Строительство каркасных домов</div><h3 class="kfull-name">Каркасные Дома</h3><p class="kfull-lead">Увеличили поток заявок на строительство каркасных домов при ограниченном бюджете — за счёт точной настройки Яндекс.Директ и оптимизации посадочных страниц.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Тверь</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Низкая видимость в поиске — компанию не находили по ключевым запросам</li><li>Дорогие лиды — реклама не была оптимизирована, бюджет тратился неэффективно</li><li>Недостаточно заявок — трафик был, но конверсия низкая</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Грамотная настройка Яндекс.Директ с фокусом на ВЧ- и СЧ-запросы</li><li>Оптимизация объявлений и посадочных страниц для роста конверсии</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Оптимизация сайта</strong><ul><li>Подготовка полного аудита сайта</li><li>Создание ТЗ по оптимизации под продвижение</li></ul></li><li><strong>Реклама в Яндекс Директе</strong><ul><li>Анализ конкурентов и аудит проекта</li><li>Стратегия и медиапланирование, сбор семантического ядра</li><li>Создание кампаний, A/B-тестирование, мониторинг и отчётность</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Рост числа заявок при том же бюджете за счёт точного таргетинга</li><li>Снижение стоимости лида благодаря оптимизации ставок и объявлений</li><li>Рост конверсии сайта за счёт улучшения UX и релевантности</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+120%</div><div class="kase-metric-l">заявок за 3 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">−45%</div><div class="kase-metric-l">стоимость лида (CPL)</div></div><div class="kase-metric"><div class="kase-metric-v">66%</div><div class="kase-metric-l">заказов пришло из РСЯ</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 280%</div><div class="kase-metric-l">рекламы</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span></div></div>
+      </article>
+      <article class="kfull card" id="case-alankara" data-tags="torg context" style="--d:0">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/alankara.jpg" alt="Alankara" loading="lazy" onerror="this.remove()"><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Балашиха · поставки по РФ</span></div>
+          <div class="kfull-intro"><div class="kase-field">Оптовый интернет-магазин сувениров</div><h3 class="kfull-name">Alankara</h3><p class="kfull-lead">Перезапустили рекламу в Яндекс.Директ для оптового интернет-магазина сувенирной продукции «Alankara»: рост оптовых заказов, автоматизация работы с клиентами и выход в новые регионы.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Балашиха · поставки по РФ</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Недостаточно клиентов — некорректная настройка рекламного кабинета</li><li>Нет системы оптовых расчётов — сложности с формированием счетов</li><li>Низкая конверсия — посетители не становились клиентами</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Создание новых рекламных кампаний в Яндекс Директ</li><li>Автоматизация работы с клиентами в CRM-системе</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Оптимизация сайта</strong><ul><li>Подготовка полного аудита сайта</li><li>Создание ТЗ по оптимизации под продвижение</li></ul></li><li><strong>Настройка рекламы в Яндекс Директе</strong><ul><li>Анализ конкурентов и аудит проекта</li><li>Стратегия и медиапланирование, сбор семантического ядра</li><li>Создание кампаний, A/B-тестирование, мониторинг и отчётность</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Сайт стал основным каналом продаж — 80% новых клиентов через сайт</li><li>Автоматизация сократила время обработки заказов в 3 раза</li><li>Выход на новые регионы — заказы из 40+ городов России</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+150%</div><div class="kase-metric-l">оптовых заказов за 6 месяцев</div></div><div class="kase-metric"><div class="kase-metric-v">75%</div><div class="kase-metric-l">заказов без участия менеджера</div></div><div class="kase-metric"><div class="kase-metric-v">+5,2%</div><div class="kase-metric-l">конверсия сайта</div></div><div class="kase-metric"><div class="kase-metric-v">42 города</div><div class="kase-metric-l">география заказов по РФ</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span></div></div>
+      </article>
+      <article class="kfull card" id="case-ledizoj" data-tags="eda site context" style="--d:1">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/ledizoj.jpg" alt="Ledi Zoj" loading="lazy" onerror="this.remove()"><span class="kase-badge">Продвижение стартапа</span><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Москва</span></div>
+          <div class="kfull-intro"><div class="kase-field">Доставка замороженной еды</div><h3 class="kfull-name">Ledi Zoj</h3><p class="kfull-lead">Создали продающий сайт для сервиса доставки замороженной здоровой еды «Ledi Zoj»: рост онлайн-продаж, удобный заказ и автоматизация приёма заявок.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Москва</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Нет удобного сайта — клиенты не могли быстро выбрать и заказать рационы</li><li>Низкая конверсия — неудобный интерфейс отпугивал покупателей</li><li>Нет автоматизации — заявки обрабатывались вручную</li><li>Слабая презентация продукта</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Современный интернет-магазин с удобной навигацией и конструктором заказа</li><li>Онлайн-оплата и интеграция с CRM для автоматизации продаж</li><li>Продуманный UX/UI с акцентом на преимущества замороженных рационов</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Структура и дизайн</strong><ul><li>Анализ ЦА (женщины 25–45, следящие за питанием)</li><li>Прототипирование интуитивного пути пользователя</li><li>Адаптивный дизайн под все устройства</li></ul></li><li><strong>Функциональность сайта</strong><ul><li>Конструктор заказа: программы питания, расчёт калорий, подписка</li><li>Интеграция с платёжной системой</li></ul></li><li><strong>Контент и SEO</strong><ul><li>Продающие тексты с упором на пользу рационов</li><li>SEO-оптимизация под ключевые запросы</li><li>Фото- и видеоконтент блюд</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Сайт стал основным каналом продаж</li><li>Автоматизация сократила нагрузку на менеджеров</li><li>Продуманный UX и контент повысили конверсию и лояльность</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+70%</div><div class="kase-metric-l">онлайн-заказов за 3 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">15→5 мин</div><div class="kase-metric-l">обработка заказа</div></div><div class="kase-metric"><div class="kase-metric-v">ТОП-5</div><div class="kase-metric-l">в поиске по ключевым запросам</div></div><div class="kase-metric"><div class="kase-metric-v">−50%</div><div class="kase-metric-l">затрат на поддержку сайта</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span></div></div>
+      </article>
+      <article class="kfull card" id="case-zojefina" data-tags="eda site context" style="--d:2">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/zojefina.jpg" alt="Zojefina" loading="lazy" onerror="this.remove()"><span class="kase-badge">Продвижение стартапа</span><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Москва</span></div>
+          <div class="kfull-intro"><div class="kase-field">Доставка здорового питания</div><h3 class="kfull-name">Zojefina</h3><p class="kfull-lead">Для сервиса доставки здорового питания «Zojefina» разработали продающий сайт и запустили рекламу в Яндекс.Директ с рекордным ROI.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Москва</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Нет современного сайта — клиенты не могли удобно заказать рационы</li><li>Недостаточно клиентов — полное отсутствие интернет-маркетинга</li><li>Низкая конверсия — посетители не оформляли покупки</li><li>Слабая дифференциация от конкурентов</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Продающий многостраничный сайт с упором на УТП и удобный заказ</li><li>Точная настройка Яндекс.Директ с таргетингом на ЦА</li><li>Внедрение аналитики для контроля эффективности</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Разработка сайта</strong><ul><li>Продающий сайт с адаптивным дизайном</li><li>Меню рационов с калькулятором калорий</li><li>Онлайн-оплата, интеграция с CRM, SEO-оптимизация</li></ul></li><li><strong>Настройка Яндекс.Директ</strong><ul><li>Создание рекламных кампаний</li><li>A/B-тестирование уникальных объявлений</li><li>Тестирование различных стратегий</li></ul></li><li><strong>Аналитика и оптимизация</strong><ul><li>Сквозная аналитика (RoiStat + Яндекс.Метрика + CRM)</li><li>Еженедельная корректировка ставок и объявлений</li><li>Оптимизация посадочных под сегменты аудитории</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Сайт стал основным каналом продаж — конверсия выросла</li><li>Реклама показала рекордный ROI</li><li>Автоматизация сократила нагрузку на менеджеров</li><li>Уникальный дизайн выделил бренд среди конкурентов</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+120%</div><div class="kase-metric-l">заказов за 4 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 580%</div><div class="kase-metric-l">рекламы</div></div><div class="kase-metric"><div class="kase-metric-v">−35%</div><div class="kase-metric-l">стоимость лида (CPL)</div></div><div class="kase-metric"><div class="kase-metric-v">+45%</div><div class="kase-metric-l">повторных заказов</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+      </article>
+      <article class="kfull card" id="case-mishlenium" data-tags="edu context" style="--d:3">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/mishlenium.jpg" alt="Мышлениум" loading="lazy" onerror="this.remove()"><span class="kase-badge">Продвижение стартапа</span><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Тверь</span></div>
+          <div class="kfull-intro"><div class="kase-field">Детский центр развития</div><h3 class="kfull-name">Мышлениум</h3><p class="kfull-lead">Привлекли новых учеников в детскую школу развития интеллекта «Мышлениум» через контекстную рекламу — со стабильным потоком записей вне сезона.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Яндекс Директ</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Тверь</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Низкая наполняемость групп — недостаточно новых учеников</li><li>Высокая стоимость привлечения — неэффективный бюджет</li><li>Сезонность спроса — нужна стабильность вне учебного года</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Точный таргетинг на родителей детей 5–12 лет</li><li>Сезонные акции для равномерного потока записей</li><li>Оптимизация ставок для снижения стоимости лида</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Реклама в Яндекс Директе</strong><ul><li>Анализ конкурентов и аудит проекта</li><li>Стратегия и медиапланирование, сбор семантического ядра</li><li>Создание кампаний, A/B-тестирование, мониторинг и отчётность</li></ul></li><li><strong>Оптимизация сайта</strong><ul><li>Подготовка полного аудита сайта</li><li>Создание ТЗ по оптимизации под продвижение</li></ul></li><li><strong>Аналитика и отчётность</strong><ul><li>Настройка Яндекс.Метрики</li><li>Отслеживание звонков через коллтрекинг</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Стабильный поток заявок вне зависимости от сезона</li><li>Снижение стоимости лида за счёт точного таргетинга</li><li>Рост узнаваемости школы в Твери</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+120%</div><div class="kase-metric-l">записей за 4 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">−42%</div><div class="kase-metric-l">стоимость лида (CPL)</div></div><div class="kase-metric"><div class="kase-metric-v">65%</div><div class="kase-metric-l">новых клиентов из рекламы</div></div><div class="kase-metric"><div class="kase-metric-v">80%</div><div class="kase-metric-l">заполняемость групп в межсезонье</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Яндекс Директ</span></div></div>
+      </article>
+      <article class="kfull card" id="case-blondinki" data-tags="med target geo context" style="--d:0">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/blondinki.jpg" alt="Не только блондинки" loading="lazy" onerror="this.remove()"><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Тверь</span></div>
+          <div class="kfull-intro"><div class="kase-field">Салон красоты</div><h3 class="kfull-name">Не только блондинки</h3><p class="kfull-lead">Комплексная digital-стратегия для салона красоты «Не только блондинки»: тройное продвижение VK Ads + Яндекс Бизнес + Директ с автоматизацией онлайн-записи.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">VK Ads</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Яндекс Директ</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Тверь</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Низкая онлайн-видимость — салон не находили в поиске и соцсетях</li><li>Путаница с записями — клиенты звонили, но не бронировали онлайн</li><li>Непонятна эффективность рекламы — куда уходит бюджет</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Тройное продвижение: VK Ads + Яндекс Бизнес + Яндекс Директ</li><li>Оптимизация Яндекс Бизнеса и стимулирование онлайн-записи</li><li>Автоматизация записей (YClients) и сквозная аналитика</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Настройка VK Ads</strong><ul><li>Анализ ЦА (женщины 25–45, гео — Тверь)</li><li>Креативы: скидки, мастер-классы, отзывы клиентов</li><li>Подбор аудиторий и ретаргетинг на посетителей группы и сайта</li></ul></li><li><strong>Оптимизация Яндекс Бизнеса</strong><ul><li>Профиль: 50+ фото работ, прайс-лист, онлайн-запись YClients</li><li>Рекламная подписка, работа с репутацией, SEO описаний</li></ul></li><li><strong>Реклама в Яндекс Директе</strong><ul><li>Анализ конкурентов, аудит, стратегия и медиаплан</li><li>Семантика, создание кампаний, A/B-тесты, отчётность</li></ul></li><li><strong>Интеграция YClients</strong><ul><li>Связка с Яндекс.Метрикой, UTM-метки по источникам</li><li>Автоматизация: напоминания клиентам и уведомления мастерам</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Рост онлайн-записей — клиенты чаще бронируют через соцсети и Яндекс</li><li>Увеличение охвата и повышение доверия за счёт заполненного профиля</li><li>Прозрачная аналитика; автоматизация экономит 15 часов в неделю</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+75%</div><div class="kase-metric-l">новых клиентов за 3 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">77%</div><div class="kase-metric-l">записей онлайн (было 12%)</div></div><div class="kase-metric"><div class="kase-metric-v">35 000+</div><div class="kase-metric-l">охват в VK</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 320%</div><div class="kase-metric-l">рекламы</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">VK Ads</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Яндекс Директ</span></div></div>
+      </article>
+      <article class="kfull card" id="case-royalneva" data-tags="horeca site context geo" style="--d:1">
+        <div class="kfull-head">
+          <div class="kfull-photo" style="background:linear-gradient(135deg,#16241c,#0b120e)"><img src="../assets/cases/royalneva.jpg" alt="Royal Neva" loading="lazy" onerror="this.remove()"><span class="kase-geo"><svg class="i" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Санкт-Петербург</span></div>
+          <div class="kfull-intro"><div class="kase-field">Караоке-клуб</div><h3 class="kfull-name">Royal Neva</h3><p class="kfull-lead">Комплексный запуск и продвижение нового караоке-клуба «Royal Neva» в Санкт-Петербурге: сайт с онлайн-бронированием, реклама и сквозная аналитика.</p><div class="kfull-meta"><div class="kfull-meta-row"><span class="kfull-meta-l">Услуги</span><div class="kase-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">SEO</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div><div class="kfull-meta-row"><span class="kfull-meta-l">ГЕО</span><span class="kfull-meta-v">Санкт-Петербург</span></div></div><button type="button" class="kfull-toggle" aria-expanded="false"><span class="kfull-toggle-txt">Смотреть полный кейс</span><svg class="kfull-toggle-i" width="14" height="14" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+        </div>
+        <div class="kfull-details"><div class="kfull-body"><div class="kfull-col"><h4 class="kfull-h">Боли клиента</h4><ul class="kfull-list neg"><li>Устаревший сайт затрудняет продвижение и бронирование</li><li>Отсутствие стабильного потока клиентов</li><li>Ручная обработка заявок ведёт к потерям</li><li>Нет аналитики для оценки эффективности рекламы</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Решение</h4><ul class="kfull-list pos"><li>Современный сайт с посадочными под мероприятия и онлайн-бронированием</li><li>Контекстная реклама в Яндекс.Директ и Яндекс.Бизнес</li><li>RoiStat для точного отслеживания эффективности каналов</li></ul></div></div><div class="kfull-lower"><div class="kfull-works"><h4 class="kfull-h">Проделанные работы</h4><ol class="kfull-works-list"><li><strong>Разработка сайта</strong><ul><li>Адаптивный сайт с посадочными и формами бронирования</li><li>Удобный интерфейс для ПК и мобильных</li><li>Базовая SEO-оптимизация для органического трафика</li></ul></li><li><strong>Реклама Яндекс.Директ</strong><ul><li>Таргет по банкетам, корпоративам, дням рождения</li><li>РСЯ-реклама для расширения охвата</li><li>A/B-тестирование объявлений и оптимизация ставок</li></ul></li><li><strong>Реклама Яндекс.Бизнес</strong><ul><li>Заполнение карточки, фото, рекламная подписка</li><li>Ведение карточки и работа с репутацией</li></ul></li><li><strong>Внедрение RoiStat</strong><ul><li>Сквозная аналитика по всем рекламным каналам</li><li>Контроль ROI и автоматический учёт заявок и звонков</li></ul></li></ol></div><div class="kfull-side"><div class="kfull-col"><h4 class="kfull-h">Выводы</h4><ul class="kfull-list pos"><li>Стабильный поток новых клиентов с первой недели после запуска</li><li>Автоматизация учёта заявок сократила обработку на 40%</li><li>Онлайн-бронирование увеличило средний чек</li></ul></div><div class="kfull-col"><h4 class="kfull-h">Результаты в цифрах</h4><div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">+78%</div><div class="kase-metric-l">заявок за первые 2 месяца</div></div><div class="kase-metric"><div class="kase-metric-v">−31%</div><div class="kase-metric-l">стоимость лида (CPL)</div></div><div class="kase-metric"><div class="kase-metric-v">ROI 351%</div><div class="kase-metric-l">рекламы</div></div><div class="kase-metric"><div class="kase-metric-v">12 000+</div><div class="kase-metric-l">посетителей сайта в месяц</div></div></div></div></div></div><div class="kase-chips kfull-chips"><span class="kase-chip">Разработка сайта</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">SEO</span><span class="kase-chip">Сквозная аналитика RoiStat</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
+    <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
+      <div>
+        <a class="brand" href="/" style="font-size: 20px;"><svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>Даниил Карацапов</a>
+        <p style="color: var(--muted); margin: 18px 0 0; font-size: 15px; line-height: 1.55; max-width: 300px;">
+          Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.
+        </p>
+      </div>
+      <div>
+        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 16px;">Навигация</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Главная</a>
+          <a href="/kontekstnaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контекстная реклама</a>
+          <a href="/keysy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Кейсы</a>
+          <a href="/contacts/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контакты</a>
+        </div>
+      </div>
+      <div>
+        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 16px;">Связь</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="tel:+79963470065" style="color: var(--muted); text-decoration: none; font-size: 15px;">+7 (996) 347-00-65</a>
+          <a href="https://t.me/Daniil_065" target="_blank" rel="noopener" style="color: var(--muted); text-decoration: none; font-size: 15px;">Telegram @Daniil_065</a>
+          <a href="/contacts/" style="color: var(--lime); text-decoration: none; font-size: 15px;">Контакты</a>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
+      <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
+      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+  // Шапка: эффект при скролле + мобильное меню (как на главной)
+  (function () {
+    const nav = document.getElementById('siteNav');
+    const burger = document.getElementById('navBurger');
+    const mobile = document.getElementById('navMobile');
+    const onScroll = () => { if (nav) nav.classList.toggle('scrolled', window.scrollY > 24); };
+    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+    if (burger && mobile) {
+      const toggle = (open) => {
+        const o = open ?? !mobile.classList.contains('open');
+        mobile.classList.toggle('open', o);
+        burger.classList.toggle('open', o);
+      };
+      burger.addEventListener('click', () => toggle());
+      mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+    }
+  })();
+
+  // Reveal + stagger при скролле
+  (function () {
+    const targets = document.querySelectorAll('.reveal, .stagger');
+    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0, rootMargin: '0px 0px -6% 0px' }) : null;
+    if (io) { targets.forEach(t => io.observe(t)); }
+    else { targets.forEach(t => t.classList.add('in')); }
+    setTimeout(() => targets.forEach(t => t.classList.add('in')), 2000);
+  })();
+
+  // Раскрытие/сворачивание полного описания кейса
+  (function () {
+    document.querySelectorAll('.kfull-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.kfull');
+        if (!card) return;
+        const open = !card.classList.contains('open');
+        card.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        const txt = btn.querySelector('.kfull-toggle-txt');
+        if (txt) txt.textContent = open ? 'Свернуть кейс' : 'Смотреть полный кейс';
+      });
+    });
+  })();
+
+  // Фильтрация кейсов по двум осям: услуга + ниша
+  (function () {
+    const grid = document.getElementById('kaseFullGrid');
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll('.kfull'));
+    const groups = document.querySelectorAll('.kase-tabs[data-group]');
+    const state = { service: 'all', niche: 'all' };
+    function apply() {
+      let d = 0;
+      cards.forEach(card => {
+        const tags = (card.dataset.tags || '').split(' ');
+        const show = (state.service === 'all' || tags.includes(state.service))
+                  && (state.niche === 'all' || tags.includes(state.niche));
+        if (show) {
+          card.classList.remove('hide');
+          card.style.setProperty('--d', d++ % 4);
+          card.style.animation = 'none';
+          void card.offsetWidth;
+          card.style.animation = '';
+        } else {
+          card.classList.add('hide');
+        }
+      });
+    }
+    groups.forEach(g => {
+      const grp = g.dataset.group;
+      let down = false, dragged = false, startX = 0, startScroll = 0;
+
+      g.querySelectorAll('.kase-tab').forEach(tab => tab.addEventListener('click', () => {
+        if (dragged) { dragged = false; return; } // был драг, а не клик
+        g.querySelectorAll('.kase-tab').forEach(t => { t.classList.remove('on'); t.setAttribute('aria-selected', 'false'); });
+        tab.classList.add('on'); tab.setAttribute('aria-selected', 'true');
+        state[grp] = tab.dataset.filter;
+        apply();
+      }));
+
+      // ПК: вертикальное колесо мыши прокручивает табы по горизонтали
+      g.addEventListener('wheel', (e) => {
+        if (g.scrollWidth <= g.clientWidth) return;
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+        e.preventDefault();
+        g.scrollLeft += e.deltaY;
+      }, { passive: false });
+
+      // ПК: перетаскивание табов курсором (drag-to-scroll)
+      g.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'touch') return; // на тач — нативный скролл
+        down = true; dragged = false;
+        startX = e.clientX; startScroll = g.scrollLeft;
+      });
+      g.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = e.clientX - startX;
+        if (!dragged && Math.abs(dx) > 6) { dragged = true; g.classList.add('dragging'); }
+        if (dragged) g.scrollLeft = startScroll - dx;
+      });
+      // сброс всегда на уровне окна — класс dragging не «залипнет»
+      const endDrag = () => { down = false; g.classList.remove('dragging'); };
+      window.addEventListener('pointerup', endDrag);
+      window.addEventListener('pointercancel', endDrag);
+    });
+  })();
+
+  // Форма «Разобрать ваш проект» → заявка в Telegram (с фолбэком в WhatsApp)
+  (function () {
+    const form = document.getElementById('leadForm');
+    if (!form) return;
+    const phone = document.getElementById('lf-phone');
+    const phoneField = phone.closest('.field');
+
+    // Маска телефона
+    phone.addEventListener('input', () => {
+      let d = phone.value.replace(/\D/g, '');
+      if (d.startsWith('8')) d = '7' + d.slice(1);
+      if (d.startsWith('9')) d = '7' + d;
+      d = d.slice(0, 11);
+      let out = '+7';
+      if (d.length > 1) out += ' (' + d.slice(1, 4);
+      if (d.length >= 4) out += ') ' + d.slice(4, 7);
+      if (d.length >= 7) out += '-' + d.slice(7, 9);
+      if (d.length >= 9) out += '-' + d.slice(9, 11);
+      phone.value = d.length ? out : '';
+      if (phoneField.classList.contains('invalid')) phoneField.classList.remove('invalid');
+    });
+
+    const val = (id) => (document.getElementById(id) || {}).value || '';
+
+    async function sendLead(text) {
+      const TOKEN = window.LEAD_TG_TOKEN || '';
+      const CHAT = window.LEAD_TG_CHAT || '';
+      if (TOKEN && CHAT) {
+        try {
+          // GET без кастомных заголовков — не вызывает CORS-preflight
+          const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage'
+            + '?chat_id=' + encodeURIComponent(CHAT)
+            + '&disable_web_page_preview=true'
+            + '&text=' + encodeURIComponent(text);
+          const r = await fetch(url);
+          const j = await r.json().catch(() => ({}));
+          if (r.ok && j && j.ok) return true;
+        } catch (e) {}
+      }
+      // Фолбэк: открыть WhatsApp с уже заполненным текстом заявки
+      window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
+      return true;
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const digits = (phone.value.match(/\d/g) || []).length;
+      if (digits < 11) { phoneField.classList.add('invalid'); phone.focus(); return; }
+      phoneField.classList.remove('invalid');
+      const access = (form.querySelector('input[name="access"]:checked') || {}).value || '—';
+      const text =
+        '🟢 Новая заявка с сайта (Кейсы)\n' +
+        '👤 Имя: ' + (val('lf-name') || '—') + '\n' +
+        '📞 Телефон: ' + phone.value + '\n' +
+        '🌐 Сайт: ' + (val('lf-site') || '—') + '\n' +
+        '🔑 Доступ в кабинет: ' + access + '\n' +
+        '💬 Комментарий: ' + (val('lf-comment') || '—');
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
+      await sendLead(text);
+      form.hidden = true;
+      const ok = document.getElementById('leadOk');
+      if (ok) ok.hidden = false;
+    });
+  })();
+</script>
+</body>
+</html>
