@@ -495,7 +495,7 @@ h3 { font-weight: 600; }
 }
 .kase-tab.on .kase-tab-n { background: rgba(0,0,0,0.18); }
 
-.kase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 22px; align-items: start; }
+.kase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 22px; align-items: stretch; }
 .kase { padding: 0; overflow: hidden; display: flex; flex-direction: column;
   opacity: 0; animation: kaseIn .5s cubic-bezier(.16,.7,.3,1) forwards;
   animation-delay: calc(var(--d) * 70ms); }
@@ -538,7 +538,7 @@ h3 { font-weight: 600; }
   min-height: 2.1em; display: flex; align-items: flex-start; }
 .kase-metric-l { color: var(--muted-2); font-size: 12.5px; line-height: 1.35; margin-top: 5px;
   min-height: 2.7em; }
-.kase-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.kase-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
 .kase-chip { font-size: 12px; color: var(--muted); padding: 5px 11px; border-radius: var(--r-pill);
   background: rgba(255,255,255,0.04); border: 1px solid var(--line); }
 @media (prefers-reduced-motion: reduce) { .kase { animation: none; opacity: 1; } }
@@ -858,3 +858,37 @@ h3 { font-weight: 600; }
   .kase-filter-label { padding-top: 0; }
   .kase-filter-group .kase-tabs { margin: 0; padding: 0 0 4px; }
 }
+
+/* ===================== ПОПАП-ФОРМА (модалка заявки) =====================
+   Переиспользуемая модалка лид-формы. Открывается по CTA «Обсудить задачу»
+   и т.п. вместо скролла к секции #contacts. Стиль — тёмная тема, лаймовый
+   акцент, токены сайта. */
+.lead-modal {
+  position: fixed; inset: 0; z-index: 200;
+  display: none; align-items: center; justify-content: center; padding: 20px;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.lead-modal.open { display: flex; animation: leadModalIn .25s ease; }
+@keyframes leadModalIn { from { opacity: 0; } to { opacity: 1; } }
+.lead-modal-card {
+  position: relative; width: min(480px, 100%); max-height: 90vh; overflow-y: auto;
+  background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 20px;
+  padding: 32px 30px 28px; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7);
+  animation: leadCardIn .3s ease;
+}
+@keyframes leadCardIn { from { transform: translateY(14px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+.lead-modal-close {
+  position: absolute; top: 16px; right: 16px; width: 38px; height: 38px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; background: var(--surface-2); border: 1px solid var(--line);
+  color: var(--muted); cursor: pointer; transition: color .18s ease, border-color .18s ease;
+}
+.lead-modal-close:hover { color: var(--lime); border-color: var(--lime); }
+.lead-modal-eyebrow { color: var(--lime); font-size: 13px; font-weight: 700; letter-spacing: .02em; margin: 0 0 8px; }
+.lead-modal-card h2 { font-size: clamp(22px, 4vw, 28px); margin: 0 0 8px; line-height: 1.15; }
+.lead-modal-sub { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0 0 22px; }
+/* Поля внутри модалки переиспользуют .lead-form, но без верхнего отступа/центра */
+.lead-modal .lead-form { max-width: none; margin: 0; }
+.lead-modal .lead-ok-box { margin: 8px auto 0; }
+.lead-modal .lead-ok-box a { color: var(--lime-bright); }
