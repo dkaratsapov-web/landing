@@ -521,7 +521,7 @@ h2.section-title {
   .sec { padding: 36px 0; }
   .sec-tight { padding: 24px 0; }
   #certs.sec { padding-bottom: 16px; }
-  #process.sec, #process.sec-tight { padding-bottom: 16px; }
+  #process.sec, #process.sec-tight { padding-top: 20px; padding-bottom: 16px; }
   #about.sec { padding-bottom: 16px; }
   #services.sec { padding-top: 20px; }
   /* компактные паддинги карточек/секций (перебиваем inline-стили) */
