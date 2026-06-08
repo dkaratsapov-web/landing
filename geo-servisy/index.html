@@ -189,8 +189,12 @@
   display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--r-md); padding: 18px 20px; transition: border-color .2s ease, transform .2s ease;
 }
+.niche { overflow: hidden; padding: 0; }
+.niche-img { width: 72px; align-self: stretch; flex: none; overflow: hidden; position: relative; }
+.niche-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.niche:hover .niche-img img { transform: scale(1.08); }
+.niche span.t { font-weight: 600; font-size: 15px; padding: 18px 18px 18px 0; }
 .niche:hover { border-color: var(--line-2); transform: translateY(-3px); }
-.niche span.t { font-weight: 600; font-size: 15px; }
 .niche-note { text-align: center; color: var(--muted); font-size: 17px; margin: 34px auto 0; max-width: 60ch; line-height: 1.5; }
 .niche-note b { color: var(--ink); font-weight: 700; }
 
@@ -516,14 +520,14 @@
       <h2>Для локального бизнеса, <span class="accent">которого ищут рядом</span></h2>
     </div>
     <div class="niche-grid stagger">
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg></span><span class="t">Кафе и рестораны</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg></span><span class="t">Салоны и барбершопы</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2a.3.3 0 0 0-.2.3Z"></path><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"></path><path d="M11 3a2 2 0 0 0-2 2v6a6 6 0 0 0 6 6"></path></svg></span><span class="t">Стоматологии и медцентры</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"></path><circle cx="6.5" cy="16.5" r="2.5"></circle><circle cx="16.5" cy="16.5" r="2.5"></circle></svg></span><span class="t">Автосервисы и автомойки</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 17.5 17.5"></path><path d="m21 21-1-1"></path><path d="m3 3 1 1"></path><path d="m18 22 4-4"></path><path d="m2 6 4-4"></path><path d="m3 10 7-7"></path><path d="m14 21 7-7"></path></svg></span><span class="t">Фитнес и спорт</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></span><span class="t">Розничные магазины</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"></path><path d="M2 8h18a2 2 0 0 1 2 2v10"></path><path d="M2 17h20"></path><path d="M6 8v9"></path></svg></span><span class="t">Отели и хостелы</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg></span><span class="t">Услуги: юристы, ремонт</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/cafe.png" alt="Кафе и рестораны" loading="lazy"></span><span class="t">Кафе и рестораны</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/salon.png" alt="Салоны и барбершопы" loading="lazy"></span><span class="t">Салоны и барбершопы</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/med.png" alt="Стоматологии и медцентры" loading="lazy"></span><span class="t">Стоматологии и медцентры</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/auto.png" alt="Автосервисы и автомойки" loading="lazy"></span><span class="t">Автосервисы и автомойки</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/fit.png" alt="Фитнес и спорт" loading="lazy"></span><span class="t">Фитнес и спорт</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/shop.png" alt="Розничные магазины" loading="lazy"></span><span class="t">Розничные магазины</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/hotel.png" alt="Отели и хостелы" loading="lazy"></span><span class="t">Отели и хостелы</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/service.png" alt="Услуги: юристы, ремонт" loading="lazy"></span><span class="t">Услуги: юристы, ремонт</span></div>
     </div>
     <p class="niche-note reveal">Если к вам приходят и звонят клиенты из вашего города или района — <b>гео-сервисы дадут стабильный поток</b>.</p>
   </div>
