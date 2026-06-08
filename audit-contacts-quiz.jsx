@@ -483,6 +483,9 @@ function Footer({ onCta }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <a href="tel:+79963470065" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>+7 (996) 347-00-65</a>
               <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>Telegram @Daniil_065</a>
+              <a href="https://wa.me/79963470065" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>WhatsApp</a>
+              <a href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>MAX</a>
+              <a href="mailto:d.karatsapov@gmail.com" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>d.karatsapov@gmail.com</a>
               <a href="#contacts" onClick={(e) => {e.preventDefault();onCta();}} style={{ color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 15 }}>Обсудить задачу</a>
             </div>
           </div>

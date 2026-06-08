@@ -271,7 +271,9 @@ function CaseCard({ c, idx }) {
   return (
     <article className="kase card" style={{ '--d': idx }}>
       <div className="kase-photo">
-        <image-slot id={'kase-' + c.id} src={c.img} placeholder="Фото проекта" shape="rounded" radius="0"></image-slot>
+        {c.imgPos
+          ? <img className="kase-img" src={c.img} alt={c.client} loading="lazy" style={{ objectPosition: c.imgPos }} />
+          : <image-slot id={'kase-' + c.id} src={c.img} placeholder="Фото проекта" shape="rounded" radius="0"></image-slot>}
         {c.badge && <span className="kase-badge">{c.badge}</span>}
         <span className="kase-geo"><IconMap size={13} />{c.geo}</span>
       </div>

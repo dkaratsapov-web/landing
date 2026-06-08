@@ -109,11 +109,11 @@ function Nav({ onCta }) {
 function HeroTrust() {
   const trust = (window.CONTENT.hero && window.CONTENT.hero.trust) || [];
   return (
-    <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap', marginTop: 40 }}>
+    <div className="hero-trust" style={{ display: 'flex', gap: 26, flexWrap: 'wrap', marginTop: 40 }}>
       {trust.map(([a, b], i) => (
-        <div key={i} style={{ display: 'flex', flexDirection: 'column' }}>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 26, letterSpacing: '-0.02em' }}>{a}</span>
-          <span style={{ color: 'var(--txt-2)', fontSize: 14, marginTop: 2 }}>{b}</span>
+        <div key={i} className="hero-trust-item" style={{ display: 'flex', flexDirection: 'column' }}>
+          <span className="hero-trust-v" style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 26, letterSpacing: '-0.02em' }}>{a}</span>
+          <span className="hero-trust-l" style={{ color: 'var(--txt-2)', fontSize: 14, marginTop: 2 }}>{b}</span>
         </div>
       ))}
     </div>
