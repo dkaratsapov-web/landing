@@ -42,7 +42,7 @@
         '<div class="lead-ok-box" id="leadModalOk" hidden>' +
           '<div class="lead-ok-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>' +
           '<h3>Заявка отправлена!</h3>' +
-          '<p>Спасибо! Я свяжусь с вами в ближайшее время. Можно также написать мне в <a href="https://t.me/Daniil_065" target="_blank" rel="noopener">Telegram</a>.</p>' +
+          '<p>Спасибо! Я свяжусь с вами в ближайшее время. Можно также написать мне в <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram</a>.</p>' +
         '</div>' +
       '</div>' +
     '</div>';

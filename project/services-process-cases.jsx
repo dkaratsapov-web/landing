@@ -37,7 +37,7 @@ function ServiceCard({ s, open, onToggle }) {
   };
   return (
     <article className={'card svc-x' + (open ? ' open' : '')} onMouseMove={onMove}>
-      <div className="svc-x-head" onClick={onToggle} role="button" tabIndex={0} aria-expanded={open}>
+      <div className="svc-x-head" onClick={onToggle} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }} role="button" tabIndex={0} aria-expanded={open}>
         <span className="icon-tile svc-x-icon"><Glyph name={s.icon} size={24} /></span>
         <span className="svc-x-titles">
           <span className="svc-x-name">{s.name}</span>
@@ -223,7 +223,7 @@ function Certificates() {
               <div className="cert-lb-title">{c.title}</div>
               <div className="cert-lb-sub">{c.issuer}</div>
             </div>
-            <a className="btn btn-fill btn-sm" href={c.file} target="_blank" rel="noopener">
+            <a className="btn btn-fill btn-sm" href={c.file} target="_blank" rel="noopener noreferrer">
               Открыть PDF<IconArrowRight size={16} />
             </a>
           </div>

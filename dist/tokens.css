@@ -1,0 +1,254 @@
+/* ============================================================
+   APERTURE DESIGN SYSTEM — colors_and_type.css
+   A photography-first product design language.
+   Foundations derived from the analysis in uploads/DESIGN-apple.md.
+   Single blue accent, near-invisible chrome, SF Pro / Inter type.
+   ============================================================ */
+
+/* --- Font substitution note ------------------------------------------------
+   The reference system uses SF Pro Display / SF Pro Text (Apple proprietary,
+   cannot be bundled). On Apple platforms `system-ui` / `-apple-system`
+   resolves to the real SF Pro. Off-system, Inter (Google Fonts) is the
+   closest open substitute. Inter is loaded in each HTML file via:
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+   ------------------------------------------------------------------------- */
+
+:root {
+  /* ---------- FONT FAMILIES ---------- */
+  /* Nunito — softer still: rounded stroke terminals, full Cyrillic. Placed first
+     so the soft look is consistent on every platform (system-ui only fallback). */
+  --font-display: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-text:    "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ---------- BRAND / ACCENT ---------- */
+  --action-blue:        #0066cc;  /* the single interactive color */
+  --focus-blue:         #0071e3;  /* keyboard focus ring */
+  --sky-link-blue:      #2997ff;  /* links on dark surfaces */
+
+  /* ---------- TEXT ---------- */
+  --ink:           #1d1d1f;  /* near-black headline + body on light */
+  --body:          #1d1d1f;
+  --body-on-dark:  #ffffff;
+  --body-muted:    #cccccc;  /* secondary copy on dark */
+  --ink-muted-80:  #333333;  /* body on pearl button */
+  --ink-muted-48:  #7a7a7a;  /* disabled text, fine print */
+
+  /* ---------- SURFACE ---------- */
+  --canvas:            #ffffff;  /* dominant light canvas */
+  --canvas-parchment:  #f5f5f7;  /* signature off-white */
+  --surface-pearl:     #fafafc;  /* ghost button fill */
+  --surface-tile-1:    #272729;  /* primary dark tile */
+  --surface-tile-2:    #2a2a2c;  /* micro-step lighter */
+  --surface-tile-3:    #252527;  /* micro-step darker */
+  --surface-black:     #000000;  /* global nav, video void */
+  --chip-translucent:  rgba(210, 210, 215, 0.64); /* control chip over photo */
+
+  /* ---------- HAIRLINES & BORDERS ---------- */
+  --divider-soft:  #f0f0f0;            /* soft ring on ghost buttons */
+  --divider-alpha: rgba(0,0,0,0.04);
+  --hairline:      #e0e0e0;            /* 1px card border */
+  --hairline-alpha:rgba(0,0,0,0.08);   /* input border / card border */
+
+  /* ---------- SEMANTIC COLOR ROLES ---------- */
+  --fg1: var(--ink);            /* primary text on light */
+  --fg2: var(--ink-muted-80);   /* secondary text on light */
+  --fg3: var(--ink-muted-48);   /* tertiary / disabled */
+  --fg-on-dark-1: var(--body-on-dark);
+  --fg-on-dark-2: var(--body-muted);
+  --bg1: var(--canvas);         /* default page */
+  --bg2: var(--canvas-parchment);
+  --bg-dark: var(--surface-tile-1);
+  --link: var(--action-blue);
+  --link-on-dark: var(--sky-link-blue);
+
+  /* ---------- ELEVATION ---------- */
+  /* The ONLY shadow in the system — reserved for product photography. */
+  --product-shadow: 3px 5px 30px 0 rgba(0, 0, 0, 0.22);
+  --frost-blur: saturate(180%) blur(20px);
+
+  /* ---------- RADIUS ---------- */
+  --r-none: 0px;
+  --r-xs:   5px;
+  --r-sm:   8px;
+  --r-md:   11px;
+  --r-lg:   18px;
+  --r-pill: 9999px;
+  --r-full: 9999px;
+
+  /* ---------- SPACING (8px base) ---------- */
+  --sp-xxs: 4px;
+  --sp-xs:  8px;
+  --sp-sm:  12px;
+  --sp-md:  17px;
+  --sp-lg:  24px;
+  --sp-xl:  32px;
+  --sp-xxl: 48px;
+  --sp-section: 80px;
+
+  /* ---------- TYPE SCALE (size / weight / line-height / tracking) ---------- */
+  --t-hero-size: 56px;   --t-hero-weight: 600;   --t-hero-lh: 1.07;  --t-hero-ls: -0.28px;
+  --t-display-lg-size: 40px; --t-display-lg-weight: 600; --t-display-lg-lh: 1.10; --t-display-lg-ls: 0px;
+  --t-display-md-size: 34px; --t-display-md-weight: 600; --t-display-md-lh: 1.47; --t-display-md-ls: -0.374px;
+  --t-lead-size: 28px;   --t-lead-weight: 400;   --t-lead-lh: 1.14;  --t-lead-ls: 0.196px;
+  --t-lead-airy-size: 24px; --t-lead-airy-weight: 300; --t-lead-airy-lh: 1.5; --t-lead-airy-ls: 0px;
+  --t-tagline-size: 21px;--t-tagline-weight: 600;--t-tagline-lh: 1.19;--t-tagline-ls: 0.231px;
+  --t-body-size: 17px;   --t-body-weight: 400;   --t-body-lh: 1.47;  --t-body-ls: -0.374px;
+  --t-body-strong-weight: 600;
+  --t-caption-size: 14px;--t-caption-weight: 400;--t-caption-lh: 1.43;--t-caption-ls: -0.224px;
+  --t-fine-size: 12px;   --t-fine-weight: 400;   --t-fine-lh: 1.0;   --t-fine-ls: -0.12px;
+  --t-micro-size: 10px;  --t-micro-weight: 400;  --t-micro-lh: 1.3;  --t-micro-ls: -0.08px;
+}
+
+/* ============================================================
+   SEMANTIC TYPOGRAPHY CLASSES
+   Apply directly, or copy the rules onto your own selectors.
+   Display = SF Pro Display 600 + negative tracking ("Apple tight").
+   Body    = SF Pro Text 400 @ 17px. The 16/17 boundary is unbreakable.
+   ============================================================ */
+
+.t-hero, h1 {
+  font-family: var(--font-display);
+  font-size: var(--t-hero-size);
+  font-weight: var(--t-hero-weight);
+  line-height: var(--t-hero-lh);
+  letter-spacing: var(--t-hero-ls);
+  color: var(--fg1);
+}
+.t-display-lg, h2 {
+  font-family: var(--font-display);
+  font-size: var(--t-display-lg-size);
+  font-weight: var(--t-display-lg-weight);
+  line-height: var(--t-display-lg-lh);
+  letter-spacing: var(--t-display-lg-ls);
+  color: var(--fg1);
+}
+.t-display-md, h3 {
+  font-family: var(--font-text);
+  font-size: var(--t-display-md-size);
+  font-weight: var(--t-display-md-weight);
+  line-height: var(--t-display-md-lh);
+  letter-spacing: var(--t-display-md-ls);
+  color: var(--fg1);
+}
+.t-lead {
+  font-family: var(--font-display);
+  font-size: var(--t-lead-size);
+  font-weight: var(--t-lead-weight);
+  line-height: var(--t-lead-lh);
+  letter-spacing: var(--t-lead-ls);
+}
+.t-lead-airy {
+  font-family: var(--font-text);
+  font-size: var(--t-lead-airy-size);
+  font-weight: var(--t-lead-airy-weight);   /* the rare weight 300 */
+  line-height: var(--t-lead-airy-lh);
+  letter-spacing: var(--t-lead-airy-ls);
+}
+.t-tagline {
+  font-family: var(--font-display);
+  font-size: var(--t-tagline-size);
+  font-weight: var(--t-tagline-weight);
+  line-height: var(--t-tagline-lh);
+  letter-spacing: var(--t-tagline-ls);
+}
+.t-body, p {
+  font-family: var(--font-text);
+  font-size: var(--t-body-size);
+  font-weight: var(--t-body-weight);
+  line-height: var(--t-body-lh);
+  letter-spacing: var(--t-body-ls);
+  color: var(--fg1);
+}
+.t-body-strong { font-weight: var(--t-body-strong-weight); }
+.t-caption {
+  font-family: var(--font-text);
+  font-size: var(--t-caption-size);
+  font-weight: var(--t-caption-weight);
+  line-height: var(--t-caption-lh);
+  letter-spacing: var(--t-caption-ls);
+}
+.t-caption-strong { font-family: var(--font-text); font-size: var(--t-caption-size); font-weight: 600; letter-spacing: var(--t-caption-ls); }
+.t-fine {
+  font-family: var(--font-text);
+  font-size: var(--t-fine-size);
+  font-weight: var(--t-fine-weight);
+  line-height: var(--t-fine-lh);
+  letter-spacing: var(--t-fine-ls);
+}
+.t-micro {
+  font-family: var(--font-text);
+  font-size: var(--t-micro-size);
+  font-weight: var(--t-micro-weight);
+  line-height: var(--t-micro-lh);
+  letter-spacing: var(--t-micro-ls);
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ============================================================
+   BUTTON GRAMMAR (the two button families + variants)
+   Press state is ALWAYS transform: scale(0.95). Never document hover.
+   ============================================================ */
+
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--action-blue);
+  color: #fff;
+  font-family: var(--font-text); font-size: 17px; font-weight: 400;
+  border: none; border-radius: var(--r-pill);
+  padding: 11px 22px; cursor: pointer;
+  transition: transform .12s ease;
+}
+.btn-primary:active { transform: scale(0.95); }
+.btn-primary:focus-visible { outline: 2px solid var(--focus-blue); outline-offset: 2px; }
+
+.btn-ghost-pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--action-blue);
+  font-family: var(--font-text); font-size: 17px; font-weight: 400;
+  border: 1px solid var(--action-blue); border-radius: var(--r-pill);
+  padding: 11px 22px; cursor: pointer;
+  transition: transform .12s ease;
+}
+.btn-ghost-pill:active { transform: scale(0.95); }
+
+.btn-dark-utility {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--ink); color: #fff;
+  font-family: var(--font-text); font-size: 14px; font-weight: 400; letter-spacing: -0.224px;
+  border: none; border-radius: var(--r-sm);
+  padding: 8px 15px; cursor: pointer;
+  transition: transform .12s ease;
+}
+.btn-dark-utility:active { transform: scale(0.95); }
+
+.btn-pearl {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--surface-pearl); color: var(--ink-muted-80);
+  font-family: var(--font-text); font-size: 14px; font-weight: 400;
+  border: 3px solid var(--divider-soft); border-radius: var(--r-md);
+  padding: 8px 14px; cursor: pointer;
+  transition: transform .12s ease;
+}
+.btn-pearl:active { transform: scale(0.95); }
+
+.btn-store-hero {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--action-blue); color: #fff;
+  font-family: var(--font-text); font-size: 18px; font-weight: 300; /* rare weight 300 */
+  border: none; border-radius: var(--r-pill);
+  padding: 14px 28px; cursor: pointer;
+  transition: transform .12s ease;
+}
+.btn-store-hero:active { transform: scale(0.95); }
+
+.btn-icon-circular {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  background: var(--chip-translucent); color: var(--ink);
+  border: none; border-radius: var(--r-full); cursor: pointer;
+  backdrop-filter: var(--frost-blur);
+  transition: transform .12s ease;
+}
+.btn-icon-circular:active { transform: scale(0.95); }
