@@ -293,6 +293,9 @@ h2.section-title {
 .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px; }
 /* On phones: horizontal snap carousel instead of a tall vertical stack */
 @media (max-width: 640px) {
+  .hero-cta-row { gap: 12px !important; }
+  .hero-cta-primary { flex: 1 1 100%; justify-content: center; }
+  .hero-cta-half { flex: 1 1 0; min-width: 0; justify-content: center; }
   .hero-trust {
     flex-wrap: nowrap !important; gap: 14px !important;
     justify-content: space-between;
