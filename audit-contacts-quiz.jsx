@@ -137,12 +137,12 @@ function Contacts() {
   return (
     <section id="contacts" className="sec bg-b" style={{ overflow: 'hidden' }}>
       <Atmos glows={[1, 2]} pattern="grid" drifting={true} />
-      <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'flex-start' }}>
-        <div className="reveal">
+      <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'stretch' }}>
+        <div className="reveal" style={{ display: 'flex', flexDirection: 'column' }}>
           <span className="eyebrow">{K.eyebrow}</span>
           <h2 className="section-title"><Lines text={K.heading} /></h2>
           <p className="lead" style={{ marginTop: 22 }}>{K.lead}</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 32 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 32, flex: 1, justifyContent: 'flex-end' }}>
             <a className="contact-row" href={'tel:' + (K.phoneTel || '')}
             onClick={() => toast('Звонок: ' + (K.phone || ''))}>
               <span className="icon-tile" style={{ width: 50, height: 50 }}><IconPhone size={22} /></span>
