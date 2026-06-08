@@ -84,8 +84,10 @@ async function creative(d, idx) {
     const tw = tool.length * charW(chipFontSize, 600) + chipPadX * 2;
     // wrap to next row if needed
     if (cx + tw > W - PAD && cx > PAD) { cx = PAD; y += chipH + 10; }
-    parts.push(`<rect x="${cx}" y="${y-chipH+8}" width="${tw}" height="${chipH}" rx="${chipR}" fill="#1e2018"/>`);
-    parts.push(`<text x="${cx + tw/2}" y="${y}" text-anchor="middle" font-family="Nunito" font-weight="600" font-size="${chipFontSize}" fill="${ACCENT}">${esc(tool)}</text>`);
+    const chipTop = y - chipH + 8;
+    const chipTextY = chipTop + chipH / 2 + chipFontSize * 0.34;
+    parts.push(`<rect x="${cx}" y="${chipTop}" width="${tw}" height="${chipH}" rx="${chipR}" fill="#1e2018"/>`);
+    parts.push(`<text x="${cx + tw/2}" y="${chipTextY}" text-anchor="middle" font-family="Nunito" font-weight="600" font-size="${chipFontSize}" fill="${ACCENT}">${esc(tool)}</text>`);
     cx += tw + chipGap;
   }
   y += chipH + 30;
