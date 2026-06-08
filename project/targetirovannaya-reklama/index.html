@@ -612,7 +612,7 @@
         <div class="kase-content">
           <div class="kase-field">Частная школа</div>
           <h3 class="kase-name">Школа «Дмитровский»</h3>
-          <p class="kase-summary">Таргет ВКонтакте в комплексе с другими каналами — стабильный поток заявок от родителей Москвы и выше наполняемость групп.</p>
+          <p class="kase-summary">Таргетированная реклама в комплексе с другими каналами — стабильный поток заявок от родителей Москвы и выше наполняемость групп.</p>
           <div class="kase-metrics"><div class="kase-metric"><div class="kase-metric-v">ROI 322%</div><div class="kase-metric-l">за 6 месяцев</div></div><div class="kase-metric"><div class="kase-metric-v">+42%</div><div class="kase-metric-l">набор в классы и группы</div></div><div class="kase-metric"><div class="kase-metric-v">+400%</div><div class="kase-metric-l">посетителей сайта за 4 месяца</div></div></div>
           <div class="kase-chips"><span class="kase-chip">VK Ads</span><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">SEO</span></div>
         </div>
@@ -780,7 +780,7 @@
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <a href="/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Главная</a>
           <a href="/kontekstnaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контекстная реклама</a>
-          <a href="/targetirovannaya-reklama/" style="color: var(--lime); text-decoration: none; font-size: 15px;">Таргет ВКонтакте</a>
+          <a href="/targetirovannaya-reklama/" style="color: var(--lime); text-decoration: none; font-size: 15px;">Таргетированная реклама</a>
           <a href="/keysy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Кейсы</a>
           <a href="/contacts/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контакты</a>
         </div>
@@ -972,7 +972,7 @@
       const CHAT = window.LEAD_TG_CHAT || '';
       const summary = Object.values(answers).flat().join(', ');
       const text =
-        '🟢 Новая заявка (Квиз · Таргет ВКонтакте)\n' +
+        '🟢 Новая заявка (Квиз · Таргетированная реклама)\n' +
         '👤 Имя: ' + (name || '—') + '\n' +
         '📲 Способ: ' + (method || '—') + '\n' +
         '📞 Контакт: ' + (contact || '—') + '\n' +
@@ -1052,7 +1052,7 @@
       if (digits < 11) { phoneField.classList.add('invalid'); phone.focus(); return; }
       phoneField.classList.remove('invalid');
       const text =
-        '🟢 Новая заявка с сайта (Таргет ВКонтакте)\n' +
+        '🟢 Новая заявка с сайта (Таргетированная реклама)\n' +
         '👤 Имя: ' + (val('lf-name') || '—') + '\n' +
         '📞 Телефон: ' + phone.value + '\n' +
         '💬 Комментарий: ' + (val('lf-comment') || '—');
