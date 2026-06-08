@@ -507,6 +507,8 @@ h2.section-title {
   .wrap { padding: 0 16px; }
   .sec { padding: 36px 0; }
   .sec-tight { padding: 24px 0; }
+  #certs.sec { padding-bottom: 16px; }
+  #process.sec, #process.sec-tight { padding-bottom: 16px; }
   /* компактные паддинги карточек/секций (перебиваем inline-стили) */
   .card { padding: 22px !important; }
   .hero-split-grid { padding: 24px 16px 20px !important; }
