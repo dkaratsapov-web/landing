@@ -686,7 +686,7 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .kase-photo { aspect-ratio: 16 / 8; }
   .kase-content { padding: 14px 16px; gap: 9px; }
   .kase-name { font-size: 19px; }
-  .kase-summary { font-size: 13px; min-height: 0; -webkit-line-clamp: 2; }
+  .kase-summary { font-size: 13px; min-height: 0; -webkit-line-clamp: unset; overflow: visible; display: block; }
   .kase-metrics { gap: 10px 12px; padding-top: 10px; }
   .kase-metric-v { font-size: 20px; }
   .kase-metric-l { font-size: 11px; }
