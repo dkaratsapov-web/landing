@@ -305,7 +305,7 @@ h2.section-title {
 }
 
 /* ---------- Swipe hint (mobile-only animated "Листайте →") ---------- */
-.swipe-hint { display: none; }
+.swipe-hint { display: none !important; }
 @media (max-width: 640px) {
   .swipe-hint {
     display: inline-flex; align-items: center; gap: 7px; margin-bottom: 16px;
@@ -321,20 +321,24 @@ h2.section-title {
 }
 @media (prefers-reduced-motion: reduce) { .swipe-hint .i { animation: none; opacity: 1; } }
 
-/* ---------- Services / Cases: horizontal snap carousel on phones ---------- */
+/* ---------- Services: full-width vertical stack on phones ---------- */
 @media (max-width: 640px) {
-  .svc-x-stack, .case-list {
+  .svc-x-stack {
+    flex-direction: column !important;
+    gap: 10px !important;
+    overflow-x: visible;
+  }
+  .svc-x { width: 100%; max-width: none; flex: none; }
+  /* Cases keep carousel */
+  .case-list {
     flex-direction: row !important; align-items: stretch;
     gap: 14px !important; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
     margin: 0 -22px; padding: 4px 22px 10px;
     scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
   }
-  .svc-x-stack::-webkit-scrollbar, .case-list::-webkit-scrollbar { height: 6px; }
-  .svc-x-stack::-webkit-scrollbar-thumb, .case-list::-webkit-scrollbar-thumb {
-    background: var(--line-strong); border-radius: 3px;
-  }
-  .svc-x { flex: 0 0 88%; max-width: none; scroll-snap-align: start; }
+  .case-list::-webkit-scrollbar { height: 6px; }
+  .case-list::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
   .case-card { flex: 0 0 86%; max-width: 340px; scroll-snap-align: start; }
 }
 .cert-card {
@@ -785,7 +789,7 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
     align-items: start;
   }
   .svc-x-name   { font-size: 17px; line-height: 1.3; }
-  .svc-x-tag    { font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .svc-x-tag    { font-size: 11.5px; }
   .svc-x-result { display: none; }
   .svc-x-more   { display: none; }
   .svc-x-meta-val { font-size: 14px; line-height: 1.4; word-break: break-word; }
