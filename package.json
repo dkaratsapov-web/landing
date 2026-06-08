@@ -10,5 +10,8 @@
     "@babel/core": "^7.24.0",
     "@babel/preset-react": "^7.24.0",
     "terser": "^5.30.0"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
   }
 }
