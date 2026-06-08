@@ -775,21 +775,21 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .svc-x-label { font-size: 11px; margin-bottom: 6px; }
 }
 
-/* На узких телефонах кнопка «Подробнее» уходит под заголовок, не перекрывает тег */
+/* На узких телефонах — flex-wrap: icon+title в первой строке, кнопка во второй */
 @media (max-width: 480px) {
   .svc-x-head {
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas:
-      "icon title chev"
-      "icon more  more";
-    row-gap: 10px;
-    align-items: start;
-    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px 50px 16px 18px;
+    position: relative;
   }
-  .svc-x-icon    { grid-area: icon; align-self: start; margin-top: 2px; }
-  .svc-x-titles  { grid-area: title; }
-  .svc-x-more    { grid-area: more; justify-self: start; }
-  .svc-x-chev    { grid-area: chev; align-self: start; margin-top: 4px; }
+  .svc-x-icon   { flex: 0 0 auto; }
+  .svc-x-titles { flex: 1 1 0; min-width: 0; }
+  .svc-x-result { display: none; }
+  .svc-x-chev   { position: absolute; top: 18px; right: 14px; }
+  .svc-x-more   { flex: 0 0 auto; margin-left: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
