@@ -787,6 +787,8 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   }
   .svc-x-icon   { flex: 0 0 auto; }
   .svc-x-titles { flex: 1 1 0; min-width: 0; }
+  .svc-x-name   { font-size: 18px; }
+  .svc-x-tag    { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
   .svc-x-result { display: none; }
   .svc-x-chev   { position: absolute; top: 18px; right: 14px; }
   .svc-x-more   { flex: 0 0 auto; margin-left: 0; }
