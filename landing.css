@@ -300,9 +300,9 @@ h2.section-title {
     flex-wrap: nowrap !important; gap: 14px !important;
     justify-content: space-between;
   }
-  .hero-trust-item { flex: 1 1 0; min-width: 0; }
-  .hero-trust-v { font-size: 20px !important; }
-  .hero-trust-l { font-size: 12px !important; }
+  .hero-trust-item { flex: 1 1 0; min-width: 0; overflow: hidden; }
+  .hero-trust-v { font-size: 18px !important; }
+  .hero-trust-l { font-size: 11px !important; word-break: break-word; }
   .cert-grid {
     display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
