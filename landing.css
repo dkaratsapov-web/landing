@@ -38,6 +38,7 @@ html, body {
   background: var(--pg);
   color: var(--txt);
   font-family: var(--font-text);
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
@@ -170,10 +171,10 @@ h2.section-title {
 .nav-links a:hover { color: var(--txt); }
 .nav-actions { display: flex; align-items: center; gap: 8px; }
 .nav-cta { margin-left: 0; }
-.nav-ic { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--accent-bright); color: var(--accent-ink); text-decoration: none; flex: none; transition: transform .2s ease, filter .2s ease; }
+.nav-ic { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--accent-bright); color: var(--accent-ink); text-decoration: none; flex: none; transition: transform .2s ease, filter .2s ease; }
 .nav-ic:hover { transform: translateY(-1px); filter: brightness(1.06); }
 .nav-ic svg { width: 19px; height: 19px; }
-.nav-burger { display: none; margin-left: 0; background: none; border: none; color: var(--txt); cursor: pointer; padding: 9px; }
+.nav-burger { display: none; margin-left: 0; background: none; border: none; color: var(--txt); cursor: pointer; padding: 10px; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
 
 /* Dropdown в навигации */
 .nav-item-drop {
@@ -293,16 +294,6 @@ h2.section-title {
 .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px; }
 /* On phones: horizontal snap carousel instead of a tall vertical stack */
 @media (max-width: 640px) {
-  .hero-cta-row { gap: 12px !important; }
-  .hero-cta-primary { flex: 1 1 100%; justify-content: center; }
-  .hero-cta-half { flex: 1 1 0; min-width: 0; justify-content: center; }
-  .hero-trust {
-    flex-wrap: nowrap !important; gap: 14px !important;
-    justify-content: space-between;
-  }
-  .hero-trust-item { flex: 1 1 0; min-width: 0; overflow: hidden; }
-  .hero-trust-v { font-size: 18px !important; }
-  .hero-trust-l { font-size: 11px !important; word-break: break-word; }
   .cert-grid {
     display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
@@ -347,7 +338,7 @@ h2.section-title {
 /* ---------- Services: full-width snap carousel on phones ---------- */
 @media (max-width: 640px) {
   .svc-x-stack {
-    flex-direction: row !important; align-items: stretch;
+    flex-direction: row !important; align-items: flex-start;
     gap: 12px !important; overflow-x: auto; overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
     margin: 0 -22px; padding: 0 16px;
@@ -442,7 +433,7 @@ h2.section-title {
 }
 
 /* ---------- Toast ---------- */
-.toast-wrap { position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); z-index: 600; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; }
+.toast-wrap { position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); z-index: 200; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none; }
 .toast {
   display: flex; align-items: center; gap: 12px;
   background: rgba(20,20,22,0.94); color: var(--txt);
@@ -680,7 +671,6 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   border-bottom: 1px solid var(--line); overflow: hidden;
 }
 .kase-photo image-slot { width: 100%; height: 100%; display: block; }
-.kase-photo .kase-img { width: 100%; height: 100%; display: block; object-fit: cover; }
 .kase-badge {
   position: absolute; top: 14px; left: 14px; z-index: 1;
   background: var(--accent); color: var(--accent-ink);
@@ -959,8 +949,7 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @keyframes meetPulse { 0% { transform: scale(1); opacity: .55; } 70%,100% { transform: scale(3.4); opacity: 0; } }
 .meet-label { fill: #fff; font-family: var(--font-display); font-size: 15px; font-weight: 700; }
 
-.meet-tags { display: flex; flex-direction: column; gap: 10px; margin: 22px 0 26px; }
-.meet-tags-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.meet-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 26px; }
 .meet-tag { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; font-size: 13.5px; font-weight: 600;
   color: var(--accent-bright, #b6f01e); background: rgba(182,240,30,0.08);
   border: 1px solid rgba(182,240,30,0.25); border-radius: var(--r-pill, 999px); }
@@ -969,13 +958,3 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @media (prefers-reduced-motion: reduce) {
   .meet-region, .meet-route, .meet-mover, .meet-pulse { animation: none !important; }
 }
-
-/* ---------------- CONTACTS perks (fills left column) ---------------- */
-.contact-perks { list-style: none; padding: 0; margin: 30px 0 0; display: flex; flex-direction: column; gap: 16px; }
-.contact-perk { display: flex; align-items: center; gap: 14px; }
-.contact-perk-ic { flex: 0 0 auto; width: 40px; height: 40px; border-radius: var(--r-md, 12px);
-  display: inline-flex; align-items: center; justify-content: center;
-  color: var(--accent-bright, #b6f01e); background: rgba(182,240,30,0.08);
-  border: 1px solid rgba(182,240,30,0.22); }
-.contact-perk b { display: block; color: #fff; font-size: 16px; font-weight: 600; line-height: 1.3; }
-.contact-perk-sub { display: block; color: var(--txt-3); font-size: 13.5px; margin-top: 2px; }
