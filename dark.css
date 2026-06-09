@@ -869,7 +869,8 @@ h3 { font-weight: 600; }
 @media (max-width: 720px) {
   .kase-filter-group { flex-direction: column; gap: 8px; }
   .kase-filter-label { padding-top: 0; }
-  .kase-filter-group .kase-tabs { margin: 0; padding: 0 0 4px; }
+  .kase-filter-group .kase-tabs { margin: 0 -18px 0; padding: 0 18px 4px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; }
+  .kase-filter-group .kase-tabs::-webkit-scrollbar { display: none; }
 }
 
 /* ===================== ПОПАП-ФОРМА (модалка заявки) =====================
