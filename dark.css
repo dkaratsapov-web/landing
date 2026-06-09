@@ -36,9 +36,10 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
@@ -869,7 +870,8 @@ h3 { font-weight: 600; }
 @media (max-width: 720px) {
   .kase-filter-group { flex-direction: column; gap: 8px; }
   .kase-filter-label { padding-top: 0; }
-  .kase-filter-group .kase-tabs { margin: 0 -18px 0; padding: 0 18px 4px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; }
+  .kase-filter-group { overflow: hidden; }
+  .kase-filter-group .kase-tabs { margin: 0; padding: 0 0 4px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; width: 100%; }
   .kase-filter-group .kase-tabs::-webkit-scrollbar { display: none; }
 }
 
