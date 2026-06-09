@@ -11,19 +11,18 @@
 <meta property="og:url" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/geo-servisy/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:image" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/portrait.jpg">
-<meta property="og:image:width" content="800">
-<meta property="og:image:height" content="800">
+<meta property="og:image" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Продвижение в Яндекс Бизнес и Картах — Даниил Карацапов">
 <meta name="twitter:description" content="Продвижение в Яндекс Бизнес, Картах и 2ГИС. Вывожу карточку в топ — больше звонков из локального поиска.">
-<meta name="twitter:image" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/portrait.jpg">
+<meta name="twitter:image" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/dark.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <script defer src="/lead-config.js"></script>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
@@ -59,6 +58,66 @@
 }
 .plat-chip:hover { border-color: var(--line-2); }
 .plat-chip .pl-logo { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; flex: none; overflow: hidden; }
+.plat-chip .pl-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* ===== Анимированный мокап Яндекс Карт ===== */
+.gmap { position: relative; display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 0; align-items: stretch; margin-top: 8px; border: 1px solid var(--line-2); border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,0.45); background: var(--surface); min-height: 430px; }
+/* левая панель */
+.gmap-panel { background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+.gmap-search { display: flex; align-items: center; gap: 10px; margin: 14px; padding: 11px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-pill); }
+.gmap-search-pin img { display: block; border-radius: 5px; }
+.gmap-query { flex: 1; font-size: 15px; color: var(--text); white-space: nowrap; overflow: hidden; }
+.gmap-typed { color: var(--text); }
+.gmap-typed .hl { color: var(--lime-bright); font-weight: 600; }
+.gmap-caret { display: inline-block; width: 2px; height: 1.05em; background: var(--lime); margin-left: 1px; vertical-align: -2px; animation: gmBlink 1s steps(1) infinite; }
+.gmap.searched .gmap-caret { opacity: 0; animation: none; }
+@keyframes gmBlink { 50% { opacity: 0; } }
+.gmap-go { flex: none; width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer; background: var(--lime); color: var(--lime-ink); display: grid; place-items: center; transition: transform .15s ease, box-shadow .2s ease; }
+.gmap.searching .gmap-go { animation: gmClick .45s ease; }
+@keyframes gmClick { 30% { transform: scale(.82); box-shadow: 0 0 0 6px var(--lime-glow); } 100% { transform: scale(1); } }
+.gmap-tabs { display: flex; gap: 18px; padding: 0 18px 10px; border-bottom: 1px solid var(--line); }
+.gmap-tab { font-size: 14px; color: var(--muted-2); padding-bottom: 6px; }
+.gmap-tab.active { color: var(--text); font-weight: 600; box-shadow: inset 0 -2px 0 var(--lime); }
+.gmap-list { padding: 8px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
+.gmap-item { padding: 12px 14px; border-radius: 12px; opacity: 0; transform: translateY(10px); transition: opacity .45s ease, transform .45s ease, background .25s ease; }
+.gmap.results .gmap-item { opacity: 1; transform: none; }
+.gmap.results .gmap-item:nth-child(2) { transition-delay: .12s; }
+.gmap.results .gmap-item:nth-child(3) { transition-delay: .24s; }
+.gmap-item-head { display: flex; align-items: center; gap: 10px; }
+.gmap-item-name { font-size: 16px; font-weight: 700; color: var(--text); }
+.gmap-item-name.gmap-muted { font-weight: 600; color: var(--muted); }
+.gmap-top { font-size: 10px; font-weight: 800; letter-spacing: .03em; color: var(--lime-ink); background: var(--lime); padding: 2px 7px; border-radius: var(--r-pill); }
+.gmap-item-rate { margin-top: 5px; font-size: 13px; color: var(--muted); }
+.gmap-item-rate b { color: #ffc531; }
+.gmap-item-rate.gmap-dim b { color: var(--muted); }
+.gmap-item-meta { margin-top: 4px; font-size: 12px; color: var(--muted-2); }
+.gmap-thumbs { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; margin-top: 10px; }
+.gmap-thumbs span { height: 84px; border-radius: 7px; background-size: cover; background-position: center; }
+.gmap-thumbs .t1 { background-image: url('/assets/cases/nebo.jpg'); }
+.gmap-thumbs .t2 { background-image: url('/assets/cases/ledizoj.jpg'); }
+.gmap-thumbs .t3 { background-image: url('/assets/cases/berezka.jpg'); }
+.gmap-item--you { border: 1px solid transparent; }
+.gmap.picked .gmap-item--you { background: var(--lime-glow); border-color: var(--lime); }
+/* карта */
+.gmap-canvas { position: relative; overflow: hidden; min-height: 320px; }
+.gmap-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.gmap-marker { position: absolute; transform: translate(-50%, -100%) scale(.3); opacity: 0; transition: opacity .4s ease, transform .45s cubic-bezier(.2,1.5,.4,1); }
+.gmap.results .gmap-marker { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+.gmap.results .gmap-marker--c:nth-of-type(3) { transition-delay: .1s; }
+.gmap.results .gmap-marker--c:nth-of-type(4) { transition-delay: .2s; }
+.gmap.results .gmap-marker--c:nth-of-type(5) { transition-delay: .3s; }
+.gmap-marker-dot { position: relative; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); display: grid; place-items: center; box-shadow: 0 3px 8px rgba(0,0,0,.35); }
+.gmap-marker-dot::after { content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--lime); }
+.gmap-dot-grey { width: 20px; height: 20px; background: #6b6f66; }
+.gmap-dot-grey::after { border-top-color: #6b6f66; }
+.gmap-marker-pulse { position: absolute; left: 50%; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--lime); transform: translate(-50%,0); opacity: .5; }
+.gmap.picked .gmap-marker--you .gmap-marker-pulse { animation: gmPulse 1.8s ease-out infinite; }
+@keyframes gmPulse { 0% { transform: translate(-50%,0) scale(1); opacity: .5; } 70%,100% { transform: translate(-50%,0) scale(3); opacity: 0; } }
+.gmap-marker-label { position: absolute; left: 50%; top: -8px; transform: translate(-50%,-100%); white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--lime-ink); background: var(--lime); padding: 4px 9px; border-radius: var(--r-pill); opacity: 0; transition: opacity .3s ease .2s; box-shadow: 0 3px 8px rgba(0,0,0,.3); }
+.gmap.picked .gmap-marker--you .gmap-marker-label { opacity: 1; }
+.gmap-cursor { position: absolute; left: 50%; top: 55%; filter: drop-shadow(0 2px 3px rgba(0,0,0,.4)); transition: left .7s cubic-bezier(.5,0,.2,1), top .7s cubic-bezier(.5,0,.2,1); pointer-events: none; z-index: 5; }
+@media (max-width: 900px) { .gmap { grid-template-columns: 1fr; } .gmap-panel { border-right: none; border-bottom: 1px solid var(--line); } }
+@media (prefers-reduced-motion: reduce) { .gmap-item,.gmap-marker { opacity: 1 !important; transform: translate(-50%,-100%) !important; } .gmap-item{transform:none!important} .gmap-caret{display:none} }
 
 /* Hero визуал — мокап выдачи гео-сервиса */
 .geo-mock {
@@ -116,15 +175,21 @@
 }
 .geo-mini-pin { position: absolute; transform: translate(-50%,-100%); display: flex; flex-direction: column; align-items: center; }
 .geo-mini-pin .mph {
-  width: 28px; height: 28px; border-radius: 50% 50% 50% 0; transform: rotate(45deg);
+  position: relative; width: 28px; height: 28px; border-radius: 50%;
   display: grid; place-items: center; font-weight: 800; font-size: 11px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
-.geo-mini-pin .mph span { transform: rotate(-45deg); }
+.geo-mini-pin .mph::after {
+  content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%);
+  border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid currentColor;
+}
 .geo-mini-pin.pml { left: 40%; top: 55%; }
 .geo-mini-pin.pml .mph { background: var(--lime); color: var(--lime-ink); }
+.geo-mini-pin.pml .mph span { color: var(--lime-ink); }
+.geo-mini-pin.pml .mph::after { border-top-color: var(--lime); }
 .geo-mini-pin.pmr1 { left: 62%; top: 45%; }
 .geo-mini-pin.pmr2 { left: 28%; top: 72%; }
 .geo-mini-pin.pmr1 .mph, .geo-mini-pin.pmr2 .mph { background: var(--surface-3); color: var(--muted); border: 1px solid var(--line-2); }
+.geo-mini-pin.pmr1 .mph::after, .geo-mini-pin.pmr2 .mph::after { border-top-color: var(--surface-3); }
 .geo-mini-pulse {
   position: absolute; top: 0; left: 50%; width: 28px; height: 28px; border-radius: 50%;
   transform: translate(-50%, 0); background: var(--lime); opacity: 0;
@@ -145,8 +210,12 @@
   display: flex; align-items: center; gap: 14px; background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--r-md); padding: 18px 20px; transition: border-color .2s ease, transform .2s ease;
 }
+.niche { overflow: hidden; padding: 0; }
+.niche-img { width: 72px; align-self: stretch; flex: none; overflow: hidden; position: relative; }
+.niche-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+.niche:hover .niche-img img { transform: scale(1.08); }
+.niche span.t { font-weight: 600; font-size: 15px; padding: 18px 18px 18px 0; }
 .niche:hover { border-color: var(--line-2); transform: translateY(-3px); }
-.niche span.t { font-weight: 600; font-size: 15px; }
 .niche-note { text-align: center; color: var(--muted); font-size: 17px; margin: 34px auto 0; max-width: 60ch; line-height: 1.5; }
 .niche-note b { color: var(--ink); font-weight: 700; }
 
@@ -227,9 +296,16 @@
   .niche-grid { grid-template-columns: 1fr; }
   .steps-grid.geo-steps { grid-template-columns: 1fr !important; }
   .vs-card, .tariff { padding: 28px 22px; }
+  /* Мокап карты: уменьшаем высоту и не даём подписям меток вылезать за экран */
+  .gmap-canvas { min-height: 240px; }
+  .gmap-marker-label { font-size: 11px; max-width: 60vw; white-space: normal; }
+  /* Карточка результата: переносим действия в строку, чтобы не было горизонтального переполнения */
+  .geo-res { flex-wrap: wrap; }
+  .geo-res-actions { flex-direction: row; width: 100%; flex-wrap: wrap; }
 }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Продвижение в Яндекс Бизнес, Картах и 2ГИС","provider":{"@type":"Person","name":"Даниил Карацапов"},"description":"Вывод бизнеса в топ Яндекс Карт, 2ГИС, Google Карт. Больше звонков из локального поиска","areaServed":"RU","url":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/geo-servisy/"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Через сколько будут первые результаты?", "acceptedAnswer": {"@type": "Answer", "text": "Базовая оптимизация и оформление карточки дают эффект уже в первые недели. Уверенный рост позиций, звонков и отзывов обычно набирается за 1–3 месяца — гео-продвижение работает накопительно и держится долго."}}, {"@type": "Question", "name": "Чем это отличается от SEO и контекстной рекламы?", "acceptedAnswer": {"@type": "Answer", "text": "Контекст — это платные клики на сайт, SEO — позиции сайта в поиске. Гео-продвижение работает на самих картах и в справочниках: человек ищет «рядом», видит вашу карточку в топе, звонит или строит маршрут. Это горячая аудитория с явным намерением прийти именно сейчас."}}, {"@type": "Question", "name": "Нужен ли отдельный бюджет на платное размещение?", "acceptedAnswer": {"@type": "Answer", "text": "Часть результата достигается бесплатной оптимизацией. Но приоритетное размещение (подписка Яндекс Бизнес, реклама на картах, приоритет в 2ГИС) оплачивается отдельно, напрямую сервисам. На аудите подскажу, нужно ли оно в вашей нише и в каком объёме."}}, {"@type": "Question", "name": "Что делать с негативными отзывами?", "acceptedAnswer": {"@type": "Answer", "text": "Отрабатываю негатив корректными публичными ответами, помогаю решить ситуацию с клиентом, а откровенно несправедливые или фейковые отзывы обжалую через площадку. Параллельно выстраиваю поток свежих честных отзывов, чтобы рейтинг рос."}}, {"@type": "Question", "name": "Подходит ли это онлайн-бизнесу без адреса?", "acceptedAnswer": {"@type": "Answer", "text": "Гео-сервисы заточены под бизнес с физической точкой или зоной обслуживания. Для части услуг без офиса можно оформить карточку с выездным форматом. Если адреса и зоны обслуживания нет совсем — честно скажу об этом на консультации и предложу более подходящий канал."}}, {"@type": "Question", "name": "Можно ли продвигать несколько филиалов?", "acceptedAnswer": {"@type": "Answer", "text": "Да. Настраиваю и веду карточки сети точек в разных городах, слежу за их позициями и репутацией. Под это рассчитан тариф «Максимум» с расширенной отчётностью по каждой точке."}}, {"@type": "Question", "name": "Кому принадлежат карточки и доступы?", "acceptedAnswer": {"@type": "Answer", "text": "Вам. Все профили регистрирую и верифицирую на вас или вашу компанию — доступы остаются под вашим контролем. Я работаю в ваших аккаунтах и ничего не «закрываю» от клиента."}}, {"@type": "Question", "name": "Что нужно от меня для старта?", "acceptedAnswer": {"@type": "Answer", "text": "Минимум — информация о бизнесе, адрес и контакты, доступ к существующим карточкам (если есть) и несколько фотографий. Остальное беру на себя. Подробный список пришлю после бесплатного аудита."}}]}</script>
 </head>
 <body>
 
@@ -298,56 +374,22 @@
         <div class="plat-row reveal">
           <!-- Яндекс Карты -->
           <span class="plat-chip">
-            <span class="pl-logo">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="24" height="24" rx="6" fill="#FC3F1D"/>
-                <!-- Яндекс «Я» letterform -->
-                <path d="M13.6 12.35h-1.1V17h-1.7V7h2.9c1.9 0 3.1 1 3.1 2.65 0 1.1-.55 1.95-1.55 2.38L16.9 17h-1.85l-1.45-4.65zm-.15-1.3h-0.95V8.3h1c.9 0 1.4.44 1.4 1.35 0 .88-.5 1.4-1.45 1.4z" fill="white"/>
-              </svg>
-            </span>
+            <span class="pl-logo"><img src="/assets/geo/yandex-maps.png" alt="Яндекс Карты" width="24" height="24" loading="lazy"></span>
             Яндекс Карты
           </span>
           <!-- Яндекс Бизнес -->
           <span class="plat-chip">
-            <span class="pl-logo">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs><linearGradient id="yb-g" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#FF6A1A"/><stop offset="1" stop-color="#FC3F1D"/></linearGradient></defs>
-                <rect width="24" height="24" rx="6" fill="url(#yb-g)"/>
-                <!-- Stylized store / building icon -->
-                <rect x="5" y="13" width="14" height="7" rx="1" fill="white" opacity="0.95"/>
-                <path d="M4 13.5L12 7l8 6.5" stroke="white" stroke-width="1.6" stroke-linejoin="round" fill="none" opacity="0.95"/>
-                <rect x="10" y="16" width="4" height="4" rx="0.5" fill="url(#yb-g)"/>
-              </svg>
-            </span>
+            <span class="pl-logo"><img src="/assets/geo/yandex-business.png" alt="Яндекс Бизнес" width="24" height="24" loading="lazy"></span>
             Яндекс Бизнес
           </span>
           <!-- 2ГИС -->
           <span class="plat-chip">
-            <span class="pl-logo">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="24" height="24" rx="6" fill="#00B956"/>
-                <!-- 2GIS logo: bold "2" + "ГИС" -->
-                <text x="6" y="15.5" font-size="11" font-weight="900" fill="white" font-family="Arial, sans-serif">2</text>
-                <text x="13" y="15.5" font-size="7.5" font-weight="700" fill="white" font-family="Arial, sans-serif">ГИС</text>
-                <line x1="5" y1="17" x2="19" y2="17" stroke="white" stroke-width="1.2" opacity="0.5"/>
-                <text x="5" y="21" font-size="5.5" font-weight="400" fill="white" font-family="Arial, sans-serif" opacity="0.75">карты и навигация</text>
-              </svg>
-            </span>
+            <span class="pl-logo"><img src="/assets/geo/2gis.webp" alt="2ГИС" width="24" height="24" loading="lazy"></span>
             2ГИС
           </span>
           <!-- Google Карты -->
           <span class="plat-chip">
-            <span class="pl-logo">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="24" height="24" rx="6" fill="white"/>
-                <!-- Google Maps pin shape with brand colors -->
-                <path d="M12 3C8.96 3 6.5 5.46 6.5 8.5c0 4.81 5.5 12.5 5.5 12.5s5.5-7.69 5.5-12.5C17.5 5.46 15.04 3 12 3z" fill="#EA4335"/>
-                <!-- Quadrant coloring for Google-colors effect -->
-                <path d="M12 3C15.04 3 17.5 5.46 17.5 8.5c0 1.4-.45 2.7-1.2 3.75L12 8.5V3z" fill="#4285F4"/>
-                <path d="M17.5 8.5c0 1.4-.45 2.7-1.2 3.75L12 8.5h5.5z" fill="#34A853"/>
-                <circle cx="12" cy="8.5" r="2.8" fill="white"/>
-              </svg>
-            </span>
+            <span class="pl-logo"><img src="/assets/geo/google-maps.png" alt="Google Карты" width="24" height="24" loading="lazy"></span>
             Google Карты
           </span>
         </div>
@@ -419,27 +461,94 @@
       <h2>Что такое продвижение <span class="accent">в гео-сервисах</span></h2>
       <p>Люди всё чаще ищут «рядом»: «кофейня рядом», «стоматология в районе», «шиномонтаж рядом». Сервисы показывают подборку компаний — звонки, маршруты и клиентов получают те, кто в топе и с хорошим рейтингом.</p>
     </div>
-    <div class="geo-plat-grid stagger">
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
-        <h3>Яндекс Карты + Бизнес</h3>
-        <p>Максимальный охват, аналитика и платное приоритетное размещение.</p>
+    <div class="gmap reveal" id="gmapMock" data-query="ресторан москва">
+      <!-- Левая панель: поиск + список -->
+      <div class="gmap-panel">
+        <div class="gmap-search">
+          <span class="gmap-search-pin"><img src="/assets/geo/yandex-maps.png" alt="Яндекс Карты" width="20" height="20" loading="lazy" decoding="async"></span>
+          <span class="gmap-query"><span class="gmap-typed"></span><span class="gmap-caret"></span></span>
+          <button class="gmap-go" type="button" aria-label="Найти">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          </button>
+        </div>
+        <div class="gmap-tabs"><span class="gmap-tab active">Места</span><span class="gmap-tab">Подборки</span></div>
+        <div class="gmap-list">
+          <div class="gmap-item gmap-item--you">
+            <div class="gmap-item-head">
+              <span class="gmap-item-name">Ваша компания</span>
+              <span class="gmap-top">ТОП-1</span>
+            </div>
+            <div class="gmap-item-rate"><b>★ 4,9</b><span>· 248 отзывов · Открыто</span></div>
+            <div class="gmap-item-meta">Ср. чек: от 3000 ₽ · 320 м от вас</div>
+            <div class="gmap-thumbs"><span class="t1"></span><span class="t2"></span><span class="t3"></span></div>
+          </div>
+          <div class="gmap-item">
+            <div class="gmap-item-head"><span class="gmap-item-name gmap-muted">Конкурент А</span></div>
+            <div class="gmap-item-rate gmap-dim"><b>★ 4,3</b><span>· 91 отзыв</span></div>
+            <div class="gmap-item-meta">Ср. чек: от 3000 ₽</div>
+          </div>
+          <div class="gmap-item">
+            <div class="gmap-item-head"><span class="gmap-item-name gmap-muted">Конкурент Б</span></div>
+            <div class="gmap-item-rate gmap-dim"><b>★ 3,8</b><span>· 34 отзыва</span></div>
+            <div class="gmap-item-meta">Ср. чек: от 2500 ₽</div>
+          </div>
+        </div>
       </div>
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg></span>
-        <h3>2ГИС</h3>
-        <p>Сильный охват в городах и приоритетное размещение в выдаче.</p>
+
+      <!-- Правая часть: карта -->
+      <div class="gmap-canvas">
+        <svg class="gmap-bg" viewBox="0 0 400 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="460" fill="#eceee8"/>
+          <!-- кварталы застройки -->
+          <g fill="#e0e4db">
+            <rect x="20" y="20" width="70" height="48" rx="3"/><rect x="100" y="24" width="56" height="40" rx="3"/>
+            <rect x="250" y="18" width="60" height="46" rx="3"/><rect x="320" y="30" width="58" height="52" rx="3"/>
+            <rect x="30" y="120" width="62" height="50" rx="3"/><rect x="300" y="120" width="70" height="56" rx="3"/>
+            <rect x="24" y="300" width="66" height="54" rx="3"/><rect x="310" y="290" width="64" height="58" rx="3"/>
+            <rect x="40" y="390" width="74" height="48" rx="3"/><rect x="290" y="392" width="80" height="46" rx="3"/>
+            <rect x="150" y="40" width="40" height="34" rx="3"/><rect x="210" y="40" width="34" height="34" rx="3"/>
+          </g>
+          <!-- парки -->
+          <path d="M-10 50 Q70 30 140 70 Q120 120 60 130 Q10 120 -10 150Z" fill="#cfe6bf" opacity="0.9"/>
+          <circle cx="340" cy="380" r="66" fill="#cfe6bf" opacity="0.85"/>
+          <ellipse cx="120" cy="370" rx="48" ry="34" fill="#cfe6bf" opacity="0.8"/>
+          <!-- Москва-река (S-образный изгиб) -->
+          <path d="M-10 210 Q70 200 110 250 Q150 305 230 300 Q300 296 330 250 Q352 214 410 220 L410 250 Q350 246 332 286 Q300 332 224 332 Q140 336 104 280 Q74 232 -10 244 Z" fill="#a7d2ec"/>
+          <!-- крупные радиальные проспекты -->
+          <g stroke="#ffffff" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.95">
+            <path d="M168 211 L20 40 M168 211 L210 -10 M168 211 L380 70 M168 211 L410 250 M168 211 L300 440 M168 211 L120 460 M168 211 L-10 330"/>
+          </g>
+          <!-- садовое и бульварное кольцо -->
+          <g fill="none" stroke="#ffffff" stroke-width="8" opacity="0.9">
+            <ellipse cx="168" cy="211" rx="150" ry="138"/>
+          </g>
+          <g fill="none" stroke="#ffffff" stroke-width="6" opacity="0.85">
+            <ellipse cx="168" cy="211" rx="78" ry="70"/>
+          </g>
+          <!-- второстепенные улицы -->
+          <g stroke="#dde2d7" stroke-width="2.4" fill="none">
+            <path d="M0 95 H400 M0 160 H400 M0 360 H400 M0 410 H400 M60 0 V460 M250 0 V460 M340 0 V460"/>
+          </g>
+          <!-- центральная площадь / Кремль -->
+          <rect x="150" y="194" width="36" height="30" rx="4" fill="#d8cfa6"/>
+        </svg>
+
+        <!-- маркеры -->
+        <span class="gmap-marker gmap-marker--you" style="left:42%; top:46%;">
+          <span class="gmap-marker-pulse"></span>
+          <span class="gmap-marker-dot"><svg viewBox="0 0 24 24" fill="#0c1402" width="13" height="13"><path d="M12 2 9.1 9.1 2 9.8l5.4 4.7L5.6 22 12 18l6.4 4-1.8-7.5L22 9.8l-7.1-.7L12 2z"/></svg></span>
+          <span class="gmap-marker-label">Ваша компания · 4,9</span>
+        </span>
+        <span class="gmap-marker gmap-marker--c" style="left:64%; top:30%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
+        <span class="gmap-marker gmap-marker--c" style="left:72%; top:58%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
+        <span class="gmap-marker gmap-marker--c" style="left:28%; top:64%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
+        <span class="gmap-marker gmap-marker--c" style="left:54%; top:72%;"><span class="gmap-marker-dot gmap-dot-grey"></span></span>
       </div>
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
-        <h3>Google Карты</h3>
-        <p>Google Business Profile для аудитории, которая ищет в Google.</p>
-      </div>
-      <div class="card hover">
-        <span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
-        <h3>Отзовики</h3>
-        <p>Zoon, Flamp, Prodoctorov, Yell и другие — для репутации.</p>
-      </div>
+
+      <!-- курсор (общий слой над обеими колонками) -->
+      <span class="gmap-cursor" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="24" height="24"><path d="M5 2l14 7-6 2-2 6L5 2z" fill="#fff" stroke="#0c1402" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      </span>
     </div>
   </div>
 </section>
@@ -452,14 +561,14 @@
       <h2>Для локального бизнеса, <span class="accent">которого ищут рядом</span></h2>
     </div>
     <div class="niche-grid stagger">
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg></span><span class="t">Кафе и рестораны</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path></svg></span><span class="t">Салоны и барбершопы</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 2.3A.3.3 0 1 0 5 2a.3.3 0 0 0-.2.3Z"></path><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"></path><path d="M11 3a2 2 0 0 0-2 2v6a6 6 0 0 0 6 6"></path></svg></span><span class="t">Стоматологии и медцентры</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"></path><circle cx="6.5" cy="16.5" r="2.5"></circle><circle cx="16.5" cy="16.5" r="2.5"></circle></svg></span><span class="t">Автосервисы и автомойки</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5 17.5 17.5"></path><path d="m21 21-1-1"></path><path d="m3 3 1 1"></path><path d="m18 22 4-4"></path><path d="m2 6 4-4"></path><path d="m3 10 7-7"></path><path d="m14 21 7-7"></path></svg></span><span class="t">Фитнес и спорт</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></span><span class="t">Розничные магазины</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"></path><path d="M2 8h18a2 2 0 0 1 2 2v10"></path><path d="M2 17h20"></path><path d="M6 8v9"></path></svg></span><span class="t">Отели и хостелы</span></div>
-      <div class="niche"><span class="icon-tile sm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg></span><span class="t">Услуги: юристы, ремонт</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/cafe.png" alt="Кафе и рестораны" loading="lazy"></span><span class="t">Кафе и рестораны</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/salon.png" alt="Салоны и барбершопы" loading="lazy"></span><span class="t">Салоны и барбершопы</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/med.png" alt="Стоматологии и медцентры" loading="lazy"></span><span class="t">Стоматологии и медцентры</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/auto.png" alt="Автосервисы и автомойки" loading="lazy"></span><span class="t">Автосервисы и автомойки</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/fit.png" alt="Фитнес и спорт" loading="lazy"></span><span class="t">Фитнес и спорт</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/shop.png" alt="Розничные магазины" loading="lazy"></span><span class="t">Розничные магазины</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/hotel.png" alt="Отели и хостелы" loading="lazy"></span><span class="t">Отели и хостелы</span></div>
+      <div class="niche"><span class="niche-img"><img src="/assets/niche/service.png" alt="Услуги: юристы, ремонт" loading="lazy"></span><span class="t">Услуги: юристы, ремонт</span></div>
     </div>
     <p class="niche-note reveal">Если к вам приходят и звонят клиенты из вашего города или района — <b>гео-сервисы дадут стабильный поток</b>.</p>
   </div>
@@ -772,6 +881,8 @@
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <a href="tel:+79963470065" style="color: var(--muted); text-decoration: none; font-size: 15px;">+7 (996) 347-00-65</a>
           <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 15px;">Telegram @Daniil_065</a>
+          <a href="https://wa.me/79963470065" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 15px;">WhatsApp</a>
+          <a href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 15px;">MAX</a>
           <a href="mailto:d.karatsapov@gmail.com" style="color: var(--lime); text-decoration: none; font-size: 15px;">d.karatsapov@gmail.com</a>
         </div>
       </div>
@@ -884,5 +995,72 @@
   })();
 </script>
 <script defer src="/lead-modal.js"></script>
+<script>
+(function () {
+  var root = document.getElementById('gmapMock');
+  if (!root) return;
+  var typedEl = root.querySelector('.gmap-typed');
+  var cursor = root.querySelector('.gmap-cursor');
+  var goBtn = root.querySelector('.gmap-go');
+  var youItem = root.querySelector('.gmap-item--you');
+  var youMarker = root.querySelector('.gmap-marker--you');
+  var query = root.getAttribute('data-query') || 'ваша услуга · москва';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var running = false;
+  var sleep = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+  function place(el, target) {
+    if (!el || !target) return;
+    var cr = root.getBoundingClientRect(), tr = target.getBoundingClientRect();
+    el.style.left = (tr.left - cr.left + tr.width / 2) + 'px';
+    el.style.top = (tr.top - cr.top + tr.height / 2) + 'px';
+  }
+  function renderTyped(n) {
+    var sub = query.slice(0, n);
+    var sp = sub.indexOf(' ');
+    if (sp > 0 && n > sp) {
+      typedEl.innerHTML = '<span class="hl">' + sub.slice(0, sp) + '</span>' + sub.slice(sp);
+    } else {
+      typedEl.innerHTML = '<span class="hl">' + sub + '</span>';
+    }
+  }
+
+  async function run() {
+    if (running) return; running = true;
+    while (true) {
+      root.classList.remove('results', 'picked', 'searched', 'searching');
+      typedEl.innerHTML = '';
+      cursor.style.opacity = '0';
+      if (reduce) { renderTyped(query.length); root.classList.add('searched', 'results', 'picked'); return; }
+      await sleep(700);
+      for (var i = 1; i <= query.length; i++) { renderTyped(i); await sleep(70 + Math.random() * 50); }
+      await sleep(450);
+      cursor.style.opacity = '1';
+      place(cursor, goBtn);
+      await sleep(750);
+      root.classList.add('searching');
+      await sleep(220);
+      root.classList.add('searched');
+      await sleep(250);
+      root.classList.add('results');
+      await sleep(900);
+      place(cursor, youItem);
+      await sleep(750);
+      root.classList.add('picked');
+      place(cursor, youMarker);
+      await sleep(2600);
+      cursor.style.opacity = '0';
+      await sleep(600);
+    }
+  }
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); run(); } });
+    }, { threshold: 0.3 });
+    io.observe(root);
+  } else { run(); }
+})();
+</script>
 </body>
 </html>
