@@ -311,8 +311,9 @@
 
     animate();
 
-    /* Hard safety: never let the preloader linger — force-dismiss after 5s. */
-    setTimeout(function () { dismiss(); }, 5000);
+    /* Hard safety: never let the preloader linger — force-dismiss after 9s.
+       Must exceed the natural run of both words (assemble + hold ×2). */
+    setTimeout(function () { dismiss(); }, 9000);
   }
 
   /* Run after DOM is ready */
