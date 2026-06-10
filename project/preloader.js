@@ -149,7 +149,7 @@
     var WORDS      = ['Daniil', 'Karatsapov'];
     var wordIdx    = 0;
     var frame      = 0;
-    var HOLD_FRAMES = 110;               /* frames to hold each word */
+    var HOLD_FRAMES = 150;               /* frames to hold each word */
     var phase      = 'assemble';          /* assemble → hold → scatter → next */
     var phaseFrame = 0;
     var dismissed  = false;
@@ -227,11 +227,11 @@
         if (!particles[i].isKilled) {
           var dx = particles[i].pos.x - particles[i].target.x;
           var dy = particles[i].pos.y - particles[i].target.y;
-          if (Math.sqrt(dx*dx + dy*dy) < 12) close++;
+          if (Math.sqrt(dx*dx + dy*dy) < 5) close++;
         }
       }
       var alive = particles.filter(function(p){ return !p.isKilled; }).length;
-      return alive > 0 && close / alive > 0.85;
+      return alive > 0 && close / alive > 0.95;
     }
 
     loadWord(0);
@@ -257,7 +257,7 @@
 
       phaseFrame++;
 
-      if (phase === 'assemble' && (mostAssembled() || phaseFrame > 180)) {
+      if (phase === 'assemble' && (mostAssembled() || phaseFrame > 320)) {
         phase = 'hold'; phaseFrame = 0;
       }
 
