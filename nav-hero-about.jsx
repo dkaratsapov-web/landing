@@ -278,7 +278,7 @@ function StarField() {
           x, y,
           ox: x, oy: y,              /* «дом» звезды */
           vx: 0, vy: 0,
-          r: Math.random() * 1.4 + 0.5,
+          r: Math.random() * 2.4 + 1.1,
           tw: Math.random() * Math.PI * 2,        /* фаза мерцания */
           tws: Math.random() * 0.04 + 0.01,       /* скорость мерцания */
           drift: Math.random() * 0.0006 + 0.0002, /* лёгкий дрейф «дома» */
@@ -329,12 +329,15 @@ function StarField() {
 
         /* мерцание */
         s.tw += s.tws;
-        const alpha = 0.35 + Math.sin(s.tw) * 0.25;
+        const alpha = 0.6 + Math.sin(s.tw) * 0.35;
 
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fillStyle = 'rgba(196, 245, 62, ' + alpha.toFixed(3) + ')';
+        ctx.shadowColor = 'rgba(196, 245, 62, 0.9)';
+        ctx.shadowBlur = s.r * 3;
         ctx.fill();
+        ctx.shadowBlur = 0;
       }
     }
 
@@ -366,7 +369,7 @@ function StarField() {
       for (const s of stars) {
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(196, 245, 62, 0.4)';
+        ctx.fillStyle = 'rgba(196, 245, 62, 0.7)';
         ctx.fill();
       }
     } else {
