@@ -149,7 +149,7 @@
     var WORDS      = ['Daniil', 'Karatsapov'];
     var wordIdx    = 0;
     var frame      = 0;
-    var HOLD_FRAMES = 150;               /* frames to hold each word */
+    var HOLD_FRAMES = 90;                /* frames to hold each word */
     var phase      = 'assemble';          /* assemble → hold → scatter → next */
     var phaseFrame = 0;
     var dismissed  = false;
