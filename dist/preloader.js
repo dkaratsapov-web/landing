@@ -114,7 +114,9 @@
   /* ── Main preloader ────────────────────────────────────────────── */
   function runPreloader() {
     /* skip if already seen this session */
-    if (sessionStorage.getItem('pl_done')) { dismiss(null, true); return; }
+    if (sessionStorage.getItem('pl_done')) { return; }
+
+    document.body.classList.add('preloading');
 
     /* overlay */
     var overlay = document.createElement('div');
@@ -155,6 +157,7 @@
     var phase      = 'assemble';          /* assemble → hold → scatter → next */
     var phaseFrame = 0;
     var dismissed  = false;
+    var fadingOut  = false;
     var raf;
 
     function loadWord(idx) {
@@ -208,16 +211,22 @@
         if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
         return;
       }
-      /* scatter then fade */
+      /* Reveal the page underneath: fade the black backdrop out while the
+         particles keep animating (they scatter outward and dissolve), so the
+         first screen surfaces through the dispersing particles. */
+      fadingOut = true;
+      overlay.style.background = 'transparent';
       for (var i = 0; i < particles.length; i++) particles[i].kill(canvas.width, canvas.height);
+      /* mark hero for the reveal-in transition if present */
+      document.body.classList.add('preloader-done');
       setTimeout(function () {
         overlay.style.opacity = '0';
         setTimeout(function () {
           cancelAnimationFrame(raf);
           if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
           window.removeEventListener('resize', resize);
-        }, 750);
-      }, 600);
+        }, 800);
+      }, 500);
     }
 
     overlay.addEventListener('click', dismiss);
@@ -242,8 +251,13 @@
       raf = requestAnimationFrame(animate);
       frame++;
 
-      ctx.fillStyle = 'rgba(8,8,10,0.18)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      if (fadingOut) {
+        /* clear transparently so the page shows through dispersing particles */
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else {
+        ctx.fillStyle = 'rgba(8,8,10,0.18)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
 
       for (var i = particles.length - 1; i >= 0; i--) {
         var p = particles[i];
