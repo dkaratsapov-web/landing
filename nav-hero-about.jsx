@@ -271,8 +271,9 @@ function About() {
   const chips = A.chips || [];
   const chipIcons = [IconMap, IconClock];
   return (
-    <section id="about" className="sec bg-a">
-      <div className="wrap two-col about-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'stretch' }}>
+    <section id="about" className="sec bg-a" style={{ position: 'relative', overflow: 'hidden' }}>
+      <div className="fall-wrap" aria-hidden="true"><div className="fall-streaks"></div></div>
+      <div className="wrap two-col about-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'stretch' }}>
         <div className="reveal about-col" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 40 }}>
           <div>
             <span className="eyebrow">{A.eyebrow}</span>
