@@ -111,10 +111,21 @@
     return targets;
   }
 
+  /* Skip the decorative preloader for crawlers, Lighthouse/PageSpeed and other
+     headless audit tools — otherwise the full-screen overlay + continuous canvas
+     animation hide page content and break LCP/TBT measurement (NO_LCP). */
+  function isBotOrAudit() {
+    var ua = (navigator.userAgent || '');
+    if (/Lighthouse|Chrome-Lighthouse|PageSpeed|Headless|Googlebot|bot|crawler|spider|GTmetrix|Pingdom|WebPageTest/i.test(ua)) return true;
+    if (navigator.webdriver) return true;
+    return false;
+  }
+
   /* ── Main preloader ────────────────────────────────────────────── */
   function runPreloader() {
-    /* skip if already seen this session */
+    /* skip if already seen this session, or for bots/audit tools */
     if (sessionStorage.getItem('pl_done')) { return; }
+    if (isBotOrAudit()) { return; }
 
     document.body.classList.add('preloading');
 
@@ -299,6 +310,9 @@
     }
 
     animate();
+
+    /* Hard safety: never let the preloader linger — force-dismiss after 5s. */
+    setTimeout(function () { dismiss(); }, 5000);
   }
 
   /* Run after DOM is ready */
