@@ -44,6 +44,9 @@ for (const f of JSX_FILES) results.push(await compile(f));
 // image-slot.js is already plain JS — copy verbatim.
 copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
 
+// Preloader — copy verbatim.
+copyFileSync(join(srcDir, 'preloader.js'), join(outDir, 'preloader.js'));
+
 // Root-level assets shared by static pages.
 copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
 copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
@@ -143,6 +146,7 @@ const html = `<!DOCTYPE html>
   <!-- /Yandex.Metrika counter -->
 </head>
 <body>
+  <script src="preloader.js"></script>
   <div id="root"></div>
 
   <template id="__bundler_thumbnail">
