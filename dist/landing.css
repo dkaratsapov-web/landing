@@ -968,3 +968,60 @@ body.preloading.preloader-done #root {
   transform: scale(1);
   transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.16,.7,.3,1);
 }
+
+/* ---------- Falling pattern (подложка блока «Обо мне») ---------- */
+.fall-wrap {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 40%, #000 0%, transparent 100%);
+          mask-image: radial-gradient(ellipse 80% 75% at 50% 40%, #000 0%, transparent 100%);
+}
+.fall-streaks {
+  position: absolute; inset: -10% 0;
+  opacity: 0.22;
+  background-color: transparent;
+  background-image:
+    radial-gradient(4px 100px at 0px 235px, var(--accent), transparent),
+    radial-gradient(4px 100px at 300px 235px, var(--accent), transparent),
+    radial-gradient(1.5px 1.5px at 150px 117.5px, var(--accent) 100%, transparent 150%),
+    radial-gradient(4px 100px at 0px 150px, var(--accent), transparent),
+    radial-gradient(4px 100px at 300px 150px, var(--accent), transparent),
+    radial-gradient(1.5px 1.5px at 150px 75px, var(--accent) 100%, transparent 150%),
+    radial-gradient(4px 100px at 0px 204px, var(--accent), transparent),
+    radial-gradient(4px 100px at 300px 204px, var(--accent), transparent),
+    radial-gradient(1.5px 1.5px at 150px 102px, var(--accent) 100%, transparent 150%),
+    radial-gradient(4px 100px at 0px 134px, var(--accent), transparent),
+    radial-gradient(4px 100px at 300px 134px, var(--accent), transparent),
+    radial-gradient(1.5px 1.5px at 150px 67px, var(--accent) 100%, transparent 150%),
+    radial-gradient(4px 100px at 0px 299px, var(--accent), transparent),
+    radial-gradient(4px 100px at 300px 299px, var(--accent), transparent),
+    radial-gradient(1.5px 1.5px at 150px 149.5px, var(--accent) 100%, transparent 150%);
+  background-size:
+    300px 235px, 300px 235px, 300px 235px,
+    300px 150px, 300px 150px, 300px 150px,
+    300px 204px, 300px 204px, 300px 204px,
+    300px 134px, 300px 134px, 300px 134px,
+    300px 299px, 300px 299px, 300px 299px;
+  animation: fallMove 120s linear infinite;
+}
+@keyframes fallMove {
+  from {
+    background-position:
+      0px 0px, 3px 0px, 151.5px 0px,
+      50px 0px, 53px 0px, 201.5px 0px,
+      100px 0px, 103px 0px, 251.5px 0px,
+      125px 0px, 128px 0px, 276.5px 0px,
+      175px 0px, 178px 0px, 326.5px 0px;
+  }
+  to {
+    background-position:
+      0px 6800px, 3px 6800px, 151.5px 6917px,
+      50px 5416px, 53px 5416px, 201.5px 5491px,
+      100px 5119px, 103px 5119px, 251.5px 5221px,
+      125px 8428px, 128px 8428px, 276.5px 8495px,
+      175px 13391px, 178px 13391px, 326.5px 13540px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fall-streaks { animation: none; }
+}
