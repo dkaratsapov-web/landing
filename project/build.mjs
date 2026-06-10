@@ -6,7 +6,7 @@
    runtime. Run with the deps installed in /tmp:
      NODE_PATH=/tmp/node_modules node project/build.mjs <srcDir> <outDir>
 */
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, cpSync, rmSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import babel from '@babel/core';
 import { minify } from 'terser';
@@ -162,6 +162,32 @@ ${scriptTags}
 </html>
 `;
 writeFileSync(join(outDir, 'index.html'), html, 'utf8');
+
+// Static subpages — copy each folder's index.html verbatim so the deploy is
+// complete (CI builds dist from scratch; without this the subpages vanish).
+const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
+  'geo-servisy', 'razrabotka-sajtov', 'contacts'];
+for (const p of SUBPAGES) {
+  const srcPage = join(srcDir, p, 'index.html');
+  if (existsSync(srcPage)) {
+    mkdirSync(join(outDir, p), { recursive: true });
+    copyFileSync(srcPage, join(outDir, p, 'index.html'));
+    console.log('Copied subpage', p + '/index.html');
+  }
+}
+
+// Assets (images, fonts, etc.) — copy the whole tree.
+const assetsSrc = join(srcDir, 'assets');
+if (existsSync(assetsSrc)) {
+  cpSync(assetsSrc, join(outDir, 'assets'), { recursive: true });
+  console.log('Copied assets/');
+}
+
+// Strip source files that must never ship to production.
+const STRIP = /\.(jsx|mjs)$/;
+for (const f of readdirSync(outDir)) {
+  if (STRIP.test(f)) { try { rmSync(join(outDir, f)); } catch (e) {} }
+}
 
 const totalRaw = results.reduce((a, r) => a + r.raw, 0);
 const totalMin = results.reduce((a, r) => a + r.min, 0);
