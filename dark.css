@@ -36,10 +36,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  overflow-x: hidden;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font);
@@ -418,13 +417,8 @@ h3 { font-weight: 600; }
 .feat-card .spacer { display: none; }
 
 /* ---------- Стоимость ---------- */
-/* Подсетка: tag → h3 → sub → h4 → список. Строки выравниваются между обеими
-   карточками, поэтому «Что входит в стоимость» и списки стоят на одном уровне
-   даже при разной длине заголовков и описаний. Внутренние отступы задаются
-   margin'ами элементов, row-gap у сетки = 0, чтобы не плодить лишние интервалы. */
-.cost-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; row-gap: 0;
-  grid-auto-rows: max-content; align-items: start; }
-.cost-card { padding: 38px; display: grid; grid-template-rows: subgrid; grid-row: span 5; }
+.cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.cost-card { padding: 38px; }
 .cost-card .tag { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--lime); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
 .cost-card .tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); }
 .cost-card h3 { font-size: 27px; margin-bottom: 10px; }
@@ -870,9 +864,7 @@ h3 { font-weight: 600; }
 @media (max-width: 720px) {
   .kase-filter-group { flex-direction: column; gap: 8px; }
   .kase-filter-label { padding-top: 0; }
-  .kase-filter-group { overflow: hidden; }
-  .kase-filter-group .kase-tabs { margin: 0; padding: 0 0 4px; overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; min-width: 0; width: 100%; }
-  .kase-filter-group .kase-tabs::-webkit-scrollbar { display: none; }
+  .kase-filter-group .kase-tabs { margin: 0; padding: 0 0 4px; }
 }
 
 /* ===================== ПОПАП-ФОРМА (модалка заявки) =====================
@@ -888,14 +880,14 @@ h3 { font-weight: 600; }
 .lead-modal.open { display: flex; animation: leadModalIn .25s ease; }
 @keyframes leadModalIn { from { opacity: 0; } to { opacity: 1; } }
 .lead-modal-card {
-  position: relative; width: min(480px, 100%); max-height: 90vh; max-height: 90dvh; overflow-y: auto;
+  position: relative; width: min(480px, 100%); max-height: 90vh; overflow-y: auto;
   background: var(--bg-2); border: 1px solid var(--line-2); border-radius: 20px;
   padding: 32px 30px 28px; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7);
   animation: leadCardIn .3s ease;
 }
 @keyframes leadCardIn { from { transform: translateY(14px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
 .lead-modal-close {
-  position: absolute; top: 16px; right: 16px; width: 44px; height: 44px;
+  position: absolute; top: 16px; right: 16px; width: 38px; height: 38px;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 50%; background: var(--surface-2); border: 1px solid var(--line);
   color: var(--muted); cursor: pointer; transition: color .18s ease, border-color .18s ease;
