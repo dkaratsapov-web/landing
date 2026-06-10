@@ -11,7 +11,7 @@
     this.acc = { x: 0, y: 0 };
     this.target = { x: x, y: y };
 
-    var speedBoost     = (window.innerWidth < 768) ? 1.8 : 1;
+    var speedBoost     = (window.innerWidth < 768) ? 1.8 : 1.8;
     this.maxSpeed      = (Math.random() * 5 + 3) * speedBoost;
     this.maxForce      = (Math.random() * 5 + 3) * 0.04 * speedBoost;
     this.closeEnough   = 80;
@@ -151,7 +151,7 @@
     var wordIdx    = 0;
     var frame      = 0;
     var isMobile = window.innerWidth < 768;
-    var HOLD_FRAMES = isMobile ? 45 : 90; /* frames to hold each word */
+    var HOLD_FRAMES = isMobile ? 45 : 45; /* frames to hold each word */
     var phase      = 'assemble';          /* assemble → hold → scatter → next */
     var phaseFrame = 0;
     var dismissed  = false;
@@ -274,12 +274,12 @@
         }
       }
 
-      if (phase === 'scatter' && phaseFrame > (isMobile ? 30 : 60)) {
+      if (phase === 'scatter' && phaseFrame > (isMobile ? 30 : 30)) {
         wordIdx++;
         loadWord(wordIdx);
       }
 
-      if (phase === 'done' && phaseFrame > (isMobile ? 45 : 90)) {
+      if (phase === 'done' && phaseFrame > (isMobile ? 45 : 45)) {
         dismiss();
       }
     }
