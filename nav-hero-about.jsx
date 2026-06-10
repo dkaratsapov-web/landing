@@ -246,6 +246,149 @@ function Hero({ variant, portrait, onCta }) {
   return <HeroSplit portrait={portrait} onCta={onCta} />;
 }
 
+/* ---------------- STARFIELD (подложка «Обо мне», звёзды разбегаются от курсора) -------- */
+function StarField() {
+  const canvasRef = useRefA(null);
+  const wrapRef = useRefA(null);
+
+  useEffectA(() => {
+    const canvas = canvasRef.current;
+    const wrap = wrapRef.current;
+    if (!canvas || !wrap) return;
+
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ctx = canvas.getContext('2d');
+    let DPR = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0;
+    let stars = [];
+    let raf = 0;
+    const mouse = { x: -9999, y: -9999, active: false };
+
+    const REPEL_RADIUS = 130;   /* радиус влияния курсора */
+    const REPEL_FORCE  = 0.9;   /* сила разбегания */
+
+    function makeStars() {
+      const area = W * H;
+      const count = Math.min(220, Math.max(60, Math.round(area / 9000)));
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        const x = Math.random() * W;
+        const y = Math.random() * H;
+        stars.push({
+          x, y,
+          ox: x, oy: y,              /* «дом» звезды */
+          vx: 0, vy: 0,
+          r: Math.random() * 1.4 + 0.5,
+          tw: Math.random() * Math.PI * 2,        /* фаза мерцания */
+          tws: Math.random() * 0.04 + 0.01,       /* скорость мерцания */
+          drift: Math.random() * 0.0006 + 0.0002, /* лёгкий дрейф «дома» */
+        });
+      }
+    }
+
+    function resize() {
+      const rect = wrap.getBoundingClientRect();
+      W = rect.width; H = rect.height;
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * DPR; canvas.height = H * DPR;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      makeStars();
+    }
+
+    function frame() {
+      raf = requestAnimationFrame(frame);
+      ctx.clearRect(0, 0, W, H);
+
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+
+        /* слабое колыхание дома */
+        s.ox += Math.cos(s.tw) * s.drift * W;
+        s.oy += Math.sin(s.tw) * s.drift * H;
+
+        /* разбегание от курсора */
+        if (mouse.active) {
+          const dx = s.x - mouse.x;
+          const dy = s.y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          if (dist < REPEL_RADIUS) {
+            const f = (1 - dist / REPEL_RADIUS) * REPEL_FORCE;
+            s.vx += (dx / dist) * f;
+            s.vy += (dy / dist) * f;
+          }
+        }
+
+        /* возврат к дому + трение */
+        s.vx += (s.ox - s.x) * 0.012;
+        s.vy += (s.oy - s.y) * 0.012;
+        s.vx *= 0.90;
+        s.vy *= 0.90;
+        s.x += s.vx;
+        s.y += s.vy;
+
+        /* мерцание */
+        s.tw += s.tws;
+        const alpha = 0.35 + Math.sin(s.tw) * 0.25;
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(196, 245, 62, ' + alpha.toFixed(3) + ')';
+        ctx.fill();
+      }
+    }
+
+    function setFromClient(cx, cy) {
+      const rect = wrap.getBoundingClientRect();
+      const x = cx - rect.left, y = cy - rect.top;
+      if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+        mouse.x = x; mouse.y = y; mouse.active = true;
+      } else {
+        mouse.active = false; mouse.x = -9999; mouse.y = -9999;
+      }
+    }
+    function onMove(e) { setFromClient(e.clientX, e.clientY); }
+    function onLeave() { mouse.active = false; mouse.x = -9999; mouse.y = -9999; }
+    function onTouch(e) {
+      if (e.touches && e.touches[0]) setFromClient(e.touches[0].clientX, e.touches[0].clientY);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('touchmove', onTouch, { passive: true });
+    window.addEventListener('touchend', onLeave);
+
+    if (reduce) {
+      /* статичный кадр без анимации */
+      makeStars();
+      ctx.clearRect(0, 0, W, H);
+      for (const s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(196, 245, 62, 0.4)';
+        ctx.fill();
+      }
+    } else {
+      frame();
+    }
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('touchmove', onTouch);
+      window.removeEventListener('touchend', onLeave);
+    };
+  }, []);
+
+  return (
+    <div ref={wrapRef} className="star-wrap" aria-hidden="true">
+      <canvas ref={canvasRef} className="star-canvas"></canvas>
+    </div>
+  );
+}
+
 /* ---------------- ABOUT ---------------- */
 function StatBlock({ s }) {
   const ref = useRefA(null);
@@ -272,7 +415,7 @@ function About() {
   const chipIcons = [IconMap, IconClock];
   return (
     <section id="about" className="sec bg-a" style={{ position: 'relative', overflow: 'hidden' }}>
-      <div className="fall-wrap" aria-hidden="true"><div className="fall-streaks"></div></div>
+      <StarField />
       <div className="wrap two-col about-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'stretch' }}>
         <div className="reveal about-col" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 40 }}>
           <div>
