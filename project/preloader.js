@@ -11,8 +11,9 @@
     this.acc = { x: 0, y: 0 };
     this.target = { x: x, y: y };
 
-    this.maxSpeed      = Math.random() * 5 + 3;
-    this.maxForce      = (Math.random() * 5 + 3) * 0.04;
+    var speedBoost     = (window.innerWidth < 768) ? 1.8 : 1;
+    this.maxSpeed      = (Math.random() * 5 + 3) * speedBoost;
+    this.maxForce      = (Math.random() * 5 + 3) * 0.04 * speedBoost;
     this.closeEnough   = 80;
     this.isKilled      = false;
 
@@ -149,7 +150,8 @@
     var WORDS      = ['Daniil', 'Karatsapov'];
     var wordIdx    = 0;
     var frame      = 0;
-    var HOLD_FRAMES = 90;                /* frames to hold each word */
+    var isMobile = window.innerWidth < 768;
+    var HOLD_FRAMES = isMobile ? 45 : 90; /* frames to hold each word */
     var phase      = 'assemble';          /* assemble → hold → scatter → next */
     var phaseFrame = 0;
     var dismissed  = false;
@@ -272,12 +274,12 @@
         }
       }
 
-      if (phase === 'scatter' && phaseFrame > 60) {
+      if (phase === 'scatter' && phaseFrame > (isMobile ? 30 : 60)) {
         wordIdx++;
         loadWord(wordIdx);
       }
 
-      if (phase === 'done' && phaseFrame > 90) {
+      if (phase === 'done' && phaseFrame > (isMobile ? 45 : 90)) {
         dismiss();
       }
     }
