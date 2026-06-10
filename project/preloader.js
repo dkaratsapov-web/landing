@@ -111,9 +111,8 @@
     return targets;
   }
 
-  /* Skip the decorative preloader for crawlers, Lighthouse/PageSpeed and other
-     headless audit tools — otherwise the full-screen overlay + continuous canvas
-     animation hide page content and break LCP/TBT measurement (NO_LCP). */
+  /* Skip the decorative preloader for crawlers / Lighthouse / PageSpeed so the
+     overlay never blocks LCP measurement. Real visitors see the full animation. */
   function isBotOrAudit() {
     var ua = (navigator.userAgent || '');
     if (/Lighthouse|Chrome-Lighthouse|PageSpeed|Headless|Googlebot|bot|crawler|spider|GTmetrix|Pingdom|WebPageTest/i.test(ua)) return true;
@@ -310,10 +309,6 @@
     }
 
     animate();
-
-    /* Hard safety: never let the preloader linger — force-dismiss after 9s.
-       Must exceed the natural run of both words (assemble + hold ×2). */
-    setTimeout(function () { dismiss(); }, 9000);
   }
 
   /* Run after DOM is ready */
