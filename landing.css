@@ -957,3 +957,14 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @media (prefers-reduced-motion: reduce) {
   .meet-region, .meet-route, .meet-mover, .meet-pulse { animation: none !important; }
 }
+
+/* ---------- Preloader → page reveal ---------- */
+body.preloading #root {
+  opacity: 0;
+  transform: scale(1.04);
+}
+body.preloading.preloader-done #root {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.16,.7,.3,1);
+}
