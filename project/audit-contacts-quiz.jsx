@@ -245,10 +245,10 @@ function MeetInPerson() {
         <span className="meet-tag"><IconCar size={15} />Выезд на встречу</span>
       </div>
 
-      <a className="btn btn-fill btn-lg meet-btn" href="#contact-fallback"
-        onClick={(e) => { e.preventDefault(); const el = document.querySelector('.contact-row'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }}>
+      <button type="button" className="btn btn-fill btn-lg meet-btn"
+        onClick={() => window.openLeadModal && window.openLeadModal()}>
         Назначить встречу<IconArrowRight size={18} />
-      </a>
+      </button>
     </div>);
 }
 
@@ -407,4 +407,67 @@ function Footer({ onCta }) {
 
 }
 
-Object.assign(window, { Audit, Contacts, QuizModal, QuizTeaser, Footer });
+/* ---------------- LEAD FORM MODAL (universal popup) ---------------- */
+function LeadFormModal({ open, onClose, title, source }) {
+  const toast = useToast();
+  const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.', source || 'Попап');
+  useEffectC(() => {
+    if (open) f.reset();
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+  useEffectC(() => {
+    const esc = (e) => { if (e.key === 'Escape') onClose(); };
+    if (open) window.addEventListener('keydown', esc);
+    return () => window.removeEventListener('keydown', esc);
+  }, [open, onClose]);
+  if (!open) return null;
+  return ReactDOM.createPortal(
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 200, background: 'rgba(0,0,0,0.75)',
+      backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: 20, animation: 'toastIn .25s ease' }}>
+      <div onClick={(e) => e.stopPropagation()} className="card"
+        style={{ width: 'min(480px, 100%)', maxHeight: '90vh', overflowY: 'auto',
+          background: 'var(--tile-b)', borderColor: 'var(--line-strong)', position: 'relative' }}>
+        <button onClick={onClose} style={{ position: 'absolute', top: 16, right: 16, background: 'none',
+          border: 'none', color: 'var(--txt-2)', cursor: 'pointer', padding: 6 }}>
+          <IconClose size={22} />
+        </button>
+        <div style={{ padding: '32px 32px 28px' }}>
+          {f.sent ? <SuccessPanel onReset={onClose} title="Готово!" text="Я получил заявку и перезвоню лично." /> :
+          <form onSubmit={f.submit} noValidate>
+            <span className="eyebrow" style={{ marginBottom: 10, display: 'block' }}>Обсудим проект</span>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 700, margin: '0 0 8px', color: 'var(--txt)' }}>
+              {title || 'Расскажите о задаче'}
+            </h3>
+            <p style={{ color: 'var(--txt-2)', fontSize: 15, margin: '0 0 24px', lineHeight: 1.5 }}>
+              Оставьте номер — перезвоню лично, без колл-центра и менеджеров.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <Field label="Как вас зовут" error={f.err.name}>
+                <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
+              </Field>
+              <Field label="Телефон" error={f.err.phone}>
+                <input className={'input' + (f.err.phone ? ' err' : '')} value={f.v.phone} onChange={f.set('phone')} placeholder="+7 (___) ___-__-__" inputMode="tel" autoFocus />
+              </Field>
+              <Field label="Коротко о задаче (необязательно)">
+                <textarea className="textarea" value={f.v.task} onChange={f.set('task')} placeholder="Бизнес, задача, вопрос" rows={2} />
+              </Field>
+              <label className="consent">
+                <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
+                <span>Согласен на обработку персональных данных.</span>
+              </label>
+              {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
+              <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
+                Обсудить задачу<IconArrowRight size={18} />
+              </button>
+            </div>
+          </form>}
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+Object.assign(window, { Audit, Contacts, QuizModal, QuizTeaser, Footer, LeadFormModal });

@@ -63,6 +63,7 @@ function CookieNotice() {
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const [quizOpen, setQuizOpen] = useStateApp(false);
+  const [leadOpen, setLeadOpen] = useStateApp(false);
   useReveal();
 
   // фоновые узоры можно отключить
@@ -82,31 +83,33 @@ function App() {
     r.setProperty('--accent-soft-bd', th.softBd);
   }, [t.accent]);
 
-  const scrollToContacts = () => document.querySelector('#contacts')?.scrollIntoView({ behavior: 'smooth' });
+  const openLead = () => setLeadOpen(true);
+  React.useEffect(() => { window.openLeadModal = openLead; }, []);
 
   return (
     <ToastProvider>
-      <Nav onCta={scrollToContacts} />
-      <Hero variant={t.heroVariant} portrait="assets/portrait.jpg" onCta={scrollToContacts} />
+      <Nav onCta={openLead} />
+      <Hero variant={t.heroVariant} portrait="assets/portrait.jpg" onCta={openLead} />
       <SectionWave from="#08080a" to="#0d0d0f" speed={16} />
       <About />
       <SectionWave from="#0d0d0f" to="#08080a" speed={13} />
-      <Services variant={t.servicesVariant} />
+      <Services variant={t.servicesVariant} onCta={openLead} />
       <SectionWave from="#08080a" to="#151517" speed={18} />
       <Certificates />
       <SectionWave from="#151517" to="#08080a" speed={14} />
       <Process data-comment-anchor="a0b41ccc3a-h3-158-15" />
       <SectionWave from="#08080a" to="#151517" speed={16} />
       <Quotes />
-      <Cases onCta={scrollToContacts} />
+      <Cases onCta={openLead} />
       <SectionWave from="#151517" to="#08080a" speed={13} />
       <Audit />
       <SectionWave from="#08080a" to="#151517" speed={17} />
-      <Contacts />
+      <Contacts onCta={openLead} />
       <SectionWave from="#151517" to="#000000" speed={15} />
-      <Footer onCta={scrollToContacts} />
+      <Footer onCta={openLead} />
       {t.showQuiz && <QuizFab onOpen={() => setQuizOpen(true)} />}
       <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
+      <LeadFormModal open={leadOpen} onClose={() => setLeadOpen(false)} />
       <CookieNotice />
 
       <TweaksPanel>

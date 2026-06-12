@@ -69,9 +69,9 @@ function ServiceCard({ s, open, onToggle }) {
                   <span className="svc-x-meta-label"><IconBolt size={14} />Стоимость</span>
                   <span className="svc-x-meta-val accent">{s.price}</span>
                 </div>
-                <a className="btn btn-fill btn-sm svc-x-cta" href="#contacts">
+                <button className="btn btn-fill btn-sm svc-x-cta" type="button" onClick={() => window.openLeadModal && window.openLeadModal()}>
                   Обсудить задачу<IconArrowRight size={16} />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -163,10 +163,10 @@ function ServicesFeature() {
 
 }
 
-function Services({ variant }) {
-  if (variant === 'rows') return <ServicesRows />;
-  if (variant === 'feature') return <ServicesFeature />;
-  return <ServicesGrid />;
+function Services({ variant, onCta }) {
+  if (variant === 'rows') return <ServicesRows onCta={onCta} />;
+  if (variant === 'feature') return <ServicesFeature onCta={onCta} />;
+  return <ServicesGrid onCta={onCta} />;
 }
 
 /* ---------------- CERTIFICATES ---------------- */

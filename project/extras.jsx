@@ -69,9 +69,12 @@ function Quotes() {
           <figure className="quote-item active">
             <div className="quote-mark" aria-hidden="true">“</div>
             <blockquote className="quote-text">
-              {chars.slice(0, typed).map(([ch, hl], k) =>
-                hl ? <span key={k} className="hl">{ch}</span> : <React.Fragment key={k}>{ch}</React.Fragment>
-              )}
+              {chars.map(([ch, hl], k) => {
+                const vis = k < typed;
+                return hl
+                  ? <span key={k} className="hl" style={{ opacity: vis ? 1 : 0, transition: vis ? 'opacity 0.08s' : 'none' }}>{ch}</span>
+                  : <span key={k} style={{ opacity: vis ? 1 : 0, transition: vis ? 'opacity 0.08s' : 'none' }}>{ch}</span>;
+              })}
               <span className={'type-caret' + (done ? ' done' : '')} aria-hidden="true" />
             </blockquote>
             <figcaption className="quote-author" style={{ opacity: done ? 1 : 0 }}>
