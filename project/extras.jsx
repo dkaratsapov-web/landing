@@ -71,11 +71,16 @@ function Quotes() {
             <blockquote className="quote-text">
               {chars.map(([ch, hl], k) => {
                 const vis = k < typed;
-                return hl
-                  ? <span key={k} className="hl" style={{ opacity: vis ? 1 : 0, transition: vis ? 'opacity 0.08s' : 'none' }}>{ch}</span>
-                  : <span key={k} style={{ opacity: vis ? 1 : 0, transition: vis ? 'opacity 0.08s' : 'none' }}>{ch}</span>;
+                return (
+                  <React.Fragment key={k}>
+                    {k === typed && <span className="type-caret" aria-hidden="true" />}
+                    {hl
+                      ? <span className="hl" style={{ opacity: vis ? 1 : 0, transition: vis ? 'opacity 0.08s' : 'none' }}>{ch}</span>
+                      : <span style={{ opacity: vis ? 1 : 0, transition: vis ? 'opacity 0.08s' : 'none' }}>{ch}</span>}
+                  </React.Fragment>
+                );
               })}
-              <span className={'type-caret' + (done ? ' done' : '')} aria-hidden="true" />
+              {done && <span className="type-caret done" aria-hidden="true" />}
             </blockquote>
             <figcaption className="quote-author" style={{ opacity: done ? 1 : 0 }}>
               <span className="rule" /><b>{q.author}</b><span>·&nbsp;{q.role}</span>
