@@ -166,6 +166,28 @@ function Contacts() {
               </div>
             </a>
           </div>
+          <div className="card" style={{ padding: 32, marginTop: 28 }}>
+            {f.sent ? <SuccessPanel onReset={f.reset} title="Готово!" text="Я получил заявку и перезвоню лично." /> :
+            <form onSubmit={f.submit} noValidate>
+              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 600, margin: '0 0 18px', color: 'var(--txt)' }}>{K.formTitle || 'Заказать звонок'}</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <Field label="Как вас зовут" error={f.err.name}>
+                  <input className={'input' + (f.err.name ? ' err' : '')} value={f.v.name} onChange={f.set('name')} placeholder="Имя" />
+                </Field>
+                <Field label="Телефон" error={f.err.phone}>
+                  <input className={'input' + (f.err.phone ? ' err' : '')} value={f.v.phone} onChange={f.set('phone')} placeholder="+7 (___) ___-__-__" inputMode="tel" />
+                </Field>
+                <label className="consent">
+                  <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
+                  <span>Согласен на обработку персональных данных.</span>
+                </label>
+                {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
+                <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
+                  Перезвоните мне<IconArrowRight size={18} />
+                </button>
+              </div>
+            </form>}
+          </div>
         </div>
         <MeetInPerson />
       </div>
