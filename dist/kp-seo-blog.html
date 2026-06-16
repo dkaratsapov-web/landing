@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КП — SEO-поддержка сайта под ключ · Карацапов Даниил</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #08080a;
+  --bg-card:  #111115;
+  --bg-el:    #1a1a1e;
+  --line:     rgba(255,255,255,0.08);
+  --txt:      #eaeaee;
+  --txt-2:    #c8c8d0;
+  --txt-3:    #888896;
+  --lime:     #b6f01e;
+  --lime-ink: #0c1402;
+  --lime-soft: rgba(182,240,30,0.10);
+  --lime-bd:  rgba(182,240,30,0.28);
+  --orange:   #f97316;
+  --orange-soft: rgba(249,115,22,0.12);
+  --orange-bd:   rgba(249,115,22,0.30);
+  --r: 14px;
+  --font: 'Nunito', sans-serif;
+}
+
+html { font-size: 15px; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--txt);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── layout ── */
+.page { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; }
+
+/* ── HEADER ── */
+.kp-header {
+  background: linear-gradient(160deg, #0f1a06 0%, #0a0f03 50%, #08080a 100%);
+  border-radius: 0 0 24px 24px;
+  padding: 48px 56px 44px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--lime-bd);
+  margin-bottom: 40px;
+}
+.kp-header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(182,240,30,0.12), transparent 70%);
+  pointer-events: none;
+}
+.kp-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--txt-3);
+  font-size: 13px;
+}
+.brand-logo {
+  width: 32px; height: 32px;
+  background: var(--lime-soft);
+  border: 1px solid var(--lime-bd);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+.brand-logo svg path { fill: var(--lime); }
+.brand-name { font-weight: 700; color: var(--txt); font-size: 14px; }
+.brand-site { color: var(--lime); font-size: 12px; text-decoration: none; }
+.kp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--lime-soft);
+  border: 1px solid var(--lime-bd);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--lime);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.kp-doc-label {
+  font-size: 12px;
+  color: var(--txt-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.kp-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--txt);
+  margin-bottom: 6px;
+}
+.kp-subtitle {
+  font-size: 16px;
+  color: var(--txt-3);
+  font-weight: 400;
+}
+.kp-price-anchor {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.price-big {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--lime);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.price-period {
+  font-size: 18px;
+  color: var(--txt-3);
+  font-weight: 400;
+}
+.price-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.price-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--txt-3);
+}
+.price-pill span { color: var(--lime); font-weight: 700; }
+
+/* ── SECTION ── */
+.sec { margin-bottom: 36px; }
+.sec-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 12px;
+}
+.sec-label::before {
+  content: '';
+  width: 16px; height: 2px;
+  background: var(--lime);
+  border-radius: 2px;
+}
+.sec-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--txt);
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+
+/* ── intro ── */
+.intro-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 24px 28px;
+  font-size: 15px;
+  color: var(--txt-2);
+  line-height: 1.7;
+  border-left: 3px solid var(--lime);
+}
+.intro-card strong { color: var(--txt); }
+
+/* ── what's included ── */
+.includes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.inc-item {
+  display: flex;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  transition: border-color 0.2s;
+}
+.inc-item:hover { border-color: var(--lime-bd); }
+.inc-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--lime-soft);
+  border: 1px solid var(--lime-bd);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800;
+  color: var(--lime);
+  flex-shrink: 0;
+}
+.inc-body { flex: 1; }
+.inc-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--txt);
+  margin-bottom: 4px;
+}
+.inc-text {
+  font-size: 13px;
+  color: var(--txt-3);
+  line-height: 1.55;
+}
+
+/* ── volume ── */
+.volume-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.vol-item { display: flex; flex-direction: column; gap: 4px; }
+.vol-v {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--lime);
+  line-height: 1;
+}
+.vol-l {
+  font-size: 13px;
+  color: var(--txt-3);
+  line-height: 1.4;
+}
+.vol-divider {
+  width: 1px;
+  background: var(--line);
+  grid-column: auto;
+  display: none;
+}
+.vol-note {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--txt-3);
+  line-height: 1.55;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+/* ── price table ── */
+.price-table {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--line);
+  gap: 16px;
+}
+.price-row:last-child { border-bottom: none; }
+.price-row-name { font-size: 14px; color: var(--txt-2); flex: 1; }
+.price-row-name strong { color: var(--txt); }
+.price-row-val {
+  font-size: 14px;
+  color: var(--txt-3);
+  white-space: nowrap;
+  font-weight: 600;
+}
+.price-row-val.included {
+  color: var(--lime);
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--lime-soft);
+  border: 1px solid var(--lime-bd);
+  border-radius: 100px;
+  padding: 3px 10px;
+}
+.price-row.total {
+  background: linear-gradient(90deg, rgba(182,240,30,0.06), transparent);
+  border-top: 1px solid var(--lime-bd);
+  padding: 20px 24px;
+}
+.price-row.total .price-row-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--txt);
+}
+.price-row.total .price-row-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--lime);
+}
+
+/* ── timeline ── */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.tl-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.tl-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--lime);
+  opacity: 0.3;
+}
+.tl-card:nth-child(2)::before { opacity: 0.6; }
+.tl-card:nth-child(3)::before { opacity: 1; }
+.tl-period {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+.tl-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--txt);
+  line-height: 1.3;
+}
+.tl-text {
+  font-size: 13px;
+  color: var(--txt-3);
+  line-height: 1.5;
+}
+.tl-disclaimer {
+  font-size: 12px;
+  color: var(--txt-3);
+  margin-top: 12px;
+  line-height: 1.55;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+/* ── conditions ── */
+.conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.cond-card {
+  background: var(--bg-card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.cond-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--lime-soft);
+  border: 1px solid var(--lime-bd);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--lime);
+  margin-bottom: 4px;
+}
+.cond-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--txt);
+}
+.cond-text {
+  font-size: 13px;
+  color: var(--txt-3);
+  line-height: 1.5;
+}
+
+/* ── CTA / footer ── */
+.kp-footer {
+  background: linear-gradient(160deg, #0f1a06 0%, #0a0f03 100%);
+  border: 1px solid var(--lime-bd);
+  border-radius: 20px;
+  padding: 40px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 40px;
+}
+.kp-footer::before {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 400px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(182,240,30,0.10), transparent 70%);
+  pointer-events: none;
+}
+.kp-footer-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--txt);
+  margin-bottom: 8px;
+}
+.kp-footer-sub {
+  font-size: 15px;
+  color: var(--txt-3);
+  margin-bottom: 28px;
+}
+.contact-row-grid {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.contact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--txt);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.contact-pill:hover { border-color: var(--lime-bd); background: var(--lime-soft); color: var(--lime); }
+.contact-pill.primary {
+  background: var(--lime);
+  color: var(--lime-ink);
+  border-color: transparent;
+  font-weight: 800;
+}
+.contact-pill.primary:hover { background: #c8f53e; }
+.kp-footer-note {
+  font-size: 12px;
+  color: var(--txt-3);
+}
+
+/* ── print ── */
+@media print {
+  body { background: white; color: #111; }
+  .page { max-width: 100%; padding: 0; }
+  .kp-header { background: #0f1a06; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bg-glow { display: none; }
+  a { color: inherit; }
+}
+
+/* ── mobile ── */
+@media (max-width: 640px) {
+  .kp-header { padding: 32px 24px 28px; }
+  .kp-header-top { flex-direction: column; gap: 16px; }
+  .price-big { font-size: 36px; }
+  .kp-title { font-size: 22px; }
+  .volume-card { grid-template-columns: 1fr 1fr; }
+  .timeline { grid-template-columns: 1fr; }
+  .conditions-grid { grid-template-columns: 1fr 1fr; }
+  .kp-footer { padding: 28px 20px; }
+  .contact-row-grid { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ══════════════ ШАПКА ══════════════ -->
+  <div class="kp-header">
+    <div class="kp-header-top">
+      <div class="brand-row">
+        <div class="brand-logo">
+          <svg width="18" height="18" viewBox="0 0 50 50" fill="none"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#b6f01e"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#b6f01e"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">Карацапов Даниил · Маркетинг</div>
+          <a class="brand-site" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" target="_blank">карацапов-даниил-маркетинг.рф</a>
+        </div>
+      </div>
+      <div class="kp-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        ПОД КЛЮЧ
+      </div>
+    </div>
+
+    <div class="kp-doc-label">Коммерческое предложение</div>
+    <h1 class="kp-title">SEO-поддержка сайта под ключ</h1>
+    <div class="kp-subtitle">Ведение блога и продвижение статьями</div>
+
+    <div class="kp-price-anchor">
+      <div>
+        <div class="price-big">60 000 ₽</div>
+        <div class="price-period">/ месяц</div>
+      </div>
+      <div class="price-pills">
+        <div class="price-pill"><span>8</span> статей в месяц</div>
+        <div class="price-pill"><span>6 250 ₽</span> за статью + стратегия и тех.часть в пакете</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ СУТЬ ══════════════ -->
+  <div class="sec">
+    <div class="sec-label">О чём это</div>
+    <div class="intro-card">
+      Полный цикл контент-маркетинга для сайта по проектированию коммерческой недвижимости и получению РНС: от стратегии и сбора поисковых запросов до написания <strong>экспертных статей</strong>, их оптимизации, размещения и контроля индексации. <strong>Вы не тратите своё время</strong> — направление ведётся под ключ.
+    </div>
+  </div>
+
+  <!-- ══════════════ ЧТО ВХОДИТ ══════════════ -->
+  <div class="sec">
+    <div class="sec-label">Состав пакета</div>
+    <h2 class="sec-title">Что входит</h2>
+    <div class="includes-list">
+      <div class="inc-item">
+        <div class="inc-num">1</div>
+        <div class="inc-body">
+          <div class="inc-title">Контент-стратегия и семантика</div>
+          <div class="inc-text">Проработка тем под реальные поисковые запросы вашей ниши, группировка, приоритеты. Контент-план на месяц вперёд — темы согласуются заранее.</div>
+        </div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-num">2</div>
+        <div class="inc-body">
+          <div class="inc-title">8 SEO-статей в месяц (2 в неделю)</div>
+          <div class="inc-text">Экспертные тексты по вашей тематике: РНС, ГПЗУ, проектирование, согласования, разрешительная документация. Объём 4 000–7 000 знаков. С проверкой фактуры.</div>
+        </div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-num">3</div>
+        <div class="inc-body">
+          <div class="inc-title">On-page оптимизация</div>
+          <div class="inc-text">Title, description, заголовки H1–H3, ключевые и LSI-слова, alt у изображений, перелинковка между статьями и страницами услуг сайта.</div>
+        </div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-num">4</div>
+        <div class="inc-body">
+          <div class="inc-title">Размещение под ключ</div>
+          <div class="inc-text">Публикация через CMS сайта, оформление статей, подбор и подготовка обложек и иллюстраций. Вам ничего не нужно делать руками.</div>
+        </div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-num">5</div>
+        <div class="inc-body">
+          <div class="inc-title">Техническая часть</div>
+          <div class="inc-text">Отправка в Яндекс.Вебмастер и Google Search Console, контроль индексации и корректности вёрстки. Статьи реально попадают в поиск.</div>
+        </div>
+      </div>
+      <div class="inc-item">
+        <div class="inc-num">6</div>
+        <div class="inc-body">
+          <div class="inc-title">Аналитика и отчётность</div>
+          <div class="inc-text">Ежемесячный отчёт: что опубликовано, динамика показов, позиций и трафика из поиска, план на следующий месяц.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ ОБЪЁМ ══════════════ -->
+  <div class="sec">
+    <div class="sec-label">Формат работы</div>
+    <h2 class="sec-title">Объём и условия выпуска</h2>
+    <div class="volume-card">
+      <div class="vol-item">
+        <div class="vol-v">8</div>
+        <div class="vol-l">статей в месяц (2 в неделю)</div>
+      </div>
+      <div class="vol-item">
+        <div class="vol-v">4–7к</div>
+        <div class="vol-l">знаков каждая статья</div>
+      </div>
+      <div class="vol-item">
+        <div class="vol-v">100%</div>
+        <div class="vol-l">контент — ваша собственность</div>
+      </div>
+      <div class="vol-note">
+        Темы согласуются заранее в контент-плане. Перед публикацией — ваша экспертная вычитка (по желанию, не обязательно). Все материалы и права на них остаются за вами.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ СТОИМОСТЬ ══════════════ -->
+  <div class="sec">
+    <div class="sec-label">Прозрачно</div>
+    <h2 class="sec-title">Из чего складывается стоимость</h2>
+    <div class="price-table">
+      <div class="price-row">
+        <div class="price-row-name">Контент-план и ведение семантики</div>
+        <div class="price-row-val included">входит в пакет</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-name"><strong>8 SEO-статей под ключ</strong> — текст + оптимизация + размещение</div>
+        <div class="price-row-val">8 × 6 250 ₽ = 50 000 ₽</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-name">Техническая оптимизация и контроль индексации</div>
+        <div class="price-row-val included">входит в пакет</div>
+      </div>
+      <div class="price-row">
+        <div class="price-row-name">Ежемесячная аналитика и отчёт</div>
+        <div class="price-row-val included">входит в пакет</div>
+      </div>
+      <div class="price-row total">
+        <div class="price-row-name">Итого в месяц</div>
+        <div class="price-row-val">60 000 ₽</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ ПРОГНОЗ ══════════════ -->
+  <div class="sec">
+    <div class="sec-label">Что ждать</div>
+    <h2 class="sec-title">Прогноз по месяцам</h2>
+    <div class="timeline">
+      <div class="tl-card">
+        <div class="tl-period">1–2 месяц</div>
+        <div class="tl-title">База контента и первые показы</div>
+        <div class="tl-text">Первые статьи в индексе, рост небрендовых показов в поиске. Формируется ядро контента и экспертный фон сайта.</div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-period">3–4 месяц</div>
+        <div class="tl-title">Трафик из органики</div>
+        <div class="tl-text">Статьи ранжируются по СЧ- и НЧ-запросам (РНС, ГПЗУ, проектирование). Появляется стабильный органический трафик на блог.</div>
+      </div>
+      <div class="tl-card">
+        <div class="tl-period">6+ месяцев</div>
+        <div class="tl-title">Накопительный актив</div>
+        <div class="tl-text">Пул из 30+ статей даёт постоянный приток заявок из поиска. Стоимость лида снижается: контент продолжает работать без доп. вложений.</div>
+      </div>
+    </div>
+    <div class="tl-disclaimer">
+      ⚠ Прогноз ориентировочный: динамика SEO зависит от конкуренции в нише, возраста домена и регулярности публикаций. Эффект накопительный, проявляется на дистанции от 3–6 месяцев.
+    </div>
+  </div>
+
+  <!-- ══════════════ УСЛОВИЯ ══════════════ -->
+  <div class="sec">
+    <div class="sec-label">Организационно</div>
+    <h2 class="sec-title">Условия работы</h2>
+    <div class="conditions-grid">
+      <div class="cond-card">
+        <div class="cond-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div class="cond-title">Оплата</div>
+        <div class="cond-text">Ежемесячно. Без длинных контрактов — работаем помесячно.</div>
+      </div>
+      <div class="cond-card">
+        <div class="cond-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="cond-title">Горизонт</div>
+        <div class="cond-text">Рекомендуемый для результата — от 6 месяцев. SEO работает на дистанции.</div>
+      </div>
+      <div class="cond-card">
+        <div class="cond-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="cond-title">Старт</div>
+        <div class="cond-text">3–5 рабочих дней на подготовку после согласования контент-плана.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ CTA ══════════════ -->
+  <div class="kp-footer">
+    <div class="kp-footer-title">Согласуем контент-план и запускаем</div>
+    <div class="kp-footer-sub">Напишите — обсудим темы, сроки и детали. Первый контент-план подготовлю в течение 3–5 рабочих дней.</div>
+    <div class="contact-row-grid">
+      <a class="contact-pill primary" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+        Написать в Telegram
+      </a>
+      <a class="contact-pill" href="tel:+79963470065">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.6 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+        +7 (996) 347-00-65
+      </a>
+      <a class="contact-pill" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" target="_blank" rel="noopener noreferrer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        карацапов-даниил-маркетинг.рф
+      </a>
+    </div>
+    <div class="kp-footer-note">Карацапов Даниил · Частный интернет-маркетолог · ИНН 690110648608</div>
+  </div>
+
+</div>
+
+</body>
+</html>
