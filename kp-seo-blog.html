@@ -282,14 +282,33 @@ body {
 .price-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 14px 24px;
+  align-items: flex-start;
+  padding: 16px 24px;
   border-bottom: 1px solid var(--line);
   gap: 16px;
 }
 .price-row:last-child { border-bottom: none; }
-.price-row-name { font-size: 14px; color: var(--txt-2); flex: 1; }
-.price-row-name strong { color: var(--txt); }
+.price-row-name { font-size: 14px; color: var(--txt-2); flex: 1; line-height: 1.5; }
+.price-row-name strong { color: var(--txt); display: block; margin-bottom: 6px; }
+.price-subs {
+  margin: 4px 0 0 0;
+  padding-left: 16px;
+  list-style: none;
+}
+.price-subs li {
+  position: relative;
+  font-size: 12px;
+  color: var(--txt-3);
+  line-height: 1.6;
+  padding-left: 0;
+}
+.price-subs li::before {
+  content: '—';
+  position: absolute;
+  left: -14px;
+  color: var(--lime);
+  opacity: 0.6;
+}
 .price-row-val {
   font-size: 14px;
   color: var(--txt-3);
@@ -534,7 +553,7 @@ body {
       </div>
       <div class="price-pills">
         <div class="price-pill"><span>8</span> статей в месяц</div>
-        <div class="price-pill"><span>6 250 ₽</span> за статью + стратегия и тех.часть в пакете</div>
+        <div class="price-pill">стратегия · тексты · размещение · аналитика</div>
       </div>
     </div>
   </div>
@@ -607,7 +626,7 @@ body {
         <div class="vol-l">статей в месяц (2 в неделю)</div>
       </div>
       <div class="vol-item">
-        <div class="vol-v">4–7к</div>
+        <div class="vol-v">3–5к</div>
         <div class="vol-l">знаков каждая статья</div>
       </div>
       <div class="vol-item">
@@ -626,19 +645,50 @@ body {
     <h2 class="sec-title">Из чего складывается стоимость</h2>
     <div class="price-table">
       <div class="price-row">
-        <div class="price-row-name">Контент-план и ведение семантики</div>
+        <div class="price-row-name">
+          <strong>Контент-план и семантика</strong>
+          <ul class="price-subs">
+            <li>Конкурентный анализ ниши и поисковых запросов</li>
+            <li>Сбор и кластеризация семантического ядра</li>
+            <li>Расстановка приоритетов: какие темы дадут трафик быстрее</li>
+            <li>Согласование тем с вами на каждый месяц</li>
+          </ul>
+        </div>
         <div class="price-row-val included">входит в пакет</div>
       </div>
       <div class="price-row">
-        <div class="price-row-name"><strong>8 SEO-статей под ключ</strong> — текст + оптимизация + размещение</div>
-        <div class="price-row-val">8 × 6 250 ₽ = 50 000 ₽</div>
+        <div class="price-row-name">
+          <strong>8 SEO-статей под ключ</strong>
+          <ul class="price-subs">
+            <li>Объём 3–5 000 знаков каждая (без воды)</li>
+            <li>SEO-оптимизация: заголовки H1–H3, мета-теги, alt-атрибуты</li>
+            <li>Структура и читаемость — под поведенческие факторы</li>
+            <li>Размещение на сайте клиента</li>
+            <li>Дистрибуция: публикация статей на Дзен, VC, Т-Журнал и других площадках</li>
+          </ul>
+        </div>
+        <div class="price-row-val">основная часть пакета</div>
       </div>
       <div class="price-row">
-        <div class="price-row-name">Техническая оптимизация и контроль индексации</div>
+        <div class="price-row-name">
+          <strong>Техническая оптимизация</strong>
+          <ul class="price-subs">
+            <li>Настройка и мониторинг Яндекс Вебмастер / Search Console</li>
+            <li>Контроль индексации новых страниц</li>
+            <li>Устранение технических ошибок, мешающих ранжированию</li>
+          </ul>
+        </div>
         <div class="price-row-val included">входит в пакет</div>
       </div>
       <div class="price-row">
-        <div class="price-row-name">Ежемесячная аналитика и отчёт</div>
+        <div class="price-row-name">
+          <strong>Аналитика и ежемесячный отчёт</strong>
+          <ul class="price-subs">
+            <li>Динамика позиций, показов и кликов из поиска</li>
+            <li>Поведенческие метрики блога (глубина, время, отказы)</li>
+            <li>Итоги месяца + план тем на следующий</li>
+          </ul>
+        </div>
         <div class="price-row-val included">входит в пакет</div>
       </div>
       <div class="price-row total">
