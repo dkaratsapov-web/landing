@@ -146,7 +146,7 @@ const html = `<!DOCTYPE html>
   <!-- /Yandex.Metrika counter -->
 </head>
 <body>
-  <script src="preloader.js"></script>
+  <!-- preloader disabled -->
   <div id="root"></div>
 
   <template id="__bundler_thumbnail">

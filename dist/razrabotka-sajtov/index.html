@@ -11,9 +11,10 @@
 <meta property="og:url" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/razrabotka-sajtov/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
+<meta property="og:image" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/og-cover.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/dark.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script defer src="/lead-config.js"></script>
@@ -30,6 +31,122 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/109681858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Разработка сайтов и лендингов","provider":{"@type":"Person","name":"Даниил Карацапов"},"description":"Разработка продающих лендингов и корпоративных сайтов с фокусом на конверсию","areaServed":"RU","url":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/razrabotka-sajtov/"}</script>
+<style>
+/* ── page-specific ── */
+.dev-hero-grid { display: grid; grid-template-columns: 1fr 480px; gap: 56px; align-items: center; }
+.dev-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; }
+.dev-stat { display: flex; flex-direction: column; gap: 4px; }
+.dev-stat-v { font-size: 32px; font-weight: 700; font-family: var(--font-display); color: var(--txt); line-height: 1; }
+.dev-stat-v span { color: var(--accent-bright); }
+.dev-stat-l { font-size: 13px; color: var(--txt-3); line-height: 1.4; max-width: 120px; }
+
+/* browser mockup */
+.browser-mock { background: #111115; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08); overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.7); position: relative; }
+.browser-bar { background: #1a1a1e; padding: 10px 14px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.browser-dots { display: flex; gap: 6px; }
+.browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+.browser-dot:nth-child(1) { background: #ff5f57; }
+.browser-dot:nth-child(2) { background: #febc2e; }
+.browser-dot:nth-child(3) { background: #28c840; }
+.browser-url { flex: 1; background: rgba(255,255,255,0.06); border-radius: 6px; padding: 5px 12px; font-size: 12px; color: var(--txt-3); font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.browser-screen { aspect-ratio: 16/10; overflow: hidden; position: relative; background: #0d0d0f; display: flex; align-items: center; justify-content: center; }
+.browser-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.browser-screen .browser-placeholder { display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--txt-3); font-size: 14px; }
+.browser-screen .browser-placeholder svg { opacity: 0.3; }
+
+/* work steps */
+.work-steps { display: flex; flex-direction: column; gap: 0; }
+.work-step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.work-step:last-child { border-bottom: none; }
+.work-step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--accent-bright); flex-shrink: 0; margin-top: 2px; }
+.work-step-body { flex: 1; }
+.work-step-title { font-size: 16px; font-weight: 600; color: var(--txt); margin: 0 0 6px; }
+.work-step-text { font-size: 14px; color: var(--txt-3); line-height: 1.6; margin: 0; }
+
+/* project case */
+.proj-case { border-radius: 20px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
+.proj-case-head { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 360px; }
+.proj-case-screen { overflow: hidden; position: relative; background: #0a0a0c; }
+.proj-case-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.6s ease; }
+.proj-case:hover .proj-case-screen img { transform: scale(1.03); }
+.proj-case-screen .proj-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--txt-3); font-size: 13px; padding: 24px; text-align: center; }
+.proj-placeholder-ic { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd); display: flex; align-items: center; justify-content: center; color: var(--accent-bright); }
+.proj-case-info { padding: 40px 40px 40px; display: flex; flex-direction: column; }
+.proj-case-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-bright); margin: 0 0 10px; }
+.proj-case-title { font-size: 26px; font-weight: 700; font-family: var(--font-display); color: var(--txt); margin: 0 0 12px; line-height: 1.2; }
+.proj-case-lead { font-size: 15px; color: var(--txt-3); line-height: 1.6; margin: 0 0 24px; }
+.proj-case-metrics { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.proj-case-metric { display: flex; flex-direction: column; gap: 2px; }
+.proj-case-metric-v { font-size: 22px; font-weight: 700; font-family: var(--font-display); color: var(--accent-bright); line-height: 1; }
+.proj-case-metric-l { font-size: 12px; color: var(--txt-3); line-height: 1.3; }
+.proj-case-link { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; color: var(--accent-bright); font-size: 14px; font-weight: 600; text-decoration: none; }
+.proj-case-link:hover { color: var(--txt); }
+.proj-case-body { padding: 0 40px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid var(--line); padding-top: 32px; margin-top: 0; }
+
+/* tech chips */
+.tech-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.tech-chip { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 100px; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd); font-size: 12px; font-weight: 600; color: var(--accent-bright); }
+
+/* checklist */
+.check-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.check-list li { display: flex; gap: 10px; font-size: 14px; color: var(--txt-3); line-height: 1.5; align-items: flex-start; }
+.check-list li::before { content: ''; width: 18px; height: 18px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4l2.5 2.5L9 1' stroke='%23b6f01e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: center; }
+
+/* process timeline */
+.process-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; position: relative; }
+.process-grid::before { content: ''; position: absolute; top: 20px; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, var(--accent-soft-bd), transparent); }
+.process-step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 0 8px; position: relative; }
+.process-num { width: 40px; height: 40px; border-radius: 50%; background: var(--card); border: 1px solid var(--accent-soft-bd); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--accent-bright); position: relative; z-index: 1; }
+.process-title { font-size: 13px; font-weight: 600; color: var(--txt); line-height: 1.3; }
+.process-text { font-size: 12px; color: var(--txt-3); line-height: 1.45; }
+
+/* price table */
+.price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.price-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
+.price-card.featured { border-color: var(--accent-soft-bd); background: linear-gradient(135deg, rgba(182,240,30,0.06), transparent); }
+.price-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-bright); }
+.price-title { font-size: 20px; font-weight: 700; font-family: var(--font-display); color: var(--txt); margin: 0; }
+.price-amount { font-size: 36px; font-weight: 700; font-family: var(--font-display); color: var(--txt); }
+.price-amount span { font-size: 18px; color: var(--txt-3); font-weight: 400; }
+.price-time { font-size: 13px; color: var(--txt-3); }
+
+/* faq */
+.faq-list { display: flex; flex-direction: column; gap: 0; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; cursor: pointer; gap: 16px; }
+.faq-q-text { font-size: 16px; font-weight: 600; color: var(--txt); }
+.faq-chevron { width: 20px; height: 20px; flex-shrink: 0; color: var(--txt-3); transition: transform 0.25s; }
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-a { display: none; padding: 0 0 20px; color: var(--txt-3); font-size: 15px; line-height: 1.65; }
+.faq-item.open .faq-a { display: block; }
+
+/* cta final */
+.cta-final { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 64px 56px; text-align: center; position: relative; overflow: hidden; }
+.cta-final::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 0%, rgba(182,240,30,0.08), transparent 60%); pointer-events: none; }
+.cta-final h2 { font-size: 36px; margin: 0 0 16px; }
+.cta-final p { font-size: 17px; color: var(--txt-3); max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
+
+/* responsive */
+@media (max-width: 1024px) {
+  .dev-hero-grid { grid-template-columns: 1fr; }
+  .proj-case-head { grid-template-columns: 1fr; min-height: auto; }
+  .proj-case-screen { height: 260px; }
+  .proj-case-body { grid-template-columns: 1fr; gap: 28px; }
+  .price-grid { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .process-grid::before { display: none; }
+}
+@media (max-width: 640px) {
+  .proj-case-info { padding: 28px 24px; }
+  .proj-case-body { padding: 24px; }
+  .cta-final { padding: 40px 24px; }
+  .cta-final h2 { font-size: 26px; }
+  .dev-stat-v { font-size: 26px; }
+  .process-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
 </head>
 <body>
 
@@ -68,7 +185,7 @@
       <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
       </a>
-      <span class="btn btn-lime btn-sm nav-cta" style="opacity:0.4;cursor:default;pointer-events:none;" aria-disabled="true">Обсудить задачу</span>
+      <button type="button" class="btn btn-lime btn-sm nav-cta" onclick="window.openLeadModal && window.openLeadModal()">Обсудить задачу</button>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -83,51 +200,479 @@
   <a href="/contacts/">Контакты</a>
 </div>
 
-<!-- ===================== ЗАГЛУШКА ===================== -->
+<!-- ===================== HERO ===================== -->
 <header id="top" class="hero" data-screen-label="Hero">
   <div class="wrap">
-    <div class="stub reveal">
-      <span class="stub-badge">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        Страница в разработке
-      </span>
-      <p class="eyebrow center" style="justify-content:center;">Разработка сайтов</p>
-      <h1>Разработка сайтов</h1>
-      <p class="stub-lead">Продающие лендинги и корпоративные сайты с адаптивным дизайном, интеграцией с CRM и рекламой — от структуры и прототипа до запуска. Лендинг от 60 000 ₽, срок 7–14 дней.</p>
-      <p class="stub-note">Подробная страница в разработке. Если нужен сайт или лендинг — напишите в мессенджер, расскажу детали и стоимость лично.</p>
-      <div class="stub-btns">
-        <a class="btn btn-lime" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
-          Telegram
-        </a>
-        <a class="btn btn-dark" href="https://wa.me/79963470065" target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.02h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.37c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.4-8.23 8.4Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg>
-          WhatsApp
-        </a>
-        <a class="btn btn-dark" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
-          MAX
-        </a>
+    <div class="dev-hero-grid">
+      <div>
+        <p class="eyebrow reveal">Разработка сайтов · под ключ</p>
+        <h1 class="reveal">Сайт, который <span class="accent">продаёт</span>,<br>а не просто существует</h1>
+        <p class="lead reveal">Разрабатываю продающие лендинги и корпоративные сайты с нуля: от прототипа и дизайна — до запуска и подключения рекламы. Работаю лично, без агентств и субподрядчиков.</p>
+        <div class="btn-row reveal">
+          <button type="button" class="btn btn-fill btn-lg" onclick="window.openLeadModal && window.openLeadModal()">Обсудить проект →</button>
+          <a class="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram</a>
+        </div>
+        <div class="dev-stats reveal">
+          <div class="dev-stat">
+            <div class="dev-stat-v"><span>7–14</span></div>
+            <div class="dev-stat-l">дней от брифа до готового сайта</div>
+          </div>
+          <div class="dev-stat">
+            <div class="dev-stat-v"><span>10+</span></div>
+            <div class="dev-stat-l">сайтов запущено</div>
+          </div>
+          <div class="dev-stat">
+            <div class="dev-stat-v">от <span>60k</span></div>
+            <div class="dev-stat-l">стоимость лендинга под ключ</div>
+          </div>
+        </div>
       </div>
-      <p class="stub-back"><a href="/">← На главную</a></p>
+
+      <div class="browser-mock reveal">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+          </div>
+          <div class="browser-url" id="heroBrowserUrl">карацапов-даниил-маркетинг.рф</div>
+        </div>
+        <div class="browser-screen" id="heroBrowserScreen">
+          <img src="../assets/dev/screen-landing.jpg" alt="Скриншот сайта" id="heroBrowserImg"
+            onerror="this.style.display='none';document.getElementById('heroBrowserPlaceholder').style.display='flex'">
+          <div class="browser-placeholder" id="heroBrowserPlaceholder" style="display:none">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            Скриншот сайта
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
 
+<!-- ===================== ЧТО ВХОДИТ ===================== -->
+<section class="sec" style="background:#0d0d0f;">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:640px;">
+      <span class="eyebrow">Полный цикл</span>
+      <h2>Что входит в <span class="accent">разработку</span></h2>
+      <p>Берусь за проект с нуля — и передаю вам готовый инструмент продаж, а не просто красивую картинку.</p>
+    </div>
+
+    <div class="work-steps reveal">
+      <div class="work-step">
+        <div class="work-step-num">1</div>
+        <div class="work-step-body">
+          <p class="work-step-title">Бриф и анализ конкурентов</p>
+          <p class="work-step-text">Изучаю задачу, целевую аудиторию и конкурентов. Определяем УТП, структуру и офферы, которые реально конвертируют.</p>
+        </div>
+      </div>
+      <div class="work-step">
+        <div class="work-step-num">2</div>
+        <div class="work-step-body">
+          <p class="work-step-title">Прототипирование и структура</p>
+          <p class="work-step-text">Создаю wireframe: расставляю блоки по логике пути пользователя — от первого касания до заявки. Согласовываем до дизайна.</p>
+        </div>
+      </div>
+      <div class="work-step">
+        <div class="work-step-num">3</div>
+        <div class="work-step-body">
+          <p class="work-step-title">Дизайн и верстка</p>
+          <p class="work-step-text">Адаптивный дизайн под все устройства. Верстаю на чистом HTML/CSS/JS — никаких тормозящих конструкторов. Оптимизирую скорость загрузки.</p>
+        </div>
+      </div>
+      <div class="work-step">
+        <div class="work-step-num">4</div>
+        <div class="work-step-body">
+          <p class="work-step-title">Интеграции: CRM, аналитика, формы</p>
+          <p class="work-step-text">Подключаю Яндекс Метрику, цели, форму заявки с уведомлением в Telegram, при необходимости — CRM и коллтрекинг.</p>
+        </div>
+      </div>
+      <div class="work-step">
+        <div class="work-step-num">5</div>
+        <div class="work-step-body">
+          <p class="work-step-title">SEO-базис и запуск</p>
+          <p class="work-step-text">Заполняю мета-теги, добавляю структурированные данные, настраиваю robots.txt и sitemap. Размещаю на хостинге и подключаю домен.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== КЕЙСЫ ===================== -->
+<section class="sec" style="background:#08080a;" id="cases">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:640px;">
+      <span class="eyebrow">Портфолио · 3 проекта</span>
+      <h2>Реальные <span class="accent">сайты</span> в работе</h2>
+      <p>Не шаблоны и не концепты — сайты, которые уже работают и приводят клиентов.</p>
+    </div>
+
+    <!-- ПРОЕКТ 1: Лендинг маркетолога -->
+    <div class="proj-case reveal" style="margin-bottom: 40px;">
+      <div class="proj-case-head">
+        <div class="proj-case-screen">
+          <img src="../assets/dev/screen-karatsapov.jpg" alt="карацапов-даниил-маркетинг.рф"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="proj-placeholder" style="display:none">
+            <div class="proj-placeholder-ic">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            Скриншот появится<br>после загрузки
+          </div>
+        </div>
+        <div class="proj-case-info">
+          <p class="proj-case-eyebrow">Лендинг · личный бренд</p>
+          <h3 class="proj-case-title">Сайт-портфолио маркетолога</h3>
+          <p class="proj-case-lead">Личный сайт-лендинг интернет-маркетолога с полным портфолио кейсов, квиз-воронкой для квалификации лидов, калькулятором бюджета и автоматической отправкой заявок в Telegram.</p>
+          <div class="proj-case-metrics">
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">React</div>
+              <div class="proj-case-metric-l">SPA на JSX/Babel</div>
+            </div>
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">22</div>
+              <div class="proj-case-metric-l">кейса в портфолио</div>
+            </div>
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">100</div>
+              <div class="proj-case-metric-l">PageSpeed Score</div>
+            </div>
+          </div>
+          <div class="tech-chips">
+            <span class="tech-chip">HTML/CSS/JS</span>
+            <span class="tech-chip">React JSX</span>
+            <span class="tech-chip">Babel + Terser</span>
+            <span class="tech-chip">Telegram Bot API</span>
+            <span class="tech-chip">Яндекс Метрика</span>
+          </div>
+          <a class="proj-case-link" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" target="_blank" rel="noopener noreferrer" style="margin-top: 20px;">
+            Открыть сайт
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="proj-case-body">
+        <div>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Задача и реализация</h4>
+          <ul class="check-list">
+            <li>Разработка SPA-лендинга на React JSX с компиляцией через Babel и Terser — без тяжёлых сборщиков</li>
+            <li>Система вариантов отображения секций через TweaksPanel (3 варианта Hero, 3 варианта Services)</li>
+            <li>Квиз-воронка для квалификации лидов с многошаговой формой и отправкой в Telegram Bot API</li>
+            <li>Анимированный прелоадер с разлётом частиц, typewriter-эффект для цитат</li>
+            <li>22 развёртываемых кейса с фильтрацией по нишам и услугам</li>
+            <li>Адаптивная вёрстка, SVG-волны между секциями, CSS-переменные для тем оформления</li>
+            <li>6 подстраниц-сервисов, страница контактов с картой Тверь–Москва</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Технические детали</h4>
+          <ul class="check-list">
+            <li>Сборка через кастомный build.mjs — JSX → минифицированный JS без webpack/vite</li>
+            <li>Content.json для редактирования контента без пересборки</li>
+            <li>Telegram Bot API вместо серверной части — нулевые расходы на бэкенд</li>
+            <li>IntersectionObserver для reveal-анимаций и ленивой загрузки</li>
+            <li>CSS-архитектура на custom properties — смена акцентной темы без JS</li>
+            <li>Яндекс Метрика с веб-виизором и коллбэком событий форм</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ПРОЕКТ 2: проектирование-под-ключ.рф -->
+    <div class="proj-case reveal" style="margin-bottom: 40px;">
+      <div class="proj-case-head" style="direction: rtl;">
+        <div class="proj-case-screen" style="direction: ltr;">
+          <img src="../assets/dev/screen-proektirovanie.jpg" alt="проектирование-под-ключ.рф"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="proj-placeholder" style="display:none">
+            <div class="proj-placeholder-ic">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            Скриншот появится<br>после загрузки
+          </div>
+        </div>
+        <div class="proj-case-info" style="direction: ltr;">
+          <p class="proj-case-eyebrow">Корпоративный сайт · B2B</p>
+          <h3 class="proj-case-title">Проектирование-под-ключ.рф</h3>
+          <p class="proj-case-lead">Корпоративный сайт для компании, специализирующейся на проектировании и получении разрешений на строительство коммерческой недвижимости в Москве и МО. Целевая аудитория — застройщики и инвесторы.</p>
+          <div class="proj-case-metrics">
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">B2B</div>
+              <div class="proj-case-metric-l">фокус на доверие и экспертизу</div>
+            </div>
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">+49%</div>
+              <div class="proj-case-metric-l">обращений после запуска</div>
+            </div>
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">−36%</div>
+              <div class="proj-case-metric-l">стоимость обращения CPL</div>
+            </div>
+          </div>
+          <div class="tech-chips">
+            <span class="tech-chip">HTML/CSS/JS</span>
+            <span class="tech-chip">Коллтрекинг</span>
+            <span class="tech-chip">Яндекс Метрика</span>
+            <span class="tech-chip">SEO-оптимизация</span>
+          </div>
+          <a class="proj-case-link" href="https://xn-----6kchmccvcqimtidgflhe4b3i2g.xn--p1ai/" target="_blank" rel="noopener noreferrer" style="margin-top: 20px;">
+            Открыть сайт
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="proj-case-body">
+        <div>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Задача и реализация</h4>
+          <ul class="check-list">
+            <li>Разработка корпоративного сайта с акцентом на экспертность и доверие в B2B-сегменте</li>
+            <li>Раздел «Услуги» с детальным описанием этапов работы по каждому направлению</li>
+            <li>Блок реализованных объектов — формирование портфолио для застройщиков</li>
+            <li>FAQ по разрешительной документации — снятие типичных возражений</li>
+            <li>Адаптивная верстка под все устройства с быстрой загрузкой</li>
+            <li>Подготовка посадочных страниц под рекламные кампании в Яндекс Директ</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Результат в рекламе</h4>
+          <ul class="check-list">
+            <li>Сайт запущен параллельно с контекстной рекламой в Яндекс Директ</li>
+            <li>Коллтрекинг связал звонки с конкретными рекламными кампаниями</li>
+            <li>После запуска нового сайта конверсия выросла — стоимость обращения снизилась на 36%</li>
+            <li>Новый сайт повысил доверие среди B2B-аудитории: инвесторы и застройщики</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ПРОЕКТ 3: Classtrade -->
+    <div class="proj-case reveal">
+      <div class="proj-case-head">
+        <div class="proj-case-screen">
+          <img src="../assets/dev/screen-classtrade.jpg" alt="Classtrade"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="proj-placeholder" style="display:none">
+            <div class="proj-placeholder-ic">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            Скриншот появится<br>после загрузки
+          </div>
+        </div>
+        <div class="proj-case-info">
+          <p class="proj-case-eyebrow">Лендинг · образование</p>
+          <h3 class="proj-case-title">Classtrade</h3>
+          <p class="proj-case-lead">Продающий лендинг для образовательного проекта. Акцент на конверсию: чёткий оффер, социальные доказательства, многоступенчатая форма захвата с квалификацией лидов.</p>
+          <div class="proj-case-metrics">
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">GitHub</div>
+              <div class="proj-case-metric-l">Pages хостинг</div>
+            </div>
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">Edu</div>
+              <div class="proj-case-metric-l">образовательная ниша</div>
+            </div>
+          </div>
+          <div class="tech-chips">
+            <span class="tech-chip">HTML/CSS/JS</span>
+            <span class="tech-chip">GitHub Pages</span>
+            <span class="tech-chip">Адаптивный дизайн</span>
+          </div>
+          <a class="proj-case-link" href="https://dkaratsapov-web.github.io/classtrade/" target="_blank" rel="noopener noreferrer" style="margin-top: 20px;">
+            Открыть сайт
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="proj-case-body">
+        <div>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Задача и реализация</h4>
+          <ul class="check-list">
+            <li>Разработка продающего лендинга для образовательного проекта с нуля</li>
+            <li>Проработка структуры под воронку продаж: проблема → решение → доверие → действие</li>
+            <li>Блок социальных доказательств: отзывы, кейсы учеников, гарантии</li>
+            <li>Форма захвата с квалификационными вопросами для сегментации лидов</li>
+            <li>Адаптивная верстка: корректное отображение на мобильных и планшетах</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Технические детали</h4>
+          <ul class="check-list">
+            <li>Чистый HTML/CSS/JS — быстрая загрузка без лишних зависимостей</li>
+            <li>Размещение на GitHub Pages — бесплатный хостинг с CDN</li>
+            <li>Оптимизация изображений и lazy-loading для скорости</li>
+            <li>CSS-анимации для плавного появления элементов при скролле</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ПРОЦЕСС ===================== -->
+<section class="sec" style="background:#0d0d0f;">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:600px;">
+      <span class="eyebrow">Как это работает</span>
+      <h2>Этапы <span class="accent">работы</span></h2>
+    </div>
+    <div class="process-grid reveal">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div class="process-title">Бриф</div>
+        <div class="process-text">Заполняете анкету или созваниваемся — фиксируем задачи, аудиторию и конкурентов</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div class="process-title">Прототип</div>
+        <div class="process-text">Показываю структуру блоков и тексты — правим до согласования</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div class="process-title">Дизайн</div>
+        <div class="process-text">Верстаю с нуля под вашу нишу — адаптивно, с анимациями</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div class="process-title">Интеграции</div>
+        <div class="process-text">Подключаю Метрику, формы, Telegram-уведомления, CRM</div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">05</div>
+        <div class="process-title">Запуск</div>
+        <div class="process-text">Размещаю на хостинге, подключаю домен, проверяю скорость</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== СТОИМОСТЬ ===================== -->
+<section class="sec" style="background:#08080a;" id="price">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:600px;">
+      <span class="eyebrow">Прозрачно</span>
+      <h2>Стоимость <span class="accent">разработки</span></h2>
+    </div>
+    <div class="price-grid reveal">
+      <div class="price-card">
+        <div class="price-label">Лендинг</div>
+        <div class="price-title">Продающая страница</div>
+        <div class="price-amount">от 60 000 ₽<span> / страница</span></div>
+        <div class="price-time">Срок: 7–10 рабочих дней</div>
+        <ul class="check-list" style="margin-top: 8px;">
+          <li>Прототип и структура</li>
+          <li>Адаптивный дизайн и верстка</li>
+          <li>Форма заявки + уведомления в Telegram</li>
+          <li>Яндекс Метрика + цели</li>
+          <li>SEO-базис, robots.txt, sitemap</li>
+          <li>Размещение на хостинге</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <div class="price-label">Корпоративный сайт</div>
+        <div class="price-title">Многостраничный сайт</div>
+        <div class="price-amount">от 100 000 ₽<span> / проект</span></div>
+        <div class="price-time">Срок: 14–21 рабочий день</div>
+        <ul class="check-list" style="margin-top: 8px;">
+          <li>Всё из тарифа «Лендинг»</li>
+          <li>До 8 страниц с уникальным дизайном</li>
+          <li>Квиз-воронка или калькулятор</li>
+          <li>Интеграция с CRM</li>
+          <li>Коллтрекинг и сквозная аналитика</li>
+          <li>SEO-оптимизация всех страниц</li>
+        </ul>
+      </div>
+    </div>
+    <p class="reveal" style="color:var(--txt-3); font-size:14px; margin-top:20px; text-align:center;">
+      Итоговая стоимость зависит от объёма задачи — уточню после брифа.
+    </p>
+  </div>
+</section>
+
+<!-- ===================== FAQ ===================== -->
+<section class="sec" style="background:#0d0d0f;">
+  <div class="wrap" style="max-width: 760px;">
+    <div class="section-head reveal">
+      <span class="eyebrow">Частые вопросы</span>
+      <h2>Вопросы и <span class="accent">ответы</span></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Сколько времени займёт разработка?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">Лендинг — 7–10 рабочих дней, корпоративный сайт — 14–21 день. Срок зависит от объёма правок и скорости обратной связи с вашей стороны. Я всегда называю реальные сроки, а не обещаю «за 3 дня» и потом затягиваю.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">На какой платформе делаете сайт?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">Пишу на чистом HTML/CSS/JS — никаких конструкторов (Tilda, Wix, WordPress). Это даёт максимальную скорость загрузки и полный контроль над кодом. При необходимости могу сделать на CMS — обсудим.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Смогу ли я самостоятельно редактировать сайт?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">Да. Базовые правки (тексты, цены, контакты) разберёт любой, кто умеет открыть файл в редакторе. Для регулярных обновлений могу настроить простую CMS или настраиваемый JSON-файл с контентом.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Занимаетесь ли вы хостингом и доменом?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">Да — помогаю выбрать хостинг, купить домен и настроить DNS. Если хотите, можно подключить GitHub Pages (бесплатно) или любой платный хостинг на ваш выбор.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Что если сайт нужно будет доработать после запуска?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">Мелкие правки после сдачи — бесплатно в течение 2 недель. Дальнейшие доработки оплачиваются по часовой ставке. Многие клиенты заказывают у меня и сайт, и рекламу — поэтому нахожусь в контексте и могу быстро вносить изменения.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="faq-q-text">Можно ли заказать только дизайн или только верстку?</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-a">Берусь за проекты под ключ — от прототипа до запуска. Отдельно верстать чужой макет или делать только дизайн не берусь: важно контролировать всю цепочку, чтобы отвечать за результат.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA ===================== -->
+<section class="sec" style="background:#08080a;" id="contacts">
+  <div class="wrap" style="max-width: 880px;">
+    <div class="cta-final reveal">
+      <span class="eyebrow center" style="display:block; text-align:center; margin-bottom:12px;">Давайте обсудим</span>
+      <h2>Готов обсудить <span class="accent">ваш сайт</span></h2>
+      <p>Расскажите о задаче — я оценю объём, назову стоимость и сроки. Перезвоню лично, без менеджеров и шаблонных ответов.</p>
+      <div class="btn-row" style="justify-content:center;">
+        <button type="button" class="btn btn-fill btn-lg" onclick="window.openLeadModal && window.openLeadModal()">Обсудить проект →</button>
+        <a class="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram</a>
+        <a class="btn btn-ghost btn-lg" href="tel:+79963470065">+7 (996) 347-00-65</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ПОДВАЛ ===================== -->
 <footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
     <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
       <div>
         <a class="brand" href="/" style="font-size: 20px;"><svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>Даниил Карацапов</a>
-        <p style="color: var(--muted); margin: 18px 0 0; font-size: 15px; line-height: 1.55; max-width: 300px;">
-          Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.
-        </p>
+        <p style="color: var(--muted); margin: 18px 0 0; font-size: 15px; line-height: 1.55; max-width: 300px;">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
       </div>
       <div>
         <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 16px;">Навигация</div>
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <a href="/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Главная</a>
           <a href="/kontekstnaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контекстная реклама</a>
+          <a href="/razrabotka-sajtov/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Разработка сайтов</a>
           <a href="/keysy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Кейсы</a>
           <a href="/contacts/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контакты</a>
         </div>
@@ -151,30 +696,55 @@
 </div>
 
 <script>
-  (function () {
-    const nav = document.getElementById('siteNav');
-    const burger = document.getElementById('navBurger');
-    const mobile = document.getElementById('navMobile');
-    const onScroll = () => { if (nav) nav.classList.toggle('scrolled', window.scrollY > 24); };
-    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
-    if (burger && mobile) {
-      const toggle = (open) => {
-        const o = open ?? !mobile.classList.contains('open');
-        mobile.classList.toggle('open', o);
-        burger.classList.toggle('open', o);
-      };
-      burger.addEventListener('click', () => toggle());
-      mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
-    }
-  })();
-  (function () {
-    const targets = document.querySelectorAll('.reveal');
-    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0 }) : null;
-    if (io) targets.forEach(t => io.observe(t)); else targets.forEach(t => t.classList.add('in'));
-    setTimeout(() => targets.forEach(t => t.classList.add('in')), 1500);
-  })();
+(function () {
+  const nav = document.getElementById('siteNav');
+  const burger = document.getElementById('navBurger');
+  const mobile = document.getElementById('navMobile');
+  const onScroll = () => { if (nav) nav.classList.toggle('scrolled', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  if (burger && mobile) {
+    const toggle = (open) => {
+      const o = open ?? !mobile.classList.contains('open');
+      mobile.classList.toggle('open', o);
+      burger.classList.toggle('open', o);
+    };
+    burger.addEventListener('click', () => toggle());
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+  }
+})();
+
+// reveal on scroll
+(function () {
+  const targets = document.querySelectorAll('.reveal');
+  const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.06 }) : null;
+  if (io) targets.forEach(t => io.observe(t)); else targets.forEach(t => t.classList.add('in'));
+  setTimeout(() => targets.forEach(t => t.classList.add('in')), 1500);
+})();
+
+// FAQ accordion
+(function () {
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+})();
+
+// nav dropdown
+(function () {
+  document.querySelectorAll('.nav-item-drop').forEach(drop => {
+    const trigger = drop.querySelector('.nav-drop-trigger');
+    if (!trigger) return;
+    drop.addEventListener('mouseenter', () => drop.classList.add('open'));
+    drop.addEventListener('mouseleave', () => drop.classList.remove('open'));
+    trigger.addEventListener('click', e => { e.preventDefault(); drop.classList.toggle('open'); });
+  });
+})();
 </script>
 <script defer src="/lead-modal.js"></script>
 </body>
