@@ -126,6 +126,11 @@ body {
   gap: 20px;
   flex-wrap: wrap;
 }
+.price-big-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
 .price-big {
   font-size: 48px;
   font-weight: 800;
@@ -140,8 +145,10 @@ body {
 }
 .price-pills {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 6px;
+  align-items: center;
 }
 .price-pill {
   display: inline-flex;
@@ -547,13 +554,16 @@ body {
     <div class="kp-subtitle">Ведение блога и продвижение статьями</div>
 
     <div class="kp-price-anchor">
-      <div>
+      <div class="price-big-row">
         <div class="price-big">60 000 ₽</div>
         <div class="price-period">/ месяц</div>
       </div>
       <div class="price-pills">
         <div class="price-pill"><span>8</span> статей в месяц</div>
-        <div class="price-pill">стратегия · тексты · размещение · аналитика</div>
+        <div class="price-pill"><span>3–5к</span> знаков каждая</div>
+        <div class="price-pill"><span>∞</span> правок до результата</div>
+        <div class="price-pill"><span>5</span> площадок публикации</div>
+        <div class="price-pill"><span>1</span> отчёт в месяц</div>
       </div>
     </div>
   </div>
@@ -651,7 +661,7 @@ body {
             <li>Конкурентный анализ ниши и поисковых запросов</li>
             <li>Сбор и кластеризация семантического ядра</li>
             <li>Расстановка приоритетов: какие темы дадут трафик быстрее</li>
-            <li>Согласование тем с вами на каждый месяц</li>
+            <li>Согласование тем на каждый месяц</li>
           </ul>
         </div>
         <div class="price-row-val included">входит в пакет</div>
