@@ -998,3 +998,141 @@ body.preloading.preloader-done #root {
           mask-image: radial-gradient(ellipse 85% 80% at 50% 45%, #000 0%, transparent 100%);
 }
 .star-canvas { position: absolute; inset: 0; display: block; }
+
+/* ============================================================
+   ENHANCE PACK — генеративные подложки, parallax, grain, micro.
+   Совместно с Higgsfield AI. Тёмная база #08080a + лайм #b6f01e.
+   Растровые материалы (assets/bg/*.png) подключаются как ВЕРХНИЙ
+   слой поверх кодовой подложки — если файла нет, страница просто
+   показывает кодовый градиент (никаких «битых» картинок).
+   Всё уважает prefers-reduced-motion.
+   ============================================================ */
+
+/* ---------- Индикатор прогресса прокрутки (в шапке) ---------- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 200;
+  transform: scaleX(0); transform-origin: 0 50%;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--accent) 40%, transparent),
+    var(--accent-bright) 60%, var(--accent));
+  box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 60%, transparent);
+  pointer-events: none; will-change: transform;
+}
+
+/* ---------- Процедурная film-grain текстура (без внешних файлов) ----------
+   feTurbulence → лёгкое зерно поверх всей страницы для «дорогой» глубины. */
+.grain-overlay {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- HERO: генеративная подложка с parallax ---------- */
+.hero-gen {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  will-change: transform;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 78%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0, #000 78%, transparent 100%);
+}
+/* кодовая «aurora»: лаймовая энергия справа, слева — тёмный простор под текст */
+.hero-gen::before {
+  content: ""; position: absolute; inset: -12%;
+  background:
+    radial-gradient(58% 76% at 86% 28%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 60%),
+    radial-gradient(46% 64% at 72% 84%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 66%),
+    radial-gradient(60% 80% at 104% 52%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 72%);
+  filter: blur(26px);
+  animation: heroAurora 24s ease-in-out infinite alternate;
+}
+@keyframes heroAurora {
+  0%   { transform: translate(0, 0) scale(1); opacity: .9; }
+  100% { transform: translate(-26px, 18px) scale(1.08); opacity: 1; }
+}
+/* растровый слой Higgsfield (если файл присутствует) — поверх кодового */
+.hero-gen::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("assets/bg/hero-bg.webp");
+  background-size: cover; background-position: 70% center; background-repeat: no-repeat;
+  opacity: 0.55; mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 48%, #000 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 48%, #000 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-gen::before { animation: none; }
+  [data-parallax] { transform: none !important; }
+}
+
+/* ---------- AURORA-полоса (фон блока «Аудит» и т.п.) ---------- */
+.aurora-sec { position: relative; overflow: hidden; }
+.aurora-layer {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  will-change: transform;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 50%, #000 30%, transparent 88%);
+          mask-image: radial-gradient(120% 100% at 50% 50%, #000 30%, transparent 88%);
+}
+.aurora-layer::before {
+  content: ""; position: absolute; inset: -15%;
+  background:
+    radial-gradient(40% 60% at 16% 30%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 64%),
+    radial-gradient(46% 62% at 86% 72%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 66%);
+  filter: blur(34px);
+  animation: heroAurora 30s ease-in-out infinite alternate;
+}
+.aurora-layer::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: url("assets/bg/aurora.webp");
+  background-size: cover; background-position: center;
+  opacity: 0.32; mix-blend-mode: screen;
+}
+.aurora-sec > .wrap { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .aurora-layer::before { animation: none; } }
+
+/* ---------- Портрет: акцентное свечение-рамка + tilt-блик ---------- */
+.portrait-tilt {
+  position: relative; transform-style: preserve-3d;
+  transition: transform .25s cubic-bezier(.16,.7,.3,1);
+}
+.portrait-tilt::after {            /* подвижный блик, следует за курсором (--gx/--gy) */
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  border-radius: inherit; opacity: 0; transition: opacity .3s ease;
+  background: radial-gradient(220px circle at var(--gx, 50%) var(--gy, 50%),
+    color-mix(in srgb, var(--accent-bright) 30%, transparent), transparent 60%);
+  mix-blend-mode: screen;
+}
+.portrait-tilt:hover::after { opacity: 1; }
+.portrait-glow {
+  position: absolute; inset: -2px; z-index: -1; border-radius: inherit;
+  background: linear-gradient(135deg, var(--accent), transparent 40%, transparent 60%, var(--accent-bright));
+  opacity: .35; filter: blur(14px);
+  animation: portraitGlow 8s ease-in-out infinite alternate;
+}
+@keyframes portraitGlow { 0% { opacity: .22; } 100% { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .portrait-glow { animation: none; } }
+
+/* ---------- Карточки: акцентный hover-lift со свечением ---------- */
+.card.lift { transition: border-color .25s ease, transform .3s cubic-bezier(.16,.7,.3,1), box-shadow .3s ease; }
+.card.lift:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-soft-bd);
+  box-shadow: 0 22px 50px rgba(0,0,0,0.45),
+              0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ---------- Магнитные кнопки: плавный возврат ---------- */
+[data-magnetic] { transition: transform .25s cubic-bezier(.16,.7,.3,1); }
+
+/* ---------- Stagger-reveal: дочерние элементы всплывают по очереди ---------- */
+.reveal-stagger > * {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity .6s cubic-bezier(.16,.7,.3,1), transform .6s cubic-bezier(.16,.7,.3,1);
+}
+.reveal-stagger.in > * { opacity: 1; transform: none; }
+.reveal-stagger.in > *:nth-child(1) { transition-delay: .04s; }
+.reveal-stagger.in > *:nth-child(2) { transition-delay: .12s; }
+.reveal-stagger.in > *:nth-child(3) { transition-delay: .20s; }
+.reveal-stagger.in > *:nth-child(4) { transition-delay: .28s; }
+.reveal-stagger.in > *:nth-child(5) { transition-delay: .36s; }
+.reveal-stagger.in > *:nth-child(6) { transition-delay: .44s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-stagger > * { opacity: 1; transform: none; transition: none; }
+}
