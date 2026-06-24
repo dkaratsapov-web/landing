@@ -47,6 +47,9 @@ copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
 // Preloader — copy verbatim.
 copyFileSync(join(srcDir, 'preloader.js'), join(outDir, 'preloader.js'));
 
+// Smooth-scroll engine (Lenis + GSAP ScrollTrigger glue) — verbatim.
+copyFileSync(join(srcDir, 'scroll.js'), join(outDir, 'scroll.js'));
+
 // Root-level assets shared by static pages.
 copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
 copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
@@ -86,6 +89,12 @@ const scriptTags = [
   '  <script defer src="services-process-cases.js"></script>',
   '  <script defer src="audit-contacts-quiz.js"></script>',
   '  <script defer src="app.js"></script>',
+  // Smooth-scroll стек (CDN) + наш движок. defer сохраняет порядок выполнения,
+  // поэтому Lenis/GSAP гарантированно готовы к моменту запуска scroll.js.
+  '  <script defer src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>',
+  '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>',
+  '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>',
+  '  <script defer src="scroll.js"></script>',
 ].join('\n');
 
 const html = `<!DOCTYPE html>

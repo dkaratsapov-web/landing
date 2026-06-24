@@ -31,7 +31,10 @@ function Nav({ onCta }) {
     return () => window.removeEventListener('scroll', on);
   }, []);
   const go = (e, href) => { e.preventDefault(); setOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+    const el = document.querySelector(href);
+    if (!el) return;
+    if (window.__lenis) window.__lenis.scrollTo(el, { offset: -90 });
+    else el.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
   return (
     <nav className={'nav' + (scrolled ? ' scrolled' : '')}>
       <div className="wrap">
@@ -226,7 +229,7 @@ function HeroEditorial({ portrait, onCta }) {
 
 function PortraitFrame({ portrait, short }) {
   return (
-    <div style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
+    <div data-gsap-parallax="6" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
       aspectRatio: short ? '4 / 3' : '4 / 4', background: 'var(--tile-c)',
       boxShadow: 'var(--product-shadow)', border: '1px solid var(--line)' }}>
       <img src={portrait} alt="Даниил Карацапов" loading="eager"
