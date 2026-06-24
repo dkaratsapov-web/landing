@@ -142,7 +142,6 @@ function HeroSplit({ portrait, onCta }) {
         {motionOk && (
           <video className="hero-video" autoPlay muted loop playsInline preload="metadata"
             poster="assets/bg/hero-bg.webp">
-            <source src="assets/bg/hero-loop.webm" type="video/webm" />
             <source src="assets/bg/hero-loop.mp4" type="video/mp4" />
           </video>
         )}
