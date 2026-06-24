@@ -128,26 +128,9 @@ const HERO_SUB = 'Помогаю малому и среднему бизнесу
 
 function HeroSplit({ portrait, onCta }) {
   const H = window.CONTENT.hero || {};
-  // Видео-фон только на десктопе и без prefers-reduced-motion; иначе — статичный
-  // poster-кадр (через CSS-фон обёртки). Экономит трафик/батарею на мобиле.
-  const [motionOk, setMotionOk] = useStateA(false);
-  useEffectA(() => {
-    const rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const wide = window.matchMedia && window.matchMedia('(min-width: 768px)').matches;
-    setMotionOk(!rm && wide);
-  }, []);
   return (
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
-      <div className="hero-video-wrap" data-gsap-parallax="5" aria-hidden="true">
-        {motionOk && (
-          <video className="hero-video" autoPlay muted loop playsInline preload="metadata"
-            poster="assets/bg/hero-bg.webp">
-            <source src="assets/bg/hero-loop.mp4" type="video/mp4" />
-          </video>
-        )}
-        <div className="hero-video-tint" />
-      </div>
-      <Atmos glows={[]} pattern="grid" drifting={true} />
+      <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap hero-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 56,
         alignItems: 'center', paddingTop: 32, paddingBottom: 60 }}>
         <div className="hero-copy">
