@@ -64,6 +64,19 @@ function ToastProvider({ children }) {
 }
 const useToast = () => useContext(ToastCtx);
 
+/* <Picture> — <img> с WebP-вариантом.
+   Сборка кладёт рядом с каждым JPEG/PNG одноимённый .webp (см. optimizeImages
+   в build.mjs). Браузер берёт WebP, если умеет, иначе — исходный файл. */
+function Picture({ src, className, alt, style, ...rest }) {
+  const webp = String(src || '').replace(/\.(jpe?g|png)$/i, '.webp');
+  return (
+    <picture>
+      {webp !== src && <source srcSet={webp} type="image/webp" />}
+      <img src={src} className={className} alt={alt} style={style} {...rest} />
+    </picture>
+  );
+}
+
 /* Phone mask helper */
 function maskPhone(raw) {
   let d = raw.replace(/\D/g, '');
@@ -109,6 +122,6 @@ const WHY = [
 ];
 
 Object.assign(window, {
-  useReveal, useCountUp, ToastProvider, useToast, maskPhone, phoneValid, applyContent, Lines,
+  useReveal, useCountUp, ToastProvider, useToast, maskPhone, phoneValid, applyContent, Lines, Picture,
   STATS, SERVICES, PROCESS, CASES, CASE_FILTERS, WHY, CERTS, QUIZ_STEPS,
 });

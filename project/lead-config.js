@@ -147,6 +147,31 @@ window.YM_ID = 109681858;
     wa.focus();
   };
 
+  /* ---- Заглушка вместо битой картинки ---------------------------------
+     Если файла нет, браузер рисует иконку «сломанное изображение». Ставим
+     вместо неё нейтральный плейсхолдер в цветах сайта. Событие error не
+     всплывает, поэтому слушаем на фазе перехвата. */
+  var BROKEN = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">' +
+    '<rect width="800" height="600" fill="#161618"/>' +
+    '<path d="M340 250h120v100H340z" fill="none" stroke="#3a3a3f" stroke-width="6"/>' +
+    '<circle cx="372" cy="282" r="12" fill="#3a3a3f"/>' +
+    '<path d="M340 330l40-36 34 30 26-22 20 18v30H340z" fill="#3a3a3f"/></svg>');
+
+  document.addEventListener('error', function (e) {
+    var el = e.target;
+    if (!el || el.tagName !== 'IMG' || el.dataset.fallbackApplied) return;
+    el.dataset.fallbackApplied = '1';
+    // <picture> с WebP-источником: сначала убираем <source>, иначе браузер
+    // продолжит брать отсутствующий webp вместо нашей заглушки.
+    var pic = el.parentElement;
+    if (pic && pic.tagName === 'PICTURE') {
+      var sources = pic.querySelectorAll('source');
+      for (var i = 0; i < sources.length; i++) sources[i].remove();
+    }
+    el.src = BROKEN;
+  }, true);
+
   /* ---- Автоцели на исходящие контакты --------------------------------
      Один делегированный слушатель на документ — работает и для элементов,
      отрисованных React'ом позже. */

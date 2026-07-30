@@ -72,9 +72,28 @@ copyFileSync(join(srcDir, 'scroll.js'), join(outDir, 'scroll.js'));
 // Root-level assets shared by static pages.
 copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
 copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
-copyFileSync(join(srcDir, 'dark.css'), join(outDir, 'dark.css'));
-copyFileSync(join(srcDir, 'landing.css'), join(outDir, 'landing.css'));
-copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
+// CSS минифицируем: раньше три файла (125 КБ) копировались как есть.
+// Осторожный проход — убираем комментарии и лишние пробелы, не трогая
+// содержимое строк, url() и внутренности media-запросов.
+function minifyCss(css) {
+  return css
+    .replace(/\/\*[\s\S]*?\*\//g, '')          // комментарии
+    .replace(/\s*\n\s*/g, '\n')                // отступы в начале строк
+    .replace(/\n{2,}/g, '\n')                  // пустые строки
+    .replace(/\s*([{}:;,>~+])\s*/g, '$1')      // пробелы вокруг разделителей
+    .replace(/;}/g, '}')                       // висящая точка с запятой
+    .replace(/\n/g, '')
+    .trim();
+}
+
+let cssBefore = 0, cssAfter = 0;
+for (const f of ['dark.css', 'landing.css', 'tokens.css']) {
+  const raw = readFileSync(join(srcDir, f), 'utf8');
+  const min = minifyCss(raw);
+  cssBefore += raw.length; cssAfter += min.length;
+  writeFileSync(join(outDir, f), min, 'utf8');
+}
+console.log(`Minified CSS: ${(cssBefore / 1024).toFixed(1)} KB → ${(cssAfter / 1024).toFixed(1)} KB`);
 
 // Custom domain for GitHub Pages. IDN «карацапов-даниил-маркетинг.рф» in
 // punycode (ASCII) form. Emitting it on every build keeps the domain bound.
@@ -249,7 +268,8 @@ const html = `<!DOCTYPE html>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" /></noscript>
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -353,20 +373,87 @@ writeFileSync(join(outDir, 'index.html'), html, 'utf8');
 // complete (CI builds dist from scratch; without this the subpages vanish).
 const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
   'geo-servisy', 'razrabotka-sajtov', 'contacts', 'privacy'];
+// <img src="…jpg"> в статических страницах оборачиваем в <picture> с WebP.
+// Делаем это на сборке, а не в исходниках: разметка остаётся читаемой, а
+// новые картинки подхватываются автоматически. Уже обёрнутые пропускаем.
+function withWebp(html) {
+  return html.replace(/(<picture[\s\S]*?<\/picture>)|(<img\b[^>]*?>)/g, (m, picture, img) => {
+    if (picture) return picture;
+    const src = /\bsrc="([^"]+\.(?:jpe?g|png))"/i.exec(img);
+    if (!src) return img;
+    // Не трогаем картинки, чей onerror ходит по соседям: обёртка <picture>
+    // сместила бы дерево и сломала авторскую заглушку. Обработчики вида
+    // this.remove() или поиск по id от вложенности не зависят.
+    if (/\bonerror="[^"]*(next|previous)ElementSibling/i.test(img)) return img;
+    const webp = src[1].replace(/\.(jpe?g|png)$/i, '.webp');
+    return `<picture><source srcset="${webp}" type="image/webp">${img}</picture>`;
+  });
+}
+
+let wrapped = 0;
 for (const p of SUBPAGES) {
   const srcPage = join(srcDir, p, 'index.html');
   if (existsSync(srcPage)) {
     mkdirSync(join(outDir, p), { recursive: true });
-    copyFileSync(srcPage, join(outDir, p, 'index.html'));
+    const html = readFileSync(srcPage, 'utf8');
+    const out = withWebp(html);
+    wrapped += (out.match(/<source srcset=/g) || []).length - (html.match(/<source srcset=/g) || []).length;
+    writeFileSync(join(outDir, p, 'index.html'), out, 'utf8');
     console.log('Copied subpage', p + '/index.html');
   }
 }
+writeFileSync(join(outDir, '404.html'), withWebp(readFileSync(join(srcDir, '404.html'), 'utf8')), 'utf8');
+console.log('Wrapped', wrapped, 'images in <picture> with WebP source');
 
 // Assets (images, fonts, etc.) — copy the whole tree.
 const assetsSrc = join(srcDir, 'assets');
 if (existsSync(assetsSrc)) {
   cpSync(assetsSrc, join(outDir, 'assets'), { recursive: true });
   console.log('Copied assets/');
+  await optimizeImages(join(outDir, 'assets'));
+}
+
+// ---------------------------------------------------------------------------
+// Оптимизация растровых ассетов.
+//
+// Исходники лежат в разрешении заметно больше, чем нужно на экране (карточка
+// кейса — примерно 600px по ширине), и только в JPEG. Здесь каждая картинка
+// ужимается по ширине и пережимается mozjpeg, плюс рядом кладётся .webp —
+// его подхватывает <source> в <picture>, с JPEG как запасным вариантом.
+async function optimizeImages(dir) {
+  const { default: sharp } = await import('sharp');
+  const MAX_W = 1200;
+  let before = 0, afterJpg = 0, afterWebp = 0, n = 0;
+
+  async function walk(d) {
+    for (const entry of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, entry.name);
+      if (entry.isDirectory()) { await walk(p); continue; }
+      if (!/\.(jpe?g|png)$/i.test(entry.name)) continue;
+
+      const orig = readFileSync(p);
+      before += orig.length;
+
+      const meta = await sharp(orig).metadata();
+      const resize = meta.width > MAX_W ? { width: MAX_W, withoutEnlargement: true } : null;
+
+      const pipe = () => { const s = sharp(orig); return resize ? s.resize(resize) : s; };
+      const jpg = await pipe().jpeg({ quality: 80, mozjpeg: true }).toBuffer();
+      const webp = await pipe().webp({ quality: 78 }).toBuffer();
+
+      // Пережатие оставляем только если оно действительно меньше исходника.
+      if (jpg.length < orig.length) writeFileSync(p, jpg);
+      afterJpg += Math.min(jpg.length, orig.length);
+
+      writeFileSync(p.replace(/\.(jpe?g|png)$/i, '.webp'), webp);
+      afterWebp += webp.length;
+      n++;
+    }
+  }
+  await walk(dir);
+
+  const mb = (b) => (b / 1024 / 1024).toFixed(2);
+  console.log(`Optimized ${n} images: ${mb(before)} MB → ${mb(afterJpg)} MB JPEG, ${mb(afterWebp)} MB WebP`);
 }
 
 // Strip source files that must never ship to production. `npm run build` does

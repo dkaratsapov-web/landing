@@ -200,7 +200,7 @@ function Certificates() {
           {CERTS.map((it, i) =>
           <button key={i} type="button" className="cert-card" onClick={() => setOpen(i)} aria-label={'Открыть: ' + it.title}>
               <span className="cert-thumb">
-                <img src={it.img} alt={it.title} loading="lazy" decoding="async" />
+                <Picture src={it.img} alt={it.title} loading="lazy" decoding="async" width="600" height="424" />
                 <span className="cert-zoom"><IconSearch size={20} /></span>
               </span>
               <span className="cert-meta">
@@ -271,7 +271,7 @@ function CaseCard({ c, idx }) {
   return (
     <article className="kase card" style={{ '--d': idx }}>
       <div className="kase-photo">
-        <img className="kase-img" src={c.img} alt={'Кейс: ' + c.client + ' — ' + c.field}
+        <Picture className="kase-img" src={c.img} alt={'Кейс: ' + c.client + ' — ' + c.field}
           loading="lazy" decoding="async" width="800" height="600"
           style={c.imgPos ? { objectPosition: c.imgPos } : undefined} />
         {c.badge && <span className="kase-badge">{c.badge}</span>}

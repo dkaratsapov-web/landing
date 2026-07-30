@@ -232,7 +232,8 @@ function PortraitFrame({ portrait, short }) {
     <div data-gsap-parallax="6" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
       aspectRatio: short ? '4 / 3' : '4 / 4', background: 'var(--tile-c)',
       boxShadow: 'var(--product-shadow)', border: '1px solid var(--line)' }}>
-      <img src={portrait} alt="Даниил Карацапов" loading="eager"
+      <Picture src={portrait} alt="Даниил Карацапов — интернет-маркетолог" loading="eager"
+        fetchpriority="high" width="914" height="1279"
         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 18%' }} />
       <div style={{ position: 'absolute', left: 16, bottom: 16, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <span className="chip" style={{ background: 'rgba(8,8,10,0.6)', backdropFilter: 'blur(10px)' }}>
@@ -444,7 +445,7 @@ function About() {
         </div>
         <div className="reveal about-photo-wrap" style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden',
           border: '1px solid var(--line)', background: 'var(--tile-b)', minHeight: 0 }}>
-          <img src="assets/about-work.jpg" alt="Даниил Карацапов за работой"
+          <Picture src="assets/about-work.jpg" alt="Даниил Карацапов за работой"
             loading="lazy" decoding="async" width="960" height="1280"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </div>
