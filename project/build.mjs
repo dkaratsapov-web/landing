@@ -7,6 +7,7 @@
      NODE_PATH=/tmp/node_modules node project/build.mjs <srcDir> <outDir>
 */
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, cpSync, rmSync, readdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import babel from '@babel/core';
 import { minify } from 'terser';
@@ -22,6 +23,7 @@ const JSX_FILES = [
 ];
 const REACT = 'https://unpkg.com/react@18.3.1/umd/react.production.min.js';
 const REACTDOM = 'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js';
+const SITE = 'https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai';
 
 mkdirSync(outDir, { recursive: true });
 
@@ -64,9 +66,41 @@ writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p
 // Favicon (lime paper plane) — copy verbatim.
 copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
 
-// SEO: robots.txt and sitemap.xml.
+// SEO: robots.txt, 404-страница и сгенерированный sitemap.xml.
 copyFileSync(join(srcDir, 'robots.txt'), join(outDir, 'robots.txt'));
-copyFileSync(join(srcDir, 'sitemap.xml'), join(outDir, 'sitemap.xml'));
+copyFileSync(join(srcDir, '404.html'), join(outDir, '404.html'));
+
+// sitemap.xml собирается из списка ниже, чтобы не расходиться с реальным
+// набором страниц. lastmod берём из даты последнего коммита, затронувшего
+// файл: это честнее даты сборки, которая менялась бы при каждом деплое.
+// В CI нужен полный клон (fetch-depth: 0), иначе git log видит один коммит.
+const SITEMAP = [
+  { loc: '/',                          src: 'content.json',                   changefreq: 'monthly', priority: '1.0' },
+  { loc: '/kontekstnaya-reklama/',     src: 'kontekstnaya-reklama/index.html', changefreq: 'monthly', priority: '0.9' },
+  { loc: '/targetirovannaya-reklama/', src: 'targetirovannaya-reklama/index.html', changefreq: 'monthly', priority: '0.9' },
+  { loc: '/geo-servisy/',              src: 'geo-servisy/index.html',         changefreq: 'monthly', priority: '0.9' },
+  { loc: '/razrabotka-sajtov/',        src: 'razrabotka-sajtov/index.html',   changefreq: 'monthly', priority: '0.8' },
+  { loc: '/keysy/',                    src: 'keysy/index.html',               changefreq: 'monthly', priority: '0.8' },
+  { loc: '/contacts/',                 src: 'contacts/index.html',            changefreq: 'yearly',  priority: '0.6' },
+];
+
+function lastModified(relPath) {
+  try {
+    const iso = execFileSync('git', ['log', '-1', '--format=%cI', '--', join(srcDir, relPath)],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (iso) return iso.slice(0, 10);
+  } catch (e) {}
+  return new Date().toISOString().slice(0, 10);
+}
+
+const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
+  + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+  + SITEMAP.map((u) =>
+      `  <url><loc>${SITE}${u.loc}</loc><lastmod>${lastModified(u.src)}</lastmod>`
+      + `<changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`
+    ).join('\n')
+  + '\n</urlset>\n';
+writeFileSync(join(outDir, 'sitemap.xml'), sitemap, 'utf8');
 
 // Editable content: ship content.json (fetched at runtime / edited via /admin)
 // and regenerate content-default.js (baked fallback loaded before the app).
@@ -98,22 +132,33 @@ const scriptTags = [
   '  <script defer src="scroll.js"></script>',
 ].join('\n');
 
+// SEO-тексты главной живут в content.json — один источник правды для сайта
+// и админки. Раньше title дублировался здесь и расходился с content.json.
+const CONTENT = JSON.parse(contentJson);
+const SEO = CONTENT.seo || {};
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
 const html = `<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Даниил Карацапов — маркетолог | Контекстная реклама, таргет, GEO-продвижение</title>
-  <meta name="description" content="Маркетолог с 9+ лет опыта. Контекстная реклама в Яндекс Директ, таргет VK Ads, продвижение в Яндекс Картах. Работаю лично — без посредников. Заявки с первой недели." />
-  <link rel="canonical" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
-  <meta property="og:title" content="Даниил Карацапов — маркетолог" />
-  <meta property="og:description" content="Контекстная реклама, таргет VK Ads, GEO-продвижение. 9+ лет, 70+ ниш. Без посредников, результат с первой недели." />
-  <meta property="og:url" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
+  <title>${esc(SEO.title)}</title>
+  <meta name="description" content="${esc(SEO.description)}" />
+  <link rel="canonical" href="${SITE}/" />
+  <meta property="og:title" content="${esc(SEO.ogTitle || SEO.title)}" />
+  <meta property="og:description" content="${esc(SEO.ogDescription || SEO.description)}" />
+  <meta property="og:url" content="${SITE}/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ru_RU" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Даниил Карацапов — маркетолог" />
-  <meta name="twitter:description" content="Контекстная реклама, таргет, GEO. 9+ лет, без посредников." />
+  <meta property="og:image" content="${SITE}/assets/og-cover.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${esc(SEO.ogTitle || SEO.title)}" />
+  <meta name="twitter:description" content="${esc(SEO.ogDescription || SEO.description)}" />
+  <meta name="twitter:image" content="${SITE}/assets/og-cover.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -128,17 +173,62 @@ const html = `<!DOCTYPE html>
   <script defer src="${REACTDOM}" crossorigin="anonymous"></script>
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Даниил Карацапов — маркетолог",
-    "description": "Контекстная реклама в Яндекс Директ, таргетированная реклама VK Ads, продвижение в гео-сервисах",
-    "url": "https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/",
-    "founder": {"@type": "Person", "name": "Даниил Карацапов"},
-    "areaServed": "RU",
-    "availableLanguage": "Russian",
-    "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "availableLanguage": "Russian"}
-  }
+  ${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': SITE + '/#person',
+        name: 'Даниил Карацапов',
+        jobTitle: 'Интернет-маркетолог',
+        description: 'Частный интернет-маркетолог: контекстная реклама, таргет, GEO-продвижение и разработка сайтов',
+        url: SITE + '/',
+        image: SITE + '/assets/portrait.jpg',
+        telephone: '+7-996-347-00-65',
+        email: 'd.karatsapov@gmail.com',
+        knowsLanguage: 'ru',
+        sameAs: ['https://t.me/Daniil_065'],
+        knowsAbout: ['Яндекс Директ', 'VK Ads', 'Telegram Ads', 'Яндекс Метрика',
+          'Яндекс Бизнес', '2ГИС', 'Контекстная реклама', 'Таргетированная реклама',
+          'Локальное продвижение', 'Разработка сайтов'],
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': SITE + '/#business',
+        name: 'Даниил Карацапов — маркетолог',
+        description: 'Контекстная реклама в Яндекс Директ, таргетированная реклама VK Ads, продвижение в гео-сервисах',
+        url: SITE + '/',
+        image: SITE + '/assets/og-cover.jpg',
+        founder: { '@id': SITE + '/#person' },
+        areaServed: { '@type': 'Country', name: 'Россия' },
+        availableLanguage: 'Russian',
+        priceRange: 'от 25 000 ₽',
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'customer service',
+          telephone: '+7-996-347-00-65',
+          email: 'd.karatsapov@gmail.com',
+          availableLanguage: 'Russian',
+        },
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: 'Услуги',
+          itemListElement: (CONTENT.services || []).map((s) => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: s.name, description: s.result, url: SITE + (s.url || '/') },
+          })),
+        },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': SITE + '/#website',
+        url: SITE + '/',
+        name: SEO.title,
+        inLanguage: 'ru-RU',
+        publisher: { '@id': SITE + '/#person' },
+      },
+    ],
+  }, null, 2).split('\n').join('\n  ')}
   </script>
 
   <!-- Yandex.Metrika counter -->

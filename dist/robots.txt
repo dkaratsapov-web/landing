@@ -1,5 +1,9 @@
 User-agent: *
 Allow: /
+
+# Служебные и непубличные страницы
 Disallow: /admin.html
+Disallow: /kp-seo-blog.html
+Disallow: /404.html
 
 Sitemap: https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/sitemap.xml

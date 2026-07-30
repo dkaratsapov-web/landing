@@ -18,6 +18,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Полная история нужна сборке: lastmod в sitemap.xml берётся из
+          # даты последнего коммита по каждой странице.
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
