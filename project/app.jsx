@@ -62,8 +62,18 @@ function CookieNotice() {
 
 }
 
+/* Панель Tweaks — инструмент разработки. В продакшен-сборке tweaks-panel.js
+   не подключается, поэтому здесь заглушка с тем же интерфейсом. Значение
+   `typeof` постоянно на всё время жизни страницы, так что порядок хуков
+   стабилен. */
+function useTweakState(defaults) {
+  if (typeof useTweaks === 'function') return useTweaks(defaults);
+  const [values, setValues] = useStateApp(defaults);
+  return [values, (k, v) => setValues((s) => ({ ...s, [k]: v }))];
+}
+
 function App() {
-  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  const [t, setTweak] = useTweakState(TWEAK_DEFAULTS);
   const [quizOpen, setQuizOpen] = useStateApp(false);
   const [leadOpen, setLeadOpen] = useStateApp(false);
   useReveal();
@@ -114,6 +124,7 @@ function App() {
       <LeadFormModal open={leadOpen} onClose={() => setLeadOpen(false)} />
       <CookieNotice />
 
+      {typeof TweaksPanel === 'function' &&
       <TweaksPanel>
         <TweakSection label="Главный экран (Hero)" />
         <TweakRadio label="Раскладка" value={t.heroVariant}
@@ -127,20 +138,51 @@ function App() {
         <AccentSwatches value={t.accent} onChange={(v) => setTweak('accent', v)} />
         <TweakToggle label="Фоновые узоры" value={t.atmos !== false} onChange={(v) => setTweak('atmos', v)} />
         <TweakToggle label="Блок квиза" value={t.showQuiz} onChange={(v) => setTweak('showQuiz', v)} />
-      </TweaksPanel>
+      </TweaksPanel>}
     </ToastProvider>);
 
 }
 
-/* Load editable content (content.json) before first render. content-default.js
-   already set window.CONTENT as a baked fallback, so the site renders even if
-   the fetch fails. applyContent() refreshes the data arrays from CONTENT. */
-function boot() {
+Object.assign(window, { App });
+
+/* Первый рендер идёт из разметки, которую сборка положила в #root
+   (см. пререндер в build.mjs): контент виден до загрузки React и попадает
+   в индекс поисковиков. Клиент подхватывает готовый DOM через hydrateRoot.
+
+   content.json больше не блокирует первый рендер — content-default.js уже
+   вшит в бандл и совпадает с тем, из чего собрана разметка. Обновление
+   контента подтягивается фоном и применяется, только если оно реально
+   отличается: иначе перерисовывать нечего. */
+let __reactRoot = null;
+
+function boot(root) {
   if (typeof applyContent === 'function') applyContent();
-  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  if (root.firstElementChild) {
+    __reactRoot = ReactDOM.hydrateRoot(root, <App />);
+  } else {
+    __reactRoot = ReactDOM.createRoot(root);
+    __reactRoot.render(<App />);
+  }
 }
-fetch('content.json', { cache: 'no-store' })
-  .then((r) => (r.ok ? r.json() : null))
-  .then((c) => { if (c && typeof c === 'object') window.CONTENT = c; })
-  .catch(() => {})
-  .finally(boot);
+
+/* Во время пререндера настоящего #root нет — сборка вычисляет модуль только
+   ради window.App, монтировать нечего. В браузере элемент есть всегда. */
+const __rootEl = typeof document !== 'undefined' ? document.getElementById('root') : null;
+
+if (__rootEl) {
+  boot(__rootEl);
+
+  // Фоновая проверка content.json — на случай, если контент правили после
+  // сборки. Перерисовываем только при реальном отличии, через тот же root.
+  const baked = JSON.stringify(window.CONTENT);
+  fetch('content.json', { cache: 'no-store' })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((c) => {
+      if (!c || typeof c !== 'object') return;
+      if (JSON.stringify(c) === baked) return;
+      window.CONTENT = c;
+      if (typeof applyContent === 'function') applyContent();
+      if (__reactRoot) __reactRoot.render(<App />);
+    })
+    .catch(() => {});
+}

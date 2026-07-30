@@ -484,4 +484,7 @@ function LeadFormModal({ open, onClose, title, source }) {
   );
 }
 
-Object.assign(window, { Audit, Contacts, QuizModal, QuizTeaser, Footer, LeadFormModal });
+/* QuizTeaser здесь был, но такой компонент никогда не существовал — строка
+   бросала ReferenceError, из-за чего весь Object.assign не выполнялся.
+   Сайт работал только потому, что function-декларации и так глобальные. */
+Object.assign(window, { Audit, Contacts, QuizModal, QuizFab, Footer, LeadFormModal });

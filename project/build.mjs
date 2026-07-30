@@ -8,6 +8,7 @@
 */
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, cpSync, rmSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { createContext, runInContext } from 'node:vm';
 import { join } from 'node:path';
 import babel from '@babel/core';
 import { minify } from 'terser';
@@ -16,13 +17,19 @@ const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
 
 // Order matters: later files reference top-level const/function from earlier ones.
+// Порядок важен: поздние файлы ссылаются на top-level const/function ранних.
+// tweaks-panel.jsx — панель разработчика, в продакшен-бандл не подключается
+// (app.jsx рендерит её только когда TweaksPanel определён).
 const JSX_FILES = [
-  'tweaks-panel.jsx', 'icons.jsx', 'shared.jsx', 'extras.jsx',
+  'icons.jsx', 'shared.jsx', 'extras.jsx',
   'nav-hero-about.jsx', 'services-process-cases.jsx',
   'audit-contacts-quiz.jsx', 'app.jsx',
 ];
-const REACT = 'https://unpkg.com/react@18.3.1/umd/react.production.min.js';
-const REACTDOM = 'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js';
+// React самохостится из node_modules: unpkg — не продакшен-CDN, без SLA,
+// и при его недоступности страница раньше оставалась белой. Локальные файлы
+// убирают внешний коннект и делают загрузку предсказуемой.
+const REACT = 'assets/vendor/react.production.min.js';
+const REACTDOM = 'assets/vendor/react-dom.production.min.js';
 const SITE = 'https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai';
 
 mkdirSync(outDir, { recursive: true });
@@ -43,11 +50,21 @@ async function compile(file) {
 const results = [];
 for (const f of JSX_FILES) results.push(await compile(f));
 
-// image-slot.js is already plain JS — copy verbatim.
-copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
+// Вендоры: React и ReactDOM кладём рядом с сайтом вместо загрузки с unpkg.
+mkdirSync(join(outDir, 'assets', 'vendor'), { recursive: true });
+for (const [from, to] of [
+  ['react/umd/react.production.min.js', 'react.production.min.js'],
+  ['react-dom/umd/react-dom.production.min.js', 'react-dom.production.min.js'],
+]) {
+  copyFileSync(join('node_modules', from), join(outDir, 'assets', 'vendor', to));
+}
 
-// Preloader — copy verbatim.
-copyFileSync(join(srcDir, 'preloader.js'), join(outDir, 'preloader.js'));
+// image-slot.js — dev-скаффолд для drag-and-drop картинок, вне своего
+// runtime он read-only. В прод не идёт: 31 КБ и лишний 404-запрос за
+// .image-slots.state.json на каждой загрузке. Фото отдаются обычным <img>.
+
+// preloader.js не подключён ни на одной странице (index.html помечен
+// «preloader disabled») — в сборку не кладём.
 
 // Smooth-scroll engine (Lenis + GSAP ScrollTrigger glue) — verbatim.
 copyFileSync(join(srcDir, 'scroll.js'), join(outDir, 'scroll.js'));
@@ -112,11 +129,87 @@ writeFileSync(join(outDir, 'content-default.js'),
 // admin.html намеренно НЕ публикуется: авторизация в нём чисто клиентская,
 // а записи на сервер нет — редактировать content.json безопаснее локально.
 
+// SEO-тексты главной живут в content.json — один источник правды для сайта
+// и админки. Раньше title дублировался здесь и расходился с content.json.
+const CONTENT = JSON.parse(contentJson);
+const SEO = CONTENT.seo || {};
+const esc = (s) => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+// ---------------------------------------------------------------------------
+// Пререндер главной.
+//
+// Раньше index.html отдавал пустой <div id="root">: весь контент появлялся
+// только после загрузки React с unpkg. Яндекс рендерит JS хуже Google, а при
+// недоступности CDN страница оставалась белой. Теперь разметка собирается
+// здесь через react-dom/server и попадает в HTML, а браузер её гидратирует.
+//
+// Компоненты обращаются к браузерным API только внутри useEffect (на сервере
+// эффекты не выполняются), поэтому хватает минимальных заглушек для
+// вычисления модулей на верхнем уровне.
+async function prerender() {
+  const React = (await import('react')).default;
+  const { renderToString } = await import('react-dom/server');
+
+  const noop = () => {};
+  const stubEl = { style: {}, classList: { add: noop, remove: noop, toggle: noop }, focus: noop };
+  const win = {
+    CONTENT,
+    React,
+    ReactDOM: { createPortal: (children) => children },
+    location: { pathname: '/', href: SITE + '/', search: '' },
+    navigator: { userAgent: 'prerender' },
+    innerWidth: 1440, innerHeight: 900, devicePixelRatio: 1,
+    addEventListener: noop, removeEventListener: noop, dispatchEvent: noop,
+    matchMedia: () => ({ matches: false, addEventListener: noop, removeEventListener: noop }),
+    requestAnimationFrame: noop, cancelAnimationFrame: noop,
+    setTimeout: noop, clearTimeout: noop, setInterval: noop, clearInterval: noop,
+    localStorage: { getItem: () => null, setItem: noop, removeItem: noop },
+    parent: { postMessage: noop },
+    getComputedStyle: () => ({ getPropertyValue: () => '' }),
+  };
+  win.window = win;
+  win.self = win;
+  win.globalThis = win;
+
+  const doc = {
+    documentElement: { ...stubEl, style: { setProperty: noop } },
+    body: { ...stubEl, appendChild: noop, insertAdjacentHTML: noop },
+    querySelector: () => null,
+    querySelectorAll: () => [],
+    getElementById: () => null,
+    createElement: () => ({ ...stubEl, appendChild: noop, setAttribute: noop }),
+    addEventListener: noop, removeEventListener: noop,
+    readyState: 'complete',
+  };
+  win.document = doc;
+
+  // Классовые <script> делят одну глобальную область — воспроизводим её,
+  // выполняя собранные файлы по очереди в общем контексте.
+  const ctx = createContext(win);
+  for (const f of JSX_FILES) {
+    const js = readFileSync(join(outDir, f.replace(/\.jsx$/, '.js')), 'utf8');
+    runInContext(js, ctx, { filename: f });
+  }
+
+  if (typeof win.applyContent === 'function') win.applyContent();
+  if (typeof win.App !== 'function') throw new Error('prerender: window.App не определён');
+  return renderToString(React.createElement(win.App));
+}
+
+let prerendered = '';
+try {
+  prerendered = await prerender();
+  console.log('Prerendered index.html:', (prerendered.length / 1024).toFixed(1), 'KB разметки');
+} catch (e) {
+  // Пустой #root — прежнее поведение: страница отрисуется на клиенте.
+  // Сборку не валим, но и молчать нельзя.
+  console.error('WARNING: пререндер не удался, index.html останется пустым:', e.message);
+}
+
 const scriptTags = [
   '  <script defer src="lead-config.js"></script>',
   '  <script defer src="content-default.js"></script>',
-  '  <script defer src="tweaks-panel.js"></script>',
-  '  <script defer src="image-slot.js"></script>',
   '  <script defer src="icons.js"></script>',
   '  <script defer src="shared.js"></script>',
   '  <script defer src="extras.js"></script>',
@@ -132,12 +225,6 @@ const scriptTags = [
   '  <script defer src="scroll.js"></script>',
 ].join('\n');
 
-// SEO-тексты главной живут в content.json — один источник правды для сайта
-// и админки. Раньше title дублировался здесь и расходился с content.json.
-const CONTENT = JSON.parse(contentJson);
-const SEO = CONTENT.seo || {};
-const esc = (s) => String(s == null ? '' : s)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const html = `<!DOCTYPE html>
 <html lang="ru">
@@ -162,15 +249,14 @@ const html = `<!DOCTYPE html>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://unpkg.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preload" as="image" href="assets/portrait.jpg" fetchpriority="high" />
 
-  <script defer src="${REACT}" crossorigin="anonymous"></script>
-  <script defer src="${REACTDOM}" crossorigin="anonymous"></script>
+  <script defer src="${REACT}"></script>
+  <script defer src="${REACTDOM}"></script>
 
   <script type="application/ld+json">
   ${JSON.stringify({
@@ -247,7 +333,7 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
   <!-- preloader disabled -->
-  <div id="root"></div>
+  <div id="root">${prerendered}</div>
 
   <template id="__bundler_thumbnail">
     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -286,7 +372,7 @@ if (existsSync(assetsSrc)) {
 // Strip source files that must never ship to production. `npm run build` does
 // `cp -r project dist` first, so admin.html lands here unless we remove it.
 const STRIP = /\.(jsx|mjs)$/;
-const STRIP_NAMES = new Set(['admin.html']);
+const STRIP_NAMES = new Set(['admin.html', 'image-slot.js', 'preloader.js', 'tweaks-panel.js']);
 for (const f of readdirSync(outDir)) {
   if (STRIP.test(f) || STRIP_NAMES.has(f)) { try { rmSync(join(outDir, f)); } catch (e) {} }
 }

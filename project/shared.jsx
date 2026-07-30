@@ -15,11 +15,15 @@ function useReveal() {
   });
 }
 
-/* Count-up for stat numbers when revealed */
+/* Count-up for stat numbers when revealed.
+   Стартуем с целевого значения, а не с нуля: так пререндер кладёт в HTML
+   настоящие цифры («9+», а не «0+»), и гидратация совпадает. Анимация всё
+   равно отыгрывает от нуля — эффект сбрасывает значение при активации. */
 function useCountUp(target, active, dur = 1400) {
-  const [val, setVal] = useState(0);
+  const [val, setVal] = useState(target);
   useEffect(() => {
     if (!active) return;
+    setVal(0);
     let raf, start;
     const step = (t) => {
       if (!start) start = t;
