@@ -53,7 +53,9 @@ function CookieNotice() {
   return (
     <div className="cookie-bar" role="dialog" aria-live="polite">
       <p className="cookie-text">
-        Мы используем файлы cookie, чтобы улучшить работу сайта. К сайту подключён сервис веб-аналитики Яндекс.Метрика, использующий cookie-файлы.
+        Мы используем файлы cookie, чтобы улучшить работу сайта. К сайту подключён сервис веб-аналитики
+        Яндекс.Метрика, использующий cookie-файлы. Подробнее — в{' '}
+        <a href="/privacy/" style={{ color: 'var(--accent-bright)' }}>политике конфиденциальности</a>.
       </p>
       <button type="button" className="cookie-ok" onClick={accept}>ок</button>
     </div>);

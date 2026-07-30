@@ -176,7 +176,7 @@ writeFileSync(join(outDir, 'index.html'), html, 'utf8');
 // Static subpages — copy each folder's index.html verbatim so the deploy is
 // complete (CI builds dist from scratch; without this the subpages vanish).
 const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
-  'geo-servisy', 'razrabotka-sajtov', 'contacts'];
+  'geo-servisy', 'razrabotka-sajtov', 'contacts', 'privacy'];
 for (const p of SUBPAGES) {
   const srcPage = join(srcDir, p, 'index.html');
   if (existsSync(srcPage)) {
