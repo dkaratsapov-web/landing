@@ -12,30 +12,44 @@ function Field({ label, children, error }) {
 
 }
 
-/* Отправка заявки в Telegram (Bot API). Фолбэк — WhatsApp с готовым текстом. */
-async function sendLeadTelegram(text) {
-  const TOKEN = window.LEAD_TG_TOKEN || '';
-  const CHAT = window.LEAD_TG_CHAT || '';
-  if (TOKEN && CHAT) {
-    try {
-      // GET без кастомных заголовков — не вызывает CORS-preflight
-      const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage'
-        + '?chat_id=' + encodeURIComponent(CHAT)
-        + '&disable_web_page_preview=true'
-        + '&text=' + encodeURIComponent(text);
-      const r = await fetch(url);
-      const j = await r.json().catch(() => ({}));
-      if (r.ok && j && j.ok) return true;
-    } catch (e) {}
-  }
-  try { window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank'); } catch (e) {}
-  return true;
+/* Скрытое поле-приманка для ботов. Настоящий посетитель его не видит и не
+   заполняет; заполненное поле воркер отбрасывает молча. */
+function Honeypot({ value, onChange }) {
+  return (
+    <div aria-hidden="true" style={{ position: 'absolute', left: -9999, width: 1, height: 1, overflow: 'hidden' }}>
+      <label htmlFor="hp-company">Компания</label>
+      <input id="hp-company" name="company" type="text" tabIndex={-1} autoComplete="off"
+        value={value} onChange={onChange} />
+    </div>);
+
+}
+
+/* Панель «не доставлено» — показывается вместо ложного «Заявка отправлена!»,
+   если эндпойнт не настроен или недоступен. */
+function FallbackPanel({ data }) {
+  const wa = window.leadWhatsAppUrl ? window.leadWhatsAppUrl(data) : '#';
+  return (
+    <div style={{ textAlign: 'center', padding: '20px 8px' }}>
+      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 12px', color: 'var(--txt)' }}>
+        Не получилось отправить
+      </h3>
+      <p className="muted" style={{ fontSize: 15, lineHeight: 1.5, margin: '0 auto 22px', maxWidth: 340 }}>
+        Форма не смогла достучаться до сервера. Чтобы заявка не потерялась, отправьте её напрямую — текст уже подставлен.
+      </p>
+      <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+        <a className="btn btn-fill" href={wa} target="_blank" rel="noopener noreferrer">Отправить в WhatsApp</a>
+        <a className="btn btn-ghost" href={window.LEAD_TG_URL || 'https://t.me/Daniil_065'} target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+      </div>
+    </div>);
+
 }
 
 function useLeadForm(toast, successMsg, source) {
-  const [v, setV] = useStateC({ name: '', phone: '', task: '', consent: true });
+  const [v, setV] = useStateC({ name: '', phone: '', task: '', consent: true, company: '' });
   const [err, setErr] = useStateC({});
   const [sent, setSent] = useStateC(false);
+  const [failed, setFailed] = useStateC(false);
+  const [busy, setBusy] = useStateC(false);
   const set = (k) => (e) => {
     const val = k === 'consent' ? e.target.checked : k === 'phone' ? maskPhone(e.target.value) : e.target.value;
     setV((s) => ({ ...s, [k]: val }));
@@ -49,16 +63,25 @@ function useLeadForm(toast, successMsg, source) {
     if (!v.consent) next.consent = 'Нужно согласие на обработку данных';
     setErr(next);
     if (Object.keys(next).length) return;
-    const text =
-      '🟢 Новая заявка с сайта' + (source ? ' (' + source + ')' : '') + '\n' +
-      '👤 Имя: ' + (v.name || '—') + '\n' +
-      '📞 Телефон: ' + (v.phone || '—') +
-      (v.task ? '\n💬 Задача: ' + v.task : '');
-    sendLeadTelegram(text).catch(() => {});
-    setSent(true);
-    toast(successMsg);
+
+    const data = { name: v.name, phone: v.phone, comment: v.task, company: v.company, source };
+    setBusy(true);
+    window.sendLead(data).then((res) => {
+      setBusy(false);
+      if (res && res.ok) {
+        setSent(true);
+        toast(successMsg);
+      } else {
+        setFailed(true);
+        window.ymGoal('lead_form_fallback', { reason: (res && res.reason) || 'unknown', source });
+      }
+    });
   };
-  return { v, err, sent, set, submit, reset: () => {setV({ name: '', phone: '', task: '', consent: true });setSent(false);} };
+  return {
+    v, err, sent, failed, busy, set, submit,
+    data: { name: v.name, phone: v.phone, comment: v.task, source },
+    reset: () => { setV({ name: '', phone: '', task: '', consent: true, company: '' }); setSent(false); setFailed(false); },
+  };
 }
 
 /* ---------------- AUDIT (lead magnet) ---------------- */
@@ -85,6 +108,7 @@ function Audit() {
         </div>
         <div className="reveal card" style={{ padding: 36 }}>
           {f.sent ? <SuccessPanel onReset={f.reset} title="Готово!" text="Я получил заявку и перезвоню лично, чтобы договориться об аудите." /> :
+          f.failed ? <FallbackPanel data={f.data} /> :
 
           <form onSubmit={f.submit} noValidate>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 22px', color: 'var(--txt)' }}>Заказать аудит</h3>
@@ -100,11 +124,13 @@ function Audit() {
                 </Field>
                 <label className="consent">
                   <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
-                  <span>Согласен на обработку персональных данных в соответствии с политикой конфиденциальности.</span>
+                  <span>Согласен на обработку персональных данных в соответствии с{' '}
+                    <a href="/privacy/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</span>
                 </label>
                 {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
-                <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
-                  Заказать аудит<IconArrowRight size={18} />
+                <Honeypot value={f.v.company} onChange={f.set('company')} />
+                <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }} disabled={f.busy}>
+                  {f.busy ? 'Отправляю…' : 'Заказать аудит'}<IconArrowRight size={18} />
                 </button>
               </div>
             </form>
@@ -252,8 +278,12 @@ function QuizModal({ open, onClose }) {
   if (!open) return null;
   const total = QUIZ_STEPS.length;
   const pick = (opt) => {
+    if (step === 0) window.ymGoal('quiz_start');
     setAns((a) => ({ ...a, [step]: opt }));
-    setTimeout(() => {if (step < total - 1) setStep(step + 1);else setPhase('form');}, 180);
+    setTimeout(() => {
+      if (step < total - 1) setStep(step + 1);
+      else { window.ymGoal('quiz_complete'); setPhase('form'); }
+    }, 180);
   };
   const pct = phase === 'form' ? 100 : Math.round(step / total * 100);
 
@@ -307,7 +337,7 @@ function QuizModal({ open, onClose }) {
             </div>
           }
 
-          {phase === 'form' && !f.sent &&
+          {phase === 'form' && !f.sent && !f.failed &&
           <form onSubmit={f.submit} noValidate style={{ animation: 'toastIn .3s ease' }}>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 8px', color: 'var(--txt)' }}>Куда отправить решение?</h3>
               <p className="muted" style={{ margin: '0 0 24px', fontSize: 16 }}>Подберу под ваши ответы и закреплю скидку 10%. Перезвоню лично.</p>
@@ -320,16 +350,19 @@ function QuizModal({ open, onClose }) {
                 </Field>
                 <label className="consent">
                   <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
-                  <span>Согласен на обработку персональных данных.</span>
+                  <span>Согласен на обработку персональных данных в соответствии с{' '}
+                    <a href="/privacy/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</span>
                 </label>
                 {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
-                <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
-                  Получить решение со скидкой<IconArrowRight size={18} />
+                <Honeypot value={f.v.company} onChange={f.set('company')} />
+                <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }} disabled={f.busy}>
+                  {f.busy ? 'Отправляю…' : 'Получить решение со скидкой'}<IconArrowRight size={18} />
                 </button>
               </div>
             </form>
           }
 
+          {f.failed && <FallbackPanel data={f.data} />}
           {f.sent && <SuccessPanel title="Скидка 10% — ваша" text="Я получил ответы и закрепил скидку. Перезвоню лично с готовым решением." />}
         </div>
       </div>
@@ -378,7 +411,7 @@ function Footer({ onCta }) {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, paddingTop: 28 }}>
           <span className="fine">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-          <a href="#" className="fine" style={{ color: 'var(--txt-3)', textDecoration: 'none' }} onClick={(e) => e.preventDefault()}>Политика конфиденциальности</a>
+          <a href="/privacy/" className="fine" style={{ color: 'var(--txt-3)', textDecoration: 'none' }}>Политика конфиденциальности</a>
         </div>
       </div>
     </footer>);
@@ -390,7 +423,7 @@ function LeadFormModal({ open, onClose, title, source }) {
   const toast = useToast();
   const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.', source || 'Попап');
   useEffectC(() => {
-    if (open) f.reset();
+    if (open) { f.reset(); window.ymGoal('lead_modal_open', { source: source || 'Попап' }); }
     document.body.style.overflow = open ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [open]);
@@ -413,6 +446,7 @@ function LeadFormModal({ open, onClose, title, source }) {
         </button>
         <div style={{ padding: '32px 32px 28px' }}>
           {f.sent ? <SuccessPanel onReset={onClose} title="Готово!" text="Я получил заявку и перезвоню лично." /> :
+          f.failed ? <FallbackPanel data={f.data} /> :
           <form onSubmit={f.submit} noValidate>
             <span className="eyebrow" style={{ marginBottom: 10, display: 'block' }}>Обсудим проект</span>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 700, margin: '0 0 8px', color: 'var(--txt)' }}>
@@ -433,11 +467,13 @@ function LeadFormModal({ open, onClose, title, source }) {
               </Field>
               <label className="consent">
                 <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
-                <span>Согласен на обработку персональных данных.</span>
+                <span>Согласен на обработку персональных данных в соответствии с{' '}
+                  <a href="/privacy/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</span>
               </label>
               {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
-              <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
-                Обсудить задачу<IconArrowRight size={18} />
+              <Honeypot value={f.v.company} onChange={f.set('company')} />
+              <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }} disabled={f.busy}>
+                {f.busy ? 'Отправляю…' : 'Обсудить задачу'}<IconArrowRight size={18} />
               </button>
             </div>
           </form>}

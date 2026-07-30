@@ -756,6 +756,10 @@
           <label for="lf-comment">Комментарий <span class="opt">(необязательно)</span></label>
           <textarea id="lf-comment" name="comment" rows="2" placeholder="Коротко о задаче или вопросе"></textarea>
         </div>
+        <div class="field lf-hp" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+          <label for="lf-company">Компания</label>
+          <input type="text" id="lf-company" name="company" tabindex="-1" autocomplete="off">
+        </div>
         <button type="submit" class="btn btn-lime" style="width:100%; justify-content:center;">Оставить заявку <span class="arr">→</span></button>
         <p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
       </form>
@@ -805,7 +809,7 @@
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
       <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <a href="/privacy/" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>
@@ -952,7 +956,7 @@
           '<button type="button" class="quiz-opt" data-m="Звонок">Звонок</button>' +
         '</div></div>' +
         '<div class="quiz-field"><label for="qContact">Контакт (телефон или ник)</label><input id="qContact" type="text" placeholder="+7 (___) ___-__-__ или @username"></div>' +
-        '<label class="quiz-consent"><input type="checkbox" id="qConsent"> Согласен с обработкой персональных данных и <a href="#">политикой конфиденциальности</a></label>';
+        '<label class="quiz-consent"><input type="checkbox" id="qConsent"> Согласен с обработкой персональных данных и <a href="/privacy/" target="_blank" rel="noopener">политикой конфиденциальности</a></label>';
       document.querySelectorAll('#qMethod .quiz-opt').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('#qMethod .quiz-opt').forEach(b => b.classList.remove('on'));
@@ -977,24 +981,17 @@
     }
 
     async function sendQuizLead(name, contact, method) {
-      const TOKEN = window.LEAD_TG_TOKEN || '';
-      const CHAT = window.LEAD_TG_CHAT || '';
       const summary = Object.values(answers).flat().join(', ');
-      const text =
-        '🟢 Новая заявка (Квиз · Таргетированная реклама)\n' +
-        '👤 Имя: ' + (name || '—') + '\n' +
-        '📲 Способ: ' + (method || '—') + '\n' +
-        '📞 Контакт: ' + (contact || '—') + '\n' +
-        '📋 Ответы: ' + summary;
-      if (TOKEN && CHAT) {
-        try {
-          const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + encodeURIComponent(CHAT) + '&disable_web_page_preview=true&text=' + encodeURIComponent(text);
-          const r = await fetch(url);
-          const j = await r.json().catch(() => ({}));
-          if (r.ok && j.ok) return;
-        } catch (e) {}
-      }
-      window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
+      const data = {
+        name: name,
+        phone: contact,
+        comment: 'Способ связи: ' + (method || '—') + '; ответы: ' + summary,
+        source: 'Квиз · Таргетированная реклама',
+      };
+      const res = await window.sendLead(data);
+      if (res && res.ok) return true;
+      showLeadFallback(data);
+      return false;
     }
 
     nextBtn.addEventListener('click', async () => {
@@ -1009,8 +1006,11 @@
         return;
       }
       nextBtn.disabled = true;
-      await sendQuizLead(name.trim(), contact.trim(), method);
-      renderDone();
+      // «Спасибо» показываем только если заявка реально доставлена; иначе
+      // sendQuizLead уже открыл панель с прямыми каналами связи.
+      const delivered = await sendQuizLead(name.trim(), contact.trim(), method);
+      if (delivered) renderDone();
+      else nextBtn.disabled = false;
     });
 
     backBtn.addEventListener('click', () => {
@@ -1041,36 +1041,28 @@
       if (phoneField.classList.contains('invalid')) phoneField.classList.remove('invalid');
     });
     const val = (id) => (document.getElementById(id) || {}).value || '';
-    async function sendLead(text) {
-      const TOKEN = window.LEAD_TG_TOKEN || '';
-      const CHAT = window.LEAD_TG_CHAT || '';
-      if (TOKEN && CHAT) {
-        try {
-          const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + encodeURIComponent(CHAT) + '&disable_web_page_preview=true&text=' + encodeURIComponent(text);
-          const r = await fetch(url);
-          const j = await r.json().catch(() => ({}));
-          if (r.ok && j && j.ok) return true;
-        } catch (e) {}
-      }
-      window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-      return true;
-    }
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const digits = (phone.value.match(/\d/g) || []).length;
       if (digits < 11) { phoneField.classList.add('invalid'); phone.focus(); return; }
       phoneField.classList.remove('invalid');
-      const text =
-        '🟢 Новая заявка с сайта (Таргетированная реклама)\n' +
-        '👤 Имя: ' + (val('lf-name') || '—') + '\n' +
-        '📞 Телефон: ' + phone.value + '\n' +
-        '💬 Комментарий: ' + (val('lf-comment') || '—');
+      const data = {
+        name: val('lf-name'),
+        phone: phone.value,
+        comment: val('lf-comment'),
+        company: val('lf-company'),
+        source: 'Таргетированная реклама',
+      };
       const btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
-      await sendLead(text);
+      const res = await window.sendLead(data);
       form.hidden = true;
-      const ok = document.getElementById('leadOk');
-      if (ok) ok.hidden = false;
+      if (res && res.ok) {
+        const ok = document.getElementById('leadOk');
+        if (ok) ok.hidden = false;
+      } else {
+        showLeadFallback(data);
+      }
     });
   })();
 </script>

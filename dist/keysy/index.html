@@ -180,6 +180,10 @@
             <label for="lf-comment">Комментарий <span class="opt">(необязательно)</span></label>
             <textarea id="lf-comment" name="comment" rows="3" placeholder="Коротко о задаче или вопросе"></textarea>
           </div>
+          <div class="field lf-hp" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden">
+            <label for="lf-company">Компания</label>
+            <input type="text" id="lf-company" name="company" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" class="btn btn-lime" style="width:100%; justify-content:center;">Разобрать мой проект <span class="arr">→</span></button>
           <p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
         </form>
@@ -918,7 +922,7 @@
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
       <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <a href="/privacy/" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>
@@ -1057,45 +1061,30 @@
 
     const val = (id) => (document.getElementById(id) || {}).value || '';
 
-    async function sendLead(text) {
-      const TOKEN = window.LEAD_TG_TOKEN || '';
-      const CHAT = window.LEAD_TG_CHAT || '';
-      if (TOKEN && CHAT) {
-        try {
-          // GET без кастомных заголовков — не вызывает CORS-preflight
-          const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage'
-            + '?chat_id=' + encodeURIComponent(CHAT)
-            + '&disable_web_page_preview=true'
-            + '&text=' + encodeURIComponent(text);
-          const r = await fetch(url);
-          const j = await r.json().catch(() => ({}));
-          if (r.ok && j && j.ok) return true;
-        } catch (e) {}
-      }
-      // Фолбэк: открыть WhatsApp с уже заполненным текстом заявки
-      window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-      return true;
-    }
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const digits = (phone.value.match(/\d/g) || []).length;
       if (digits < 11) { phoneField.classList.add('invalid'); phone.focus(); return; }
       phoneField.classList.remove('invalid');
       const access = (form.querySelector('input[name="access"]:checked') || {}).value || '—';
-      const text =
-        '🟢 Новая заявка с сайта (Кейсы)\n' +
-        '👤 Имя: ' + (val('lf-name') || '—') + '\n' +
-        '📞 Телефон: ' + phone.value + '\n' +
-        '🌐 Сайт: ' + (val('lf-site') || '—') + '\n' +
-        '🔑 Доступ в кабинет: ' + access + '\n' +
-        '💬 Комментарий: ' + (val('lf-comment') || '—');
+      const data = {
+        name: val('lf-name'),
+        phone: phone.value,
+        site: val('lf-site'),
+        comment: 'Доступ в кабинет: ' + access + '; ' + (val('lf-comment') || '—'),
+        company: val('lf-company'),
+        source: 'Кейсы',
+      };
       const btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
-      await sendLead(text);
+      const res = await window.sendLead(data);
       form.hidden = true;
-      const ok = document.getElementById('leadOk');
-      if (ok) ok.hidden = false;
+      if (res && res.ok) {
+        const ok = document.getElementById('leadOk');
+        if (ok) ok.hidden = false;
+      } else {
+        showLeadFallback(data);
+      }
     });
   })();
 </script>

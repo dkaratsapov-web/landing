@@ -75,7 +75,8 @@ writeFileSync(join(outDir, 'content.json'), contentJson, 'utf8');
 writeFileSync(join(outDir, 'content-default.js'),
   '/* AUTO-GENERATED from content.json — fallback loaded before the app. */\nwindow.CONTENT = '
   + contentJson + ';\n', 'utf8');
-copyFileSync(join(srcDir, 'admin.html'), join(outDir, 'admin.html'));
+// admin.html намеренно НЕ публикуется: авторизация в нём чисто клиентская,
+// а записи на сервер нет — редактировать content.json безопаснее локально.
 
 const scriptTags = [
   '  <script defer src="lead-config.js"></script>',
@@ -192,10 +193,12 @@ if (existsSync(assetsSrc)) {
   console.log('Copied assets/');
 }
 
-// Strip source files that must never ship to production.
+// Strip source files that must never ship to production. `npm run build` does
+// `cp -r project dist` first, so admin.html lands here unless we remove it.
 const STRIP = /\.(jsx|mjs)$/;
+const STRIP_NAMES = new Set(['admin.html']);
 for (const f of readdirSync(outDir)) {
-  if (STRIP.test(f)) { try { rmSync(join(outDir, f)); } catch (e) {} }
+  if (STRIP.test(f) || STRIP_NAMES.has(f)) { try { rmSync(join(outDir, f)); } catch (e) {} }
 }
 
 const totalRaw = results.reduce((a, r) => a + r.raw, 0);

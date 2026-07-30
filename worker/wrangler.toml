@@ -1,0 +1,15 @@
+name = "lead-proxy"
+main = "lead-proxy.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+# Домены, с которых принимаются заявки. Origin — со схемой, без слеша на конце.
+ALLOWED_ORIGINS = "https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai,https://dkaratsapov-web.github.io"
+
+# Ограничение частоты: 5 заявок с одного IP за 60 секунд.
+# Если убрать этот блок, воркер продолжит работать — просто без лимита.
+[[unsafe.bindings]]
+name = "RATE_LIMIT"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 5, period = 60 }
