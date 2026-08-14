@@ -8,8 +8,12 @@
 */
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, cpSync, rmSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { execFileSync } from 'node:child_process';
 import babel from '@babel/core';
 import { minify } from 'terser';
+import { prerenderApp } from './prerender.mjs';
+
+const SITE = 'https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai';
 
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
@@ -35,7 +39,9 @@ async function compile(file) {
   const min = await minify(out, { compress: true, mangle: false, toplevel: false });
   const jsName = file.replace(/\.jsx$/, '.js');
   writeFileSync(join(outDir, jsName), min.code, 'utf8');
-  return { jsName, raw: code.length, min: min.code.length };
+  // out (без минификации) уходит в пререндер: в vm-контексте важнее читаемые
+  // имена в стектрейсах, чем размер.
+  return { jsName, raw: code.length, min: min.code.length, compiled: out };
 }
 
 const results = [];
@@ -64,9 +70,8 @@ writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p
 // Favicon (lime paper plane) — copy verbatim.
 copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
 
-// SEO: robots.txt and sitemap.xml.
+// SEO: robots.txt. sitemap.xml генерируется ниже, из фактического списка страниц.
 copyFileSync(join(srcDir, 'robots.txt'), join(outDir, 'robots.txt'));
-copyFileSync(join(srcDir, 'sitemap.xml'), join(outDir, 'sitemap.xml'));
 
 // Editable content: ship content.json (fetched at runtime / edited via /admin)
 // and regenerate content-default.js (baked fallback loaded before the app).
@@ -76,6 +81,15 @@ writeFileSync(join(outDir, 'content-default.js'),
   '/* AUTO-GENERATED from content.json — fallback loaded before the app. */\nwindow.CONTENT = '
   + contentJson + ';\n', 'utf8');
 copyFileSync(join(srcDir, 'admin.html'), join(outDir, 'admin.html'));
+
+// SEO: рендерим лендинг в статический HTML, чтобы робот видел текст без JS.
+// Падение здесь валит сборку намеренно — молча выложить пустую главную хуже,
+// чем не выложить ничего.
+const rootHtml = prerenderApp(
+  results.map((r, i) => [JSX_FILES[i], r.compiled]),
+  JSON.parse(contentJson),
+);
+console.log('Prerendered #root:', (rootHtml.length / 1024).toFixed(1), 'KB of HTML');
 
 const scriptTags = [
   '  <script defer src="lead-config.js"></script>',
@@ -107,12 +121,22 @@ const html = `<!DOCTYPE html>
   <link rel="canonical" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
   <meta property="og:title" content="Даниил Карацапов — маркетолог" />
   <meta property="og:description" content="Контекстная реклама, таргет VK Ads, GEO-продвижение. 9+ лет, 70+ ниш. Без посредников, результат с первой недели." />
-  <meta property="og:url" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
+  <meta property="og:url" content="${SITE}/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ru_RU" />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="${SITE}/assets/og/index.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Даниил Карацапов — частный интернет-маркетолог" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Даниил Карацапов — маркетолог" />
   <meta name="twitter:description" content="Контекстная реклама, таргет, GEO. 9+ лет, без посредников." />
+  <meta name="twitter:image" content="${SITE}/assets/og/index.jpg" />
+
+  <!-- .js включает reveal-анимации. Без JS (робот, упавший скрипт) контент
+       виден сразу, а не прозрачным — иначе пререндеренный текст считался бы
+       скрытым. Скрипт стоит до стилей, чтобы не мигало. -->
+  <script>document.documentElement.className+=" js"</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -126,18 +150,55 @@ const html = `<!DOCTYPE html>
   <script defer src="${REACT}" crossorigin="anonymous"></script>
   <script defer src="${REACTDOM}" crossorigin="anonymous"></script>
 
+  <!-- Person + sameAs: связывает сайт, имя и внешние профили в одну сущность.
+       Для личного бренда это основа E-E-A-T — поисковик должен понимать, что
+       автор статей, владелец сайта и человек в профилях это один специалист.
+       Новые профили (Дзен, VK) дописывать в sameAs. -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Даниил Карацапов — маркетолог",
-    "description": "Контекстная реклама в Яндекс Директ, таргетированная реклама VK Ads, продвижение в гео-сервисах",
-    "url": "https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/",
-    "founder": {"@type": "Person", "name": "Даниил Карацапов"},
-    "areaServed": "RU",
-    "availableLanguage": "Russian",
-    "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "availableLanguage": "Russian"}
-  }
+  ${JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': SITE + '/#person',
+        name: 'Даниил Карацапов',
+        givenName: 'Даниил',
+        familyName: 'Карацапов',
+        jobTitle: 'Частный интернет-маркетолог',
+        description: 'Частный интернет-маркетолог. Настройка и ведение контекстной рекламы в Яндекс Директ, таргетированной рекламы VK Ads, продвижение в Яндекс Картах и 2ГИС, разработка сайтов.',
+        url: SITE + '/',
+        image: SITE + '/assets/portrait.jpg',
+        telephone: '+7 996 347-00-65',
+        knowsAbout: ['Контекстная реклама', 'Яндекс Директ', 'Таргетированная реклама',
+          'VK Ads', 'Яндекс Бизнес', 'Локальное продвижение', 'Веб-аналитика', 'Разработка сайтов'],
+        knowsLanguage: 'ru',
+        sameAs: ['https://t.me/Daniil_065',
+          'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c'],
+      },
+      {
+        '@type': 'ProfessionalService',
+        '@id': SITE + '/#business',
+        name: 'Даниил Карацапов — маркетолог',
+        description: 'Контекстная реклама в Яндекс Директ, таргетированная реклама VK Ads, продвижение в гео-сервисах',
+        url: SITE + '/',
+        image: SITE + '/assets/og/index.jpg',
+        founder: { '@id': SITE + '/#person' },
+        provider: { '@id': SITE + '/#person' },
+        areaServed: 'RU',
+        availableLanguage: 'Russian',
+        priceRange: 'от 30 000 ₽',
+        contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', availableLanguage: 'Russian' },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': SITE + '/#website',
+        url: SITE + '/',
+        name: 'Даниил Карацапов — маркетолог',
+        inLanguage: 'ru-RU',
+        publisher: { '@id': SITE + '/#person' },
+      },
+    ],
+  }, null, 2)}
   </script>
 
   <!-- Yandex.Metrika counter -->
@@ -156,7 +217,7 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
   <!-- preloader disabled -->
-  <div id="root"></div>
+  <div id="root">${rootHtml}</div>
 
   <template id="__bundler_thumbnail">
     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -191,6 +252,55 @@ if (existsSync(assetsSrc)) {
   cpSync(assetsSrc, join(outDir, 'assets'), { recursive: true });
   console.log('Copied assets/');
 }
+
+// 404-страница — статична, просто копируем.
+if (existsSync(join(srcDir, '404.html'))) {
+  copyFileSync(join(srcDir, '404.html'), join(outDir, '404.html'));
+  console.log('Copied 404.html');
+}
+
+// ── sitemap.xml ─────────────────────────────────────────────────────────────
+// Собираем из фактического списка страниц, а не из руками поддерживаемого
+// файла: с блогом ручная карта разъедется на первой же забытой правке.
+// lastmod берём из даты последнего коммита исходника — требует полной истории
+// (в CI: actions/checkout с fetch-depth: 0). Если истории нет, дату опускаем:
+// отсутствующий lastmod лучше, чем сегодняшняя дата на всех URL разом.
+function gitLastMod(file) {
+  try {
+    const iso = execFileSync('git', ['log', '-1', '--format=%cI', '--', file],
+      { cwd: srcDir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    return iso ? iso.slice(0, 10) : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+const SITEMAP_PAGES = [
+  { loc: '/', src: 'content.json', priority: '1.0', changefreq: 'monthly' },
+  { loc: '/kontekstnaya-reklama/', src: 'kontekstnaya-reklama/index.html', priority: '0.9', changefreq: 'monthly' },
+  { loc: '/targetirovannaya-reklama/', src: 'targetirovannaya-reklama/index.html', priority: '0.9', changefreq: 'monthly' },
+  { loc: '/geo-servisy/', src: 'geo-servisy/index.html', priority: '0.9', changefreq: 'monthly' },
+  { loc: '/razrabotka-sajtov/', src: 'razrabotka-sajtov/index.html', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/keysy/', src: 'keysy/index.html', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/contacts/', src: 'contacts/index.html', priority: '0.6', changefreq: 'yearly' },
+];
+
+const urls = SITEMAP_PAGES.map(({ loc, src, priority, changefreq }) => {
+  const lastmod = gitLastMod(src);
+  return '  <url>'
+    + `<loc>${SITE}${loc}</loc>`
+    + (lastmod ? `<lastmod>${lastmod}</lastmod>` : '')
+    + `<changefreq>${changefreq}</changefreq>`
+    + `<priority>${priority}</priority>`
+    + '</url>';
+}).join('\n');
+
+writeFileSync(join(outDir, 'sitemap.xml'),
+  '<?xml version="1.0" encoding="UTF-8"?>\n'
+  + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+  + urls + '\n</urlset>\n', 'utf8');
+console.log('Generated sitemap.xml:', SITEMAP_PAGES.length, 'URL',
+  urls.includes('<lastmod>') ? '(с lastmod)' : '(без lastmod — нет истории git)');
 
 // Strip source files that must never ship to production.
 const STRIP = /\.(jsx|mjs)$/;

@@ -448,4 +448,7 @@ function LeadFormModal({ open, onClose, title, source }) {
   );
 }
 
-Object.assign(window, { Audit, Contacts, QuizModal, QuizTeaser, Footer, LeadFormModal });
+// QuizTeaser здесь стоял по ошибке — такого компонента нет, и строка падала с
+// ReferenceError, из-за чего ни одно из имён не попадало в window. Кнопка квиза
+// называется QuizFab.
+Object.assign(window, { Audit, Contacts, QuizModal, QuizFab, Footer, LeadFormModal });

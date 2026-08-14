@@ -135,7 +135,13 @@ function App() {
    the fetch fails. applyContent() refreshes the data arrays from CONTENT. */
 function boot() {
   if (typeof applyContent === 'function') applyContent();
-  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  const root = document.getElementById('root');
+  // build.mjs вшивает в #root пререндеренную разметку — переиспользуем её через
+  // hydrateRoot, иначе React стёр бы готовый HTML и нарисовал то же самое заново.
+  // Если разметки нет (dev-режим без сборки) или content.json на сервере успели
+  // отредактировать через /admin — createRoot и обычный рендер с нуля.
+  if (root.firstElementChild) ReactDOM.hydrateRoot(root, <App />);
+  else ReactDOM.createRoot(root).render(<App />);
 }
 fetch('content.json', { cache: 'no-store' })
   .then((r) => (r.ok ? r.json() : null))
