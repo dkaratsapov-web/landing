@@ -355,7 +355,12 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
    Колонка липкая: таймлайн длинный, и кольцо должно оставаться в кадре,
    пока читают пункты, — иначе оно мелькнёт один раз и уедет. */
 .path-grid { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 56px; align-items: start; }
-.orbit-col { position: sticky; top: 120px; display: flex; justify-content: center; }
+/* overflow: hidden обязателен. Чипы платформ вынесены за радиус кольца
+   (translate по --a), поэтому фактическая ширина орбиты больше её 380px:
+   на 1440 колонка вылезала за экран на 31px и давала горизонтальную
+   прокрутку всей страницы. Кольцо декоративное — обрезка по колонке
+   ничего не скрывает, чипы и так уезжают за край при вращении. */
+.orbit-col { position: sticky; top: 120px; display: flex; justify-content: center; overflow: hidden; }
 
 .orbit {
   position: relative; width: 380px; height: 380px;
