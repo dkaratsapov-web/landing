@@ -16,12 +16,13 @@ import { renderPage, seoConfig } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
+import * as politikaPage from './pages/politika.mjs';
 
 const SITE = 'https://karatsapov.ru';
 
 /* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
    которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
-const GENERATED_PAGES = [aboutPage, cenyPage];
+const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage];
 
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
@@ -97,10 +98,28 @@ copyFileSync(join(srcDir, 'admin.html'), join(outDir, 'admin.html'));
 // SEO: рендерим лендинг в статический HTML, чтобы робот видел текст без JS.
 // Падение здесь валит сборку намеренно — молча выложить пустую главную хуже,
 // чем не выложить ничего.
+const content = JSON.parse(contentJson);
 const rootHtml = prerenderApp(
   results.map((r, i) => [JSX_FILES[i], r.compiled]),
-  JSON.parse(contentJson),
+  content,
 );
+
+/* Мета главной берём из content.json → блок seo. Раньше они были захардкожены
+   здесь, а блок seo в content.json никто не читал: владелец правил его через
+   /admin и не понимал, почему в выдаче ничего не меняется. Теперь источник
+   один. Отсутствие блока валит сборку — выложить главную без title хуже, чем
+   не выложить. */
+if (!content.seo || !content.seo.title || !content.seo.description) {
+  throw new Error('build: в content.json нет блока seo с title и description');
+}
+const META = {
+  title: content.seo.title,
+  description: content.seo.description,
+  ogTitle: content.seo.ogTitle || content.seo.title,
+  ogDescription: content.seo.ogDescription || content.seo.description,
+};
+const escAttr = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 console.log('Prerendered #root:', (rootHtml.length / 1024).toFixed(1), 'KB of HTML');
 
 /* Подтверждение прав в вебмастерах. Проверка идёт по главной, поэтому теги
@@ -141,12 +160,12 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Даниил Карацапов — маркетолог | Контекстная реклама, таргет, GEO-продвижение</title>
-  <meta name="description" content="Маркетолог с 9+ лет опыта. Контекстная реклама в Яндекс Директ, таргет VK Ads, продвижение в Яндекс Картах. Работаю лично — без посредников. Заявки с первой недели." />
+  <title>${escAttr(META.title)}</title>
+  <meta name="description" content="${escAttr(META.description)}" />
   <link rel="canonical" href="https://karatsapov.ru/" />
 ${verifyTags}
-  <meta property="og:title" content="Даниил Карацапов — маркетолог" />
-  <meta property="og:description" content="Контекстная реклама, таргет VK Ads, GEO-продвижение. 9+ лет, 70+ ниш. Без посредников, результат с первой недели." />
+  <meta property="og:title" content="${escAttr(META.ogTitle)}" />
+  <meta property="og:description" content="${escAttr(META.ogDescription)}" />
   <meta property="og:url" content="${SITE}/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ru_RU" />
@@ -155,8 +174,8 @@ ${verifyTags}
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Даниил Карацапов — частный интернет-маркетолог" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Даниил Карацапов — маркетолог" />
-  <meta name="twitter:description" content="Контекстная реклама, таргет, GEO. 9+ лет, без посредников." />
+  <meta name="twitter:title" content="${escAttr(META.ogTitle)}" />
+  <meta name="twitter:description" content="${escAttr(META.ogDescription)}" />
   <meta name="twitter:image" content="${SITE}/assets/og/index.jpg" />
 
   <!-- .js включает reveal-анимации. Без JS (робот, упавший скрипт) контент
@@ -349,6 +368,10 @@ const SITEMAP_PAGES = [
   { loc: '/about/', src: 'pages/about.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/ceny/', src: 'pages/ceny.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/contacts/', src: 'contacts/index.html', priority: '0.6', changefreq: 'yearly' },
+  /* Политика в карте сайта нужна: на неё ведут ссылки из каждой формы, и
+     поисковик всё равно её найдёт. Явное низкое priority показывает, что это
+     служебный документ, а не посадочная. */
+  { loc: '/politika/', src: 'pages/politika.mjs', priority: '0.2', changefreq: 'yearly' },
 ];
 
 /* Статьи в карту сайта. lastmod у статьи берём из фронтматтера (updated или

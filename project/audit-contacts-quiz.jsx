@@ -33,7 +33,10 @@ async function sendLeadTelegram(text) {
 }
 
 function useLeadForm(toast, successMsg, source) {
-  const [v, setV] = useStateC({ name: '', phone: '', task: '', consent: true });
+  /* consent по умолчанию снят: предзаполненная галочка — не согласие. 152-ФЗ
+     требует активного действия пользователя, а для посетителя заранее
+     проставленный флажок читается как «за меня уже всё решили». */
+  const [v, setV] = useStateC({ name: '', phone: '', task: '', consent: false });
   const [err, setErr] = useStateC({});
   const [sent, setSent] = useStateC(false);
   const set = (k) => (e) => {
@@ -58,7 +61,7 @@ function useLeadForm(toast, successMsg, source) {
     setSent(true);
     toast(successMsg);
   };
-  return { v, err, sent, set, submit, reset: () => {setV({ name: '', phone: '', task: '', consent: true });setSent(false);} };
+  return { v, err, sent, set, submit, reset: () => {setV({ name: '', phone: '', task: '', consent: false });setSent(false);} };
 }
 
 /* ---------------- AUDIT (lead magnet) ---------------- */
@@ -100,7 +103,7 @@ function Audit() {
                 </Field>
                 <label className="consent">
                   <input type="checkbox" checked={f.v.consent} onChange={f.set('consent')} />
-                  <span>Согласен на обработку персональных данных в соответствии с политикой конфиденциальности.</span>
+                  <span>Согласен на обработку персональных данных в соответствии с <a href="/politika/" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>политикой конфиденциальности</a>.</span>
                 </label>
                 {f.err.consent && <span style={{ color: '#ff5a4d', fontSize: 13, marginTop: -8 }}>{f.err.consent}</span>}
                 <button type="submit" className="btn btn-fill btn-lg" style={{ width: '100%' }}>
@@ -378,7 +381,7 @@ function Footer({ onCta }) {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, paddingTop: 28 }}>
           <span className="fine">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-          <a href="#" className="fine" style={{ color: 'var(--txt-3)', textDecoration: 'none' }} onClick={(e) => e.preventDefault()}>Политика конфиденциальности</a>
+          <a href="/politika/" className="fine" style={{ color: 'var(--txt-2)', textDecoration: 'none' }}>Политика конфиденциальности</a>
         </div>
       </div>
     </footer>);

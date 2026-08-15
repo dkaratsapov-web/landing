@@ -195,6 +195,13 @@
 .tariff .t-price .val { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
 .tariff .t-price .val .ph { color: var(--lime); }
 .tariff .t-price .per { color: var(--muted); font-size: 15px; }
+/* Тарифы без опубликованной цены. Раньше здесь стояла заглушка «[____]» —
+   недоделанная страница читается хуже, чем честное «считаем под задачу».
+   Колонка вместо строки: подпись объясняет, от чего зависит цифра, и снимает
+   тревогу «сколько же они назовут». */
+.tariff .t-price-ask { flex-direction: column; align-items: flex-start; gap: 4px; }
+.tariff .t-price-ask .val { font-size: 26px; font-weight: 700; color: var(--lime); }
+.tariff .t-price-ask .per { font-size: 13.5px; line-height: 1.4; }
 .tariff .t-feats { list-style: none; margin: 0 0 28px; padding: 0; display: flex; flex-direction: column; gap: 12px; flex: 1; }
 .tariff .t-feats li { display: flex; gap: 12px; font-size: 15px; color: var(--ink-2); line-height: 1.4; }
 .tariff .t-feats li::before {
@@ -630,7 +637,7 @@
         <span class="pop">Популярный</span>
         <div class="t-name">Оптимум</div>
         <div class="t-scope">Все карты, один город</div>
-        <div class="t-price"><span class="from">от</span><span class="val"><span class="ph">[____]</span></span><span class="per">₽/мес</span></div>
+        <div class="t-price t-price-ask"><span class="val">Расчёт по задаче</span><span class="per">после бесплатного аудита карточек</span></div>
         <ul class="t-feats">
           <li>Яндекс + 2ГИС + Google</li>
           <li>Полная упаковка карточек</li>
@@ -644,7 +651,7 @@
       <div class="card tariff">
         <div class="t-name">Максимум</div>
         <div class="t-scope">Москва / несколько регионов</div>
-        <div class="t-price"><span class="from">от</span><span class="val"><span class="ph">[____]</span></span><span class="per">₽/мес</span></div>
+        <div class="t-price t-price-ask"><span class="val">Расчёт по задаче</span><span class="per">зависит от числа точек и городов</span></div>
         <ul class="t-feats">
           <li>Всё из тарифа «Оптимум»</li>
           <li>Сеть точек и филиалов</li>
@@ -778,7 +785,7 @@
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
       <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>

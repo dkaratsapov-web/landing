@@ -37,7 +37,8 @@
             '<textarea id="lm-comment" name="comment" rows="2" placeholder="Коротко о задаче или вопросе"></textarea>' +
           '</div>' +
           '<button type="submit" class="btn btn-lime" style="width:100%; justify-content:center;">Обсудить мой проект <span class="arr">→</span></button>' +
-          '<p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>' +
+          '<p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных ' +
+            'в соответствии с <a href="/politika/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</p>' +
         '</form>' +
         '<div class="lead-ok-box" id="leadModalOk" hidden>' +
           '<div class="lead-ok-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>' +

@@ -34,6 +34,23 @@ export const seoConfig = (() => {
   }
 })();
 
+/* Реквизиты оператора персональных данных. Один источник для футера и
+   страницы /politika/.
+
+   status и inn намеренно пустые: юридический статус (самозанятый или ИП) и
+   ИНН владелец должен подтвердить сам — выдуманные реквизиты в правовом
+   документе хуже, чем их отсутствие. Как только значения появятся здесь, они
+   сами подтянутся и в футер, и в раздел «Реквизиты оператора». Все места,
+   которые их выводят, проверяют поле на пустоту и молча пропускают. */
+export const OPERATOR = {
+  name: 'Карацапов Даниил',
+  status: '',
+  inn: '',
+  email: 'd.karatsapov@gmail.com',
+  phone: '+7 (996) 347-00-65',
+  phoneTel: '+79963470065',
+};
+
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
@@ -120,6 +137,13 @@ ${mobileDrops}
 /* ── Футер ───────────────────────────────────────────────────────────────── */
 const FOOT_LINK = 'color: var(--muted); text-decoration: none; font-size: 15px;';
 
+/* Строка со статусом и ИНН. Пока владелец их не подтвердил, возвращает пустую
+   строку — футер выглядит ровно как раньше. */
+function legalLine() {
+  const bits = [OPERATOR.status, OPERATOR.inn && `ИНН ${OPERATOR.inn}`].filter(Boolean);
+  return bits.length ? ` ${bits.join(' · ')}.` : '';
+}
+
 function footer() {
   const cols = [
     ['Навигация', [
@@ -158,8 +182,8 @@ ${navCol}
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
-      <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <span style="color: var(--muted); font-size: 13px; line-height: 1.5;">© 2026 ${OPERATOR.name}. Интернет-маркетинг.${legalLine()}</span>
+      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>`;

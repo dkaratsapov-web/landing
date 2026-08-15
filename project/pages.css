@@ -225,6 +225,52 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* ── Политика конфиденциальности ────────────────────────────────────────── */
+/* Правовой документ, а не посадочная: задача — чтобы человек быстро нашёл свой
+   пункт и убедился, что документ настоящий. Отсюда оглавление сверху и блок
+   реквизитов внизу. Компоненты собраны из тех же карточек, что и весь сайт
+   (--card + --line + скругление), поэтому страница не выпадает из стилистики. */
+.policy-updated { color: var(--txt-3); font-size: 14px; margin-top: 18px; }
+
+.policy-toc {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 22px 26px;
+}
+.policy-toc-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--txt-3); margin-bottom: 12px;
+}
+.policy-toc ol {
+  margin: 0; padding-left: 20px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px;
+}
+.policy-toc li { color: var(--txt-3); font-size: 15px; }
+.policy-toc a { color: var(--txt-2); text-decoration: none; }
+.policy-toc a:hover { color: var(--accent-bright); }
+
+/* scroll-margin — чтобы якорь из оглавления не уводил заголовок под липкую
+   шапку. Значение то же, что у заголовков статей блога. */
+.prose > h2[id] { scroll-margin-top: 90px; }
+
+.policy-req {
+  margin-top: 48px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 26px 28px;
+}
+.policy-req-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--txt-3); margin-bottom: 16px;
+}
+.policy-req-grid { display: flex; flex-direction: column; gap: 12px; }
+.req-row {
+  display: grid; grid-template-columns: 140px 1fr; gap: 16px;
+  font-size: 15px; line-height: 1.5;
+}
+.req-k { color: var(--txt-3); }
+.req-v { color: var(--txt-2); }
+.req-v a { color: var(--accent-bright); text-decoration: none; }
+.req-v a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
 /* ── Адаптив ────────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .dev-hero-grid { grid-template-columns: 1fr; }
@@ -239,4 +285,8 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   .cta-final h2 { font-size: 26px; }
   .dev-stat-v { font-size: 26px; }
   .dev-stats { gap: 24px; }
+  /* На узком экране две колонки оглавления и подпись-значение в реквизитах
+     схлопываются в одну — иначе строки рвутся по слогам. */
+  .policy-toc ol { grid-template-columns: 1fr; }
+  .req-row { grid-template-columns: 1fr; gap: 2px; }
 }

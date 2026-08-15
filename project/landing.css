@@ -276,8 +276,13 @@ h2.section-title {
 .input:focus, .textarea:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
 .input.err, .textarea.err { border-color: #ff5a4d; }
 .textarea { resize: vertical; min-height: 96px; }
-.consent { display: flex; gap: 10px; align-items: flex-start; color: var(--txt-3); font-size: 13px; line-height: 1.5; }
+/* Согласие на обработку ПД. Цвет — --txt-2, а не --txt-3: на карточке форма
+   даёт у --txt-3 контраст ~3.3:1 при 13px, это ниже порога WCAG AA (4.5:1).
+   Юридически значимый текст, набранный нечитаемо, читается как спрятанный. */
+.consent { display: flex; gap: 10px; align-items: flex-start; color: var(--txt-2); font-size: 13px; line-height: 1.5; }
 .consent input { margin-top: 3px; accent-color: var(--accent); width: 16px; height: 16px; flex: 0 0 auto; }
+.consent a { color: var(--accent-bright); text-decoration: underline; text-underline-offset: 2px; }
+.consent a:hover { text-decoration-thickness: 2px; }
 
 /* ---------- Pills / chips ---------- */
 .chip {
