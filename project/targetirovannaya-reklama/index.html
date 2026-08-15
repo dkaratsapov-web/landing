@@ -773,7 +773,7 @@
           <textarea id="lf-comment" name="comment" rows="2" placeholder="Коротко о задаче или вопросе"></textarea>
         </div>
         <button type="submit" class="btn btn-lime" style="width:100%; justify-content:center;">Оставить заявку <span class="arr">→</span></button>
-        <p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+        <p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных в соответствии с <a href="/politika/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</p>
       </form>
       <div class="lead-ok-box" id="leadOk" hidden>
         <div class="lead-ok-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
@@ -971,7 +971,7 @@
           '<button type="button" class="quiz-opt" data-m="Звонок">Звонок</button>' +
         '</div></div>' +
         '<div class="quiz-field"><label for="qContact">Контакт (телефон или ник)</label><input id="qContact" type="text" placeholder="+7 (___) ___-__-__ или @username"></div>' +
-        '<label class="quiz-consent"><input type="checkbox" id="qConsent"> Согласен с обработкой персональных данных и <a href="#">политикой конфиденциальности</a></label>';
+        '<label class="quiz-consent"><input type="checkbox" id="qConsent"> Согласен с обработкой персональных данных и <a href="/politika/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">политикой конфиденциальности</a></label>';
       document.querySelectorAll('#qMethod .quiz-opt').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('#qMethod .quiz-opt').forEach(b => b.classList.remove('on'));
