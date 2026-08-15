@@ -35,8 +35,8 @@ const JSX_FILES = [
   'nav-hero-about.jsx', 'services-process-cases.jsx',
   'audit-contacts-quiz.jsx', 'app.jsx',
 ];
-const REACT = 'https://unpkg.com/react@18.3.1/umd/react.production.min.js';
-const REACTDOM = 'https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js';
+const REACT = '/assets/react.min.js';
+const REACTDOM = '/assets/react-dom.min.js';
 
 mkdirSync(outDir, { recursive: true });
 
@@ -65,7 +65,6 @@ copyFileSync(join(srcDir, 'image-slot.js'), join(outDir, 'image-slot.js'));
 copyFileSync(join(srcDir, 'preloader.js'), join(outDir, 'preloader.js'));
 
 // Smooth-scroll engine (Lenis + GSAP ScrollTrigger glue) — verbatim.
-copyFileSync(join(srcDir, 'scroll.js'), join(outDir, 'scroll.js'));
 
 // Root-level assets shared by static pages.
 copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
@@ -211,14 +210,13 @@ const scriptTags = [
   '  <script defer src="services-process-cases.js"></script>',
   '  <script defer src="audit-contacts-quiz.js"></script>',
   '  <script defer src="app.js"></script>',
-  // Smooth-scroll стек (CDN) + наш движок. defer сохраняет порядок выполнения,
-  // поэтому Lenis/GSAP гарантированно готовы к моменту запуска scroll.js.
-  '  <script defer src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>',
-  '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>',
-  '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>',
-  '  <script defer src="scroll.js"></script>',
-  // Микровзаимодействия по указателю. Отдельно от scroll.js: тот зависит от
-  // Lenis/GSAP с CDN, а этот работает всегда и сам по себе.
+  /* Lenis и GSAP убраны. Три внешних скрипта на 120 КБ обслуживали ровно один
+     параллакс в герое — его теперь делает CSS через .mo-parallax, без единого
+     килобайта JS. Сам Lenis при этом перехватывал прокрутку у всего сайта:
+     он приезжал с CDN уже после первой отрисовки и на ходу подменял поведение
+     скролла — отсюда и рывок при перезагрузке, и тяжёлые кадры на длинных
+     страницах. Нативная прокрутка ровнее и ничего не стоит. */
+  // Микровзаимодействия по указателю: работает всегда и сам по себе.
   '  <script defer src="motion.js"></script>',
 ].join('\n');
 
@@ -249,11 +247,6 @@ ${verifyTags}
        виден сразу, а не прозрачным — иначе пререндеренный текст считался бы
        скрытым. Скрипт стоит до стилей, чтобы не мигало. -->
   <script>document.documentElement.className+=" js"</script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://unpkg.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap"></noscript></noscript>
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
   <link rel="stylesheet" href="motion.css" />

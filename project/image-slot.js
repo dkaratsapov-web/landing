@@ -75,6 +75,13 @@
 
   function load() {
     if (loadP) return loadP;
+    /* Файл-спутник существует только в режиме редактирования. На боевом сайте
+       его нет, и запрос давал 404 в консоли на каждой загрузке каждой страницы:
+       в логах шум, а в отчётах проверки — ложное «битый ресурс». Редактор
+       живёт на /admin, поэтому вне его состояние просто не подтягиваем. */
+    const editing = /(^|\/)admin(\.html)?$/.test(location.pathname)
+      || location.search.includes('edit=1');
+    if (!editing) { loadP = Promise.resolve(null); return loadP; }
     loadP = fetch(STATE_FILE)
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {

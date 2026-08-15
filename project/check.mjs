@@ -156,8 +156,11 @@ for (const path of pages()) {
       const de = document.documentElement;
       /* Скрытые элементы из проверки имён исключаем: у свёрнутого <details>
          innerText пуст, и ссылка внутри FAQ ложно считается безымянной. */
+      /* Картинка без src — это не битая картинка, а заготовка: так устроен
+         <img> в лайтбоксе, который получает адрес только при открытии.
+         Считаем битым только то, у чего адрес есть, а изображение не пришло. */
       const broken = [...document.images]
-        .filter((i) => i.complete && i.naturalWidth === 0)
+        .filter((i) => i.getAttribute('src') && i.complete && i.naturalWidth === 0)
         .map((i) => i.getAttribute('src'));
       /* Верхняя граница каждой волны-разделителя в координатах документа. */
       const seams = [...document.querySelectorAll('.wave-svg')]

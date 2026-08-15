@@ -84,7 +84,15 @@ function App() {
   }, [t.accent]);
 
   const openLead = () => setLeadOpen(true);
-  React.useEffect(() => { window.openLeadModal = openLead; }, []);
+  React.useEffect(() => {
+    window.openLeadModal = openLead;
+    /* Сигнал для motion.js: гидратация завершена, DOM можно трогать.
+       Эффект выполняется после коммита, то есть после того, как React сверил
+       серверную разметку с клиентской. До этого момента любая правка DOM
+       снаружи ломает гидратацию и заставляет React перерисовать всю страницу. */
+    document.documentElement.dataset.hydrated = '1';
+    window.dispatchEvent(new Event('app:hydrated'));
+  }, []);
 
   return (
     <ToastProvider>

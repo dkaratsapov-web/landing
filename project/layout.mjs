@@ -339,10 +339,10 @@ ${verify}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description)}">
-<meta name="twitter:image" content="${ogAbs}">
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap"></noscript></noscript>
+<meta name="twitter:image" content="${ogAbs}"><noscript></noscript>
+<link rel="preload" href="/assets/fonts/nunito-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/nunito-cyrillic-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/nunito-cyrillic-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
 <link rel="stylesheet" href="/motion.css">

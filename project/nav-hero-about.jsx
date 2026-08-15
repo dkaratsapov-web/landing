@@ -239,7 +239,7 @@ function HeroEditorial({ portrait, onCta }) {
 
 function PortraitFrame({ portrait, short }) {
   return (
-    <div data-gsap-parallax="6" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
+    <div className="mo-parallax" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
       aspectRatio: short ? '4 / 3' : '4 / 4', background: 'var(--tile-c)',
       boxShadow: 'var(--product-shadow)', border: '1px solid var(--line)' }}>
       <img src={portrait} alt="Даниил Карацапов" loading="eager"
