@@ -10,7 +10,7 @@
    карточками услуг на главной хуже отсутствия страницы, поэтому при правке
    прайса меняем оба места.
 */
-import { SITE, breadcrumbs } from '../layout.mjs';
+import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
 
 export const meta = {
   path: '/ceny/',
@@ -157,10 +157,7 @@ ${p.works.map((w) => `          <li>${w}</li>`).join('\n')}
           <td class="cell-term">${p.term}</td>
         </tr>`).join('\n');
 
-  const faq = FAQ.map(([q, a]) => `      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">${q}</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">${a}</div>
-      </div>`).join('\n');
+  const faq = faqItems(FAQ);
 
   const body = `<header class="hero" data-screen-label="Цены">
   <div class="wrap">
@@ -178,7 +175,7 @@ ${p.works.map((w) => `          <li>${w}</li>`).join('\n')}
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Коротко</div>
-    <h2 class="reveal">Прайс одной таблицей</h2>
+    <h2 class="reveal">Прайс на услуги интернет-маркетинга</h2>
     <div class="table-scroll reveal">
       <table class="price-table">
         <caption class="visually-hidden">Стоимость услуг интернет-маркетинга</caption>
@@ -212,7 +209,7 @@ ${cards}
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Вопросы о цене</div>
-    <h2 class="reveal">Что обычно спрашивают</h2>
+    <h2 class="reveal">Вопросы о ценах и оплате</h2>
     <div class="faq-list reveal">
 ${faq}
     </div>
@@ -222,7 +219,7 @@ ${faq}
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
-      <h2>Посчитаем под вашу задачу</h2>
+      <h2>Рассчитать стоимость под вашу задачу</h2>
       <p>На бесплатной консультации разберу нишу и назову конкретную сумму — по объёму работ, а не по прайсу «в среднем».</p>
       <div class="btn-row">
         <a class="btn btn-fill btn-lg" href="/contacts/">Оставить заявку</a>

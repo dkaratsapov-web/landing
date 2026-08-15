@@ -34,6 +34,23 @@ export const seoConfig = (() => {
   }
 })();
 
+/* Реквизиты оператора персональных данных. Один источник для футера и
+   страницы /politika/.
+
+   status и inn намеренно пустые: юридический статус (самозанятый или ИП) и
+   ИНН владелец должен подтвердить сам — выдуманные реквизиты в правовом
+   документе хуже, чем их отсутствие. Как только значения появятся здесь, они
+   сами подтянутся и в футер, и в раздел «Реквизиты оператора». Все места,
+   которые их выводят, проверяют поле на пустоту и молча пропускают. */
+export const OPERATOR = {
+  name: 'Карацапов Даниил',
+  status: '',
+  inn: '',
+  email: 'd.karatsapov@gmail.com',
+  phone: '+7 (996) 347-00-65',
+  phoneTel: '+79963470065',
+};
+
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
@@ -58,6 +75,7 @@ const PLANE = '<svg class="brand-plane" width="30" height="30" viewBox="0 0 50 5
 
 const TG_URL = 'https://t.me/Daniil_065';
 const MAX_URL = 'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c';
+export const DZEN_URL = 'https://dzen.ru/karatsapov';
 
 /* Пункты выпадающего списка «Услуги». Один источник для десктопа и мобильного
    меню — иначе они разъезжаются. */
@@ -102,6 +120,9 @@ ${drops}
       <a class="nav-ic nav-ic-max" href="${MAX_URL}" target="_blank" rel="noopener noreferrer" aria-label="MAX">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
       </a>
+      <a class="nav-ic nav-ic-dzen" href="${DZEN_URL}" target="_blank" rel="noopener noreferrer" aria-label="Дзен">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>
+      </a>
       <a class="btn btn-lime btn-sm nav-cta" href="/contacts/">Обсудить задачу</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
@@ -119,6 +140,13 @@ ${mobileDrops}
 
 /* ── Футер ───────────────────────────────────────────────────────────────── */
 const FOOT_LINK = 'color: var(--muted); text-decoration: none; font-size: 15px;';
+
+/* Строка со статусом и ИНН. Пока владелец их не подтвердил, возвращает пустую
+   строку — футер выглядит ровно как раньше. */
+function legalLine() {
+  const bits = [OPERATOR.status, OPERATOR.inn && `ИНН ${OPERATOR.inn}`].filter(Boolean);
+  return bits.length ? ` ${bits.join(' · ')}.` : '';
+}
 
 function footer() {
   const cols = [
@@ -158,8 +186,8 @@ ${navCol}
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
-      <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <span style="color: var(--muted); font-size: 13px; line-height: 1.5;">© 2026 ${OPERATOR.name}. Интернет-маркетинг.${legalLine()}</span>
+      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>`;
@@ -194,16 +222,14 @@ const PAGE_SCRIPTS = `<script>
   setTimeout(() => targets.forEach(t => t.classList.add('in')), 1500);
 })();
 
-// FAQ accordion
+// FAQ: раскрытие обеспечивает нативный <details>, скрипт нужен только чтобы
+// открытым оставался один пункт — как на остальных страницах сайта.
 (function () {
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-    });
-  });
+  const items = document.querySelectorAll('details.faq-item');
+  items.forEach(d => d.addEventListener('toggle', () => {
+    if (!d.open) return;
+    items.forEach(o => { if (o !== d) o.open = false; });
+  }));
 })();
 
 // nav dropdown
@@ -217,7 +243,26 @@ const PAGE_SCRIPTS = `<script>
   });
 })();
 </script>
-<script defer src="/lead-modal.js"></script>`;
+<script defer src="/lead-modal.js"></script>
+<script defer src="/motion.js"></script>`;
+
+/* ── FAQ ─────────────────────────────────────────────────────────────────── */
+/* items — [[вопрос, ответ], ...]. Возвращает только элементы списка: обёртку
+   <div class="faq-list"> ставит вызывающая страница, ей же принадлежит класс
+   reveal.
+
+   Разметка на <details>/<summary> — ровно та, которую dark.css уже стилизует
+   для шести исторических страниц. Раньше /about/ и /ceny/ рендерили
+   собственный div-аккордеон с классами .faq-q/.faq-a, которых нет ни в одном
+   подключённом стиле: все ответы стояли раскрытыми одновременно, а текст
+   вылезал за границы карточки. Общий помощник закрывает и причину — две копии
+   одной разметки, которые разъехались со стилями. Плюс details работает без
+   JS и доступен с клавиатуры из коробки. */
+export function faqItems(items) {
+  return items
+    .map(([q, a]) => `      <details class="faq-item"><summary>${q}<span class="sign"></span></summary><div class="answer">${a}</div></details>`)
+    .join('\n');
+}
 
 /* ── Хлебные крошки ──────────────────────────────────────────────────────── */
 /* trail — [[url, название], ...] без «Главной»: её добавляем сами.
@@ -300,6 +345,7 @@ ${verify}
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
+<link rel="stylesheet" href="/motion.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
 <script defer src="/lead-config.js"></script>
@@ -307,7 +353,7 @@ ${metrika}
 ${ld}
 ${extraHead}
 </head>
-<body${bodyClass ? ` class="${bodyClass}"` : ''}>
+<body class="mo-grain${bodyClass ? ` ${bodyClass}` : ''}">
 
 <div class="bg-fx">
   <div class="glow g1"></div>

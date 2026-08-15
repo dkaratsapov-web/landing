@@ -75,6 +75,9 @@ function Nav({ onCta }) {
           <a className="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
           </a>
+          <a className="nav-ic nav-ic-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer" aria-label="Дзен">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>
+          </a>
           <a className="btn btn-fill btn-sm nav-cta" href="#contacts"
              onClick={(e) => { e.preventDefault(); onCta(); }}>Обсудить задачу</a>
           <button className="nav-burger" onClick={() => setOpen(o => !o)} aria-label="Меню">
@@ -138,12 +141,16 @@ function HeroSplit({ portrait, onCta }) {
         alignItems: 'center', paddingTop: 32, paddingBottom: 60 }}>
         <div className="hero-copy">
           <span className="eyebrow reveal in">{H.eyebrow}</span>
-          <h1 className="display reveal in" style={{ fontSize: 'clamp(40px, 6vw, 76px)' }}>
+          {/* Верхняя граница снижена с 76px до 62px: после замены заголовка на
+              «Интернет-маркетинг, который делаю я сам» первая строка перестала
+              помещаться в колонку и рвалась по дефису — «Интернет-» / «маркетинг».
+              Перенос внутри ключевой фразы читается как опечатка. */}
+          <h1 className="display reveal in" data-mo-kinetic style={{ fontSize: 'clamp(38px, 4.4vw, 62px)' }}>
             {H.titleLine1}<br />{H.titleLine2} <span style={{ color: 'var(--accent-bright)' }}>{H.titleAccent}</span>
           </h1>
           <p className="lead reveal in" style={{ marginTop: 26, maxWidth: 480 }}>{H.sub}</p>
           <div className="reveal in" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
               {H.ctaPrimary}<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href={H.telegramUrl} target="_blank" rel="noopener noreferrer">
@@ -178,7 +185,7 @@ function HeroOverlay({ portrait, onCta }) {
           </h1>
           <p className="lead reveal in" style={{ marginTop: 24, maxWidth: 560, color: '#e6e6ea' }}>{HERO_SUB}</p>
           <div className="reveal in" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
               Обсудить задачу<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">
@@ -212,7 +219,7 @@ function HeroEditorial({ portrait, onCta }) {
         <div className="reveal in" style={{ paddingBottom: 18 }}>
           <p className="lead" style={{ maxWidth: 460 }}>{HERO_SUB}</p>
           <div style={{ display: 'flex', gap: 14, marginTop: 32, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
               Обсудить задачу<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">

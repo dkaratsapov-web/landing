@@ -134,7 +134,17 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
 .post-card:hover { border-color: var(--accent-soft-bd); transform: translateY(-3px); }
 .post-card-cover { width: 100%; height: auto; aspect-ratio: 1200/630; object-fit: cover; display: block; }
 .post-card-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-.post-card-meta { font-size: 13px; color: var(--txt-3); }
+/* Метка темы, дата и время чтения в одной строке. flex с переносом целыми
+   элементами, а не inline-поток: иначе строка рвётся посреди «4 минуты
+   чтения» и последнее слово повисает отдельной строкой. */
+.post-card-meta {
+  font-size: 13px; color: var(--txt-3);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px;
+}
+/* Разделителя между датой и временем чтения намеренно нет: при переносе
+   строки точка повисала в начале новой строки. Расстояния в 10px хватает,
+   чтобы части читались как отдельные. */
+.post-card-read { white-space: nowrap; }
 .post-card-title { font-size: 19px; font-weight: 700; line-height: 1.3; margin: 0; color: var(--txt); }
 .post-card-desc { font-size: 15px; color: var(--txt-2); line-height: 1.55; margin: 0; flex: 1; }
 .post-card-more { font-size: 14px; color: var(--accent-bright); }
@@ -225,6 +235,146 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* ── Лента блога: герой и фильтры ───────────────────────────────────────── */
+/* Прежний герой ленты занимал пол-экрана: заголовок clamp(40px,6vw,76px),
+   лид под ним и 136px пустоты до карточек. На странице выбора статьи это
+   плохой размен — первым экраном человек должен видеть статьи, а не вывеску.
+   Здесь заголовок и лид стоят в две колонки, отступы срезаны, а карточки
+   подтянуты вплотную. */
+.hero-feed { padding: 92px 0 0; }
+.feed-head {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 20px 56px; align-items: end;
+}
+.hero-feed h1 { font-size: clamp(32px, 3.6vw, 52px); line-height: 1.06; margin: 0; }
+.feed-lead {
+  color: var(--txt-2); font-size: 16px; line-height: 1.6; margin: 0;
+  max-width: 52ch; padding-bottom: 4px;
+}
+
+/* Секция с карточками почти вплотную к герою: между ними остаётся только
+   панель фильтров, она же и служит переходом. */
+.section-feed { padding-top: 28px; }
+
+/* ── Табы-фильтры ───────────────────────────────────────────────────────── */
+/* Липкие: на длинной ленте возможность сменить тему не должна уезжать вверх.
+   Подложка размыта — под панель во время прокрутки заезжают карточки, и без
+   неё текст табов накладывался бы на заголовки статей. */
+.feed-filters {
+  position: sticky; top: 78px; z-index: 20;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 0 0 30px;
+  padding: 12px 0;
+  background: color-mix(in srgb, var(--bg, #08080a) 86%, transparent);
+  backdrop-filter: saturate(150%) blur(14px);
+  -webkit-backdrop-filter: saturate(150%) blur(14px);
+}
+.feed-tab {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px;
+  font: inherit; font-size: 14.5px; line-height: 1;
+  color: var(--txt-2); cursor: pointer;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-pill, 999px);
+  transition: color .2s ease, border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.feed-tab:hover { color: var(--txt); border-color: var(--line-2, var(--line)); transform: translateY(-1px); }
+.feed-tab-n {
+  font-size: 12px; color: var(--txt-3);
+  padding: 2px 7px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: color .2s ease, background .2s ease;
+}
+/* Активная вкладка залита акцентом. Контраст текста на салатовом даёт
+   тёмная краска --accent-ink, а не белый: белым по лаймовому нечитаемо. */
+.feed-tab.is-active {
+  color: var(--accent-ink, #0c1402);
+  background: var(--accent, var(--lime, #b6f01e));
+  border-color: transparent;
+  font-weight: 600;
+}
+.feed-tab.is-active .feed-tab-n {
+  color: var(--accent-ink, #0c1402);
+  background: rgba(0, 0, 0, 0.16);
+}
+.feed-tab:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 2px; }
+
+/* Метка темы на карточке — та же сущность, что и вкладка сверху: человек
+   видит, по какому тегу карточка попадёт в фильтр. */
+.post-card-tag {
+  display: inline-block;
+  padding: 3px 9px; border-radius: 999px;
+  font-size: 11.5px; letter-spacing: .02em;
+  color: var(--accent-bright);
+  background: rgba(182, 240, 30, 0.11);
+  border: 1px solid rgba(182, 240, 30, 0.22);
+}
+
+.feed-empty { color: var(--txt-2); font-size: 16px; margin: 8px 0 0; }
+.feed-reset {
+  font: inherit; color: var(--accent-bright); background: none;
+  border: 0; padding: 0; cursor: pointer; text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Карточки скрываются атрибутом hidden. Правило нужно потому, что
+   .post-card объявлена как display:flex, а это перебивает hidden. */
+.post-card[hidden] { display: none; }
+
+@media (max-width: 860px) {
+  .hero-feed { padding-top: 76px; }
+  .feed-head { grid-template-columns: 1fr; gap: 14px; align-items: start; }
+  .feed-lead { font-size: 15px; }
+  .feed-filters { top: 66px; gap: 6px; }
+  .feed-tab { padding: 8px 13px; font-size: 13.5px; }
+}
+
+/* ── Политика конфиденциальности ────────────────────────────────────────── */
+/* Правовой документ, а не посадочная: задача — чтобы человек быстро нашёл свой
+   пункт и убедился, что документ настоящий. Отсюда оглавление сверху и блок
+   реквизитов внизу. Компоненты собраны из тех же карточек, что и весь сайт
+   (--card + --line + скругление), поэтому страница не выпадает из стилистики. */
+.policy-updated { color: var(--txt-3); font-size: 14px; margin-top: 18px; }
+
+.policy-toc {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 22px 26px;
+}
+.policy-toc-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--txt-3); margin-bottom: 12px;
+}
+.policy-toc ol {
+  margin: 0; padding-left: 20px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px;
+}
+.policy-toc li { color: var(--txt-3); font-size: 15px; }
+.policy-toc a { color: var(--txt-2); text-decoration: none; }
+.policy-toc a:hover { color: var(--accent-bright); }
+
+/* scroll-margin — чтобы якорь из оглавления не уводил заголовок под липкую
+   шапку. Значение то же, что у заголовков статей блога. */
+.prose > h2[id] { scroll-margin-top: 90px; }
+
+.policy-req {
+  margin-top: 48px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 26px 28px;
+}
+.policy-req-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--txt-3); margin-bottom: 16px;
+}
+.policy-req-grid { display: flex; flex-direction: column; gap: 12px; }
+.req-row {
+  display: grid; grid-template-columns: 140px 1fr; gap: 16px;
+  font-size: 15px; line-height: 1.5;
+}
+.req-k { color: var(--txt-3); }
+.req-v { color: var(--txt-2); }
+.req-v a { color: var(--accent-bright); text-decoration: none; }
+.req-v a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
 /* ── Адаптив ────────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .dev-hero-grid { grid-template-columns: 1fr; }
@@ -239,4 +389,8 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   .cta-final h2 { font-size: 26px; }
   .dev-stat-v { font-size: 26px; }
   .dev-stats { gap: 24px; }
+  /* На узком экране две колонки оглавления и подпись-значение в реквизитах
+     схлопываются в одну — иначе строки рвутся по слогам. */
+  .policy-toc ol { grid-template-columns: 1fr; }
+  .req-row { grid-template-columns: 1fr; gap: 2px; }
 }

@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/dark.css">
+<link rel="stylesheet" href="/motion.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script defer src="/lead-config.js"></script>
 <!-- Yandex.Metrika counter -->
@@ -75,6 +76,12 @@
 .proj-case:hover .proj-case-screen img { transform: scale(1.03); }
 .proj-case-screen .proj-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--txt-3); font-size: 13px; padding: 24px; text-align: center; }
 .proj-placeholder-ic { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd); display: flex; align-items: center; justify-content: center; color: var(--accent-bright); }
+/* Заглушка проекта, для которого нет скриншота. Раньше здесь стояло
+   «Скриншот появится после загрузки» — в разделе, который обещает «реальные
+   сайты в работе», это читается как недоделанный сайт, а не как портфолио.
+   Домен проекта вместо служебной надписи выглядит намеренным решением. */
+.proj-placeholder-dom { font-size: 17px; font-weight: 700; font-family: var(--font-display); color: var(--txt-2); line-height: 1.3; word-break: break-word; }
+.proj-placeholder-note { font-size: 13px; color: var(--txt-3); line-height: 1.4; }
 .proj-case-info { padding: 40px 40px 40px; display: flex; flex-direction: column; }
 .proj-case-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-bright); margin: 0 0 10px; }
 .proj-case-title { font-size: 26px; font-weight: 700; font-family: var(--font-display); color: var(--txt); margin: 0 0 12px; line-height: 1.2; }
@@ -194,6 +201,7 @@
       <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
       </a>
+      <a class="nav-ic nav-ic-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer" aria-label="Дзен"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg></a>
       <button type="button" class="btn btn-lime btn-sm nav-cta" onclick="window.openLeadModal && window.openLeadModal()">Обсудить задачу</button>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
@@ -218,7 +226,7 @@
     <div class="dev-hero-grid">
       <div>
         <p class="eyebrow reveal">Разработка сайтов · под ключ</p>
-        <h1 class="reveal">Сайт, который <span class="accent">продаёт</span>,<br>а не просто существует</h1>
+        <h1 class="reveal">Разработка сайтов и лендингов <span class="accent">под ключ</span></h1>
         <p class="lead reveal">Разрабатываю продающие лендинги и корпоративные сайты с нуля: от прототипа и дизайна — до запуска и подключения рекламы. Работаю лично, без агентств и субподрядчиков.</p>
         <div class="btn-row reveal">
           <button type="button" class="btn btn-fill btn-lg" onclick="window.openLeadModal && window.openLeadModal()">Обсудить проект →</button>
@@ -267,7 +275,7 @@
   <div class="wrap">
     <div class="section-head reveal" style="max-width:640px;">
       <span class="eyebrow">Полный цикл</span>
-      <h2>Что входит в <span class="accent">разработку</span></h2>
+      <h2>Что входит в разработку <span class="accent">сайта под ключ</span></h2>
       <p>Берусь за проект с нуля — и передаю вам готовый инструмент продаж, а не просто красивую картинку.</p>
     </div>
 
@@ -316,7 +324,7 @@
   <div class="wrap">
     <div class="section-head reveal" style="max-width:640px;">
       <span class="eyebrow">Портфолио · 3 проекта</span>
-      <h2>Реальные <span class="accent">сайты</span> в работе</h2>
+      <h2>Портфолио: сайты, которые уже работают</h2>
       <p>Не шаблоны и не концепты — сайты, которые уже работают и приводят клиентов.</p>
     </div>
 
@@ -330,7 +338,8 @@
             <div class="proj-placeholder-ic">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
             </div>
-            Скриншот появится<br>после загрузки
+            <span class="proj-placeholder-dom">karatsapov.ru</span>
+            <span class="proj-placeholder-note">Этот сайт</span>
           </div>
         </div>
         <div class="proj-case-info">
@@ -401,17 +410,22 @@
             <div class="proj-placeholder-ic">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
             </div>
-            Скриншот появится<br>после загрузки
+            <span class="proj-placeholder-dom">проектирование-под-ключ.рф</span>
+            <span class="proj-placeholder-note">Сайт в работе у клиента</span>
           </div>
         </div>
         <div class="proj-case-info" style="direction: ltr;">
-          <p class="proj-case-eyebrow">Корпоративный сайт · B2B</p>
-          <h3 class="proj-case-title">Проектирование-под-ключ.рф</h3>
-          <p class="proj-case-lead">Корпоративный сайт для компании, специализирующейся на проектировании и получении разрешений на строительство коммерческой недвижимости в Москве и МО. Целевая аудитория — застройщики и инвесторы.</p>
+          <p class="proj-case-eyebrow">Корпоративный сайт · B2B · строительство</p>
+          <h3 class="proj-case-title">Сайт проектного бюро «Сфера»: 38 посадочных страниц под B2B-запросы</h3>
+          <p class="proj-case-lead">Инженерно-проектное бюро: проектирование коммерческой недвижимости и разрешения на строительство по Москве, Московской и Тверской областям. Ниша с длинным циклом сделки — клиент месяцами сам изучает процедуру до обращения. Построил структуру, которая ловит спрос на всех стадиях: от «что такое ГПЗУ» до «разрешение на строительство склада в Люберцах».</p>
           <div class="proj-case-metrics">
             <div class="proj-case-metric">
-              <div class="proj-case-metric-v">B2B</div>
-              <div class="proj-case-metric-l">фокус на доверие и экспертизу</div>
+              <div class="proj-case-metric-v">38</div>
+              <div class="proj-case-metric-l">индексируемых страниц вместо одного лендинга</div>
+            </div>
+            <div class="proj-case-metric">
+              <div class="proj-case-metric-v">113 000</div>
+              <div class="proj-case-metric-l">знаков экспертного текста</div>
             </div>
             <div class="proj-case-metric">
               <div class="proj-case-metric-v">+49%</div>
@@ -423,10 +437,12 @@
             </div>
           </div>
           <div class="tech-chips">
-            <span class="tech-chip">HTML/CSS/JS</span>
-            <span class="tech-chip">Коллтрекинг</span>
+            <span class="tech-chip">Next.js · статическая генерация</span>
+            <span class="tech-chip">12 типов Schema.org</span>
+            <span class="tech-chip">IndexNow</span>
+            <span class="tech-chip">Коллтрекинг Callibri</span>
             <span class="tech-chip">Яндекс Метрика</span>
-            <span class="tech-chip">SEO-оптимизация</span>
+            <span class="tech-chip">Автодеплой</span>
           </div>
           <a class="proj-case-link" href="https://xn-----6kchmccvcqimtidgflhe4b3i2g.xn--p1ai/" target="_blank" rel="noopener noreferrer" style="margin-top: 20px;">
             Открыть сайт
@@ -436,23 +452,25 @@
       </div>
       <div class="proj-case-body">
         <div>
-          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Задача и реализация</h4>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Структура под поисковый спрос</h4>
           <ul class="check-list">
-            <li>Разработка корпоративного сайта с акцентом на экспертность и доверие в B2B-сегменте</li>
-            <li>Раздел «Услуги» с детальным описанием этапов работы по каждому направлению</li>
-            <li>Блок реализованных объектов — формирование портфолио для застройщиков</li>
-            <li>FAQ по разрешительной документации — снятие типичных возражений</li>
-            <li>Адаптивная верстка под все устройства с быстрой загрузкой</li>
-            <li>Подготовка посадочных страниц под рекламные кампании в Яндекс Директ</li>
+            <li>6 страниц по направлениям проектирования: магазин, склад, производство, автосервис, административное здание, отель</li>
+            <li>6 страниц по получению разрешения — тот же набор типов, но под другой интент: документы, причины отказов, сроки</li>
+            <li>7 гео-страниц: Истра, Клин, Егорьевск, Колюбакино, Люберцы, Кашин, Солнечногорск — на каждой реальный объект компании</li>
+            <li>12 экспертных статей: ГПЗУ, инженерные изыскания, экспертиза документации, техусловия, легализация самостроя</li>
+            <li>«Проектирование склада» и «разрешение на строительство склада» — разные страницы с перелинковкой, а не дубли под похожие ключи</li>
+            <li>Лид-магнит: PDF-гид с чек-листом из 18 пунктов за подписку</li>
           </ul>
         </div>
         <div>
-          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Результат в рекламе</h4>
+          <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Техника и аналитика</h4>
           <ul class="check-list">
-            <li>Сайт запущен параллельно с контекстной рекламой в Яндекс Директ</li>
-            <li>Коллтрекинг связал звонки с конкретными рекламными кампаниями</li>
-            <li>После запуска нового сайта конверсия выросла — стоимость обращения снизилась на 36%</li>
-            <li>Новый сайт повысил доверие среди B2B-аудитории: инвесторы и застройщики</li>
+            <li>12 типов микроразметки Schema.org: FAQPage на 33 страницах, хлебные крошки на 37</li>
+            <li>Уникальные title и description на всех страницах — ноль дублей</li>
+            <li>IndexNow: мгновенное уведомление Яндекса и Bing вместо ожидания робота</li>
+            <li>Статическая генерация на Next.js — главная весит 92 КБ, изображения в WebP</li>
+            <li>Метрика с вебвизором, коллтрекинг Callibri, квиз-калькулятор в 3 шага, карта объектов</li>
+            <li>Автодеплой: правка в репозитории — сборка — выкладка, без ручной загрузки</li>
           </ul>
         </div>
       </div>
@@ -468,7 +486,8 @@
             <div class="proj-placeholder-ic">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
             </div>
-            Скриншот появится<br>после загрузки
+            <span class="proj-placeholder-dom">Classtrade</span>
+            <span class="proj-placeholder-note">Лендинг для образовательного проекта</span>
           </div>
         </div>
         <div class="proj-case-info">
@@ -526,7 +545,7 @@
   <div class="wrap">
     <div class="section-head reveal" style="max-width:600px;">
       <span class="eyebrow">Как это работает</span>
-      <h2>Этапы <span class="accent">работы</span></h2>
+      <h2>Этапы разработки <span class="accent">сайта</span></h2>
     </div>
     <div class="process-grid reveal">
       <div class="process-step">
@@ -563,7 +582,7 @@
   <div class="wrap">
     <div class="section-head reveal" style="max-width:600px;">
       <span class="eyebrow">Прозрачно</span>
-      <h2>Стоимость <span class="accent">разработки</span></h2>
+      <h2>Сколько стоит <span class="accent">разработка сайта</span></h2>
     </div>
     <div class="price-grid reveal">
       <div class="price-card">
@@ -583,7 +602,7 @@
       <div class="price-card featured">
         <div class="price-label">Корпоративный сайт</div>
         <div class="price-title">Многостраничный сайт</div>
-        <div class="price-amount">от 100 000 ₽<span> / проект</span></div>
+        <div class="price-amount">от 120 000 ₽<span> / проект</span></div>
         <div class="price-time">Срок: 14–21 рабочий день</div>
         <ul class="check-list" style="margin-top: 8px;">
           <li>Всё из тарифа «Лендинг»</li>
@@ -606,7 +625,7 @@
   <div class="wrap" style="max-width: 760px;">
     <div class="section-head reveal">
       <span class="eyebrow">Частые вопросы</span>
-      <h2>Вопросы и <span class="accent">ответы</span></h2>
+      <h2>Вопросы о <span class="accent">разработке сайтов</span></h2>
     </div>
     <div class="faq-list reveal">
       <div class="faq-item">
@@ -660,7 +679,7 @@
   <div class="wrap" style="max-width: 880px;">
     <div class="cta-final reveal">
       <span class="eyebrow center" style="display:block; text-align:center; margin-bottom:12px;">Давайте обсудим</span>
-      <h2>Готов обсудить <span class="accent">ваш сайт</span></h2>
+      <h2>Заказать <span class="accent">разработку сайта</span></h2>
       <p>Расскажите о задаче — я оценю объём, назову стоимость и сроки. Перезвоню лично, без менеджеров и шаблонных ответов.</p>
       <div class="btn-row" style="justify-content:center;">
         <button type="button" class="btn btn-fill btn-lg" onclick="window.openLeadModal && window.openLeadModal()">Обсудить проект →</button>
@@ -703,7 +722,7 @@
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
       <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>
@@ -762,5 +781,6 @@
 })();
 </script>
 <script defer src="/lead-modal.js"></script>
+<script defer src="/motion.js"></script>
 </body>
 </html>

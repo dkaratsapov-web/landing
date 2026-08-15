@@ -16,12 +16,13 @@ import { renderPage, seoConfig } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
+import * as politikaPage from './pages/politika.mjs';
 
 const SITE = 'https://karatsapov.ru';
 
 /* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
    которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
-const GENERATED_PAGES = [aboutPage, cenyPage];
+const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage];
 
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
@@ -69,6 +70,9 @@ copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
 copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
 copyFileSync(join(srcDir, 'dark.css'), join(outDir, 'dark.css'));
 copyFileSync(join(srcDir, 'landing.css'), join(outDir, 'landing.css'));
+// Общий слой движения — нужен и главной, и статическим, и генерируемым.
+copyFileSync(join(srcDir, 'motion.css'), join(outDir, 'motion.css'));
+copyFileSync(join(srcDir, 'motion.js'), join(outDir, 'motion.js'));
 copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
 // Компоненты страниц из layout.mjs (/about/, /ceny/, блог).
 copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
@@ -97,10 +101,81 @@ copyFileSync(join(srcDir, 'admin.html'), join(outDir, 'admin.html'));
 // SEO: рендерим лендинг в статический HTML, чтобы робот видел текст без JS.
 // Падение здесь валит сборку намеренно — молча выложить пустую главную хуже,
 // чем не выложить ничего.
+const content = JSON.parse(contentJson);
 const rootHtml = prerenderApp(
   results.map((r, i) => [JSX_FILES[i], r.compiled]),
-  JSON.parse(contentJson),
+  content,
 );
+
+/* Мета главной берём из content.json → блок seo. Раньше они были захардкожены
+   здесь, а блок seo в content.json никто не читал: владелец правил его через
+   /admin и не понимал, почему в выдаче ничего не меняется. Теперь источник
+   один. Отсутствие блока валит сборку — выложить главную без title хуже, чем
+   не выложить. */
+if (!content.seo || !content.seo.title || !content.seo.description) {
+  throw new Error('build: в content.json нет блока seo с title и description');
+}
+const META = {
+  title: content.seo.title,
+  description: content.seo.description,
+  ogTitle: content.seo.ogTitle || content.seo.title,
+  ogDescription: content.seo.ogDescription || content.seo.description,
+};
+const escAttr = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/* ── Микроразметка услуг и сертификатов ─────────────────────────────────────
+   Собирается из content.json, а не пишется руками: услуги и цены там уже
+   есть, и второй список неизбежно разъехался бы с первым — ровно так уже
+   случилось с ценами в мета-описаниях страниц услуг.
+
+   minPrice, а не price: в карточках стоит «от 30 000 ₽», и точная цена в
+   разметке противоречила бы тексту страницы. */
+const offerCatalog = {
+  '@type': 'OfferCatalog',
+  name: 'Услуги интернет-маркетинга',
+  itemListElement: (content.services || []).map((s, i) => {
+    const digits = String(s.price || '').replace(/[^\d]/g, '');
+    return {
+      '@type': 'Offer',
+      position: i + 1,
+      itemOffered: {
+        '@type': 'Service',
+        name: s.name,
+        description: s.result,
+        ...(s.url ? { url: SITE + s.url } : {}),
+        provider: { '@id': SITE + '/#person' },
+        areaServed: 'RU',
+        ...(s.works && s.works.length ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Что входит',
+            itemListElement: s.works.map((w) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: w } })),
+          },
+        } : {}),
+      },
+      ...(digits ? {
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          minPrice: Number(digits),
+          priceCurrency: 'RUB',
+        },
+      } : {}),
+    };
+  }),
+};
+
+/* Сертификаты как hasCredential. Для личного бренда это прямое подтверждение
+   квалификации: девять официальных сертификаций — самая сильная и при этом
+   единственная полностью проверяемая точка доверия на сайте, а в разметке её
+   до сих пор не было вовсе. */
+const credentials = (content.certs || []).map((c) => ({
+  '@type': 'EducationalOccupationalCredential',
+  name: c.title,
+  credentialCategory: 'certificate',
+  ...(c.issuer ? { recognizedBy: { '@type': 'Organization', name: c.issuer.split('·')[0].trim() } } : {}),
+  ...(c.file ? { url: SITE + '/' + c.file.replace(/^\//, '') } : {}),
+}));
 console.log('Prerendered #root:', (rootHtml.length / 1024).toFixed(1), 'KB of HTML');
 
 /* Подтверждение прав в вебмастерах. Проверка идёт по главной, поэтому теги
@@ -134,6 +209,9 @@ const scriptTags = [
   '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>',
   '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>',
   '  <script defer src="scroll.js"></script>',
+  // Микровзаимодействия по указателю. Отдельно от scroll.js: тот зависит от
+  // Lenis/GSAP с CDN, а этот работает всегда и сам по себе.
+  '  <script defer src="motion.js"></script>',
 ].join('\n');
 
 const html = `<!DOCTYPE html>
@@ -141,12 +219,12 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Даниил Карацапов — маркетолог | Контекстная реклама, таргет, GEO-продвижение</title>
-  <meta name="description" content="Маркетолог с 9+ лет опыта. Контекстная реклама в Яндекс Директ, таргет VK Ads, продвижение в Яндекс Картах. Работаю лично — без посредников. Заявки с первой недели." />
+  <title>${escAttr(META.title)}</title>
+  <meta name="description" content="${escAttr(META.description)}" />
   <link rel="canonical" href="https://karatsapov.ru/" />
 ${verifyTags}
-  <meta property="og:title" content="Даниил Карацапов — маркетолог" />
-  <meta property="og:description" content="Контекстная реклама, таргет VK Ads, GEO-продвижение. 9+ лет, 70+ ниш. Без посредников, результат с первой недели." />
+  <meta property="og:title" content="${escAttr(META.ogTitle)}" />
+  <meta property="og:description" content="${escAttr(META.ogDescription)}" />
   <meta property="og:url" content="${SITE}/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ru_RU" />
@@ -155,8 +233,8 @@ ${verifyTags}
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Даниил Карацапов — частный интернет-маркетолог" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Даниил Карацапов — маркетолог" />
-  <meta name="twitter:description" content="Контекстная реклама, таргет, GEO. 9+ лет, без посредников." />
+  <meta name="twitter:title" content="${escAttr(META.ogTitle)}" />
+  <meta name="twitter:description" content="${escAttr(META.ogDescription)}" />
   <meta name="twitter:image" content="${SITE}/assets/og/index.jpg" />
 
   <!-- .js включает reveal-анимации. Без JS (робот, упавший скрипт) контент
@@ -170,6 +248,7 @@ ${verifyTags}
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
+  <link rel="stylesheet" href="motion.css" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
   <link rel="preload" as="image" href="assets/portrait.jpg" fetchpriority="high" />
@@ -199,7 +278,17 @@ ${verifyTags}
         knowsAbout: ['Контекстная реклама', 'Яндекс Директ', 'Таргетированная реклама',
           'VK Ads', 'Яндекс Бизнес', 'Локальное продвижение', 'Веб-аналитика', 'Разработка сайтов'],
         knowsLanguage: 'ru',
+        email: 'd.karatsapov@gmail.com',
+        /* Опыт в digital начинается с 2019 года. Раньше сайт заявлял «с 2017»
+           и «9+ лет», что расходилось со страницей /about/ на том же сайте. */
+        hasOccupation: {
+          '@type': 'Occupation',
+          name: 'Интернет-маркетолог',
+          occupationalCategory: 'Marketing',
+        },
+        hasCredential: credentials,
         sameAs: ['https://t.me/Daniil_065',
+          'https://dzen.ru/karatsapov',
           'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c'],
       },
       {
@@ -211,10 +300,20 @@ ${verifyTags}
         image: SITE + '/assets/og/index.jpg',
         founder: { '@id': SITE + '/#person' },
         provider: { '@id': SITE + '/#person' },
-        areaServed: 'RU',
+        areaServed: { '@type': 'Country', name: 'Россия' },
         availableLanguage: 'Russian',
-        priceRange: 'от 30 000 ₽',
-        contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', availableLanguage: 'Russian' },
+        priceRange: 'от 12 000 ₽ до 90 000 ₽ в месяц',
+        telephone: '+7 996 347-00-65',
+        email: 'd.karatsapov@gmail.com',
+        hasOfferCatalog: offerCatalog,
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'customer service',
+          telephone: '+7 996 347-00-65',
+          email: 'd.karatsapov@gmail.com',
+          availableLanguage: 'Russian',
+          areaServed: 'RU',
+        },
       },
       {
         '@type': 'WebSite',
@@ -223,6 +322,20 @@ ${verifyTags}
         name: 'Даниил Карацапов — маркетолог',
         inLanguage: 'ru-RU',
         publisher: { '@id': SITE + '/#person' },
+      },
+      /* WebPage связывает саму страницу с сущностями выше. Без неё главная
+         остаётся набором несвязанных объектов: поисковик видит человека,
+         услугу и сайт, но не то, что эта страница — про них. */
+      {
+        '@type': 'WebPage',
+        '@id': SITE + '/#webpage',
+        url: SITE + '/',
+        name: META.title,
+        description: META.description,
+        inLanguage: 'ru-RU',
+        isPartOf: { '@id': SITE + '/#website' },
+        about: { '@id': SITE + '/#person' },
+        primaryImageOfPage: SITE + '/assets/og/index.jpg',
       },
     ],
   }, null, 2)}
@@ -242,7 +355,7 @@ ${verifyTags}
   <noscript><div><img src="https://mc.yandex.ru/watch/109681858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
 </head>
-<body>
+<body class="mo-grain">
   <!-- preloader disabled -->
   <div id="root">${rootHtml}</div>
 
@@ -349,6 +462,10 @@ const SITEMAP_PAGES = [
   { loc: '/about/', src: 'pages/about.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/ceny/', src: 'pages/ceny.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/contacts/', src: 'contacts/index.html', priority: '0.6', changefreq: 'yearly' },
+  /* Политика в карте сайта нужна: на неё ведут ссылки из каждой формы, и
+     поисковик всё равно её найдёт. Явное низкое priority показывает, что это
+     служебный документ, а не посадочная. */
+  { loc: '/politika/', src: 'pages/politika.mjs', priority: '0.2', changefreq: 'yearly' },
 ];
 
 /* Статьи в карту сайта. lastmod у статьи берём из фронтматтера (updated или

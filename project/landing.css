@@ -52,6 +52,19 @@ html, body {
 
 ::selection { background: var(--accent); color: #fff; }
 
+/* Страховка от tokens.css. Тот файл — вендорная светлая дизайн-система
+   (белый холст, синий акцент), и он задаёт цвет голым h1/h2/h3/p:
+   `color: var(--fg1)` → #1d1d1f. На тёмном лендинге это почти чёрный текст на
+   почти чёрном фоне. Сегодня этого не видно единственно потому, что каждый
+   заголовок и абзац на главной покрашен явно — классом или инлайново. Первый
+   же новый заголовок, добавленный без цвета, окажется невидимым, и искать
+   причину придётся в чужом файле.
+   landing.css подключается после tokens.css, поэтому одного правила хватает,
+   чтобы базовые элементы вернулись к тёмной палитре. Видимых изменений на
+   текущей вёрстке нет: там, где цвет задан явно, он и так специфичнее. */
+h1, h2, h3, h4, h5, h6 { color: var(--txt); }
+p { color: inherit; }
+
 a { color: var(--accent-bright); }
 a:hover { text-decoration: none; }
 
@@ -276,8 +289,13 @@ h2.section-title {
 .input:focus, .textarea:focus { border-color: var(--accent); background: rgba(255,255,255,0.06); }
 .input.err, .textarea.err { border-color: #ff5a4d; }
 .textarea { resize: vertical; min-height: 96px; }
-.consent { display: flex; gap: 10px; align-items: flex-start; color: var(--txt-3); font-size: 13px; line-height: 1.5; }
+/* Согласие на обработку ПД. Цвет — --txt-2, а не --txt-3: на карточке форма
+   даёт у --txt-3 контраст ~3.3:1 при 13px, это ниже порога WCAG AA (4.5:1).
+   Юридически значимый текст, набранный нечитаемо, читается как спрятанный. */
+.consent { display: flex; gap: 10px; align-items: flex-start; color: var(--txt-2); font-size: 13px; line-height: 1.5; }
 .consent input { margin-top: 3px; accent-color: var(--accent); width: 16px; height: 16px; flex: 0 0 auto; }
+.consent a { color: var(--accent-bright); text-decoration: underline; text-underline-offset: 2px; }
+.consent a:hover { text-decoration-thickness: 2px; }
 
 /* ---------- Pills / chips ---------- */
 .chip {
