@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Блог Даниила Карацапова</title>
+    <link>https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/</link>
+    <description>Разборы по контекстной рекламе, таргету и интернет-маркетингу</description>
+    <language>ru</language>
+    <atom:link href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Яндекс Директ или SEO — что выбрать малому бизнесу</title>
+      <link>https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/direkt-ili-seo/</link>
+      <guid isPermaLink="true">https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/direkt-ili-seo/</guid>
+      <description>Сравниваю контекстную рекламу и поисковое продвижение по деньгам, срокам и рискам. Когда Директ выгоднее SEO, когда наоборот и почему на дистанции их обычно совмещают.</description>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <author>Даниил Карацапов</author>
+    </item>
+    <item>
+      <title>Как продвигаться в Яндекс Картах — пошаговая инструкция</title>
+      <link>https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/prodvizhenie-v-yandex-kartah/</link>
+      <guid isPermaLink="true">https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/prodvizhenie-v-yandex-kartah/</guid>
+      <description>Что влияет на позицию организации в Яндекс Картах и как поднять карточку в выдаче: заполнение профиля, отзывы, фотографии, рубрики. Разбор по шагам для локального бизнеса.</description>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <author>Даниил Карацапов</author>
+    </item>
+    <item>
+      <title>Сколько стоит контекстная реклама в Яндекс Директ</title>
+      <link>https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/skolko-stoit-kontekstnaya-reklama/</link>
+      <guid isPermaLink="true">https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/skolko-stoit-kontekstnaya-reklama/</guid>
+      <description>Из чего складывается цена контекстной рекламы: работа специалиста, рекламный бюджет и стоимость клика. Разбираю на цифрах, сколько нужно на старт и почему «настройка за 5 000 ₽» обходится дороже всего.</description>
+      <pubDate>Sat, 15 Aug 2026 00:00:00 GMT</pubDate>
+      <author>Даниил Карацапов</author>
+    </item>
+  </channel>
+</rss>

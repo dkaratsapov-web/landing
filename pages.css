@@ -123,6 +123,97 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
 .cta-final h2 { font-size: 36px; margin: 0 0 16px; }
 .cta-final p { font-size: 17px; color: var(--txt-3); max-width: 520px; margin: 0 auto 32px; line-height: 1.6; }
 
+/* ── Блог: лента ────────────────────────────────────────────────────────── */
+.post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 26px; }
+.post-card {
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+  text-decoration: none; color: inherit;
+  transition: border-color .18s ease, transform .18s ease;
+}
+.post-card:hover { border-color: var(--accent-soft-bd); transform: translateY(-3px); }
+.post-card-cover { width: 100%; height: auto; aspect-ratio: 1200/630; object-fit: cover; display: block; }
+.post-card-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.post-card-meta { font-size: 13px; color: var(--txt-3); }
+.post-card-title { font-size: 19px; font-weight: 700; line-height: 1.3; margin: 0; color: var(--txt); }
+.post-card-desc { font-size: 15px; color: var(--txt-2); line-height: 1.55; margin: 0; flex: 1; }
+.post-card-more { font-size: 14px; color: var(--accent-bright); }
+
+/* ── Блог: статья ───────────────────────────────────────────────────────── */
+.wrap-narrow { max-width: 760px; }
+.post h1 { font-size: 40px; line-height: 1.15; margin: 12px 0 18px; }
+.post-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--txt-3); font-size: 14px; }
+.post-meta-sep { opacity: .5; }
+.post-cover { width: 100%; height: auto; border-radius: 16px; margin: 30px 0 8px; display: block; }
+.post-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.post-tag {
+  font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--accent-bright); background: var(--accent-soft);
+  border: 1px solid var(--accent-soft-bd); border-radius: 999px; padding: 5px 12px;
+}
+
+/* Оглавление: длинную статью читают по частям, а якоря дают ссылки на разделы. */
+.post-toc {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 22px 26px; margin: 32px 0;
+}
+.post-toc-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--txt-3); margin-bottom: 12px;
+}
+.post-toc ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.post-toc li { color: var(--txt-3); font-size: 15px; }
+.post-toc a { color: var(--txt-2); text-decoration: none; }
+.post-toc a:hover { color: var(--accent-bright); }
+
+/* ── Блог: текст статьи ─────────────────────────────────────────────────── */
+.prose { color: var(--txt-2); font-size: 17px; line-height: 1.7; }
+/* Отступы задаются только между соседями, поэтому первый и последний блок не
+   отрывают текст от заголовка и от блока автора. Селекторы намеренно одной
+   специфичности и различаются порядком: правило вида «.prose p { margin: 0 }»
+   специфичнее, чем «.prose > * + *», и молча схлопывало все абзацы. */
+.prose > * { margin: 0; }
+.prose > * + * { margin-top: 22px; }
+.prose > h2 {
+  font-size: 27px; line-height: 1.25; color: var(--txt);
+  margin-top: 48px; scroll-margin-top: 90px;
+}
+.prose > h3 { font-size: 20px; line-height: 1.3; color: var(--txt); margin-top: 34px; }
+.prose a { color: var(--accent-bright); text-decoration: underline; text-underline-offset: 3px; }
+.prose ul, .prose ol { margin: 0; padding-left: 24px; display: flex; flex-direction: column; gap: 10px; }
+.prose li { line-height: 1.6; }
+.prose li::marker { color: var(--accent); }
+.prose strong { color: var(--txt); font-weight: 700; }
+.prose img { width: 100%; height: auto; border-radius: 14px; display: block; }
+.prose blockquote {
+  margin: 0; padding: 18px 24px; border-left: 3px solid var(--accent);
+  background: var(--card); border-radius: 0 12px 12px 0; color: var(--txt-2);
+}
+.prose blockquote p { margin: 0; }
+.prose code {
+  background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: 2px 6px; font-size: .9em;
+}
+.prose pre {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 18px; overflow-x: auto;
+}
+.prose pre code { background: none; border: none; padding: 0; }
+.prose hr { border: none; border-top: 1px solid var(--line); margin: 40px 0; }
+.prose table { width: 100%; border-collapse: collapse; font-size: 15px; display: block; overflow-x: auto; }
+.prose th, .prose td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+.prose th { color: var(--txt); font-weight: 700; }
+
+/* ── Блог: автор ────────────────────────────────────────────────────────── */
+.post-author {
+  display: flex; gap: 18px; align-items: flex-start; margin-top: 52px;
+  padding: 24px; background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+}
+.post-author img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.post-author-name { font-weight: 700; font-size: 17px; color: var(--txt); }
+.post-author-bio { margin: 6px 0 0; font-size: 15px; line-height: 1.6; color: var(--txt-2); }
+.post-author-bio a { color: var(--accent-bright); }
+
 /* ── Скрытый от глаз, но читаемый скринридером ──────────────────────────── */
 .visually-hidden {
   position: absolute; width: 1px; height: 1px;
@@ -135,6 +226,10 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   .price-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
+  .post h1 { font-size: 30px; }
+  .prose { font-size: 16px; }
+  .prose > h2 { font-size: 23px; }
+  .post-author { flex-direction: column; gap: 14px; }
   .cta-final { padding: 40px 24px; }
   .cta-final h2 { font-size: 26px; }
   .dev-stat-v { font-size: 26px; }
