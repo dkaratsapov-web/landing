@@ -446,6 +446,14 @@ function About() {
                 return <span className="chip" key={i}><Ic size={15} />{ch}</span>;
               })}
             </div>
+            {/* Биография переехала на /about/ целиком: здесь блок отвечает на
+                вопрос «почему не агентство», а путь и принципы читают, кто
+                захотел разобраться. Раньше оба места пересказывали одно и то
+                же почти дословно. */}
+            <a href="/about/" className="about-more" style={{ display: 'inline-flex', alignItems: 'center', gap: 8,
+              marginTop: 24, color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 16 }}>
+              Мой путь и принципы работы<IconArrowRight size={17} />
+            </a>
           </div>
           <div className="stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28,
             padding: '36px', background: 'var(--tile-card)', border: '1px solid var(--line)', borderRadius: 'var(--r-lg)' }}>

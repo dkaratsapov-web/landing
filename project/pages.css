@@ -92,6 +92,33 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
 .cert-card-title { font-weight: 700; font-size: 15px; line-height: 1.35; color: var(--txt); margin-top: 12px; }
 .cert-card-issuer { color: var(--txt-3); font-size: 13px; margin-top: 5px; }
 
+/* Перечень квалификаций строками — вариант для /about/. Галерея с
+   миниатюрами осталась на главной, здесь она была бы дословным повтором
+   полстраницы. Строка даёт то же доказательство компактнее и читается
+   сверху вниз как список. */
+.cert-list { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.cert-row {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto;
+  gap: 16px; align-items: center;
+  padding: 16px 20px; text-decoration: none; color: inherit;
+  border-bottom: 1px solid var(--line);
+  transition: background .18s ease;
+}
+.cert-row:last-child { border-bottom: none; }
+.cert-row:hover { background: var(--card); }
+.cert-row-title { font-weight: 600; font-size: 15.5px; color: var(--txt); }
+.cert-row-issuer { color: var(--txt-3); font-size: 14px; }
+.cert-row-open {
+  font-size: 12px; font-weight: 700; letter-spacing: .06em;
+  color: var(--accent-bright); border: 1px solid var(--accent-soft-bd);
+  border-radius: 999px; padding: 4px 10px;
+}
+@media (max-width: 700px) {
+  .cert-row { grid-template-columns: 1fr auto; gap: 4px 14px; }
+  .cert-row-issuer { grid-column: 1; font-size: 13px; }
+  .cert-row-open { grid-row: 1 / span 2; grid-column: 2; }
+}
+
 /* ── Таблица прайса ─────────────────────────────────────────────────────── */
 .table-scroll { overflow-x: auto; margin-top: 24px; }
 .price-table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 15px; }

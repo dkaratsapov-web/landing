@@ -152,11 +152,16 @@ export function render() {
         <p class="tl-text" style="margin:10px 0 0;">${t}</p>
       </div>`).join('\n');
 
-  const certs = CERTS.map(([title, issuer, slug]) => `      <a class="cert-card" href="/assets/certs/${slug}.pdf" target="_blank" rel="noopener noreferrer">
-        <img src="/assets/certs/${slug}.jpg" alt="${title} — сертификат Даниила Карацапова" loading="lazy" width="300" height="212">
-        <div class="cert-card-title">${title}</div>
-        <div class="cert-card-issuer">${issuer}</div>
-      </a>`).join('\n');
+  /* Список строками, без превью. Галерея сертификатов с миниатюрами и
+     лайтбоксом живёт на главной — там она работает как доказательство по ходу
+     чтения. Дублировать её здесь картинка в картинку значило повторять
+     полстраницы; на странице специалиста уместнее сухой перечень
+     квалификаций со ссылками на оригиналы. */
+  const certs = CERTS.map(([title, issuer, slug]) => `        <a class="cert-row" href="/assets/certs/${slug}.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="cert-row-title">${title}</span>
+          <span class="cert-row-issuer">${issuer}</span>
+          <span class="cert-row-open">PDF</span>
+        </a>`).join('\n');
 
   const faq = faqItems(FAQ);
 
@@ -224,8 +229,8 @@ ${principles}
   <div class="wrap">
     <div class="eyebrow reveal">Подтверждённая экспертиза</div>
     <h2 class="reveal">Сертификаты Яндекса, Google и Roistat</h2>
-    <p class="lead reveal">Официальные сертификации Яндекса и Google, партнёрский статус Roistat. Каждый сертификат открывается в оригинале — нажмите, чтобы посмотреть.</p>
-    <div class="certs-grid reveal">
+    <p class="lead reveal">Девять официальных сертификаций Яндекса и Google и партнёрский статус Roistat. Каждая строка открывает оригинал в PDF.</p>
+    <div class="cert-list reveal">
 ${certs}
     </div>
   </div>
