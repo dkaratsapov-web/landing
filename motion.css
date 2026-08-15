@@ -1,0 +1,263 @@
+/* motion.css — общий слой движения. Подключается на всех страницах сайта:
+   на главной (после landing.css) и на статических/генерируемых (после
+   dark.css + pages.css).
+
+   Зачем отдельный файл. Движение на сайте было размазано: главная получала
+   Lenis + GSAP с CDN, остальные страницы — только IntersectionObserver из
+   layout.mjs, а шесть исторических страниц не получали почти ничего. Здесь
+   собрано то, что работает везде и без единой строчки JavaScript, — на
+   scroll-driven анимациях CSS (`animation-timeline`), которые в 2026 году
+   вышли в кроссбраузерный baseline. Считает их композитор, а не главный
+   поток, поэтому прокрутка не дёргается даже на слабом телефоне.
+
+   Правила игры:
+   1. Всё внутри @supports — там, где scroll-timeline нет, страница просто
+      остаётся статичной и полностью читаемой. Ни один текст не прячется
+      навсегда.
+   2. Всё выключается при prefers-reduced-motion. Блок в конце файла —
+      единственная точка, где это делается, чтобы ничего не забылось.
+   3. Цвета берутся из уже существующих переменных. На главной это --accent
+      (landing.css), на остальных страницах --lime (dark.css). Отсюда
+      двухступенчатый var() с общим запасным значением.
+*/
+
+:root {
+  --mo-accent:      var(--accent, var(--lime, #b6f01e));
+  --mo-accent-br:   var(--accent-bright, var(--lime-bright, #c4f53e));
+  --mo-ease:        cubic-bezier(.16, .7, .3, 1);
+}
+
+/* ══ Полоса прогресса чтения ══════════════════════════════════════════════
+   Тонкая линия вверху, растущая по мере прокрутки страницы. Делается на
+   body::after без единого тега разметки: scroll(root block) берёт прогресс
+   у корневого скроллера напрямую.
+
+   Для длинных страниц (блог, политика, кейсы) это дешёвый ответ на вопрос
+   «сколько ещё осталось» — читатель реже уходит, когда видит конец. */
+@supports (animation-timeline: scroll()) {
+  body::after {
+    content: '';
+    position: fixed; inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 200;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--mo-accent), var(--mo-accent-br));
+    pointer-events: none;
+    animation: mo-progress linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes mo-progress { to { transform: scaleX(1); } }
+
+/* ══ Появление секций по скроллу ══════════════════════════════════════════
+   Апгрейд существующего .reveal. Раньше класс .in навешивал
+   IntersectionObserver — то есть появление зависело от JS и работало только
+   там, где скрипт подключён. view() привязывает анимацию к положению
+   элемента во вьюпорте средствами самого браузера.
+
+   Переопределяем только там, где view-timeline поддерживается, и только для
+   .js .reveal — то есть в точности для тех элементов, которые старый код и
+   так прятал. Класс .in продолжает работать: если JS успел его навесить,
+   элемент виден в любом случае. */
+@supports (animation-timeline: view()) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    animation: mo-reveal .01s linear both;
+    animation-timeline: view();
+    /* Полностью проявлен, когда элемент вошёл в кадр на 18% высоты вьюпорта,
+       и не гаснет при уходе вверх: cover 18% → cover 42%. */
+    animation-range: cover 8% cover 38%;
+    transition: none;
+  }
+  .js .reveal.in { opacity: 1; transform: none; }
+}
+@keyframes mo-reveal {
+  to { opacity: 1; transform: none; }
+}
+
+/* Каскад для соседей внутри сетки: карточки услуг, кейсов, сертификатов
+   появляются не разом, а с небольшой задержкой друг за другом. Задержка
+   задаётся сдвигом диапазона, а не animation-delay: у scroll-timeline
+   задержка во времени смысла не имеет — прогресс считается от прокрутки. */
+@supports (animation-timeline: view()) {
+  .mo-stagger > * {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: mo-reveal .01s linear both;
+    animation-timeline: view();
+    animation-range: cover 6% cover 34%;
+  }
+  .mo-stagger > *:nth-child(2) { animation-range: cover 9% cover 37%; }
+  .mo-stagger > *:nth-child(3) { animation-range: cover 12% cover 40%; }
+  .mo-stagger > *:nth-child(4) { animation-range: cover 15% cover 43%; }
+  .mo-stagger > *:nth-child(5) { animation-range: cover 18% cover 46%; }
+  .mo-stagger > *:nth-child(n+6) { animation-range: cover 21% cover 49%; }
+}
+
+/* ══ Параллакс без JS ═════════════════════════════════════════════════════
+   Мягкий сдвиг по вертикали, привязанный к прохождению элемента через кадр.
+   На главной этим занимался GSAP по атрибуту data-gsap-parallax; здесь то же
+   самое получают страницы, куда GSAP не подключён. Амплитуда намеренно
+   маленькая: параллакс должен читаться как глубина, а не как аттракцион. */
+@supports (animation-timeline: view()) {
+  .mo-parallax {
+    animation: mo-parallax linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+    will-change: transform;
+  }
+}
+@keyframes mo-parallax {
+  from { transform: translateY(var(--mo-par, 22px)); }
+  to   { transform: translateY(calc(var(--mo-par, 22px) * -1)); }
+}
+
+/* ══ Липкий заголовок секции ══════════════════════════════════════════════
+   Заголовок слегка уезжает и гаснет, когда секция уходит вверх. Приём из
+   «редакционных» лендингов 2026: движение подсказывает, что раздел
+   закончился, без разделительных линий. */
+@supports (animation-timeline: view()) {
+  .mo-fade-out {
+    animation: mo-fade-out linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 90%;
+  }
+}
+@keyframes mo-fade-out {
+  to { opacity: 0; transform: translateY(-24px); }
+}
+
+/* ══ Зерно ════════════════════════════════════════════════════════════════
+   Плёночное зерно поверх страницы. В 2026-м фактуру снова делают текстурой,
+   а не WebGL: SVG-шум весит меньше килобайта, рисуется один раз и не грузит
+   GPU. На больших тёмных заливках он заодно маскирует полосы градиента
+   (бандинг) — на плоском чёрном это самый заметный дефект.
+
+   Непрозрачность 3.5% — на грани различимости: зерно должно чувствоваться,
+   а не выглядеть грязью на экране. */
+.mo-grain::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: mo-grain 700ms steps(1) infinite;
+}
+@keyframes mo-grain {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-3%, 2%); }
+  50%  { transform: translate(2%, -3%); }
+  75%  { transform: translate(-2%, -2%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ══ Типографика ══════════════════════════════════════════════════════════
+   text-wrap: balance выравнивает длину строк в заголовке — исчезают
+   «висячие» одиночные слова на последней строке. pretty делает то же мягче
+   для абзацев, не трогая производительность на длинном тексте.
+   Поддержка в 2026-м практически повсеместная, а деградация безвредна:
+   старый браузер просто переносит строки как раньше. */
+h1, h2, h3, .display, .section-title, .hero h1 {
+  text-wrap: balance;
+}
+p, .lead, .prose > p {
+  text-wrap: pretty;
+}
+
+/* ══ Кинетический заголовок ═══════════════════════════════════════════════
+   Заголовок героя выезжает по словам. Слова разбивает мелкий скрипт в
+   motion.js; пока он не отработал (или не отработает вовсе), заголовок
+   отображается как обычный текст — разметка не ломается. */
+.mo-kinetic { display: inline; }
+.mo-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.42em) rotate(1.4deg);
+  animation: mo-word-in .78s var(--mo-ease) both;
+  animation-delay: calc(var(--mo-i, 0) * 62ms);
+}
+@keyframes mo-word-in {
+  to { opacity: 1; transform: none; }
+}
+
+/* ══ Магнитная кнопка ═════════════════════════════════════════════════════
+   Смещение задаёт motion.js через --mo-mx/--mo-my. Здесь только переход,
+   чтобы кнопка возвращалась плавно, а не рывком. */
+.mo-magnetic {
+  transform: translate(var(--mo-mx, 0), var(--mo-my, 0));
+  transition: transform .35s var(--mo-ease);
+}
+.mo-magnetic:active { transition-duration: .08s; }
+
+/* ══ Подсветка карточки под курсором ══════════════════════════════════════
+   Мягкое акцентное пятно, следующее за указателем. Координаты приходят из
+   motion.js в --mo-x/--mo-y. Пятно живёт в ::after поверх фона, но под
+   контентом, поэтому текст не тускнеет. */
+.mo-spot { position: relative; isolation: isolate; }
+.mo-spot::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity .35s ease;
+  background: radial-gradient(
+    260px circle at var(--mo-x, 50%) var(--mo-y, 50%),
+    color-mix(in srgb, var(--mo-accent) 16%, transparent),
+    transparent 70%
+  );
+}
+.mo-spot:hover::after { opacity: 1; }
+
+/* ══ Переходы между страницами ════════════════════════════════════════════
+   View Transitions для межстраничной навигации. Сайт многостраничный, и без
+   них каждый переход — белая вспышка и прыжок к началу документа. С ними
+   страницы перетекают друг в друга.
+
+   Кроссдокументные переходы в 2026-м есть не везде (Firefox ещё догоняет),
+   поэтому это чистое прогрессивное улучшение: где не поддерживается —
+   обычная навигация, как раньше. */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root) {
+  animation: mo-page-out .22s var(--mo-ease) both;
+}
+::view-transition-new(root) {
+  animation: mo-page-in .34s var(--mo-ease) both;
+}
+@keyframes mo-page-out { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes mo-page-in { from { opacity: 0; transform: translateY(14px); } }
+
+/* Шапка и подвал одинаковы на всех страницах — закрепляем их как
+   непрерывные элементы, чтобы они не мигали вместе с остальной страницей. */
+.nav, .footer { view-transition-name: none; }
+
+/* ══ Отключение движения ══════════════════════════════════════════════════
+   Единственное место, где гасится всё добавленное выше. Пользователь,
+   попросивший систему убрать анимации, получает статичную страницу — но
+   полностью читаемую: opacity и transform принудительно возвращаются в
+   нормальное состояние, иначе часть контента осталась бы невидимой. */
+@media (prefers-reduced-motion: reduce) {
+  body::after { display: none; }
+  .mo-grain::before { animation: none; }
+
+  .js .reveal,
+  .mo-stagger > *,
+  .mo-parallax,
+  .mo-fade-out,
+  .mo-word {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .mo-magnetic { transform: none !important; transition: none !important; }
+  .mo-spot::after { display: none; }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+}

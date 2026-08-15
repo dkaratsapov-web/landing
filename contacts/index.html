@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/dark.css">
+<link rel="stylesheet" href="/motion.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script defer src="/lead-config.js"></script>
 <!-- Yandex.Metrika counter -->
@@ -46,7 +47,14 @@
   a.contact-card:hover { border-color: var(--lime-glow); }
   a.contact-card:hover .ic { background: var(--lime); color: var(--lime-ink); }
   .contact-card .ct-l { display: block; color: var(--muted-2); font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
-  .contact-card .ct-v { display: block; color: var(--ink); font-size: 17px; font-weight: 600; line-height: 1.3; word-break: break-word; }
+  /* word-break: break-word рвал адрес почты в произвольном месте
+     («…gmail.c / om»). overflow-wrap ломает строку только когда она реально
+     не влезает, и предпочитает подсказанную точку — <wbr> перед @ в разметке.
+     Тогда перенос выглядит осмысленно: имя / домен. */
+  .contact-card .ct-v { display: block; color: var(--ink); font-size: 17px; font-weight: 600; line-height: 1.3; word-break: normal; overflow-wrap: break-word; }
+  /* Почта длиннее остальных значений — на шаг мельче, чтобы в большинстве
+     ширин помещаться в одну строку. */
+  .contact-card .ct-v.ct-mail { font-size: 15.5px; letter-spacing: -0.01em; }
   .contact-card .ct-sub { display: block; color: var(--muted); font-size: 13.5px; line-height: 1.4; margin-top: 4px; }
   .info-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
   .info-pill { display: inline-flex; align-items: center; gap: 9px; padding: 12px 18px; border-radius: var(--r-pill);
@@ -102,6 +110,7 @@
       <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
       </a>
+      <a class="nav-ic nav-ic-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer" aria-label="Дзен"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg></a>
       <a class="btn btn-lime btn-sm nav-cta" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
@@ -121,7 +130,7 @@
   <div class="wrap">
     <div class="section-head reveal" style="max-width: 760px;">
       <p class="eyebrow">Контакты</p>
-      <h1>Связаться <span class="accent">со мной</span></h1>
+      <h1>Контакты <span class="accent">интернет-маркетолога</span></h1>
       <p>Отвечаю лично и быстро — обычно в течение пары часов в рабочее время. Выбирайте удобный способ связи: напишите в мессенджер, позвоните или отправьте письмо.</p>
     </div>
   </div>
@@ -172,7 +181,7 @@
         <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg></span>
         <span>
           <span class="ct-l">E-mail</span>
-          <span class="ct-v">d.karatsapov@gmail.com</span>
+          <span class="ct-v ct-mail">d.karatsapov<wbr>@gmail.com</span>
           <span class="ct-sub">Для писем, документов и КП</span>
         </span>
       </a>
@@ -201,7 +210,7 @@
 <section class="section sec-tight" data-screen-label="CTA">
   <div class="wrap">
     <div class="card" style="text-align: center; padding: 56px 32px; display: flex; flex-direction: column; align-items: center; gap: 18px;">
-      <h2 style="margin: 0;">Расскажите о своей задаче</h2>
+      <h2 style="margin: 0;">Заказать консультацию маркетолога</h2>
       <p style="color: var(--muted); max-width: 560px; margin: 0; font-size: 16px; line-height: 1.5;">Напишите пару слов о проекте — отвечу, задам уточняющие вопросы и предложу план продвижения с ориентиром по срокам и бюджету.</p>
       <div class="btn-row" style="justify-content: center;">
         <a class="btn btn-lime" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Написать в Telegram <span class="arr">→</span></a>
@@ -243,7 +252,7 @@
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
       <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>
@@ -281,5 +290,6 @@
   })();
 </script>
 <script defer src="/lead-modal.js"></script>
+<script defer src="/motion.js"></script>
 </body>
 </html>

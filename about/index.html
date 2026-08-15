@@ -26,6 +26,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
+<link rel="stylesheet" href="/motion.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
 <script defer src="/lead-config.js"></script>
@@ -46,7 +47,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Чем частный маркетолог лучше агентства?","acceptedAnswer":{"@type":"Answer","text":"Тем, что вы получаете время специалиста, а не его подпись под работой стажёра. Я работал в трёх агентствах и дорос там до тимлида команды контекстологов, поэтому говорю по опыту: клиентский проект почти всегда ведёт джуниор, а senior подключается точечно. Минус частного специалиста назову честно: я один, поэтому не возьму проект, где нужна команда из пяти человек в режиме 24/7."}},{"@type":"Question","name":"Вы только настраиваете рекламу?","acceptedAnswer":{"@type":"Answer","text":"Нет, и это принципиально. Кроме Яндекс Директа работаю с VK Ads, Telegram Ads, Промостраницами, занимаюсь SEO-оптимизацией, настраиваю сквозную аналитику и сам пишу сайты и приложения. Поэтому могу взять маркетинг под ключ: не «привёл трафик, дальше не моя зона», а вся связка до заявки и её учёта."}},{"@type":"Question","name":"Сколько проектов вы ведёте одновременно?","acceptedAnswer":{"@type":"Answer","text":"Ограниченное число — столько, чтобы каждому хватало внимания. Поэтому иногда я отказываю в старте и предлагаю подождать освободившийся слот. Это неудобно, но лучше, чем взять проект и вести его формально."}},{"@type":"Question","name":"Вы работаете по договору?","acceptedAnswer":{"@type":"Answer","text":"Да. Работаю официально, с договором и закрывающими документами. Условия, объём работ и сроки фиксируются письменно до старта."}},{"@type":"Question","name":"С каким бюджетом есть смысл приходить?","acceptedAnswer":{"@type":"Answer","text":"Рекламный бюджет от 50 000 ₽ в месяц — ниже этой отметки данных для оптимизации накапливается слишком мало, и реклама не успевает выйти на стабильный результат. Если бюджет меньше, честнее начать с гео-сервисов: в Яндекс Картах и 2ГИС заявки дешевле."}},{"@type":"Question","name":"Что если результата не будет?","acceptedAnswer":{"@type":"Answer","text":"Гарантировать конкретное число заявок не может никто — это зависит и от спроса, и от того, как вы обрабатываете лиды. Что я гарантирую: прозрачность и разбор причин. Если после теста видно, что канал не окупается, я говорю об этом прямо и предлагаю альтернативу, а не продолжаю осваивать бюджет."}},{"@type":"Question","name":"Как с вами начать работать?","acceptedAnswer":{"@type":"Answer","text":"Напишите в Telegram или оставьте номер — созвонимся и разберём задачу. Консультация бесплатная: на ней я говорю, есть ли смысл в рекламе для вашей ниши, и называю вилку по бюджету и срокам."}}]}</script>
 
 </head>
-<body>
+<body class="mo-grain">
 
 <div class="bg-fx">
   <div class="glow g1"></div>
@@ -84,6 +85,9 @@
       </a>
       <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
+      </a>
+      <a class="nav-ic nav-ic-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer" aria-label="Дзен">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>
       </a>
       <a class="btn btn-lime btn-sm nav-cta" href="/contacts/">Обсудить задачу</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
@@ -145,7 +149,7 @@
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Путь</div>
-    <h2 class="reveal">Как я пришёл к своей практике</h2>
+    <h2 class="reveal">Опыт в интернет-маркетинге с 2019 года</h2>
     <div class="tl reveal">
       <div class="tl-item">
         <div class="tl-num">1</div>
@@ -172,7 +176,7 @@
         <div class="tl-num">4</div>
         <div class="tl-body">
           <h3 class="tl-title">2025 — своя практика</h3>
-          <p class="tl-text">Ушёл из найма и работаю на себя. Причина простая: в агентстве между клиентом и специалистом всегда стоит менеджер, и часть смысла теряется по дороге. Сейчас клиент говорит напрямую с тем, кто делает работу.</p>
+          <p class="tl-text">Ушёл из найма и работаю на себя. Причина простая: в агентстве между клиентом и специалистом всегда стоит менеджер, и часть смысла теряется по дороге. Сейчас клиент говорит напрямую с тем, кто делает работу. К этому моменту накопленного опыта хватает, чтобы брать проекты на комплексное продвижение под ключ: не отдельную услугу, а связку «трафик — посадочная — аналитика» целиком, с одной точкой ответственности.</p>
         </div>
       </div>
     </div>
@@ -182,7 +186,7 @@
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Инструменты</div>
-    <h2 class="reveal">С чем я работаю</h2>
+    <h2 class="reveal">Инструменты: Яндекс Директ, VK Ads, аналитика</h2>
     <p class="lead reveal">Не «полный спектр услуг», а инструменты, которыми владею лично и за результат которых отвечаю.</p>
     <div class="price-grid reveal">
       <a class="price-card" href="/kontekstnaya-reklama/" style="text-decoration:none;">
@@ -220,7 +224,7 @@
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Как я работаю</div>
-    <h2 class="reveal">Шесть принципов</h2>
+    <h2 class="reveal">Принципы работы с клиентами</h2>
     <p class="lead reveal">Это не декларация о намерениях, а то, из чего складывается разница между работой с человеком и работой с подрядчиком.</p>
     <div class="price-grid reveal">
       <div class="price-card">
@@ -254,7 +258,7 @@
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Подтверждённая экспертиза</div>
-    <h2 class="reveal">Сертификаты</h2>
+    <h2 class="reveal">Сертификаты Яндекса, Google и Roistat</h2>
     <p class="lead reveal">Официальные сертификации Яндекса и Google, партнёрский статус Roistat. Каждый сертификат открывается в оригинале — нажмите, чтобы посмотреть.</p>
     <div class="certs-grid reveal">
       <a class="cert-card" href="/assets/certs/roistat.pdf" target="_blank" rel="noopener noreferrer">
@@ -309,36 +313,15 @@
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Вопросы</div>
-    <h2 class="reveal">О работе со мной</h2>
+    <h2 class="reveal">Вопросы о работе с частным маркетологом</h2>
     <div class="faq-list reveal">
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">Чем частный маркетолог лучше агентства?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">Тем, что вы получаете время специалиста, а не его подпись под работой стажёра. Я работал в трёх агентствах и дорос там до тимлида команды контекстологов, поэтому говорю по опыту: клиентский проект почти всегда ведёт джуниор, а senior подключается точечно. Минус частного специалиста назову честно: я один, поэтому не возьму проект, где нужна команда из пяти человек в режиме 24/7.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">Вы только настраиваете рекламу?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">Нет, и это принципиально. Кроме Яндекс Директа работаю с VK Ads, Telegram Ads, Промостраницами, занимаюсь SEO-оптимизацией, настраиваю сквозную аналитику и сам пишу сайты и приложения. Поэтому могу взять маркетинг под ключ: не «привёл трафик, дальше не моя зона», а вся связка до заявки и её учёта.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">Сколько проектов вы ведёте одновременно?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">Ограниченное число — столько, чтобы каждому хватало внимания. Поэтому иногда я отказываю в старте и предлагаю подождать освободившийся слот. Это неудобно, но лучше, чем взять проект и вести его формально.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">Вы работаете по договору?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">Да. Работаю официально, с договором и закрывающими документами. Условия, объём работ и сроки фиксируются письменно до старта.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">С каким бюджетом есть смысл приходить?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">Рекламный бюджет от 50 000 ₽ в месяц — ниже этой отметки данных для оптимизации накапливается слишком мало, и реклама не успевает выйти на стабильный результат. Если бюджет меньше, честнее начать с гео-сервисов: в Яндекс Картах и 2ГИС заявки дешевле.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">Что если результата не будет?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">Гарантировать конкретное число заявок не может никто — это зависит и от спроса, и от того, как вы обрабатываете лиды. Что я гарантирую: прозрачность и разбор причин. Если после теста видно, что канал не окупается, я говорю об этом прямо и предлагаю альтернативу, а не продолжаю осваивать бюджет.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">Как с вами начать работать?</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">Напишите в Telegram или оставьте номер — созвонимся и разберём задачу. Консультация бесплатная: на ней я говорю, есть ли смысл в рекламе для вашей ниши, и называю вилку по бюджету и срокам.</div>
-      </div>
+      <details class="faq-item"><summary>Чем частный маркетолог лучше агентства?<span class="sign"></span></summary><div class="answer">Тем, что вы получаете время специалиста, а не его подпись под работой стажёра. Я работал в трёх агентствах и дорос там до тимлида команды контекстологов, поэтому говорю по опыту: клиентский проект почти всегда ведёт джуниор, а senior подключается точечно. Минус частного специалиста назову честно: я один, поэтому не возьму проект, где нужна команда из пяти человек в режиме 24/7.</div></details>
+      <details class="faq-item"><summary>Вы только настраиваете рекламу?<span class="sign"></span></summary><div class="answer">Нет, и это принципиально. Кроме Яндекс Директа работаю с VK Ads, Telegram Ads, Промостраницами, занимаюсь SEO-оптимизацией, настраиваю сквозную аналитику и сам пишу сайты и приложения. Поэтому могу взять маркетинг под ключ: не «привёл трафик, дальше не моя зона», а вся связка до заявки и её учёта.</div></details>
+      <details class="faq-item"><summary>Сколько проектов вы ведёте одновременно?<span class="sign"></span></summary><div class="answer">Ограниченное число — столько, чтобы каждому хватало внимания. Поэтому иногда я отказываю в старте и предлагаю подождать освободившийся слот. Это неудобно, но лучше, чем взять проект и вести его формально.</div></details>
+      <details class="faq-item"><summary>Вы работаете по договору?<span class="sign"></span></summary><div class="answer">Да. Работаю официально, с договором и закрывающими документами. Условия, объём работ и сроки фиксируются письменно до старта.</div></details>
+      <details class="faq-item"><summary>С каким бюджетом есть смысл приходить?<span class="sign"></span></summary><div class="answer">Рекламный бюджет от 50 000 ₽ в месяц — ниже этой отметки данных для оптимизации накапливается слишком мало, и реклама не успевает выйти на стабильный результат. Если бюджет меньше, честнее начать с гео-сервисов: в Яндекс Картах и 2ГИС заявки дешевле.</div></details>
+      <details class="faq-item"><summary>Что если результата не будет?<span class="sign"></span></summary><div class="answer">Гарантировать конкретное число заявок не может никто — это зависит и от спроса, и от того, как вы обрабатываете лиды. Что я гарантирую: прозрачность и разбор причин. Если после теста видно, что канал не окупается, я говорю об этом прямо и предлагаю альтернативу, а не продолжаю осваивать бюджет.</div></details>
+      <details class="faq-item"><summary>Как с вами начать работать?<span class="sign"></span></summary><div class="answer">Напишите в Telegram или оставьте номер — созвонимся и разберём задачу. Консультация бесплатная: на ней я говорю, есть ли смысл в рекламе для вашей ниши, и называю вилку по бюджету и срокам.</div></details>
     </div>
   </div>
 </section>
@@ -346,7 +329,7 @@
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
-      <h2>Разберём вашу задачу</h2>
+      <h2>Заказать консультацию интернет-маркетолога</h2>
       <p>Консультация бесплатная. Скажу честно, есть ли смысл в рекламе для вашей ниши, и назову вилку по бюджету и срокам.</p>
       <div class="btn-row" style="justify-content:center;">
         <a class="btn btn-fill btn-lg" href="/contacts/">Оставить заявку</a>
@@ -386,8 +369,8 @@
       </div>
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
-      <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <span style="color: var(--muted); font-size: 13px; line-height: 1.5;">© 2026 Карацапов Даниил. Интернет-маркетинг.</span>
+      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>
@@ -422,16 +405,14 @@
   setTimeout(() => targets.forEach(t => t.classList.add('in')), 1500);
 })();
 
-// FAQ accordion
+// FAQ: раскрытие обеспечивает нативный <details>, скрипт нужен только чтобы
+// открытым оставался один пункт — как на остальных страницах сайта.
 (function () {
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-    });
-  });
+  const items = document.querySelectorAll('details.faq-item');
+  items.forEach(d => d.addEventListener('toggle', () => {
+    if (!d.open) return;
+    items.forEach(o => { if (o !== d) o.open = false; });
+  }));
 })();
 
 // nav dropdown
@@ -446,5 +427,6 @@
 })();
 </script>
 <script defer src="/lead-modal.js"></script>
+<script defer src="/motion.js"></script>
 </body>
 </html>

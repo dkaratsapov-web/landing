@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="/dark.css">
+<link rel="stylesheet" href="/motion.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <script defer src="/lead-config.js"></script>
 <!-- Yandex.Metrika counter -->
@@ -129,6 +130,7 @@
       <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
       </a>
+      <a class="nav-ic nav-ic-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer" aria-label="Дзен"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg></a>
       <a class="btn btn-lime btn-sm nav-cta" href="#contacts">Обсудить задачу</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
@@ -153,12 +155,12 @@
     <div class="cases-hero-grid">
       <div class="section-head reveal" style="max-width: 620px; margin-bottom: 0;">
         <p class="eyebrow">Портфолио · кейсы маркетолога</p>
-        <h1>Реальные проекты — <span class="accent">боли, решения и цифры</span></h1>
+        <h1>Кейсы интернет-маркетолога: <span class="accent">результаты в цифрах</span></h1>
         <p>Здесь — подробные истории 22 проектов из разных ниш: с какими проблемами пришёл клиент, что именно я сделал и какие результаты это дало. Без воды — только то, что было на самом деле.</p>
       </div>
 
       <div class="lead-card card reveal">
-        <h2 class="lead-title">Разобрать ваш проект</h2>
+        <h2 class="lead-title">Обсудить продвижение вашего проекта</h2>
         <p class="lead-sub">Оставьте заявку — посмотрю ваш проект и расскажу, что можно улучшить. Перезвоню лично.</p>
         <form id="leadForm" novalidate>
           <div class="lead-row">
@@ -189,7 +191,7 @@
             <textarea id="lf-comment" name="comment" rows="3" placeholder="Коротко о задаче или вопросе"></textarea>
           </div>
           <button type="submit" class="btn btn-lime" style="width:100%; justify-content:center;">Разобрать мой проект <span class="arr">→</span></button>
-          <p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</p>
+          <p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных в соответствии с <a href="/politika/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</p>
         </form>
         <div class="lead-ok" id="leadOk" hidden>
           <div class="lead-ok-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
@@ -929,7 +931,7 @@
     </div>
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
       <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>
@@ -1111,5 +1113,6 @@
   })();
 </script>
 <script defer src="/lead-modal.js"></script>
+<script defer src="/motion.js"></script>
 </body>
 </html>
