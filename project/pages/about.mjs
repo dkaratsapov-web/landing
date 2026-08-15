@@ -121,6 +121,101 @@ ${items}
       </div>`;
 }
 
+const ABOUT_CSS = `<style>
+/* ── Инструменты: одна матрица вместо шести одинаковых карточек ─────────── */
+.tools {
+  display: grid; gap: 1px; margin-top: 34px;
+  background: var(--line);              /* фон проступает в зазорах — это и есть линии */
+  border: 1px solid var(--line); border-radius: 22px; overflow: hidden;
+}
+@media (min-width: 820px) { .tools { grid-template-columns: 1fr 1fr; } }
+
+.tool {
+  position: relative; display: block; padding: 26px 28px 28px;
+  background: var(--surface); color: inherit; text-decoration: none;
+  transition: background .5s cubic-bezier(.32, .72, 0, 1);
+}
+/* Первая ячейка — основная платформа, поэтому во всю ширину и с акцентом. */
+@media (min-width: 820px) {
+  .tool-lead { grid-column: 1 / -1; padding: 32px 28px 34px; }
+  /* Ведущая ячейка занимает всю строку, поэтому остальных остаётся нечётное
+     число и последняя висела рядом с пустотой. Растягиваем и её. */
+  .tool:last-child:nth-child(even) { grid-column: 1 / -1; }
+}
+
+/* Акцентная полоса слева: у ведущего инструмента она есть всегда,
+   у остальных вырастает при наведении. Ширина, а не цвет — движение
+   считает композитор, перерисовки нет. */
+.tool::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--accent); transform: scaleY(0); transform-origin: top;
+  transition: transform .55s cubic-bezier(.32, .72, 0, 1);
+}
+.tool-lead::before { transform: scaleY(1); }
+.tool:hover { background: rgba(255, 255, 255, .035); }
+.tool:hover::before { transform: scaleY(1); }
+.tool-link:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: -3px; }
+
+.tool-n {
+  display: block; margin-bottom: 12px;
+  font-size: 11px; font-weight: 700; letter-spacing: .18em;
+  color: var(--txt-3); font-variant-numeric: tabular-nums;
+  transition: color .4s ease;
+}
+.tool:hover .tool-n { color: var(--accent-bright); }
+
+.tool-name {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 18px; font-weight: 700; color: var(--txt); line-height: 1.25;
+}
+.tool-lead .tool-name { font-size: clamp(21px, 2.2vw, 26px); }
+.tool-arr {
+  flex: none; color: var(--accent-bright); opacity: .55;
+  transition: transform .5s cubic-bezier(.32, .72, 0, 1), opacity .4s ease;
+}
+.tool:hover .tool-arr { transform: translateX(5px); opacity: 1; }
+.tool-text { margin: 10px 0 0; font-size: 15px; line-height: 1.55; color: var(--txt-2); max-width: 62ch; }
+
+/* ── Принципы: нумерованный список вместо карточек ──────────────────────── */
+.prs { list-style: none; margin: 34px 0 0; padding: 0; counter-reset: pr; }
+.pr {
+  display: grid; gap: 6px 26px; padding: 26px 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.pr:last-child { border-bottom: 1px solid var(--line); }
+@media (min-width: 880px) { .pr { grid-template-columns: 78px minmax(0, 300px) minmax(0, 1fr); gap: 0 34px; } }
+
+.pr-n {
+  font-size: clamp(30px, 3.4vw, 42px); font-weight: 800; line-height: .9;
+  letter-spacing: -.04em; color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+  font-variant-numeric: tabular-nums;
+  transition: -webkit-text-stroke-color .5s cubic-bezier(.32, .72, 0, 1);
+}
+.pr:hover .pr-n { -webkit-text-stroke-color: var(--accent); }
+.pr-h { font-size: 18px; font-weight: 700; line-height: 1.3; color: var(--txt); margin: 0; }
+.pr-t { margin: 0; font-size: 15px; line-height: 1.6; color: var(--txt-2); max-width: 62ch; }
+@media (max-width: 879px) { .pr-t { margin-top: 8px; } }
+@media (min-width: 880px) { .pr-body { display: contents; } }
+
+/* Появление строк лесенкой при прокрутке. */
+.js .pr { opacity: 0; transform: translateY(12px); }
+@supports (animation-timeline: view()) {
+  .js .pr {
+    animation: pr-in .7s var(--d, 0ms) both cubic-bezier(.32, .72, 0, 1);
+    animation-timeline: view(); animation-range: entry 8% cover 30%;
+  }
+}
+@supports not (animation-timeline: view()) { .js .pr { opacity: 1; transform: none; } }
+@keyframes pr-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .js .pr { animation: none !important; opacity: 1; transform: none; }
+  .tool, .tool::before, .tool-arr, .tool-n, .pr-n { transition: none; }
+}
+</style>`;
+
 export function render() {
   const crumbs = breadcrumbs([['/about/', 'О себе']]);
   const orbit = renderOrbit();
@@ -138,19 +233,37 @@ export function render() {
         </div>
       </div>`).join('\n');
 
-  const stack = STACK.map(([name, text, url]) => {
-    const inner = `        <div class="price-title">${name}</div>
-        <p class="tl-text" style="margin:10px 0 0;">${text}</p>`
-      + (url ? `\n        <span style="color:var(--accent-bright); font-size:14px; display:inline-block; margin-top:12px;">Подробнее →</span>` : '');
+  /* Матрица, а не шесть плавающих карточек. Шесть одинаковых прямоугольников
+     с заголовком и абзацем — самая узнаваемая заготовка: взгляду не за что
+     зацепиться, все инструменты выглядят равнозначными, хотя Директ здесь
+     основная платформа, а остальное — вокруг него.
+
+     Здесь один объект с волосяными разделителями внутри: первая ячейка во всю
+     ширину и с акцентной полосой, дальше сетка два в ряд. Ссылки помечены
+     стрелкой, которая уезжает при наведении, — понятно, куда можно перейти,
+     а куда нет. */
+  const stack = STACK.map(([name, text, url], i) => {
+    const n = String(i + 1).padStart(2, '0');
+    const inner = `        <span class="tool-n" aria-hidden="true">${n}</span>
+        <div class="tool-name">${name}${url ? '<svg class="tool-arr" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>' : ''}</div>
+        <p class="tool-text">${text}</p>`;
+    const cls = 'tool' + (i === 0 ? ' tool-lead' : '') + (url ? ' tool-link' : '');
     return url
-      ? `      <a class="price-card" href="${url}" style="text-decoration:none;">\n${inner}\n      </a>`
-      : `      <div class="price-card">\n${inner}\n      </div>`;
+      ? `      <a class="${cls}" href="${url}">\n${inner}\n      </a>`
+      : `      <div class="${cls}">\n${inner}\n      </div>`;
   }).join('\n');
 
-  const principles = PRINCIPLES.map(([h, t]) => `      <div class="price-card">
-        <div class="price-title">${h}</div>
-        <p class="tl-text" style="margin:10px 0 0;">${t}</p>
-      </div>`).join('\n');
+  /* Принципы — не карточки. Карточка означает «самостоятельный объект,
+     который можно взять отдельно», а это связный свод правил, который читают
+     подряд. Поэтому список: крупный контурный номер, заголовок и текст
+     в двух колонках, волосяная линия вместо рамки. */
+  const principles = PRINCIPLES.map(([h, t], i) => `      <li class="pr" style="--d:${i * 70}ms">
+        <span class="pr-n" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+        <div class="pr-body">
+          <h3 class="pr-h">${h}</h3>
+          <p class="pr-t">${t}</p>
+        </div>
+      </li>`).join('\n');
 
   /* Список строками, без превью. Галерея сертификатов с миниатюрами и
      лайтбоксом живёт на главной — там она работает как доказательство по ходу
@@ -212,7 +325,7 @@ ${timeline}
     <div class="eyebrow reveal">Инструменты</div>
     <h2 class="reveal">Инструменты: Яндекс Директ, VK Ads, аналитика</h2>
     <p class="lead reveal">Не «полный спектр услуг», а инструменты, которыми владею лично и за результат которых отвечаю.</p>
-    <div class="price-grid reveal">
+    <div class="tools reveal">
 ${stack}
     </div>
     <p style="color:var(--txt-2); font-size:15px; margin-top:22px;">Стоимость по каждому направлению — на странице <a href="/ceny/" style="color:var(--accent-bright);">цен</a>.</p>
@@ -224,9 +337,9 @@ ${stack}
     <div class="eyebrow reveal">Как я работаю</div>
     <h2 class="reveal">Принципы работы с клиентами</h2>
     <p class="lead reveal">Это не декларация о намерениях, а то, из чего складывается разница между работой с человеком и работой с подрядчиком.</p>
-    <div class="price-grid reveal">
+    <ol class="prs reveal">
 ${principles}
-    </div>
+    </ol>
   </div>
 </section>
 
@@ -399,5 +512,5 @@ ${faq}
     },
   ];
 
-  return { body, schema };
+  return { body, schema, extraHead: ABOUT_CSS };
 }
