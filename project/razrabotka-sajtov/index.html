@@ -184,8 +184,20 @@
 /* project case */
 .proj-case { border-radius: 20px; overflow: hidden; background: var(--card); border: 1px solid var(--line); }
 .proj-case-head { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 360px; }
-.proj-case-screen { overflow: hidden; position: relative; background: #0a0a0c; }
-.proj-case-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.6s ease; }
+/* Колонка со скрином тянется по высоте текстового столбца, а он выше: при
+   object-fit: cover картинка обрезалась по бокам (у «Сферы» срезало пол-логотипа
+   и правый край макета) и выходила за скруглённый угол карточки. Показываем
+   скриншот целиком на подложке с полями — как снимок в рамке, а не как фон. */
+.proj-case-screen {
+  overflow: hidden; position: relative; background: #0a0a0c;
+  display: grid; place-items: center; padding: 30px;
+}
+.proj-case-screen img {
+  width: 100%; height: auto; max-height: 100%; object-fit: contain; display: block;
+  border-radius: 12px; border: 1px solid var(--line-strong);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .6);
+  transition: transform .6s cubic-bezier(.32, .72, 0, 1);
+}
 .proj-case:hover .proj-case-screen img { transform: scale(1.03); }
 .proj-case-screen .proj-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--txt-3); font-size: 13px; padding: 24px; text-align: center; }
 .proj-placeholder-ic { width: 56px; height: 56px; border-radius: 50%; background: var(--accent-soft); border: 1px solid var(--accent-soft-bd); display: flex; align-items: center; justify-content: center; color: var(--accent-bright); }
@@ -256,7 +268,7 @@
 @media (max-width: 1024px) {
   .dev-hero-grid { grid-template-columns: 1fr; }
   .proj-case-head { grid-template-columns: 1fr; min-height: auto; }
-  .proj-case-screen { height: 260px; }
+  .proj-case-screen { height: auto; padding: 20px; }
   .proj-case-body { grid-template-columns: 1fr; gap: 28px; }
   .price-grid { grid-template-columns: 1fr; }
   .process-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
