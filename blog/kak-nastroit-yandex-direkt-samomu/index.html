@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className+=" js"</script><!-- .js включает reveal-анимации. Без JS (робот, упавший скрипт) контент виден сразу, а не прозрачным. -->
+<title>Как настроить Яндекс Директ самому — пошаговая инструкция — блог Даниила Карацапова</title>
+<meta name="description" content="Пошаговая настройка рекламной кампании в Яндекс Директе с нуля: подготовка, сбор семантики, структура кампаний, объявления, ставки и запуск. Что можно сделать самому и где чаще всего ошибаются.">
+<link rel="canonical" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/kak-nastroit-yandex-direkt-samomu/">
+
+<meta property="og:title" content="Как настроить Яндекс Директ самому — пошаговая инструкция — блог Даниила Карацапова">
+<meta property="og:description" content="Пошаговая настройка рекламной кампании в Яндекс Директе с нуля: подготовка, сбор семантики, структура кампаний, объявления, ставки и запуск. Что можно сделать самому и где чаще всего ошибаются.">
+<meta property="og:url" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/kak-nastroit-yandex-direkt-samomu/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:image" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/blog/nastroit-direkt-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Как настроить Яндекс Директ самому — пошаговая инструкция — блог Даниила Карацапова">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Как настроить Яндекс Директ самому — пошаговая инструкция — блог Даниила Карацапова">
+<meta name="twitter:description" content="Пошаговая настройка рекламной кампании в Яндекс Директе с нуля: подготовка, сбор семантики, структура кампаний, объявления, ставки и запуск. Что можно сделать самому и где чаще всего ошибаются.">
+<meta name="twitter:image" content="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/blog/nastroit-direkt-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/dark.css">
+<link rel="stylesheet" href="/pages.css">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
+<script defer src="/lead-config.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109681858', 'ym');
+    ym(109681858, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109681858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/"},{"@type":"ListItem","position":2,"name":"Блог","item":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/"},{"@type":"ListItem","position":3,"name":"Как настроить Яндекс Директ самому — пошаговая инструкция","item":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/kak-nastroit-yandex-direkt-samomu/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Как настроить Яндекс Директ самому — пошаговая инструкция","description":"Пошаговая настройка рекламной кампании в Яндекс Директе с нуля: подготовка, сбор семантики, структура кампаний, объявления, ставки и запуск. Что можно сделать самому и где чаще всего ошибаются.","datePublished":"2026-08-15","dateModified":"2026-08-15","inLanguage":"ru-RU","author":{"@id":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/#person"},"publisher":{"@id":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/#person"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/kak-nastroit-yandex-direkt-samomu/"},"url":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/blog/kak-nastroit-yandex-direkt-samomu/","image":"https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/assets/blog/nastroit-direkt-cover.jpg","keywords":"Яндекс Директ, Инструкция, Для новичков","wordCount":720}</script>
+
+</head>
+<body>
+
+<div class="bg-fx">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="grid"></div>
+</div>
+
+<div class="page">
+
+<nav class="nav" id="siteNav">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>
+      Даниил Карацапов
+    </a>
+    <div class="nav-links">
+      <div class="nav-item-drop">
+        <a href="/kontekstnaya-reklama/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav-dropdown">
+          <a href="/kontekstnaya-reklama/" class="nav-drop-link">Контекстная реклама</a>
+          <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a>
+          <a href="/targetirovannaya-reklama/" class="nav-drop-link">Таргетированная реклама</a>
+          <a href="/geo-servisy/" class="nav-drop-link">GEO-сервисы</a>
+          <a href="/ceny/" class="nav-drop-link">Цены</a>
+        </div>
+      </div>
+      <a href="/about/">О себе</a>
+      <a href="/blog/">Блог</a>
+      <a href="/keysy/">Кейсы</a>
+      <a href="/contacts/">Контакты</a>
+    </div>
+    <div class="nav-actions">
+      <a class="nav-ic nav-ic-tg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+      </a>
+      <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
+      </a>
+      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/">Обсудить задачу</a>
+      <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/kontekstnaya-reklama/">Услуги</a>
+  <a href="/kontekstnaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Контекстная реклама</a>
+  <a href="/razrabotka-sajtov/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Разработка сайтов</a>
+  <a href="/targetirovannaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Таргетированная реклама</a>
+  <a href="/geo-servisy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">GEO-сервисы</a>
+  <a href="/ceny/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Цены</a>
+  <a href="/about/">О себе</a>
+  <a href="/blog/">Блог</a>
+  <a href="/keysy/">Кейсы</a>
+  <a href="/contacts/">Контакты</a>
+</div>
+
+<article class="section post">
+  <div class="wrap wrap-narrow">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span style="margin:0 8px; opacity:.5;">/</span><a href="/blog/">Блог</a><span style="margin:0 8px; opacity:.5;">/</span><span aria-current="page">Как настроить Яндекс Директ самому — пошаговая инструкция</span></nav>
+    <div class="post-tags"><span class="post-tag">Яндекс Директ</span><span class="post-tag">Инструкция</span><span class="post-tag">Для новичков</span></div>
+    <h1>Как настроить Яндекс Директ самому — пошаговая инструкция</h1>
+    <div class="post-meta">
+      <time datetime="2026-08-15">15 августа 2026 г.</time>
+      <span class="post-meta-sep">·</span>
+      <span>4 минуты чтения</span>
+      
+    </div>
+    <img class="post-cover" src="/assets/blog/nastroit-direkt-cover.jpg" alt="Как настроить Яндекс Директ самому — пошаговая инструкция" width="1200" height="630">
+    <nav class="post-toc" aria-label="Содержание статьи">
+      <div class="post-toc-title">В статье</div>
+      <ol>
+        <li><a href="#shag-0-chto-sdelat-do-togo-kak-otkryvat-direkt">Шаг 0. Что сделать до того, как открывать Директ</a></li>
+        <li><a href="#shag-1-soberite-semantiku">Шаг 1. Соберите семантику</a></li>
+        <li><a href="#shag-2-sozdayte-kampaniyu">Шаг 2. Создайте кампанию</a></li>
+        <li><a href="#shag-3-razbeyte-na-gruppy-obyavleniy">Шаг 3. Разбейте на группы объявлений</a></li>
+        <li><a href="#shag-4-napishite-obyavleniya">Шаг 4. Напишите объявления</a></li>
+        <li><a href="#shag-5-stavki-i-zapusk">Шаг 5. Ставки и запуск</a></li>
+        <li><a href="#shag-6-pervaya-nedelya-samaya-vazhnaya">Шаг 6. Первая неделя — самая важная</a></li>
+        <li><a href="#chto-realno-sdelat-samomu-a-chto-net">Что реально сделать самому, а что нет</a></li>
+      </ol>
+    </nav>
+    <div class="prose">
+<p>Запустить рекламу в Директе самому реально — интерфейс за последние годы стал заметно дружелюбнее. Другой вопрос, получится ли кампания, которая приносит заявки, а не осваивает бюджет. Разница между этими двумя результатами не в кнопках, а в подготовке.</p>
+<p>Разберу порядок работ так, как делаю сам. Где можно упростить — скажу отдельно.</p>
+<h2 id="shag-0-chto-sdelat-do-togo-kak-otkryvat-direkt">Шаг 0. Что сделать до того, как открывать Директ</h2>
+<p>Половина неудачных запусков — это запуск без подготовки.</p>
+<p><strong>Настройте Метрику и цели.</strong> Без них реклама будет работать вслепую, а автостратегии не смогут обучаться. Что именно настроить — в статье про <a href="/blog/nastrojka-celej-v-metrike/">цели в Метрике</a>. Это не «потом доделаем», это условие старта.</p>
+<p><strong>Проверьте посадочную.</strong> Откройте страницу с телефона по мобильному интернету. Если грузится дольше трёх секунд, если нет цены или вилки, если непонятно, как оставить заявку, — чините сначала это. Реклама на плохую страницу — это оплаченные клики без заявок.</p>
+<p><strong>Посчитайте бюджет.</strong> По формуле из статьи про <a href="/blog/reklamnyj-byudzhet-malogo-biznesa/">рекламный бюджет</a>. Если выходит меньше 50 000 ₽ в месяц, честнее не запускать: статистики не хватит для выводов.</p>
+<h2 id="shag-1-soberite-semantiku">Шаг 1. Соберите семантику</h2>
+<p>Список запросов, по которым вас должны находить.</p>
+<p><img src="/assets/blog/nastroit-direkt-semantika.jpg" alt="Порядок сбора семантики" loading="lazy" decoding="async"></p>
+<p>Начните с <a href="https://wordstat.yandex.ru/" target="_blank" rel="noopener noreferrer">Яндекс Вордстата</a>. Вбейте основную услугу, выберите регион и выпишите всё, что относится к делу и имеет частотность.</p>
+<p>Разделите собранное на группы по смыслу. «Натяжные потолки цена», «натяжные потолки заказать», «натяжные потолки установка» — это три разных намерения, и объявления к ним нужны разные.</p>
+<p>Сразу отсортируйте мусор в минус-слова: «своими руками», «бесплатно», «вакансии», «отзывы сотрудников», «фото». Подробно про сбор минусов — <a href="/blog/minus-slova/">здесь</a>.</p>
+<p><strong>Где упрощают.</strong> Можно взять 30–50 самых частотных запросов вместо тысячи. Для старта в узкой нише этого хватает, а управлять проще.</p>
+<h2 id="shag-2-sozdayte-kampaniyu">Шаг 2. Создайте кампанию</h2>
+<p>В интерфейсе Директа: «Добавить» → «Кампания» → «Режим эксперта». Мастер кампаний оставьте на потом — <a href="/blog/master-kampanij/">про него отдельно</a>.</p>
+<p>Что задать:</p>
+<ul>
+<li><strong>Тип</strong> — «Поиск» для первой кампании. РСЯ создавайте отдельной кампанией, никогда не смешивайте их в одной: у них разная логика и разные ставки.</li>
+<li><strong>География</strong> — только те регионы, где вы реально работаете. Запуск на всю Россию при небольшом бюджете размажет показы.</li>
+<li><strong>Расписание</strong> — если заявки принимает человек, ограничьте показы рабочими часами. Заявка в три ночи, на которую ответят в десять утра, чаще всего уже не ваша.</li>
+<li><strong>Стратегия</strong> — на старте берите ручное управление или «Максимум кликов» с ограничением. <a href="/blog/avtostrategii-direkta/">Автостратегии</a> подключайте, когда накопится статистика.</li>
+</ul>
+<h2 id="shag-3-razbeyte-na-gruppy-obyavleniy">Шаг 3. Разбейте на группы объявлений</h2>
+<p>Правило простое: <strong>одна группа — одно намерение</strong>. Внутри группы 5–15 близких по смыслу запросов, не сто.</p>
+<p>Это самая частая ошибка новичков: все запросы сваливают в одну группу и пишут одно объявление на всё. Релевантность падает, CTR падает, цена клика растёт. Вы платите больше конкурента за ту же позицию.</p>
+<h2 id="shag-4-napishite-obyavleniya">Шаг 4. Напишите объявления</h2>
+<p>На каждую группу — минимум два объявления, чтобы система их сравнила.</p>
+<p>Что должно быть:</p>
+<ul>
+<li><strong>Ключевой запрос в заголовке.</strong> Человек ищет «натяжные потолки в Твери» — он должен увидеть эти слова. Совпадение подсвечивается жирным и заметно повышает кликабельность.</li>
+<li><strong>Конкретика вместо общих слов.</strong> «Замер за 1 день, монтаж за 3 часа» работает, «высокое качество и индивидуальный подход» — нет.</li>
+<li><strong>Все расширения.</strong> Быстрые ссылки, уточнения, визитка, цена. Они бесплатны и увеличивают площадь объявления в выдаче.</li>
+<li><strong>Ссылка на релевантную страницу.</strong> Не на главную, а на страницу той услуги, о которой объявление.</li>
+</ul>
+<h2 id="shag-5-stavki-i-zapusk">Шаг 5. Ставки и запуск</h2>
+<p>На старте не гонитесь за первым местом: спецразмещение стоит кратно дороже, а разница в конверсии редко оправдывает переплату. Вторая-третья позиция обычно выгоднее по цене заявки.</p>
+<p>Поставьте дневное ограничение бюджета — на первую неделю с запасом вниз. Проще добавить, чем объяснять себе, куда ушли деньги.</p>
+<p>Перед запуском пройдитесь по чек-листу:</p>
+<p><img src="/assets/blog/nastroit-direkt-checklist.jpg" alt="Что проверить перед нажатием «Запустить»" loading="lazy" decoding="async"></p>
+<h2 id="shag-6-pervaya-nedelya-samaya-vazhnaya">Шаг 6. Первая неделя — самая важная</h2>
+<p>Запуск — не конец работы, а её начало.</p>
+<p><strong>Каждый день</strong> открывайте отчёт по поисковым запросам и добавляйте мусор в минус-слова. В первую неделю его будет много: реальные запросы всегда шире собранной семантики.</p>
+<p><strong>Через 7 дней</strong> посмотрите, какие группы дают заявки, а какие только тратят. Отключите или переработайте вторые.</p>
+<p><strong>Через 2–4 недели</strong> накопится статистика, и можно переходить на автостратегию с оптимизацией по цели.</p>
+<h2 id="chto-realno-sdelat-samomu-a-chto-net">Что реально сделать самому, а что нет</h2>
+<p>Самому вполне по силам: собрать семантику по узкой услуге, запустить поисковую кампанию на один город, вести её и чистить запросы. Это несколько вечеров и вполне рабочий результат.</p>
+<p>Тяжело даётся без опыта: широкая семантика с большим числом групп, РСЯ с чисткой площадок, связка кампаний с аналитикой, работа с автостратегиями на объёме. Здесь цена ошибки уже сопоставима со стоимостью специалиста — а <a href="/blog/skolko-stoit-kontekstnaya-reklama/">почему дешёвая настройка выходит дороже</a>, я разбирал отдельно.</p>
+<p>Если хотите, чтобы кампанию собрал и вёл человек, который делал это сотни раз, — <a href="/kontekstnaya-reklama/">вот как я работаю</a> и <a href="/ceny/">сколько это стоит</a>.</p>
+
+    </div>
+    <aside class="post-author">
+  <img src="/assets/portrait.jpg" alt="Даниил Карацапов" width="72" height="72" loading="lazy">
+  <div>
+    <div class="post-author-name">Даниил Карацапов</div>
+    <p class="post-author-bio">Частный интернет-маркетолог. В digital с 2019 года, прошёл путь от младшего специалиста до тимлида команды контекстологов, с 2025 года веду проекты самостоятельно. <a href="/about/">Подробнее обо мне</a></p>
+  </div>
+</aside>
+  </div>
+</article>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta-final reveal">
+      <h2>Нужна помощь с задачей из статьи?</h2>
+      <p>Разберу вашу ситуацию на бесплатной консультации и скажу честно, что стоит делать, а что — нет.</p>
+      <div class="btn-row" style="justify-content:center;">
+        <a class="btn btn-fill btn-lg" href="/contacts/">Обсудить задачу</a>
+        <a class="btn btn-ghost btn-lg" href="/kontekstnaya-reklama/">Посмотреть услугу</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2 class="reveal">Читайте также</h2>
+    <div class="post-grid reveal">
+      <a class="post-card" href="/blog/avtostrategii-direkta/">
+        <img class="post-card-cover" src="/assets/blog/avtostrategii-cover.jpg" alt="" width="600" height="315" loading="lazy">
+        <div class="post-card-body">
+          <div class="post-card-meta"><time datetime="2026-08-15">15 августа 2026 г.</time> · 4 минуты чтения</div>
+          <h3 class="post-card-title">Автостратегии Яндекс Директа — какую выбрать под задачу</h3>
+          <p class="post-card-desc">Разбор автоматических стратегий Директа: максимум кликов, максимум конверсий, оплата за конверсии. Когда автоматика выигрывает у ручного управления, сколько данных ей нужно и почему нельзя менять стратегию каждую неделю.</p>
+          <span class="post-card-more">Читать →</span>
+        </div>
+      </a>
+      <a class="post-card" href="/blog/direkt-ili-seo/">
+        <img class="post-card-cover" src="/assets/blog/direkt-ili-seo-cover.jpg" alt="" width="600" height="315" loading="lazy">
+        <div class="post-card-body">
+          <div class="post-card-meta"><time datetime="2026-08-15">15 августа 2026 г.</time> · 4 минуты чтения</div>
+          <h3 class="post-card-title">Яндекс Директ или SEO — что выбрать малому бизнесу</h3>
+          <p class="post-card-desc">Сравниваю контекстную рекламу и поисковое продвижение по деньгам, срокам и рискам. Когда Директ выгоднее SEO, когда наоборот и почему на дистанции их обычно совмещают.</p>
+          <span class="post-card-more">Читать →</span>
+        </div>
+      </a>
+      <a class="post-card" href="/blog/kak-schitat-okupaemost-reklamy/">
+        <img class="post-card-cover" src="/assets/blog/okupaemost-cover.jpg" alt="" width="600" height="315" loading="lazy">
+        <div class="post-card-body">
+          <div class="post-card-meta"><time datetime="2026-08-15">15 августа 2026 г.</time> · 4 минуты чтения</div>
+          <h3 class="post-card-title">Как считать окупаемость рекламы — ROI, ROAS и ДРР без путаницы</h3>
+          <p class="post-card-desc">Три показателя, которыми меряют эффективность рекламы, и чем они отличаются. Формулы, примеры расчёта на цифрах и разбор, какой показатель когда применять, чтобы не принять убыточную кампанию за прибыльную.</p>
+          <span class="post-card-more">Читать →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
+    <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
+      <div>
+        <a class="brand" href="/" style="font-size: 20px;"><svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>Даниил Карацапов</a>
+        <p style="color: var(--muted); margin: 18px 0 0; font-size: 15px; line-height: 1.55; max-width: 300px;">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
+      </div>
+      <div>
+        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 16px;">Навигация</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Главная</a>
+          <a href="/kontekstnaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контекстная реклама</a>
+          <a href="/razrabotka-sajtov/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Разработка сайтов</a>
+          <a href="/keysy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Кейсы</a>
+          <a href="/about/" style="color: var(--muted); text-decoration: none; font-size: 15px;">О себе</a>
+          <a href="/blog/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Блог</a>
+          <a href="/ceny/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Цены</a>
+          <a href="/contacts/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контакты</a>
+        </div>
+      </div>
+      <div>
+        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 16px;">Связь</div>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="tel:+79963470065" style="color: var(--muted); text-decoration: none; font-size: 15px;">+7 (996) 347-00-65</a>
+          <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 15px;">Telegram @Daniil_065</a>
+          <a href="mailto:d.karatsapov@gmail.com" style="color: var(--lime); text-decoration: none; font-size: 15px;">d.karatsapov@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
+      <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
+      <a href="#" style="color: var(--muted-2); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  const nav = document.getElementById('siteNav');
+  const burger = document.getElementById('navBurger');
+  const mobile = document.getElementById('navMobile');
+  const onScroll = () => { if (nav) nav.classList.toggle('scrolled', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  if (burger && mobile) {
+    const toggle = (open) => {
+      const o = open ?? !mobile.classList.contains('open');
+      mobile.classList.toggle('open', o);
+      burger.classList.toggle('open', o);
+    };
+    burger.addEventListener('click', () => toggle());
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+  }
+})();
+
+// reveal on scroll
+(function () {
+  const targets = document.querySelectorAll('.reveal');
+  const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.06 }) : null;
+  if (io) targets.forEach(t => io.observe(t)); else targets.forEach(t => t.classList.add('in'));
+  setTimeout(() => targets.forEach(t => t.classList.add('in')), 1500);
+})();
+
+// FAQ accordion
+(function () {
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+})();
+
+// nav dropdown
+(function () {
+  document.querySelectorAll('.nav-item-drop').forEach(drop => {
+    const trigger = drop.querySelector('.nav-drop-trigger');
+    if (!trigger) return;
+    drop.addEventListener('mouseenter', () => drop.classList.add('open'));
+    drop.addEventListener('mouseleave', () => drop.classList.remove('open'));
+    trigger.addEventListener('click', e => { e.preventDefault(); drop.classList.toggle('open'); });
+  });
+})();
+</script>
+<script defer src="/lead-modal.js"></script>
+</body>
+</html>
