@@ -79,6 +79,7 @@ function shell(w, h, inner, extraCss = '') {
      и без этого короткие висят вверху кадра с пустотой под ними. */
   .main{flex:1;display:flex;flex-direction:column;justify-content:center}
   .main h1{margin-bottom:36px}
+  .main .eyebrow+h1{margin-bottom:0}
   .eyebrow{
     color:${BRAND.accent};font-size:21px;font-weight:700;
     letter-spacing:.09em;text-transform:uppercase;margin-bottom:22px;
@@ -108,8 +109,10 @@ function cover({ eyebrow, title, withPhoto = true }, w, h) {
   return shell(w, h, `
     <div style="display:flex;flex:1;position:relative">
       <div class="pad" style="flex:1;min-width:0">
-        <div class="eyebrow">${esc(eyebrow)}</div>
-        <h1>${esc(title).replace(/\n/g, '<br>')}</h1>
+        <div class="main">
+          <div class="eyebrow">${esc(eyebrow)}</div>
+          <h1>${esc(title).replace(/\n/g, '<br>')}</h1>
+        </div>
         ${signature}
       </div>
       ${photo}

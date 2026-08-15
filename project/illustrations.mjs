@@ -19,7 +19,7 @@
 export const SPECS = [
   /* ── Сколько стоит контекстная реклама ──────────────────────────────── */
   {
-    group: 'skolko-stoit', name: 'cover', type: 'cover', size: 'cover-site',
+    group: 'skolko-stoit', name: 'cover', type: 'cover', size: 'cover-site', withPhoto: false,
     eyebrow: 'Яндекс Директ · разбор',
     title: 'Сколько стоит\nконтекстная реклама',
   },
@@ -59,7 +59,7 @@ export const SPECS = [
 
   /* ── Директ или SEO ─────────────────────────────────────────────────── */
   {
-    group: 'direkt-ili-seo', name: 'cover', type: 'cover', size: 'cover-site',
+    group: 'direkt-ili-seo', name: 'cover', type: 'cover', size: 'cover-site', withPhoto: false,
     eyebrow: 'Стратегия',
     title: 'Яндекс Директ\nили SEO',
   },
@@ -95,7 +95,7 @@ export const SPECS = [
 
   /* ── Продвижение в Яндекс Картах ────────────────────────────────────── */
   {
-    group: 'yandex-karty', name: 'cover', type: 'cover', size: 'cover-site',
+    group: 'yandex-karty', name: 'cover', type: 'cover', size: 'cover-site', withPhoto: false,
     eyebrow: 'Локальное продвижение',
     title: 'Как продвигаться\nв Яндекс Картах',
   },
@@ -132,3 +132,113 @@ export const SPECS = [
     ],
   },
 ];
+
+/* ── Статьи первого месяца ──────────────────────────────────────────────── */
+SPECS.push(
+  /* Почему реклама не приносит заявок */
+  { group:'net-zayavok', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Разбор ошибок', title:'Почему реклама\nне приносит заявок' },
+  { group:'net-zayavok', name:'trafik', type:'compare',
+    title:'Кабинет без минус-слов и с проработанной семантикой',
+    left:{ head:'Без минусов', items:['«ремонт своими руками»','«ремонт вакансии»','«ремонт фото»','Треть бюджета мимо'] },
+    right:{ head:'С минусами', items:['«ремонт квартир цена»','«ремонт квартир под ключ»','«заказать ремонт»','Бюджет на целевых'] } },
+  { group:'net-zayavok', name:'posadochnaya', type:'checklist',
+    title:'Что должно быть на посадочной',
+    items:['Ответ на запрос в первом экране','Цена или вилка цен','Телефон и мессенджер на виду','Форма из двух полей'] },
+  { group:'net-zayavok', name:'poryadok', type:'steps',
+    title:'Порядок проверки, если заявок нет',
+    items:['Отчёт по поисковым запросам','Цели в Метрике','Соответствие объявления и посадочной','Скорость сайта на телефоне','Скорость ответа на заявку'] },
+
+  /* Окупаемость */
+  { group:'okupaemost', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Аналитика', title:'ROI, ROAS и ДРР\nбез путаницы' },
+  { group:'okupaemost', name:'pokazateli', type:'steps',
+    title:'Три показателя и что каждый считает',
+    items:['ROAS — сколько выручки принёс рубль рекламы','ДРР — какую долю выручки съедает реклама','ROI — заработали или нет, с себестоимостью'] },
+  { group:'okupaemost', name:'chto-nuzhno', type:'checklist',
+    title:'Что нужно, чтобы считать окупаемость',
+    items:['Цели в Метрике на реальные обращения','Понимание своей маржи','Учёт работы подрядчика в расходах','Период не короче цикла сделки'] },
+
+  /* Бюджет */
+  { group:'byudzhet', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Бюджет', title:'Какой бюджет нужен\nмалому бизнесу' },
+  { group:'byudzhet', name:'raschet', type:'steps',
+    title:'Расчёт минимального бюджета',
+    items:['Узнать цену клика в Прогнозе бюджета','Взять конверсию сайта (или 2–3%)','Кликов = заявки ÷ конверсия','Бюджет = клики × цена клика'] },
+  { group:'byudzhet', name:'alternativy', type:'checklist',
+    title:'Если на контекст пока не хватает',
+    items:['Сузить до одного города и одной услуги','Начать с Яндекс Карт и 2ГИС','Поднять конверсию посадочной','Не запускать «на попробовать»'] },
+
+  /* Цели в Метрике */
+  { group:'celi', name:'metrika-cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Яндекс Метрика', title:'Настройка целей\nперед запуском' },
+  { group:'celi', name:'tipy', type:'steps',
+    title:'Четыре типа целей в Метрике',
+    items:['Посещение страницы — например, «Спасибо»','JavaScript-событие — формы без перезагрузки','Клик по кнопке или номеру телефона','Составная цель — последовательность шагов'] },
+  { group:'celi', name:'shagi', type:'steps',
+    title:'Порядок настройки',
+    items:['Метрика → Цели → Добавить цель','Дать понятное имя, а не «Цель 1»','Выбрать тип и заполнить условие','Оставить заявку и проверить отчёт'] },
+
+  /* Настройка Директа */
+  { group:'nastroit-direkt', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Инструкция', title:'Как настроить\nЯндекс Директ самому' },
+  { group:'nastroit-direkt', name:'semantika', type:'steps',
+    title:'Сбор семантики',
+    items:['Вордстат: выписать запросы по услуге и региону','Разделить на группы по намерению','Отсортировать мусор в минус-слова'] },
+  { group:'nastroit-direkt', name:'checklist', type:'checklist',
+    title:'Проверить перед запуском',
+    items:['Цели в Метрике настроены и срабатывают','Поиск и РСЯ — разные кампании','Одна группа — одно намерение','Ссылки ведут на страницу услуги','Дневной лимит бюджета выставлен'] },
+
+  /* Минус-слова */
+  { group:'minus-slova', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Яндекс Директ', title:'Минус-слова:\nкак собрать и зачем' },
+  { group:'minus-slova', name:'sravnenie', type:'compare',
+    title:'Один запрос без минус-слов и с ними',
+    left:{ head:'Показы идут по', items:['ремонт квартир своими руками','ремонт квартир вакансии','ремонт квартир фото','ремонт квартир смотреть'] },
+    right:{ head:'После чистки', items:['ремонт квартир под ключ','ремонт квартир цена','заказать ремонт квартиры','ремонт квартир недорого'] } },
+  { group:'minus-slova', name:'istochniki', type:'steps',
+    title:'Три источника минус-слов',
+    items:['Вордстат — до запуска, черновой список','Отчёт по поисковым запросам — главный источник','Подсказки поиска — неожиданный мусор'] },
+
+  /* РСЯ */
+  { group:'rsya', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Рекламная сеть Яндекса', title:'РСЯ: когда включать\nи как не слить бюджет' },
+  { group:'rsya', name:'sravnenie', type:'compare',
+    title:'Поиск и РСЯ: разное намерение',
+    left:{ head:'РСЯ', items:['Человек читает статью','Ничего не искал','Клик дешевле в разы','Конверсия ниже'] },
+    right:{ head:'Поиск', items:['Человек ищет услугу сейчас','В процессе выбора','Клик дороже','Конверсия выше'] } },
+  { group:'rsya', name:'ploshchadki', type:'checklist', negative:true,
+    title:'Какие площадки отключать',
+    items:['Расход выше цены заявки при нуле конверсий','Показатель отказов выше 80%','Мобильные игры и приложения','Высокий CTR при нулевых конверсиях'] },
+
+  /* Мастер кампаний */
+  { group:'master-kampanij', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Разбор', title:'Мастер кампаний:\nкому подходит' },
+  { group:'master-kampanij', name:'sravnenie', type:'compare',
+    title:'Что доступно в каждом режиме',
+    left:{ head:'Мастер кампаний', items:['Отчёт по запросам урезан','Поиск и РСЯ вместе','Структуру не задать','Чистка площадок ограничена'] },
+    right:{ head:'Режим эксперта', items:['Полный отчёт по запросам','Раздельные кампании','Группы под намерения','Полное управление площадками'] } },
+  { group:'master-kampanij', name:'usloviya', type:'checklist',
+    title:'Если запускаете Мастер — минимум',
+    items:['Цели в Метрике настроены','Одна услуга и один регион','Бюджет ограничен сверху','Проверка цены заявки раз в неделю'] },
+
+  /* Автостратегии */
+  { group:'avtostrategii', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Автоматизация', title:'Автостратегии:\nкакую выбрать' },
+  { group:'avtostrategii', name:'porog', type:'stats',
+    title:'Порог данных для автостратегии',
+    items:[['10+','конверсий в неделю по цели'],['14 дней','период обучения'],['3–4 недели','ручного управления до перехода'],['±15%','шаг изменения цены конверсии']] },
+  { group:'avtostrategii', name:'oshibki', type:'checklist', negative:true,
+    title:'Что сбрасывает обучение',
+    items:['Правки настроек во время обучения','Резкое изменение бюджета','Смена цели на другую','Пять разнородных целей сразу'] },
+
+  /* Ретаргетинг */
+  { group:'retargeting', name:'cover', type:'cover', size:'cover-site', withPhoto:false, withPhoto: false,
+    eyebrow:'Яндекс Директ', title:'Ретаргетинг:\nсценарии, которые окупаются' },
+  { group:'retargeting', name:'shema', type:'steps',
+    title:'Как собирается аудитория',
+    items:['Метрика собирает сегмент по условию','Директ показывает рекламу этому сегменту','Минимум 100 человек в сегменте для старта'] },
+  { group:'retargeting', name:'oshibki', type:'checklist', negative:true,
+    title:'Ошибки ретаргетинга',
+    items:['Показы тем, кто уже купил','Один креатив на все сегменты','Сегмент «все посетители за 90 дней»','Нет ограничения частоты показов'] },
+);
