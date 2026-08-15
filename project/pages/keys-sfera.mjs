@@ -7,11 +7,11 @@
    строительной компании», «сайт под SEO с нуля». Такие запросы гуглит человек,
    который выбирает подрядчика и хочет увидеть не скриншот, а логику решений.
 
-   Про визуал. Скриншота сайта клиента здесь нет намеренно: сайт закрыт от
-   внешнего доступа, а подставлять чужой рендер или «похожую» картинку в кейс
-   нельзя. Вместо скриншота — схема архитектуры: 38 плиток по группам страниц.
-   Для этого кейса она честнее скриншота, потому что продукт здесь — структура,
-   а не главный экран.
+   Про визуал. Пять скриншотов сайта — от клиента, подписи к ним тоже его.
+   Рядом со скриншотами живёт схема архитектуры: 38 плиток по группам страниц.
+   Одно другое не заменяет — скриншот показывает, как сайт выглядит, схема
+   показывает то, чего на скриншоте не видно и в чём весь смысл кейса: почему
+   страниц тридцать восемь и как они разведены по интентам.
 
    Про цифры. В карточке на /razrabotka-sajtov/ висят +49% обращений и −36% CPL.
    В исходном материале клиента на этом месте стоит пустой слот («подставьте
@@ -38,6 +38,39 @@ const MAP_GROUPS = [
   { key: 'geo', n: 7, label: 'Гео-страницы', hint: 'Истра, Клин, Егорьевск, Колюбакино, Люберцы, Кашин, Солнечногорск' },
   { key: 'art', n: 12, label: 'Экспертные статьи', hint: 'ГПЗУ, изыскания, экспертиза, техусловия, самострой, ввод в эксплуатацию' },
   { key: 'core', n: 7, label: 'Каркас сайта', hint: 'главная, услуги, о компании, объекты, контакты, блог, лид-магнит' },
+];
+
+/* Скриншоты и подписи — от клиента. Первый идёт в герой, остальные в галерею.
+   Пропорции у файлов разные, и мы их не выравниваем кропом: у скриншота
+   обрезанный низ — это потерянная часть страницы, а не «аккуратная плитка». */
+const HERO_SHOT = {
+  src: '/assets/dev/sfera/glavnaya.webp',
+  w: 1600, h: 1000,
+  alt: 'Первый экран сайта проектного бюро «Сфера»: заголовок «Проектирование коммерческой недвижимости под ключ», три преимущества и форма заявки',
+  cap: 'Первый экран: оффер, ключевые преимущества и форма заявки',
+};
+
+const SHOTS = [
+  {
+    src: '/assets/dev/sfera/tipy-obektov.webp', w: 1600, h: 1333,
+    alt: 'Блок «С какими типами объектов мы работаем»: шесть карточек — магазин, склад, производство, автосервис, административное здание, отель',
+    cap: 'Шесть направлений — каждое ведёт на свою посадочную страницу',
+  },
+  {
+    src: '/assets/dev/sfera/posadochnaya-rns.webp', w: 1600, h: 1100,
+    alt: 'Посадочная страница «Разрешение на строительство склада под ключ» с формой консультации и перечнем необходимых документов',
+    cap: 'Отдельная страница под запрос «разрешение на строительство склада»',
+  },
+  {
+    src: '/assets/dev/sfera/keys-obekta.webp', w: 1600, h: 1143,
+    alt: 'Кейс объекта в Люберцах: назначение, площадь 751,6 м², конструктив, органы согласования и фотографии готового здания',
+    cap: 'Кейсы с реальными параметрами объектов, номерами разрешений и фотографиями',
+  },
+  {
+    src: '/assets/dev/sfera/mobilnaya-versiya.webp', w: 1600, h: 1131,
+    alt: 'Три экрана мобильной версии сайта: главная, лента статей и посадочная страница по разрешению на строительство',
+    cap: 'Адаптив от 320 пикселей — проверен на реальных разрешениях',
+  },
 ];
 
 const FACTS = [
@@ -179,6 +212,91 @@ ${groups}
     </div>`;
 }
 
+/* Галерея скриншотов. В сетке превью режем по 16/10: у исходников пропорции
+   от 1.20 до 1.45, и без общей высоты подписи разъезжаются по вертикали на
+   полтораста пикселей. Обрезка тут ничего не стоит — целиком скриншот
+   открывается в лайтбоксе по клику. */
+function renderGallery() {
+  const zoom = '<span class="shot-zoom" aria-hidden="true">'
+    + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">'
+    + '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>';
+
+  const items = SHOTS.map((s, i) => `        <figure class="shot">
+          <!-- +1: нулевой индекс в лайтбоксе занят скриншотом из героя -->
+          <button type="button" class="shot-open" data-shot="${i + 1}" aria-label="Открыть скриншот: ${s.cap}">
+            <img src="${s.src}" width="${s.w}" height="${s.h}" alt="${s.alt}" loading="lazy" decoding="async">
+            ${zoom}
+          </button>
+          <figcaption>${s.cap}</figcaption>
+        </figure>`).join('\n');
+
+  return `<div class="shots reveal">
+${items}
+      </div>`;
+}
+
+/* Лайтбокс. Тот же принцип, что у сертификатов на /about/: скриншот
+   открывается здесь же, а не в новой вкладке — уход на голый файл посреди
+   кейса выбрасывает человека со страницы. */
+function galleryScript() {
+  const data = JSON.stringify([HERO_SHOT, ...SHOTS].map((s) => ({ src: s.src, alt: s.alt, cap: s.cap })));
+  return `<script>
+(function () {
+  var shots = ${data};
+  var box, img, cap, idx = 0;
+
+  function build() {
+    box = document.createElement('div');
+    box.className = 'shot-lb';
+    box.hidden = true;
+    box.innerHTML = '<button type="button" class="shot-lb-close" aria-label="Закрыть">&times;</button>'
+      + '<button type="button" class="shot-lb-nav prev" aria-label="Предыдущий">&#8249;</button>'
+      + '<button type="button" class="shot-lb-nav next" aria-label="Следующий">&#8250;</button>'
+      + '<figure class="shot-lb-stage"><img alt=""><figcaption></figcaption></figure>';
+    document.body.appendChild(box);
+    img = box.querySelector('img');
+    cap = box.querySelector('figcaption');
+    box.querySelector('.shot-lb-close').addEventListener('click', close);
+    box.querySelector('.prev').addEventListener('click', function () { go(idx - 1); });
+    box.querySelector('.next').addEventListener('click', function () { go(idx + 1); });
+    box.addEventListener('click', function (e) { if (e.target === box) close(); });
+  }
+
+  function go(n) {
+    idx = (n + shots.length) % shots.length;
+    img.src = shots[idx].src;
+    img.alt = shots[idx].alt;
+    cap.textContent = shots[idx].cap;
+  }
+
+  function open(n) {
+    if (!box) build();
+    go(n);
+    box.hidden = false;
+    document.body.style.overflow = 'hidden';
+    box.querySelector('.shot-lb-close').focus();
+  }
+
+  function close() {
+    box.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-shot]');
+    if (b) { e.preventDefault(); open(+b.getAttribute('data-shot')); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (!box || box.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') go(idx - 1);
+    if (e.key === 'ArrowRight') go(idx + 1);
+  });
+}());
+</script>`;
+}
+
 /* Диаграмма «два интента — две страницы». Главное решение кейса, и словами оно
    объясняется хуже, чем схемой: слева один запрос, справа другой, между ними
    связь, а не дубль. */
@@ -213,6 +331,90 @@ const CSS = `<style>
    колонка на две позиции рядом с орбитой на /about/; здесь под ним вся ширина. */
 .hero .dev-stats { max-width: 820px; }
 @media (min-width: 760px) { .hero .dev-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* ── Герой: текст и первый экран сайта рядом ─────────────────────────────── */
+.case-hero { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 1080px) {
+  .case-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 46%); gap: 52px; }
+  .case-hero .lead { max-width: none; }
+}
+.case-hero-media { min-width: 0; }
+
+/* Рамка браузера вокруг скриншота: без неё чужой светлый интерфейс на тёмной
+   странице читается как сбой вёрстки, а не как «вот сайт клиента». */
+.frame {
+  border-radius: 14px; overflow: hidden; background: #111115;
+  border: 1px solid var(--line-strong); box-shadow: 0 24px 80px rgba(0, 0, 0, .7);
+}
+.frame-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; background: #1a1a1e; border-bottom: 1px solid var(--line);
+}
+.frame-dots { display: flex; gap: 6px; flex: none; }
+.frame-dots i { width: 10px; height: 10px; border-radius: 50%; display: block; }
+.frame-dots i:nth-child(1) { background: #ff5f57; }
+.frame-dots i:nth-child(2) { background: #febc2e; }
+.frame-dots i:nth-child(3) { background: #28c840; }
+.frame-url {
+  flex: 1; min-width: 0; padding: 5px 12px; border-radius: 6px;
+  background: rgba(255, 255, 255, .06); font-size: 12px; color: var(--txt-3);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.frame img { display: block; width: 100%; height: auto; }
+.frame-btn { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.frame-cap { margin: 12px 2px 0; font-size: 13px; color: var(--txt-3); line-height: 1.5; }
+
+/* ── Галерея скриншотов ──────────────────────────────────────────────────── */
+.shots { display: grid; gap: 28px; align-items: start; margin-top: 30px; }
+@media (min-width: 860px) { .shots { grid-template-columns: 1fr 1fr; gap: 32px; } }
+.shot { margin: 0; }
+.shot-open {
+  position: relative; display: block; width: 100%; padding: 0; cursor: zoom-in;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden;
+  background: #111115; transition: border-color .2s ease, transform .2s ease;
+}
+.shot-open:hover { border-color: var(--accent-soft-bd); transform: translateY(-2px); }
+.shot-open:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+/* object-position: top — у скриншота смысл в верхней части экрана,
+   центрированный кроп срезал бы заголовок вместе с подвалом. */
+.shot-open img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
+/* Метка «увеличить». Без неё скриншот читается как картинка, а не как кнопка:
+   курсор zoom-in виден только на десктопе и только при наведении. */
+.shot-zoom, .frame-zoom {
+  position: absolute; right: 12px; bottom: 12px; display: grid; place-items: center;
+  width: 30px; height: 30px; border-radius: 50%; color: #fff;
+  background: rgba(12, 12, 14, .72); border: 1px solid rgba(255, 255, 255, .22);
+  backdrop-filter: blur(4px); transition: background .2s ease;
+}
+.shot-open:hover .shot-zoom, .frame-btn:hover .frame-zoom { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.shot figcaption { margin-top: 12px; font-size: 14px; color: var(--txt-2); line-height: 1.5; }
+
+.shot-lb {
+  position: fixed; inset: 0; z-index: 90; display: grid; place-items: center;
+  padding: 4vh 5vw; background: rgba(6, 6, 8, .93); backdrop-filter: blur(6px);
+}
+.shot-lb[hidden] { display: none; }
+.shot-lb-stage { margin: 0; max-width: 1200px; width: 100%; }
+.shot-lb-stage img {
+  display: block; width: 100%; height: auto; max-height: 78vh; object-fit: contain;
+  border-radius: 12px; border: 1px solid var(--line-strong); background: #111115;
+}
+.shot-lb-stage figcaption {
+  margin-top: 14px; text-align: center; font-size: 15px; color: var(--txt-2);
+}
+.shot-lb-close, .shot-lb-nav {
+  position: absolute; display: grid; place-items: center; cursor: pointer;
+  border: 1px solid var(--line-strong); background: rgba(255, 255, 255, .06);
+  color: var(--txt); border-radius: 50%; line-height: 1;
+}
+.shot-lb-close { top: 18px; right: 18px; width: 42px; height: 42px; font-size: 26px; }
+.shot-lb-nav { top: 50%; transform: translateY(-50%); width: 46px; height: 46px; font-size: 30px; }
+.shot-lb-nav.prev { left: 12px; }
+.shot-lb-nav.next { right: 12px; }
+.shot-lb-close:hover, .shot-lb-nav:hover { background: rgba(255, 255, 255, .14); }
 
 /* ── Схема архитектуры сайта ─────────────────────────────────────────────── */
 .sitemap {
@@ -366,12 +568,29 @@ ${b.items.map((i) => `      <li>${i}</li>`).join('\n')}
   const body = `<header class="hero" data-screen-label="Кейс «Сфера»">
   <div class="wrap">
     ${crumbs.visible}
-    <div class="eyebrow">Кейс · разработка сайта · B2B, строительство</div>
-    <h1>Сайт проектного бюро <span class="accent">«Сфера»</span>: 38 посадочных страниц под B2B-запросы</h1>
-    <p class="lead">Инженерно-проектное бюро: проектирование коммерческой недвижимости и разрешения на строительство по Москве, Московской и Тверской областям. Разработал и веду сайт — структуру под поисковый спрос, тексты, техническую SEO-базу, аналитику и контент-производство.</p>
-    <div class="btn-row">
-      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить свой сайт</a>
-      <a class="btn btn-ghost btn-lg" href="/razrabotka-sajtov/">Все проекты</a>
+    <div class="case-hero">
+      <div>
+        <div class="eyebrow">Кейс · разработка сайта · B2B, строительство</div>
+        <h1>Сайт проектного бюро <span class="accent">«Сфера»</span>: 38 посадочных страниц под B2B-запросы</h1>
+        <p class="lead">Инженерно-проектное бюро: проектирование коммерческой недвижимости и разрешения на строительство по Москве, Московской и Тверской областям. Разработал и веду сайт — структуру под поисковый спрос, тексты, техническую SEO-базу, аналитику и контент-производство.</p>
+        <div class="btn-row">
+          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить свой сайт</a>
+          <a class="btn btn-ghost btn-lg" href="/razrabotka-sajtov/">Все проекты</a>
+        </div>
+      </div>
+      <div class="case-hero-media reveal">
+        <div class="frame">
+          <div class="frame-bar" aria-hidden="true">
+            <span class="frame-dots"><i></i><i></i><i></i></span>
+            <span class="frame-url">проектирование-под-ключ.рф</span>
+          </div>
+          <button type="button" class="frame-btn" data-shot="0" aria-label="Открыть скриншот: ${HERO_SHOT.cap}">
+            <img src="${HERO_SHOT.src}" width="${HERO_SHOT.w}" height="${HERO_SHOT.h}" alt="${HERO_SHOT.alt}" fetchpriority="high" decoding="async">
+            <span class="frame-zoom" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+          </button>
+        </div>
+        <p class="frame-cap">${HERO_SHOT.cap}</p>
+      </div>
     </div>
     <div class="dev-stats" style="margin-top:38px;">
 ${facts}
@@ -385,6 +604,15 @@ ${facts}
     <h2 class="reveal">Сложная B2B-ниша с длинным циклом сделки</h2>
     <p class="lead reveal">Клиент принимает решение месяцами и до обращения сам изучает процедуру: читает про ГПЗУ, изыскания, экспертизу. Лид дорогой, конкуренция в выдаче плотная.</p>
     <p class="lead reveal">Задача была не «сделать красиво», а построить структуру, которая ловит спрос на всех стадиях — от «что вообще такое ГПЗУ» до «нужно разрешение на строительство склада в Люберцах». На старте у компании был один лендинг.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow reveal">Как выглядит</div>
+    <h2 class="reveal">Скриншоты сайта проектного бюро</h2>
+    <p class="lead reveal">Четыре разворота из тридцати восьми страниц: витрина направлений, посадочная под конкретный запрос, кейс реального объекта и мобильная версия.</p>
+    ${renderGallery()}
   </div>
 </section>
 
@@ -458,7 +686,9 @@ ${faqItems(FAQ)}
       </div>
     </div>
   </div>
-</section>`;
+</section>
+
+${galleryScript()}`;
 
   const schema = [
     crumbs.schema,
@@ -470,7 +700,9 @@ ${faqItems(FAQ)}
       author: { '@id': SITE + '/#person' },
       publisher: { '@id': SITE + '/#person' },
       mainEntityOfPage: { '@type': 'WebPage', '@id': SITE + meta.path },
-      image: SITE + meta.ogImage,
+      /* Первым — скриншот сайта: он показывает предмет кейса. OG-обложка
+         второй, она нужна соцсетям, а не для иллюстрации статьи. */
+      image: [SITE + HERO_SHOT.src, SITE + meta.ogImage],
       articleSection: 'Кейсы',
       inLanguage: 'ru-RU',
       about: {
