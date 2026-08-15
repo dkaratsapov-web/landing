@@ -10,7 +10,7 @@
    карточками услуг на главной хуже отсутствия страницы, поэтому при правке
    прайса меняем оба места.
 */
-import { SITE, breadcrumbs } from '../layout.mjs';
+import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
 
 export const meta = {
   path: '/ceny/',
@@ -157,10 +157,7 @@ ${p.works.map((w) => `          <li>${w}</li>`).join('\n')}
           <td class="cell-term">${p.term}</td>
         </tr>`).join('\n');
 
-  const faq = FAQ.map(([q, a]) => `      <div class="faq-item">
-        <div class="faq-q"><span class="faq-q-text">${q}</span><svg class="faq-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="faq-a">${a}</div>
-      </div>`).join('\n');
+  const faq = faqItems(FAQ);
 
   const body = `<header class="hero" data-screen-label="Цены">
   <div class="wrap">

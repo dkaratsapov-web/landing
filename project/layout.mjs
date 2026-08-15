@@ -218,16 +218,14 @@ const PAGE_SCRIPTS = `<script>
   setTimeout(() => targets.forEach(t => t.classList.add('in')), 1500);
 })();
 
-// FAQ accordion
+// FAQ: раскрытие обеспечивает нативный <details>, скрипт нужен только чтобы
+// открытым оставался один пункт — как на остальных страницах сайта.
 (function () {
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.closest('.faq-item');
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
-    });
-  });
+  const items = document.querySelectorAll('details.faq-item');
+  items.forEach(d => d.addEventListener('toggle', () => {
+    if (!d.open) return;
+    items.forEach(o => { if (o !== d) o.open = false; });
+  }));
 })();
 
 // nav dropdown
@@ -242,6 +240,24 @@ const PAGE_SCRIPTS = `<script>
 })();
 </script>
 <script defer src="/lead-modal.js"></script>`;
+
+/* ── FAQ ─────────────────────────────────────────────────────────────────── */
+/* items — [[вопрос, ответ], ...]. Возвращает только элементы списка: обёртку
+   <div class="faq-list"> ставит вызывающая страница, ей же принадлежит класс
+   reveal.
+
+   Разметка на <details>/<summary> — ровно та, которую dark.css уже стилизует
+   для шести исторических страниц. Раньше /about/ и /ceny/ рендерили
+   собственный div-аккордеон с классами .faq-q/.faq-a, которых нет ни в одном
+   подключённом стиле: все ответы стояли раскрытыми одновременно, а текст
+   вылезал за границы карточки. Общий помощник закрывает и причину — две копии
+   одной разметки, которые разъехались со стилями. Плюс details работает без
+   JS и доступен с клавиатуры из коробки. */
+export function faqItems(items) {
+  return items
+    .map(([q, a]) => `      <details class="faq-item"><summary>${q}<span class="sign"></span></summary><div class="answer">${a}</div></details>`)
+    .join('\n');
+}
 
 /* ── Хлебные крошки ──────────────────────────────────────────────────────── */
 /* trail — [[url, название], ...] без «Главной»: её добавляем сами.
