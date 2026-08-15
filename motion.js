@@ -77,6 +77,14 @@
     }, 1200), { once: true });
   }
 
+  /* Подсветку и магнит навешиваем по смыслу, а не по классу: размечать
+     руками двадцать карточек на каждой странице — это гарантированно забыть
+     половину. Кнопка-призыв и карточка-ссылка ведут себя одинаково на всём
+     сайте, потому что правило одно. */
+  document.querySelectorAll('.btn-fill, .btn-lime').forEach((b) => b.classList.add('mo-magnetic'));
+  document.querySelectorAll('.price-card, .kfull, .post-card, .icon-card, .tool, .shot-open, .cert-row')
+    .forEach((c) => c.classList.add('mo-spot'));
+
   if (!finePointer) return;
 
   /* ── Магнитные кнопки ────────────────────────────────────────────────────
@@ -96,6 +104,48 @@
       el.style.setProperty('--mo-mx', '0px');
       el.style.setProperty('--mo-my', '0px');
     });
+  });
+
+
+  /* ── Роли появления ──────────────────────────────────────────────────────
+     До сих пор все элементы с .reveal выезжали одинаково: заголовок, абзац,
+     карточка и картинка — одним и тем же движением на 26 пикселей вверх.
+     Одинаковость и читается как шаблон: глазу не за что зацепиться, страница
+     «проявляется» ровным полотном.
+
+     Роль назначаем по структуре, а не по списку классов: тогда правило
+     работает и на страницах, которых ещё нет, и не разъезжается, когда
+     вёрстку правят. Дальше каждой роли CSS даёт своё появление.
+
+       head   — заголовок: короче и раньше остальных, он задаёт такт
+       text   — абзац: мягче, с лёгким расфокусом
+       group  — сетка или ряд: сам не анимируется, вместо него лесенкой
+                выезжают дети
+       media  — блок с картинкой или схемой: подъезжает с приближением
+       block  — всё остальное, прежнее поведение
+
+     Дети группы получают --mo-i только для CSS-задержки; сам индекс дальше
+     седьмого не нужен — в сетках больше восьми видимых элементов подряд
+     не бывает, а бесконечная лесенка выглядит как затянутая. */
+  document.querySelectorAll('.reveal').forEach((el) => {
+    if (el.dataset.mo) return;
+
+    if (el.matches('h1, h2, h3')) { el.dataset.mo = 'head'; return; }
+    if (el.matches('p')) { el.dataset.mo = 'text'; return; }
+
+    const cs = getComputedStyle(el);
+    const kids = [...el.children].filter((c) => c.getBoundingClientRect().height > 24);
+    const isTrack = /grid|flex/.test(cs.display) && kids.length >= 2;
+
+    if (isTrack) {
+      el.dataset.mo = 'group';
+      kids.forEach((k, i) => k.style.setProperty('--mo-i', Math.min(i, 7)));
+      return;
+    }
+    /* Картинка или встроенная схема — но только если она и есть содержимое
+       блока, а не иконка внутри текста. */
+    const media = el.querySelector('img, picture, canvas, .frame, .build, .geo-mock');
+    el.dataset.mo = media && media.getBoundingClientRect().height > 120 ? 'media' : 'block';
   });
 
   /* ── Подсветка карточки под курсором ─────────────────────────────────────
