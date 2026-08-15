@@ -33,6 +33,8 @@ const CARDS = [
   { slug: 'razrabotka-sajtov', eyebrow: 'Разработка', title: 'Сайт, который\nпродаёт' },
   { slug: 'keysy', eyebrow: 'Кейсы · доказательства', title: 'Результат\nв цифрах' },
   { slug: 'contacts', eyebrow: 'Контакты', title: 'Обсудим\nвашу задачу' },
+  { slug: 'about', eyebrow: 'Обо мне', title: 'Даниил Карацапов —\nмаркетолог' },
+  { slug: 'ceny', eyebrow: 'Стоимость', title: 'Прозрачный\nпрайс' },
 ];
 
 const portraitData = (() => {

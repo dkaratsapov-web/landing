@@ -7,7 +7,9 @@ const NAV_LINKS = [
     ['Разработка сайтов', '/razrabotka-sajtov/'],
     ['Таргетированная реклама', '/targetirovannaya-reklama/'],
     ['GEO-сервисы', '/geo-servisy/'],
+    ['Цены', '/ceny/'],
   ]],
+  ['О себе', '/about/'],
   ['Кейсы', '/keysy/'],
   ['Контакты', '/contacts/'],
 ];

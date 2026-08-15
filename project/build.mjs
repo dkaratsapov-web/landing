@@ -12,8 +12,15 @@ import { execFileSync } from 'node:child_process';
 import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
+import { renderPage, seoConfig } from './layout.mjs';
+import * as aboutPage from './pages/about.mjs';
+import * as cenyPage from './pages/ceny.mjs';
 
 const SITE = 'https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai';
+
+/* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
+   которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
+const GENERATED_PAGES = [aboutPage, cenyPage];
 
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
@@ -62,6 +69,8 @@ copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
 copyFileSync(join(srcDir, 'dark.css'), join(outDir, 'dark.css'));
 copyFileSync(join(srcDir, 'landing.css'), join(outDir, 'landing.css'));
 copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
+// Компоненты страниц из layout.mjs (/about/, /ceny/, блог).
+copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
 
 // Custom domain for GitHub Pages. IDN «карацапов-даниил-маркетинг.рф» in
 // punycode (ASCII) form. Emitting it on every build keeps the domain bound.
@@ -91,6 +100,19 @@ const rootHtml = prerenderApp(
 );
 console.log('Prerendered #root:', (rootHtml.length / 1024).toFixed(1), 'KB of HTML');
 
+/* Подтверждение прав в вебмастерах. Проверка идёт по главной, поэтому теги
+   обязаны попасть именно сюда; на генерируемых страницах их ставит layout.mjs.
+   Пустой код тега не даёт — Яндекс на пустом content отдаёт ошибку проверки. */
+const verifyTags = [
+  ['yandex-verification', seoConfig.yandexVerification],
+  ['google-site-verification', seoConfig.googleVerification],
+  ['mailru-verification', seoConfig.mailruVerification],
+].filter(([, v]) => v)
+  .map(([name, v]) => `  <meta name="${name}" content="${v}" />`)
+  .join('\n');
+console.log('Подтверждение прав:',
+  verifyTags ? verifyTags.split('\n').length + ' мета-тег(а)' : 'коды не заданы (seo.config.json)');
+
 const scriptTags = [
   '  <script defer src="lead-config.js"></script>',
   '  <script defer src="content-default.js"></script>',
@@ -119,6 +141,7 @@ const html = `<!DOCTYPE html>
   <title>Даниил Карацапов — маркетолог | Контекстная реклама, таргет, GEO-продвижение</title>
   <meta name="description" content="Маркетолог с 9+ лет опыта. Контекстная реклама в Яндекс Директ, таргет VK Ads, продвижение в Яндекс Картах. Работаю лично — без посредников. Заявки с первой недели." />
   <link rel="canonical" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
+${verifyTags}
   <meta property="og:title" content="Даниил Карацапов — маркетолог" />
   <meta property="og:description" content="Контекстная реклама, таргет VK Ads, GEO-продвижение. 9+ лет, 70+ ниш. Без посредников, результат с первой недели." />
   <meta property="og:url" content="${SITE}/" />
@@ -246,6 +269,27 @@ for (const p of SUBPAGES) {
   }
 }
 
+// Страницы из общего шаблона (/about/, /ceny/, …). Ошибка рендера валит
+// сборку: пустая или битая страница в проде хуже несобранного деплоя.
+for (const page of GENERATED_PAGES) {
+  const { meta, render } = page;
+  const { body, schema } = render();
+  const html = renderPage({ ...meta, body, schema });
+  const dir = join(outDir, meta.path.replace(/^\/|\/$/g, ''));
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'index.html'), html, 'utf8');
+  console.log('Generated page', meta.path, (html.length / 1024).toFixed(1) + 'KB');
+}
+
+// Файлы подтверждения прав (yandex_*.html, google*.html) — в корень как есть.
+// README из папки не публикуем: он инструкция для нас, а не часть сайта.
+const verifyDir = join(srcDir, 'verification');
+if (existsSync(verifyDir)) {
+  const files = readdirSync(verifyDir).filter((f) => f !== 'README.md');
+  for (const f of files) copyFileSync(join(verifyDir, f), join(outDir, f));
+  console.log('Файлы подтверждения:', files.length ? files.join(', ') : 'нет');
+}
+
 // Assets (images, fonts, etc.) — copy the whole tree.
 const assetsSrc = join(srcDir, 'assets');
 if (existsSync(assetsSrc)) {
@@ -282,6 +326,8 @@ const SITEMAP_PAGES = [
   { loc: '/geo-servisy/', src: 'geo-servisy/index.html', priority: '0.9', changefreq: 'monthly' },
   { loc: '/razrabotka-sajtov/', src: 'razrabotka-sajtov/index.html', priority: '0.8', changefreq: 'monthly' },
   { loc: '/keysy/', src: 'keysy/index.html', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/about/', src: 'pages/about.mjs', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/ceny/', src: 'pages/ceny.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/contacts/', src: 'contacts/index.html', priority: '0.6', changefreq: 'yearly' },
 ];
 
