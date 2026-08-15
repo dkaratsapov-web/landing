@@ -235,6 +235,90 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* ── Орбита платформ рядом с таймлайном ─────────────────────────────────── */
+/* Правая колонка раздела «Путь» пустовала на всю его высоту. Кольцо из
+   названий площадок закрывает пустоту и работает на смысл раздела: за годы
+   практики набрался вот такой стек.
+
+   Колонка липкая: таймлайн длинный, и кольцо должно оставаться в кадре,
+   пока читают пункты, — иначе оно мелькнёт один раз и уедет. */
+.path-grid { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 56px; align-items: start; }
+.orbit-col { position: sticky; top: 120px; display: flex; justify-content: center; }
+
+.orbit {
+  position: relative; width: 380px; height: 380px;
+  display: flex; align-items: center; justify-content: center;
+}
+/* Мягкое акцентное свечение под кольцом — тот же приём, что у героя. */
+.orbit::before {
+  content: ''; position: absolute; inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(182, 240, 30, 0.10), transparent 68%);
+  pointer-events: none;
+}
+.orbit-core {
+  position: relative; z-index: 1;
+  width: 104px; height: 104px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card);
+  border: 1px solid rgba(182, 240, 30, 0.30);
+  font-size: 13px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent-bright);
+}
+
+.orbit-ring { position: absolute; inset: 0; }
+/* Раскладка по окружности: поворот на свой угол, вынос по радиусу и обратный
+   поворот — чтобы подпись стояла ровно ещё до всякой анимации. */
+.orbit-item {
+  position: absolute; top: 50%; left: 50%;
+  transform: rotate(var(--a)) translateY(-152px) rotate(calc(var(--a) * -1));
+  margin: -18px 0 0 -70px;
+  width: 140px; display: flex; justify-content: center;
+}
+.orbit-chip {
+  display: inline-block; padding: 8px 14px;
+  border-radius: 999px; white-space: nowrap;
+  font-size: 13px; line-height: 1;
+  color: var(--txt-2);
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
+@supports (animation-timeline: view()) {
+  /* Именованный таймлайн, объявленный на контейнере, а не view() на каждом
+     элементе. Это принципиально: view() считает прогресс по положению того
+     элемента, к которому применён, а кольцо и подписи стоят в разных точках
+     экрана. С отдельными таймлайнами их повороты расходились, и подписи
+     ехали набок вместо того, чтобы стоять ровно. Один таймлайн на контейнер
+     наследуется потомками, и встречные вращения гасят друг друга точно. */
+  .orbit { view-timeline-name: --orbit; view-timeline-axis: block; }
+
+  .orbit-ring {
+    animation: orbit-spin linear both;
+    animation-timeline: --orbit;
+    animation-range: cover 0% cover 100%;
+  }
+  /* Встречное вращение подписей той же величины — текст остаётся
+     горизонтальным на всём проходе. */
+  .orbit-counter {
+    animation: orbit-spin-back linear both;
+    animation-timeline: --orbit;
+    animation-range: cover 0% cover 100%;
+  }
+}
+@keyframes orbit-spin      { from { transform: rotate(-58deg); } to { transform: rotate(58deg); } }
+@keyframes orbit-spin-back { from { transform: rotate(58deg); }  to { transform: rotate(-58deg); } }
+
+@media (max-width: 1180px) {
+  /* Ниже этой ширины кольцо съедает место у текста — раздел возвращается
+     к одной колонке, а кольцо уходит: оно украшение, а не содержание. */
+  .path-grid { grid-template-columns: 1fr; gap: 0; }
+  .orbit-col { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-ring, .orbit-counter { animation: none !important; }
+}
+
 /* ── Лента блога: герой и фильтры ───────────────────────────────────────── */
 /* Прежний герой ленты занимал пол-экрана: заголовок clamp(40px,6vw,76px),
    лид под ним и 136px пустоты до карточек. На странице выбора статьи это

@@ -83,8 +83,47 @@ const FAQ = [
     'Напишите в Telegram или оставьте номер — созвонимся и разберём задачу. Консультация бесплатная: на ней я говорю, есть ли смысл в рекламе для вашей ниши, и называю вилку по бюджету и срокам.'],
 ];
 
+/* Орбита платформ рядом с таймлайном. Колонка справа от «Пути» пустовала на
+   всю высоту раздела, а сам раздел — про накопленный опыт: кольцо из названий
+   площадок читается как «вот чем за эти годы оброс».
+
+   Почему подписи, а не логотипы: файлов логотипов в проекте нет, а рисовать
+   приблизительные копии чужих товарных знаков хуже, чем набрать названия
+   фирменной гарнитурой — приблизительный логотип выглядит подделкой.
+   Если появятся официальные SVG, они встают на место .orbit-chip без правки
+   разметки вокруг.
+
+   Кольцо крутится от прокрутки (animation-timeline: view), а подписи
+   крутятся навстречу с той же скоростью, поэтому текст всегда горизонтален.
+   Раздел декоративный: тот же список есть ниже обычной сеткой, поэтому от
+   скринридера кольцо скрыто. */
+const PLATFORMS = [
+  'Яндекс Директ', 'VK Ads', 'Telegram Ads', 'Яндекс Метрика',
+  'Яндекс Бизнес', 'Google Ads', '2ГИС', 'Roistat',
+];
+
+function renderOrbit() {
+  const n = PLATFORMS.length;
+  const items = PLATFORMS.map((name, i) => {
+    const a = Math.round((360 / n) * i);
+    return `          <div class="orbit-item" style="--a:${a}deg">
+            <div class="orbit-counter"><span class="orbit-chip">${name}</span></div>
+          </div>`;
+  }).join('\n');
+
+  return `<div class="orbit-col" aria-hidden="true">
+        <div class="orbit">
+          <div class="orbit-core"><span>Стек</span></div>
+          <div class="orbit-ring">
+${items}
+          </div>
+        </div>
+      </div>`;
+}
+
 export function render() {
   const crumbs = breadcrumbs([['/about/', 'О себе']]);
+  const orbit = renderOrbit();
 
   const stats = STATS.map(([v, l]) => `        <div class="dev-stat">
           <div class="dev-stat-v">${v}</div>
@@ -149,8 +188,11 @@ ${stats}
   <div class="wrap">
     <div class="eyebrow reveal">Путь</div>
     <h2 class="reveal">Опыт в интернет-маркетинге с 2019 года</h2>
-    <div class="tl reveal">
+    <div class="path-grid">
+      <div class="tl reveal">
 ${timeline}
+      </div>
+      ${orbit}
     </div>
   </div>
 </section>

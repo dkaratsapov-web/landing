@@ -99,6 +99,17 @@ h3 { font-weight: 600; }
 .btn-lime:hover { background: var(--lime-bright); box-shadow: 0 12px 40px -8px var(--lime-glow); transform: translateY(-2px); }
 .btn-lime .arr { transition: transform .25s ease; }
 .btn-lime:hover .arr { transform: translateX(5px); }
+/* .btn-fill и .btn-lg — синонимы для генерируемых страниц (/about/, /ceny/,
+   /politika/, блог). Их разметку писали по образцу главной, а главная
+   подключает landing.css, где эти два класса и объявлены. Сюда они не
+   попали, и .btn-fill не давал ни фона, ни рамки: главная кнопка на /about/
+   рисовалась голым текстом рядом с оформленной «Смотреть кейсы» — выглядела
+   не как кнопка вовсе. Объявляем здесь через ту же лаймовую заливку, что и
+   .btn-lime, чтобы обе системы называли одно и то же одинаково. */
+.btn-fill { background: var(--lime); color: var(--lime-ink); box-shadow: 0 0 0 rgba(182,240,30,0); }
+.btn-fill:hover { background: var(--lime-bright); box-shadow: 0 12px 40px -8px var(--lime-glow); transform: translateY(-2px); }
+.btn-lg { padding: 18px 32px; font-size: 17px; }
+
 .btn-dark { background: var(--surface-2); color: var(--ink); border: 1px solid var(--line-2); }
 .btn-dark:hover { background: var(--surface-3); border-color: var(--lime); transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line-2); }
@@ -906,3 +917,8 @@ h3 { font-weight: 600; }
 .lead-modal .lead-form { max-width: none; margin: 0; }
 .lead-modal .lead-ok-box { margin: 8px auto 0; }
 .lead-modal .lead-ok-box a { color: var(--lime-bright); }
+
+/* Кнопка Дзена в шапке. Скрывается на том же брейкпоинте, что и основная
+   CTA: на узком экране в шапке остаются только логотип, мессенджеры и бургер,
+   а ссылка на канал живёт в мобильном меню. */
+@media (max-width: 980px) { .nav-dzen { display: none; } }
