@@ -107,7 +107,7 @@ function shell(w, h, inner, extraCss = '') {
   </body></html>`;
 }
 
-const signature = '<div class="sign"><b>Даниил Карацапов</b> · карацапов-даниил-маркетинг.рф</div>';
+const signature = '<div class="sign"><b>Даниил Карацапов</b> · karatsapov.ru</div>';
 
 /* ── Тип: обложка ───────────────────────────────────────────────────────── */
 function cover({ eyebrow, title, withPhoto = true }, w, h) {

@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
-export const SITE = 'https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai';
+export const SITE = 'https://karatsapov.ru';
 
 /* Коды подтверждения прав в панелях вебмастеров. Лежат в seo.config.json,
    потому что их выдают в личном кабинете и меняют они руками, а не кодом.

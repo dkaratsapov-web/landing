@@ -17,7 +17,7 @@ import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
 
-const SITE = 'https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai';
+const SITE = 'https://karatsapov.ru';
 
 /* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
    которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
@@ -73,9 +73,11 @@ copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
 // Компоненты страниц из layout.mjs (/about/, /ceny/, блог).
 copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
 
-// Custom domain for GitHub Pages. IDN «карацапов-даниил-маркетинг.рф» in
-// punycode (ASCII) form. Emitting it on every build keeps the domain bound.
-writeFileSync(join(outDir, 'CNAME'), 'xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai\n', 'utf8');
+// Домен для GitHub Pages. Пишется на каждой сборке: этим файлом Pages и
+// определяет, по какому адресу отдавать сайт, и без него привязка слетает.
+// До августа 2026 здесь был кириллический карацапов-даниил-маркетинг.рф
+// в punycode-виде.
+writeFileSync(join(outDir, 'CNAME'), 'karatsapov.ru\n', 'utf8');
 
 // Favicon (lime paper plane) — copy verbatim.
 copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
@@ -141,7 +143,7 @@ const html = `<!DOCTYPE html>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Даниил Карацапов — маркетолог | Контекстная реклама, таргет, GEO-продвижение</title>
   <meta name="description" content="Маркетолог с 9+ лет опыта. Контекстная реклама в Яндекс Директ, таргет VK Ads, продвижение в Яндекс Картах. Работаю лично — без посредников. Заявки с первой недели." />
-  <link rel="canonical" href="https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/" />
+  <link rel="canonical" href="https://karatsapov.ru/" />
 ${verifyTags}
   <meta property="og:title" content="Даниил Карацапов — маркетолог" />
   <meta property="og:description" content="Контекстная реклама, таргет VK Ads, GEO-продвижение. 9+ лет, 70+ ниш. Без посредников, результат с первой недели." />

@@ -113,7 +113,7 @@ async function creative(d, idx) {
   const fY = H - PAD;
   parts.push(`<line x1="${PAD}" y1="${fY-42}" x2="${W-PAD}" y2="${fY-42}" stroke="#2a2b2a" stroke-width="1.5"/>`);
   parts.push(`<text x="${PAD}" y="${fY}" font-family="Nunito" font-weight="700" font-size="24" fill="${WHITE}">Частный маркетолог · реклама и сайты</text>`);
-  parts.push(`<text x="${W-PAD}" y="${fY}" text-anchor="end" font-family="Nunito" font-weight="700" font-size="22" fill="${ACCENT}">карацапов-даниил-маркетинг.рф</text>`);
+  parts.push(`<text x="${W-PAD}" y="${fY}" text-anchor="end" font-family="Nunito" font-weight="700" font-size="22" fill="${ACCENT}">karatsapov.ru</text>`);
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">${parts.join('')}</svg>`;
 

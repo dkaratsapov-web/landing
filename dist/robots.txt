@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://xn-----6kcaabbmngo7aadrlotojgvup6c4e.xn--p1ai/sitemap.xml
+Sitemap: https://karatsapov.ru/sitemap.xml

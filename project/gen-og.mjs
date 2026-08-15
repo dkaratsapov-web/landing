@@ -84,7 +84,7 @@ function cardHtml({ eyebrow, title }) {
     <div class="txt">
       <div class="eyebrow">${eyebrow}</div>
       <h1>${lines}</h1>
-      <div class="foot"><span class="dot"></span><b>Даниил Карацапов</b> · карацапов-даниил-маркетинг.рф</div>
+      <div class="foot"><span class="dot"></span><b>Даниил Карацапов</b> · karatsapov.ru</div>
     </div>
     ${portraitData ? `<div class="photo"><img src="${portraitData}" alt=""></div>` : ''}
     <div class="bar"></div>
