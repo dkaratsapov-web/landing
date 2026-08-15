@@ -113,6 +113,21 @@
 .pr:last-child { border-bottom: 1px solid var(--line); }
 @media (min-width: 880px) { .pr { grid-template-columns: 78px minmax(0, 300px) minmax(0, 1fr); gap: 0 34px; } }
 
+/* На широком контейнере (1800px) третья колонка упирается в предел читаемой
+   строки — 62 символа, — и справа простаивала треть экрана. Снимать предел
+   нельзя: строка в 90+ символов читается тяжело. Поэтому на больших ширинах
+   ставим принципы по два в ряд: пустота уходит, высота блока падает вдвое,
+   а мера строки остаётся прежней. */
+@media (min-width: 1400px) {
+  .prs { display: grid; grid-template-columns: 1fr 1fr; column-gap: 72px; }
+  .pr { grid-template-columns: 66px minmax(0, 1fr); gap: 0 22px; }
+  /* Верхняя линия нужна каждой строке, нижняя — только последней паре. */
+  .pr:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+  .pr:last-child { border-bottom: 1px solid var(--line); }
+  .pr-body { display: block; }
+  .pr-t { margin-top: 10px; }
+}
+
 .pr-n {
   font-size: clamp(30px, 3.4vw, 42px); font-weight: 800; line-height: .9;
   letter-spacing: -.04em; color: transparent;
@@ -124,7 +139,7 @@
 .pr-h { font-size: 18px; font-weight: 700; line-height: 1.3; color: var(--txt); margin: 0; }
 .pr-t { margin: 0; font-size: 15px; line-height: 1.6; color: var(--txt-2); max-width: 62ch; }
 @media (max-width: 879px) { .pr-t { margin-top: 8px; } }
-@media (min-width: 880px) { .pr-body { display: contents; } }
+@media (min-width: 880px) and (max-width: 1399px) { .pr-body { display: contents; } }
 
 /* Появление строк лесенкой при прокрутке. */
 .js .pr { opacity: 0; transform: translateY(12px); }
