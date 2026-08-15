@@ -15,10 +15,11 @@
         а его отрисованная область не отличается от фона. Проверяем пикселями,
         а не getComputedStyle: у композитных scroll-анимаций стили в главном
         потоке возвращают базовое значение, и такая проверка врёт.
-     5. Ступенька на стыке секций. У волны-разделителя есть инвариант: её
-        фон обязан совпадать с фактическим тоном предыдущей секции. Замеряем
-        цвет над границей и под ней — расхождение больше полутора единиц RGB
-        глаз видит как полосу.
+     5. Полосы на стыках — сканом всей страницы по колонке пикселей, а не
+        по позициям волн и не по computed-фону: и то и другое уже давало
+        ложный ноль. Ищем строку, где тон меняется скачком больше полутора
+        единиц, а выше и ниже держится ровно. Плавный градиент проверку
+        не тревожит.
 
    Запуск:  npm run check          — проверить всё
             npm run check -- /keysy/ /about/   — только указанные страницы
@@ -176,6 +177,75 @@ for (const path of pages()) {
       };
     });
 
+    /* ── Контраст текста и размер зон касания ────────────────────────────
+       Обе проверки пришли из отчёта PageSpeed: «цвета фона и переднего плана
+       недостаточно контрастны» и «области прикосновения недостаточно большие».
+       Считаем сами, чтобы не узнавать об этом из чужого отчёта постфактум.
+
+       Контраст — по формуле WCAG. Порог 4.5:1 для обычного текста и 3:1 для
+       крупного (от 24px, либо от 18.66px при жирном начертании). Фон ищем
+       вверх по дереву до первого непрозрачного предка — у текста он почти
+       всегда прозрачный.
+
+       Зоны касания меряем только на узком экране: 24×24 CSS-пикселя — порог,
+       ниже которого палец промахивается. */
+    const a11y = await page.evaluate((isNarrow) => {
+      const lum = (c) => {
+        const [r, g, b] = c.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      };
+      const parse = (s) => (s.match(/[\d.]+/g) || []).slice(0, 4).map(Number);
+      const solidBg = (el) => {
+        let n = el;
+        while (n && n !== document.documentElement) {
+          const c = parse(getComputedStyle(n).backgroundColor);
+          if (c.length >= 3 && (c[3] === undefined || c[3] > 0.85)) return c;
+          n = n.parentElement;
+        }
+        return [8, 8, 10];
+      };
+      const ratio = (a, b) => { const l1 = lum(a), l2 = lum(b); const [hi, lo] = l1 > l2 ? [l1, l2] : [l2, l1]; return (hi + 0.05) / (lo + 0.05); };
+
+      const low = [], small = [];
+      const seen = new Set();
+      document.querySelectorAll('p, span, a, li, h1, h2, h3, h4, div, button, summary').forEach((el) => {
+        const t = (el.textContent || '').trim();
+        if (!t || el.children.length > 0) return;           /* только листья с текстом */
+        const r = el.getBoundingClientRect();
+        if (r.width < 2 || r.height < 2) return;
+        const cs = getComputedStyle(el);
+        if (cs.visibility === 'hidden' || cs.display === 'none' || +cs.opacity < 0.1) return;
+        const fg = parse(cs.color);
+        if (fg.length < 3 || (fg[3] !== undefined && fg[3] < 0.5)) return;
+        const size = parseFloat(cs.fontSize), weight = +cs.fontWeight || 400;
+        const big = size >= 24 || (size >= 18.66 && weight >= 700);
+        const need = big ? 3 : 4.5;
+        const got = ratio(fg, solidBg(el));
+        if (got < need - 0.05) {
+          const key = cs.color + '|' + size + '|' + t.slice(0, 24);
+          if (!seen.has(key)) { seen.add(key); low.push({ t: t.slice(0, 46), color: cs.color, size, got: +got.toFixed(2), need }); }
+        }
+      });
+      if (isNarrow) {
+        document.querySelectorAll('a, button, input, summary, [role="button"]').forEach((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.width < 2 || r.height < 2) return;
+          if (r.width < 24 || r.height < 24) {
+            small.push({ t: ((el.textContent || el.getAttribute('aria-label') || '').trim() || el.tagName).slice(0, 32),
+              w: Math.round(r.width), h: Math.round(r.height) });
+          }
+        });
+      }
+      return { low: low.slice(0, 6), small: small.slice(0, 6) };
+    }, width === 390);
+
+    for (const l of a11y.low) {
+      add(path, width, 'низкий контраст', `«${l.t}» — ${l.got}:1 при норме ${l.need}:1 (${l.color}, ${l.size}px)`);
+    }
+    for (const sm of a11y.small) {
+      add(path, width, 'мелкая зона касания', `«${sm.t}» — ${sm.w}×${sm.h}px, нужно от 24×24`);
+    }
+
     if (dom.overflow > 0) {
       add(path, width, 'горизонтальная прокрутка', `${dom.scrollWidth}px против ${width}px — что-то вылезает за экран`);
     }
@@ -193,21 +263,49 @@ for (const path of pages()) {
     if (dom.h1 !== 1) add(path, width, 'заголовки', `h1 на странице: ${dom.h1} (должен быть ровно один)`);
     if (!dom.title) add(path, width, 'мета', 'пустой <title>');
 
-    /* Ступеньки на стыках — только на широком экране: на узком волна почти
-       не видна, а лишний прогон стоит времени. */
-    if (width === 1440 && dom.seams.length) {
+    /* ── Полосы на стыках ────────────────────────────────────────────────
+       Раньше проверялись только позиции волн-разделителей, и по фону секции
+       через computed backgroundColor. Это дважды дало ложный ноль: у секции
+       с градиентом backgroundColor прозрачный, а полосы бывают и там, где
+       волны нет вовсе. Владелец сайта находил их глазами после того, как
+       я отчитывался, что всё чисто.
+
+       Теперь сканируется вся страница по колонке пикселей: ищем строку, где
+       тон скачком меняется больше чем на полторы единицы, а сверху и снизу
+       от неё держится ровно. Ровно так это и видит глаз — резкая граница
+       двух больших плоскостей. Плавный градиент проверку не тревожит:
+       там соседние строки отличаются на доли единицы.
+
+       Пробы берём в поле страницы (x = 6/14/22). На отступах контента они
+       попадали на текст и карточки и давали ложные срабатывания. */
+    if (width === 1440) {
+      /* Фиксированные элементы (шапка, плашка cookie, кнопка квиза) в
+         полностраничном снимке впечатываются один раз — как правило у нижнего
+         края — и создают ступеньку там, где на самой странице ничего нет.
+         Это артефакт съёмки, а не дефект вёрстки, поэтому на время замера
+         прячем всё, что вынуто из потока. Сюда же .bg-fx — слой свечений:
+         он тоже fixed, при реальной прокрутке едет вместе с экраном и шва
+         между секциями создать не может по определению. */
+      await page.addStyleTag({ content:
+        '.nav,.nav-mobile,.cookie-bar,.quiz-fab,.toast-wrap,.lead-modal,.shot-lb,.bg-fx,body::after{display:none!important}' });
+      await page.waitForTimeout(150);
       const shot = await page.screenshot({ fullPage: true });
       const { data, info } = await sharp(shot).raw().toBuffer({ resolveWithObject: true });
-      const xs = [Math.round(info.width * 0.12), Math.round(info.width * 0.22), Math.round(info.width * 0.32)];
-      for (const y of dom.seams) {
-        if (y < 12 || y + 12 >= info.height) continue;
-        const above = rowTone(data, info.width, info.channels, y - 8, xs);
-        const below = rowTone(data, info.width, info.channels, y + 8, xs);
-        const d = Math.abs(above - below);
-        if (d > 1.5) {
-          add(path, width, 'ступенька на стыке',
-            `y=${y}: над границей ${above.toFixed(1)}, под ней ${below.toFixed(1)} (разница ${d.toFixed(1)}) — видно как полоса`);
-        }
+      const xs = [6, 14, 22];
+      const tone = (y) => rowTone(data, info.width, info.channels, y, xs);
+      const hits = [];
+      for (let y = 9; y < info.height - 9; y++) {
+        const d = tone(y) - tone(y - 1);
+        if (Math.abs(d) < 1.5) continue;
+        /* Ступенька, а не градиент: до и после границы тон держится ровно. */
+        if (Math.abs(tone(y - 1) - tone(y - 8)) > 0.6) continue;
+        if (Math.abs(tone(y + 7) - tone(y)) > 0.6) continue;
+        if (hits.length && y - hits[hits.length - 1].y < 10) continue;
+        hits.push({ y, d, up: tone(y - 1), dn: tone(y) });
+      }
+      for (const h of hits) {
+        add(path, width, 'полоса на стыке',
+          `y=${h.y}: тон ${h.up.toFixed(1)} → ${h.dn.toFixed(1)} (скачок ${h.d.toFixed(1)}) — граница видна как полоса`);
       }
     }
 

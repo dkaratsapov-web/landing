@@ -16,7 +16,10 @@
   --card:          #161618;
   --txt:           #f5f5f7;
   --txt-2:         #a1a1a6;
-  --txt-3:         #6e6e73;
+  /* Синхронизировано с --muted-2 в dark.css: этот файл грузится позже и
+     перебивал токен, из-за чего подписи на генерируемых страницах оставались
+     с контрастом 3.95:1. */
+  --txt-3:         #82828a;
   --accent:        #b6f01e;
   --accent-bright: #c4f53e;
   --accent-soft:   rgba(182,240,30,0.13);
@@ -595,3 +598,17 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   .policy-toc ol { grid-template-columns: 1fr; }
   .req-row { grid-template-columns: 1fr; gap: 2px; }
 }
+
+
+/* ── Зоны касания ─────────────────────────────────────────────────────────
+   Ссылки-стрелки в карточках проектов имели высоту 19px, чекбоксы фильтров —
+   13×13. Порог PageSpeed — 24×24: ниже него палец промахивается. */
+.proj-case-link { display: inline-flex; align-items: center; min-height: 28px; padding: 4px 0; }
+.kase-filters input[type="checkbox"], .filters input[type="checkbox"], input[type="radio"] { width: 24px; height: 24px; }
+
+/* Ссылки внутри текста и флажки согласия. Инлайновая ссылка в абзаце имела
+   высоту 18px, флажок — 13×13: и то и другое ниже порога 24×24, на телефоне
+   палец промахивается. Вертикальные поля у инлайнового элемента расширяют
+   область нажатия, не сдвигая строку. */
+.lead a, .prose p a, p a:not(.btn):not(.proj-case-link) { padding: 4px 0; }
+input[type="checkbox"] { width: 24px; height: 24px; }

@@ -51,7 +51,10 @@ function CookieNotice() {
     setShow(false);
   };
   return (
-    <div className="cookie-bar" role="dialog" aria-live="polite">
+    /* role="dialog" без доступного названия — ошибка PageSpeed. Здесь роль
+       и не нужна: это не диалог, а уведомление, которое ничего не блокирует
+       и не перехватывает фокус. Правильная роль для такого — status. */
+    <div className="cookie-bar" role="status" aria-label="Уведомление об использовании cookie">
       <p className="cookie-text">
         Мы используем файлы cookie, чтобы улучшить работу сайта. К сайту подключён сервис веб-аналитики Яндекс.Метрика, использующий cookie-файлы.
       </p>
@@ -102,24 +105,22 @@ function App() {
           просмотра считает разметку некорректной. */}
       <main id="main">
       <Hero variant={t.heroVariant} portrait="assets/portrait.jpg" onCta={openLead} />
-      {/* ambient — только здесь: единственный стык под секцией со свечениями
-          и сеткой (герой). См. комментарий у SectionWave. */}
-      <SectionWave from="#08080a" to="#0d0d0f" speed={16} ambient />
+      <SectionWave from="#08080a" to="#08080a" speed={16} />
       <About />
-      <SectionWave from="#0d0d0f" to="#08080a" speed={13} />
+      <SectionWave from="#08080a" to="#08080a" speed={13} />
       <Services variant={t.servicesVariant} onCta={openLead} />
-      <SectionWave from="#08080a" to="#151517" speed={18} />
+      <SectionWave from="#08080a" to="#08080a" speed={18} />
       <Certificates />
-      <SectionWave from="#151517" to="#08080a" speed={14} />
+      <SectionWave from="#08080a" to="#08080a" speed={14} />
       <Process data-comment-anchor="a0b41ccc3a-h3-158-15" />
-      <SectionWave from="#08080a" to="#151517" speed={16} />
+      <SectionWave from="#08080a" to="#08080a" speed={16} />
       <Quotes />
       <Cases onCta={openLead} />
-      <SectionWave from="#151517" to="#08080a" speed={13} />
+      <SectionWave from="#08080a" to="#08080a" speed={13} />
       <Audit />
-      <SectionWave from="#08080a" to="#151517" speed={17} />
+      <SectionWave from="#08080a" to="#08080a" speed={17} />
       <Contacts onCta={openLead} />
-      <SectionWave from="#151517" to="#000000" speed={15} />
+      <SectionWave from="#08080a" to="#08080a" speed={15} />
       </main>
       <Footer onCta={openLead} />
       {t.showQuiz && <QuizFab onOpen={() => setQuizOpen(true)} />}

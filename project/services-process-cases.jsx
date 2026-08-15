@@ -213,7 +213,7 @@ function Certificates() {
       </div>
 
       {c &&
-      <div className="cert-lb" onClick={close} role="dialog" aria-modal="true">
+      <div className="cert-lb" onClick={close} role="dialog" aria-modal="true" aria-label="Просмотр сертификата">
         <button className="cert-lb-close" onClick={close} aria-label="Закрыть"><IconClose size={26} /></button>
         <button className="cert-lb-nav prev" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Предыдущий"><IconChevron size={28} /></button>
         <div className="cert-lb-stage" onClick={(e) => e.stopPropagation()}>
