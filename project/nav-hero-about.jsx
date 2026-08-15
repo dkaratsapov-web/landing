@@ -138,12 +138,16 @@ function HeroSplit({ portrait, onCta }) {
         alignItems: 'center', paddingTop: 32, paddingBottom: 60 }}>
         <div className="hero-copy">
           <span className="eyebrow reveal in">{H.eyebrow}</span>
-          <h1 className="display reveal in" style={{ fontSize: 'clamp(40px, 6vw, 76px)' }}>
+          {/* Верхняя граница снижена с 76px до 62px: после замены заголовка на
+              «Интернет-маркетинг, который делаю я сам» первая строка перестала
+              помещаться в колонку и рвалась по дефису — «Интернет-» / «маркетинг».
+              Перенос внутри ключевой фразы читается как опечатка. */}
+          <h1 className="display reveal in" data-mo-kinetic style={{ fontSize: 'clamp(38px, 4.4vw, 62px)' }}>
             {H.titleLine1}<br />{H.titleLine2} <span style={{ color: 'var(--accent-bright)' }}>{H.titleAccent}</span>
           </h1>
           <p className="lead reveal in" style={{ marginTop: 26, maxWidth: 480 }}>{H.sub}</p>
           <div className="reveal in" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
               {H.ctaPrimary}<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href={H.telegramUrl} target="_blank" rel="noopener noreferrer">
@@ -178,7 +182,7 @@ function HeroOverlay({ portrait, onCta }) {
           </h1>
           <p className="lead reveal in" style={{ marginTop: 24, maxWidth: 560, color: '#e6e6ea' }}>{HERO_SUB}</p>
           <div className="reveal in" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
               Обсудить задачу<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">
@@ -212,7 +216,7 @@ function HeroEditorial({ portrait, onCta }) {
         <div className="reveal in" style={{ paddingBottom: 18 }}>
           <p className="lead" style={{ maxWidth: 460 }}>{HERO_SUB}</p>
           <div style={{ display: 'flex', gap: 14, marginTop: 32, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
               Обсудить задачу<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">

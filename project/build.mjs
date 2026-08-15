@@ -70,6 +70,9 @@ copyFileSync(join(srcDir, 'lead-config.js'), join(outDir, 'lead-config.js'));
 copyFileSync(join(srcDir, 'lead-modal.js'), join(outDir, 'lead-modal.js'));
 copyFileSync(join(srcDir, 'dark.css'), join(outDir, 'dark.css'));
 copyFileSync(join(srcDir, 'landing.css'), join(outDir, 'landing.css'));
+// Общий слой движения — нужен и главной, и статическим, и генерируемым.
+copyFileSync(join(srcDir, 'motion.css'), join(outDir, 'motion.css'));
+copyFileSync(join(srcDir, 'motion.js'), join(outDir, 'motion.js'));
 copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
 // Компоненты страниц из layout.mjs (/about/, /ceny/, блог).
 copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
@@ -206,6 +209,9 @@ const scriptTags = [
   '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>',
   '  <script defer src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>',
   '  <script defer src="scroll.js"></script>',
+  // Микровзаимодействия по указателю. Отдельно от scroll.js: тот зависит от
+  // Lenis/GSAP с CDN, а этот работает всегда и сам по себе.
+  '  <script defer src="motion.js"></script>',
 ].join('\n');
 
 const html = `<!DOCTYPE html>
@@ -242,6 +248,7 @@ ${verifyTags}
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
+  <link rel="stylesheet" href="motion.css" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
   <link rel="preload" as="image" href="assets/portrait.jpg" fetchpriority="high" />
@@ -347,7 +354,7 @@ ${verifyTags}
   <noscript><div><img src="https://mc.yandex.ru/watch/109681858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
 </head>
-<body>
+<body class="mo-grain">
   <!-- preloader disabled -->
   <div id="root">${rootHtml}</div>
 

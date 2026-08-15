@@ -73,7 +73,7 @@ function Audit() {
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center' }}>
         <div className="reveal">
           <span className="eyebrow">Бесплатный аудит</span>
-          <h2 className="section-title">Ваш маркетинг сливает бюджет?<br />Проверю бесплатно</h2>
+          <h2 className="section-title">Бесплатный аудит рекламы<br />и сайта</h2>
           <p className="lead" style={{ marginTop: 24 }}>
             Я проанализирую вашу рекламу, сайт и аналитику — и покажу, где теряются заявки и деньги.
             Без обязательств: просто честная картина по цифрам.

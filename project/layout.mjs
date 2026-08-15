@@ -239,7 +239,8 @@ const PAGE_SCRIPTS = `<script>
   });
 })();
 </script>
-<script defer src="/lead-modal.js"></script>`;
+<script defer src="/lead-modal.js"></script>
+<script defer src="/motion.js"></script>`;
 
 /* ── FAQ ─────────────────────────────────────────────────────────────────── */
 /* items — [[вопрос, ответ], ...]. Возвращает только элементы списка: обёртку
@@ -340,6 +341,7 @@ ${verify}
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
+<link rel="stylesheet" href="/motion.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
 <script defer src="/lead-config.js"></script>
@@ -347,7 +349,7 @@ ${metrika}
 ${ld}
 ${extraHead}
 </head>
-<body${bodyClass ? ` class="${bodyClass}"` : ''}>
+<body class="mo-grain${bodyClass ? ` ${bodyClass}` : ''}">
 
 <div class="bg-fx">
   <div class="glow g1"></div>

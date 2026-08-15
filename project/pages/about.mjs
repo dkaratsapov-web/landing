@@ -148,7 +148,7 @@ ${stats}
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Путь</div>
-    <h2 class="reveal">Как я пришёл к своей практике</h2>
+    <h2 class="reveal">Опыт в интернет-маркетинге с 2019 года</h2>
     <div class="tl reveal">
 ${timeline}
     </div>
@@ -158,7 +158,7 @@ ${timeline}
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Инструменты</div>
-    <h2 class="reveal">С чем я работаю</h2>
+    <h2 class="reveal">Инструменты: Яндекс Директ, VK Ads, аналитика</h2>
     <p class="lead reveal">Не «полный спектр услуг», а инструменты, которыми владею лично и за результат которых отвечаю.</p>
     <div class="price-grid reveal">
 ${stack}
@@ -170,7 +170,7 @@ ${stack}
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Как я работаю</div>
-    <h2 class="reveal">Шесть принципов</h2>
+    <h2 class="reveal">Принципы работы с клиентами</h2>
     <p class="lead reveal">Это не декларация о намерениях, а то, из чего складывается разница между работой с человеком и работой с подрядчиком.</p>
     <div class="price-grid reveal">
 ${principles}
@@ -181,7 +181,7 @@ ${principles}
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Подтверждённая экспертиза</div>
-    <h2 class="reveal">Сертификаты</h2>
+    <h2 class="reveal">Сертификаты Яндекса, Google и Roistat</h2>
     <p class="lead reveal">Официальные сертификации Яндекса и Google, партнёрский статус Roistat. Каждый сертификат открывается в оригинале — нажмите, чтобы посмотреть.</p>
     <div class="certs-grid reveal">
 ${certs}
@@ -192,7 +192,7 @@ ${certs}
 <section class="section">
   <div class="wrap">
     <div class="eyebrow reveal">Вопросы</div>
-    <h2 class="reveal">О работе со мной</h2>
+    <h2 class="reveal">Вопросы о работе с частным маркетологом</h2>
     <div class="faq-list reveal">
 ${faq}
     </div>
@@ -202,7 +202,7 @@ ${faq}
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
-      <h2>Разберём вашу задачу</h2>
+      <h2>Заказать консультацию интернет-маркетолога</h2>
       <p>Консультация бесплатная. Скажу честно, есть ли смысл в рекламе для вашей ниши, и назову вилку по бюджету и срокам.</p>
       <div class="btn-row" style="justify-content:center;">
         <a class="btn btn-fill btn-lg" href="/contacts/">Оставить заявку</a>

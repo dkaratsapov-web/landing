@@ -279,12 +279,16 @@ ${relatedBlock}`;
   });
 }
 
-/* ── Карточка в ленте ────────────────────────────────────────────────────── */
+/* ── Карточка в ленте ──────────────────────────────────────────────────────
+   data-tags нужен фильтру: сравнение идёт по строке в нижнем регистре, чтобы
+   не зависеть от того, как тег записан во фронтматтере статьи. */
 function postCard(post) {
-  return `      <a class="post-card" href="${post.path}">
+  const tags = (post.tags || []).map((t) => t.toLowerCase()).join('|');
+  const badge = (post.tags || [])[0];
+  return `      <a class="post-card mo-spot" href="${post.path}" data-tags="${esc(tags)}">
         ${post.cover ? `<img class="post-card-cover" src="${post.cover}" alt="" width="600" height="315" loading="lazy">` : ''}
         <div class="post-card-body">
-          <div class="post-card-meta"><time datetime="${post.date}">${humanDate(post.date)}</time> · ${post.reading.label}</div>
+          <div class="post-card-meta">${badge ? `<span class="post-card-tag">${esc(badge)}</span>` : ''}<time datetime="${post.date}">${humanDate(post.date)}</time><span class="post-card-read">${post.reading.label}</span></div>
           <h3 class="post-card-title">${esc(post.title)}</h3>
           <p class="post-card-desc">${esc(post.description)}</p>
           <span class="post-card-more">Читать →</span>
@@ -292,27 +296,124 @@ function postCard(post) {
       </a>`;
 }
 
+/* ── Табы-фильтры ──────────────────────────────────────────────────────────
+   Собираются из тегов статей, а не задаются руками: иначе при добавлении
+   новой темы вкладка не появится, а руками поддерживаемый список неизбежно
+   разъедется с фронтматтером.
+
+   В табы попадают только теги минимум с двумя статьями. Вкладка, за которой
+   одна заметка, — это не раздел, а тупик: пользователь жмёт фильтр и видит
+   пустую сетку с одним элементом. Порядок — по числу статей. */
+function buildFilters(posts) {
+  const count = new Map();
+  posts.forEach((p) => (p.tags || []).forEach((t) => {
+    count.set(t, (count.get(t) || 0) + 1);
+  }));
+
+  return [...count.entries()]
+    .filter(([, n]) => n >= 2)
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'ru'))
+    .slice(0, 6)
+    .map(([tag, n]) => ({ tag, n }));
+}
+
 /* ── Лента /blog/ ────────────────────────────────────────────────────────── */
 export function renderIndex(posts) {
   const crumbs = breadcrumbs([['/blog/', 'Блог']]);
 
-  const body = `<header class="hero" data-screen-label="Блог">
+  const filters = buildFilters(posts);
+
+  /* Герой ленты намеренно низкий и двухколоночный. Прежний вариант занимал
+     пол-экрана: заголовок в 76px, лид под ним и 136px пустоты до карточек
+     (96px снизу героя + 76px сверху секции). На странице, куда приходят
+     выбирать статью, первый экран не должен уходить целиком на вывеску —
+     карточки обязаны быть видны сразу. */
+  const head = `<header class="hero hero-feed" data-screen-label="Блог">
   <div class="wrap">
     ${crumbs.visible}
-    <div class="eyebrow">Блог</div>
-    <h1>Разборы по <span class="accent">интернет-маркетингу</span></h1>
-    <p class="lead">Пишу о том, с чем сталкиваюсь в работе: как устроен Яндекс Директ, куда утекает рекламный бюджет, что считать результатом. Без пересказа справки Яндекса — только практика.</p>
+    <div class="feed-head">
+      <div>
+        <div class="eyebrow">Блог</div>
+        <h1>Блог об интернет-маркетинге и <span class="accent">Яндекс Директе</span></h1>
+      </div>
+      <p class="feed-lead">Пишу о том, с чем сталкиваюсь в работе: как устроен Яндекс Директ, куда утекает рекламный бюджет, что считать результатом. Без пересказа справки Яндекса — только практика.</p>
+    </div>
   </div>
-</header>
+</header>`;
 
-<section class="section">
+  /* Панель фильтров липкая: при прокрутке длинной ленты возможность сменить
+     тему не должна уезжать вверх вместе с шапкой. */
+  const tabs = filters.length ? `    <div class="feed-filters" role="tablist" aria-label="Фильтр статей по темам">
+      <button type="button" class="feed-tab is-active" data-filter="*" role="tab" aria-selected="true">Все<span class="feed-tab-n">${posts.length}</span></button>
+${filters.map(({ tag, n }) => `      <button type="button" class="feed-tab" data-filter="${esc(tag.toLowerCase())}" role="tab" aria-selected="false">${esc(tag)}<span class="feed-tab-n">${n}</span></button>`).join('\n')}
+    </div>` : '';
+
+  const body = `${head}
+
+<section class="section section-feed">
   <div class="wrap">
-${posts.length ? `    <div class="post-grid reveal">
+${tabs}
+${posts.length ? `    <div class="post-grid mo-stagger" id="postGrid">
 ${posts.map(postCard).join('\n')}
-    </div>`
+    </div>
+    <p class="feed-empty" id="feedEmpty" hidden>По этой теме статей пока нет. <button type="button" class="feed-reset">Показать все</button></p>`
     : `    <p class="lead">Первые статьи скоро появятся.</p>`}
   </div>
-</section>`;
+</section>
+
+<script>
+/* Фильтрация ленты. Полностью на клиенте и без перезагрузки: статей
+   немного, все карточки уже в разметке, и любой запрос к серверу здесь был
+   бы лишним ожиданием.
+
+   Выбранная тема пишется в адрес (?tema=...) — ссылкой на отфильтрованную
+   ленту можно поделиться, а кнопка «назад» возвращает предыдущий фильтр.
+   Без JS видны все статьи: панель фильтров просто ничего не делает. */
+(function () {
+  var grid = document.getElementById('postGrid');
+  if (!grid) return;
+  var tabs = [].slice.call(document.querySelectorAll('.feed-tab'));
+  var cards = [].slice.call(grid.querySelectorAll('.post-card'));
+  var empty = document.getElementById('feedEmpty');
+
+  function apply(value, push) {
+    var shown = 0;
+    cards.forEach(function (card) {
+      var tags = card.getAttribute('data-tags') || '';
+      var hit = value === '*' || tags.split('|').indexOf(value) !== -1;
+      card.hidden = !hit;
+      if (hit) shown++;
+    });
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('data-filter') === value;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if (empty) empty.hidden = shown !== 0;
+
+    if (push) {
+      var url = value === '*' ? location.pathname
+        : location.pathname + '?tema=' + encodeURIComponent(value);
+      history.pushState({ tema: value }, '', url);
+    }
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { apply(t.getAttribute('data-filter'), true); });
+  });
+  if (empty) {
+    var reset = empty.querySelector('.feed-reset');
+    if (reset) reset.addEventListener('click', function () { apply('*', true); });
+  }
+
+  function fromUrl() {
+    var m = location.search.match(/[?&]tema=([^&]*)/);
+    return m ? decodeURIComponent(m[1]) : '*';
+  }
+  window.addEventListener('popstate', function () { apply(fromUrl(), false); });
+  if (location.search) apply(fromUrl(), false);
+})();
+</script>`;
 
   const schema = [
     crumbs.schema,

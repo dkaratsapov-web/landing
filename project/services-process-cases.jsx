@@ -36,7 +36,7 @@ function ServiceCard({ s, open, onToggle }) {
     e.currentTarget.style.setProperty('--my', (e.clientY - r.top) + 'px');
   };
   return (
-    <article className={'card svc-x' + (open ? ' open' : '')} onMouseMove={onMove}>
+    <article className={'card svc-x mo-spot' + (open ? ' open' : '')} onMouseMove={onMove}>
       <div className="svc-x-head" onClick={onToggle} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }} role="button" tabIndex={0} aria-expanded={open}>
         <span className="icon-tile svc-x-icon"><Glyph name={s.icon} size={24} /></span>
         <span className="svc-x-titles">
@@ -269,7 +269,7 @@ function Process() {
 /* ---------------- CASES (filterable cards) ---------------- */
 function CaseCard({ c, idx }) {
   return (
-    <article className="kase card" style={{ '--d': idx }}>
+    <article className="kase card mo-spot" style={{ '--d': idx }}>
       <div className="kase-photo">
         {c.imgPos
           ? <img className="kase-img" src={c.img} alt={c.client} loading="lazy" style={{ objectPosition: c.imgPos }} />
@@ -323,7 +323,7 @@ function Cases({ onCta }) {
           {list.map((c, i) => <CaseCard key={c.id} c={c} idx={i} />)}
         </div>
         <div style={{ marginTop: 44, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-          <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+          <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
             Обсудить похожую задачу<IconArrowRight size={18} />
           </a>
           <a className="btn btn-dark btn-lg" href="/keysy/">
