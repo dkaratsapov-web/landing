@@ -41,11 +41,18 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Разработка сайтов и лендингов","provider":{"@type":"Person","name":"Даниил Карацапов"},"description":"Разработка продающих лендингов и корпоративных сайтов с фокусом на конверсию","areaServed":"RU","url":"https://karatsapov.ru/razrabotka-sajtov/"}</script>
 <style>
 /* ── page-specific ── */
-/* Схлопывание отступов. У секции с ценами нулевой нижний паддинг, поэтому
-   нижний margin её последнего потомка «протекал» наружу и раздвигал соседние
-   секции на 14px. В зазор был виден фон страницы — на стыке появлялась
-   светлая полоса, хотя цвета самих секций совпадали. flow-root создаёт
-   контекст форматирования: отступ остаётся внутри и наружу не выходит. */
+/* Секции больше не красятся. Раньше они чередовали два фона (#0d0d0f и
+   #08080a), и на каждой границе был виден перепад. Градиентная растушёвка
+   проблему не решила: перепад в пять единиц RGB глаз ловит и растянутым на
+   180 пикселей — вместо линии получалась полоса-размазка.
+
+   Теперь фон один на всю страницу, как на остальных страницах сайта, где
+   стыков нет вообще. Секции разделяются отступами и содержимым, а не сменой
+   тона. Перепадов не осталось по построению.
+
+   flow-root оставлен: у секции с ценами нулевой нижний паддинг, и нижний
+   margin последнего потомка протекал наружу, раздвигая соседей на 14px.
+   Пока фон был разный, в зазор светила полоса. */
 .sec { display: flow-root; }
 
 .dev-hero-grid { display: grid; grid-template-columns: 1fr 480px; gap: 56px; align-items: center; }
@@ -410,7 +417,7 @@
 </header>
 
 <!-- ===================== ЧТО ВХОДИТ ===================== -->
-<section class="sec" style="background:linear-gradient(to bottom,#08080a 0,#0d0d0f 180px,#0d0d0f calc(100% - 180px),#08080a 100%);">
+<section class="sec">
   <div class="wrap">
     <div class="section-head reveal" style="max-width:640px;">
       <span class="eyebrow">Полный цикл</span>
@@ -459,7 +466,7 @@
 </section>
 
 <!-- ===================== КЕЙСЫ ===================== -->
-<section class="sec" style="background:linear-gradient(to bottom,#08080a 0,#08080a calc(100% - 180px),#0d0d0f 100%);" id="cases">
+<section class="sec" id="cases">
   <div class="wrap">
     <div class="section-head reveal" style="max-width:640px;">
       <span class="eyebrow">Портфолио · 3 проекта</span>
@@ -692,7 +699,7 @@
 </section>
 
 <!-- ===================== ПРОЦЕСС ===================== -->
-<section class="sec" style="background:linear-gradient(to bottom,#0d0d0f 0,#0d0d0f calc(100% - 180px),#08080a 100%);">
+<section class="sec">
   <div class="wrap">
     <div class="section-head reveal" style="max-width:600px;">
       <span class="eyebrow">Как это работает</span>
@@ -729,7 +736,7 @@
 </section>
 
 <!-- ===================== СТОИМОСТЬ ===================== -->
-<section class="sec" style="background:linear-gradient(to bottom,#08080a 0,#08080a calc(100% - 180px),#0d0d0f 100%);" id="price">
+<section class="sec" id="price">
   <div class="wrap">
     <div class="section-head reveal" style="max-width:600px;">
       <span class="eyebrow">Прозрачно</span>
@@ -772,7 +779,7 @@
 </section>
 
 <!-- ===================== FAQ ===================== -->
-<section class="sec" style="background:linear-gradient(to bottom,#0d0d0f 0,#0d0d0f calc(100% - 180px),#08080a 100%);">
+<section class="sec">
   <div class="wrap" style="max-width: 760px;">
     <div class="section-head reveal">
       <span class="eyebrow">Частые вопросы</span>
@@ -826,7 +833,7 @@
 </section>
 
 <!-- ===================== CTA ===================== -->
-<section class="sec" style="background:linear-gradient(to bottom,#08080a 0,#08080a calc(100% - 180px),#000000 100%);" id="contacts">
+<section class="sec" id="contacts">
   <div class="wrap" style="max-width: 880px;">
     <div class="cta-final reveal">
       <span class="eyebrow center" style="display:block; text-align:center; margin-bottom:12px;">Давайте обсудим</span>
