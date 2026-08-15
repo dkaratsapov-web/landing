@@ -288,6 +288,7 @@ ${verifyTags}
         },
         hasCredential: credentials,
         sameAs: ['https://t.me/Daniil_065',
+          'https://dzen.ru/karatsapov',
           'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c'],
       },
       {
