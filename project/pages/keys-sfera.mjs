@@ -85,6 +85,7 @@ const FACTS = [
    ответ на «как делают сайт проектной организации». */
 const BLOCKS = [
   {
+    tag: 'Структура',
     h: 'Структура сайта под поисковый спрос: 38 страниц вместо лендинга',
     lead: 'Вместо одностраничника — сеть посадочных страниц, разведённых по типу запроса. Каждая отвечает на свой вопрос и не конкурирует с соседней.',
     items: [
@@ -95,6 +96,7 @@ const BLOCKS = [
     ],
   },
   {
+    tag: 'Техническое SEO',
     h: 'Техническое SEO: микроразметка, индексация и перелинковка',
     lead: 'База, без которой структура не работает: поисковик должен понимать, что перед ним, и узнавать об изменениях сразу.',
     items: [
@@ -107,6 +109,7 @@ const BLOCKS = [
     ],
   },
   {
+    tag: 'Скорость',
     h: 'Скорость загрузки и адаптивная вёрстка',
     lead: 'Статическая генерация: страницы отдаются готовым HTML, без ожидания скриптов.',
     items: [
@@ -116,6 +119,7 @@ const BLOCKS = [
     ],
   },
   {
+    tag: 'Заявки',
     h: 'Заявки и сквозная аналитика: формы, квиз, коллтрекинг',
     lead: 'В B2B с длинным циклом важно не потерять человека на любой стадии и понимать, откуда он пришёл.',
     items: [
@@ -127,6 +131,7 @@ const BLOCKS = [
     ],
   },
   {
+    tag: 'Контент',
     h: 'Контент-маркетинг: лид-магнит, Дзен и VC.ru',
     lead: 'Сайт закрывает горячий спрос, контент — тех, кто ещё изучает процедуру и до заявки не дошёл.',
     items: [
@@ -137,6 +142,7 @@ const BLOCKS = [
     ],
   },
   {
+    tag: 'Инфраструктура',
     h: 'Инфраструктура: автодеплой и правка контента без вёрстки',
     lead: 'Сайт должен жить после сдачи, а не превращаться в памятник, к которому страшно подходить.',
     items: [
@@ -514,6 +520,119 @@ span.sm-dot.sm-core { background: var(--line-strong); }
   .in-link::before, .in-link::after { width: 1px; height: 26px; margin: 8px auto; }
 }
 
+/* ── Шесть блоков «что сделано»: разворот с осью ─────────────────────────── */
+.wk-flow { display: grid; gap: 96px; margin-top: 44px; }
+@media (min-width: 1000px) { .wk-flow { gap: 128px; } }
+
+.wk { position: relative; display: grid; gap: 28px; }
+@media (min-width: 1000px) {
+  .wk { grid-template-columns: minmax(0, 38%) minmax(0, 1fr); gap: 56px; padding-left: 34px; }
+  /* Ось слева: тонкий трек на всю высоту блока и лаймовая заливка, которая
+     набегает по мере прокрутки. Шесть отдельных столбиков превращаются
+     в одну непрерывную линию рассказа. */
+  .wk::before {
+    content: ''; position: absolute; left: 0; top: 6px; bottom: -128px;
+    width: 1px; background: var(--line);
+  }
+  .wk:last-child::before { bottom: 6px; }
+  .wk::after {
+    content: ''; position: absolute; left: 0; top: 6px; bottom: -128px;
+    width: 1px; background: var(--accent); transform-origin: top;
+    transform: scaleY(0);
+  }
+  .wk:last-child::after { bottom: 6px; }
+}
+@supports (animation-timeline: view()) {
+  @media (min-width: 1000px) {
+    .js .wk::after {
+      animation: wk-rail linear both;
+      animation-timeline: view();
+      animation-range: cover 12% cover 78%;
+    }
+  }
+}
+@keyframes wk-rail { to { transform: scaleY(1); } }
+
+.wk-head { position: relative; }
+@media (min-width: 1000px) { .wk-head { position: sticky; top: 116px; align-self: start; } }
+
+/* Контурная цифра — не декоративный «пузырь», а узел на оси: она стоит ровно
+   на линии и сообщает, какой это шаг из шести. */
+.wk-num {
+  font-size: clamp(52px, 6vw, 76px); font-weight: 800; line-height: .8;
+  letter-spacing: -.04em; color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+  margin-bottom: 20px;
+  transition: -webkit-text-stroke-color .6s cubic-bezier(.32, .72, 0, 1);
+}
+@media (min-width: 1000px) { .wk-num { margin-left: -34px; padding-left: 34px; } }
+.wk:hover .wk-num { -webkit-text-stroke-color: var(--accent); }
+
+.wk-tag {
+  display: inline-block; margin-bottom: 16px; padding: 5px 12px;
+  border-radius: 999px; border: 1px solid var(--accent-soft-bd);
+  background: var(--accent-soft); color: var(--accent-bright);
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .2em;
+}
+/* Заголовок блока — не заголовок секции: 60px в колонке 38% ширины давал
+   шесть строк и перевешивал содержание справа. */
+.wk h2 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.14; }
+.wk-lead { margin: 16px 0 0; font-size: 16px; line-height: 1.55; color: var(--txt-2); }
+
+/* Лоток и строки: внешняя оболочка с волосяной рамкой, внутри — отдельные
+   плашки со своим радиусом. Плоский список галочек на плоском фоне читался
+   как черновик. */
+.wk-tray {
+  padding: 6px; border-radius: 26px;
+  background: rgba(255, 255, 255, .022);
+  border: 1px solid var(--line);
+}
+.wk-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.wk-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 18px 20px; border-radius: 20px;
+  background: rgba(255, 255, 255, .012);
+  font-size: 15px; line-height: 1.55; color: var(--txt-2);
+  transition: background .5s cubic-bezier(.32, .72, 0, 1),
+              box-shadow .5s cubic-bezier(.32, .72, 0, 1),
+              transform .5s cubic-bezier(.32, .72, 0, 1);
+}
+.wk-item:hover {
+  background: rgba(255, 255, 255, .045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09);
+  transform: translateX(3px);
+}
+.wk-item p { margin: 0; }
+.wk-item strong { color: var(--txt); font-weight: 700; }
+
+.wk-check {
+  flex: none; display: grid; place-items: center;
+  width: 22px; height: 22px; margin-top: 1px; border-radius: 50%;
+  border: 1px solid var(--accent-soft-bd); background: var(--accent-soft);
+  color: var(--accent-bright);
+  transition: background .5s cubic-bezier(.32, .72, 0, 1), color .5s cubic-bezier(.32, .72, 0, 1);
+}
+.wk-check svg { width: 11px; height: 9px; }
+.wk-item:hover .wk-check { background: var(--accent); color: var(--accent-ink); }
+
+/* Появление строк — лесенкой, с лёгким расфокусом: элементы не возникают
+   разом, а «доезжают». */
+.js .wk-item { opacity: 0; transform: translateY(14px); }
+@supports (animation-timeline: view()) {
+  .js .wk-item {
+    animation: wk-in .8s var(--d, 0ms) both cubic-bezier(.32, .72, 0, 1);
+    animation-timeline: view();
+    animation-range: entry 6% cover 26%;
+  }
+}
+@supports not (animation-timeline: view()) {
+  .js .wk-item { opacity: 1; transform: none; }
+}
+@keyframes wk-in {
+  from { opacity: 0; transform: translateY(14px); filter: blur(5px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
 /* ── Список работ ────────────────────────────────────────────────────────── */
 .works { counter-reset: w; display: grid; gap: 0; margin-top: 26px; }
 .works li {
@@ -537,7 +656,9 @@ span.sm-dot.sm-core { background: var(--line-strong); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .sm-tile { animation: none !important; opacity: 1; transform: none; }
+  .js .sm-tile, .js .wk-item { animation: none !important; opacity: 1; transform: none; filter: none; }
+  .wk::after { animation: none !important; transform: scaleY(1); }
+  .wk-item, .wk-check, .wk-num { transition: none; }
 }
 </style>`;
 
@@ -552,15 +673,39 @@ export function render() {
           <div class="dev-stat-l">${l}</div>
         </div>`).join('\n');
 
-  const blocks = BLOCKS.map((b) => `<section class="section">
-  <div class="wrap">
-    <h2 class="reveal">${b.h}</h2>
-    <p class="lead reveal">${b.lead}</p>
-    <ul class="check-list reveal" style="margin-top:22px;">
-${b.items.map((i) => `      <li>${i}</li>`).join('\n')}
-    </ul>
-  </div>
-</section>`).join('\n\n');
+  /* Шесть блоков «что сделано» — одна лента, а не шесть отдельных секций.
+     Раньше каждый был «заголовок во всю ширину + список галочек под ним»:
+     правая половина экрана пустая, между блоками провал в две секции, и шесть
+     одинаковых вертикальных столбиков не читаются как один рассказ.
+
+     Теперь разворот: слева порядковый номер, тег и заголовок, справа пункты
+     в общем лотке. Заголовок ушёл с 60px на 32px — в колонке 38% ширины
+     шестидесятый кегль ставил его в шесть строк, из-за чего заголовок весил
+     больше содержания. */
+  const check = '<svg viewBox="0 0 12 10" fill="none" aria-hidden="true">'
+    + '<path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  const blocks = BLOCKS.map((b, n) => {
+    const num = String(n + 1).padStart(2, '0');
+    const items = b.items.map((it, i) => `          <li class="wk-item" style="--d:${i * 60}ms">
+            <span class="wk-check">${check}</span>
+            <p>${it}</p>
+          </li>`).join('\n');
+
+    return `      <article class="wk">
+        <div class="wk-head">
+          <div class="wk-num" aria-hidden="true">${num}</div>
+          <span class="wk-tag">${b.tag}</span>
+          <h2>${b.h}</h2>
+          <p class="wk-lead">${b.lead}</p>
+        </div>
+        <div class="wk-tray">
+          <ul class="wk-items">
+${items}
+          </ul>
+        </div>
+      </article>`;
+  }).join('\n');
 
   const works = WORKS.map((w) => `      <li>${w}</li>`).join('\n');
   const stack = STACK.map((s) => `      <span class="stack-chip">${s}</span>`).join('\n');
@@ -634,7 +779,14 @@ ${facts}
   </div>
 </section>
 
+<section class="section works-section">
+  <div class="wrap">
+    <div class="eyebrow reveal">Что сделано</div>
+    <div class="wk-flow">
 ${blocks}
+    </div>
+  </div>
+</section>
 
 <section class="section">
   <div class="wrap">
