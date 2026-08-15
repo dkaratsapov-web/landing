@@ -29,6 +29,25 @@
   --r-xl: 34px;
   --r-pill: 999px;
 
+  /* Псевдонимы имён из landing.css. Шесть исторических страниц писались с
+     оглядкой на главную и местами обращаются к --accent-bright, --txt,
+     --txt-3, --line-strong. В этом файле таких переменных не было, и правила
+     с ними молча не применялись: акцентные подписи на /razrabotka-sajtov/
+     выходили серыми вместо лаймовых, а не «так задумано».
+
+     Псевдонимы, а не копии значений: цвет остаётся в одном месте, менять
+     тему по-прежнему нужно только в блоке выше. */
+  --accent:         var(--lime);
+  --accent-bright:  var(--lime-bright);
+  --accent-ink:     var(--lime-ink);
+  --accent-soft:    rgba(182, 240, 30, 0.13);
+  --accent-soft-bd: rgba(182, 240, 30, 0.30);
+  --txt:            var(--ink);
+  --txt-2:          var(--muted);
+  --txt-3:          var(--muted-2);
+  --line-strong:    var(--line-2);
+  --card:           var(--surface);
+
   --sp-section: 76px;
   --maxw: 1640px;
 
