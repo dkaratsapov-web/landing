@@ -20,7 +20,7 @@
         '<p class="lead-modal-sub">Оставьте заявку — я свяжусь лично, отвечу на вопросы и предложу решение.</p>' +
         '<form id="leadModalForm" class="lead-form" novalidate>' +
           '<div class="field">' +
-            '<label for="lm-name">Имя <span class="opt">(необязательно)</span></label>' +
+            '<label for="lm-name">Имя <span class="req">*</span></label>' +
             '<input type="text" id="lm-name" name="name" autocomplete="name" placeholder="Как к вам обращаться">' +
           '</div>' +
           '<div class="field">' +
@@ -28,14 +28,11 @@
             '<input type="tel" id="lm-phone" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" required>' +
             '<span class="field-err">Укажите телефон для связи</span>' +
           '</div>' +
-          '<div class="field">' +
-            '<label for="lm-site">Сайт <span class="opt">(необязательно)</span></label>' +
-            '<input type="text" id="lm-site" name="site" placeholder="example.ru">' +
-          '</div>' +
-          '<div class="field">' +
-            '<label for="lm-comment">Комментарий <span class="opt">(необязательно)</span></label>' +
-            '<textarea id="lm-comment" name="comment" rows="2" placeholder="Коротко о задаче или вопросе"></textarea>' +
-          '</div>' +
+          /* Только имя и телефон. Поля «сайт» и «комментарий» убраны: форма
+             открывается по кнопке «Обсудить задачу», где человек ещё ничего не
+             решил, и каждое лишнее поле здесь стоит заявок. Всё остальное
+             выясняется в разговоре. Форма на главной ровно такая же — сайт
+             должен вести себя одинаково в обоих местах. */
           '<button type="submit" class="btn btn-lime" style="width:100%; justify-content:center;">Обсудить мой проект <span class="arr">→</span></button>' +
           '<p class="lead-note">Нажимая кнопку, вы соглашаетесь на обработку персональных данных ' +
             'в соответствии с <a href="/politika/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</p>' +
@@ -104,15 +101,19 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      // Имя стало обязательным — проверяем его так же, как телефон.
+      var nameEl = document.getElementById('lm-name');
+      var nameField = nameEl.closest('.field');
+      if (nameEl.value.trim().length < 2) { nameField.classList.add('invalid'); nameEl.focus(); return; }
+      nameField.classList.remove('invalid');
+
       var digits = (phone.value.match(/\d/g) || []).length;
       if (digits < 11) { phoneField.classList.add('invalid'); phone.focus(); return; }
       phoneField.classList.remove('invalid');
       var text =
         '🟢 Новая заявка с сайта (' + SOURCE + ' · попап)\n' +
         '👤 Имя: ' + (val('lm-name') || '—') + '\n' +
-        '📞 Телефон: ' + phone.value + '\n' +
-        '🌐 Сайт: ' + (val('lm-site') || '—') + '\n' +
-        '💬 Комментарий: ' + (val('lm-comment') || '—');
+        '📞 Телефон: ' + phone.value;
       var btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
       sendLead(text).then(function () {

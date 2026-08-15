@@ -27,7 +27,10 @@
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
 <link rel="stylesheet" href="/motion.css">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="120x120" href="/favicon-120.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
 <script defer src="/lead-config.js"></script>
 <!-- Yandex.Metrika counter -->
@@ -88,7 +91,7 @@
       <a class="btn btn-ghost btn-sm nav-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer">
         <svg class="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>Я на Дзен
       </a>
-      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/">Обсудить задачу</a>
+      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/" data-lead-modal>Обсудить задачу</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -216,8 +219,26 @@
       <h2>Нужна помощь с задачей из статьи?</h2>
       <p>Разберу вашу ситуацию на бесплатной консультации и скажу честно, что стоит делать, а что — нет.</p>
       <div class="btn-row" style="justify-content:center;">
-        <a class="btn btn-fill btn-lg" href="/contacts/">Обсудить задачу</a>
+        <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить задачу</a>
         <a class="btn btn-ghost btn-lg" href="/kontekstnaya-reklama/">Посмотреть услугу</a>
+      </div>
+      <!-- Прямые контакты под кнопками. Дочитавший статью — самый тёплый
+           читатель, и заставлять его открывать форму, когда он готов просто
+           позвонить или написать в мессенджер, значит терять часть таких
+           обращений. Телефон кликабельный: на телефоне это сразу звонок. -->
+      <div class="post-contacts">
+        <a class="post-contact" href="tel:+79963470065">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+          +7 (996) 347-00-65
+        </a>
+        <a class="post-contact" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+          Telegram
+        </a>
+        <a class="post-contact" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
+          MAX
+        </a>
       </div>
     </div>
   </div>

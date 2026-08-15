@@ -119,6 +119,68 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   .cert-row-open { grid-row: 1 / span 2; grid-column: 2; }
 }
 
+/* ── Лайтбокс сертификата ───────────────────────────────────────────────── */
+/* Разворот открывается прямо на странице. Раньше строка уводила в новую
+   вкладку с PDF — человек уходил с середины раздела ради одной картинки.
+   Оформление повторяет лайтбокс главной, чтобы поведение сайта было
+   одинаковым в обоих местах. */
+.cert-lb {
+  position: fixed; inset: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: center;
+  gap: 12px; padding: 24px;
+  background: rgba(4, 4, 6, 0.86);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  animation: cert-fade .25s ease;
+}
+.cert-lb[hidden] { display: none; }
+@keyframes cert-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.cert-lb-stage {
+  display: flex; flex-direction: column; gap: 14px;
+  max-width: min(92vw, 760px);
+  animation: cert-pop .3s cubic-bezier(.16, .7, .3, 1);
+}
+@keyframes cert-pop {
+  from { opacity: 0; transform: scale(0.96) translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.cert-lb-stage img {
+  max-height: 78vh; max-width: 100%; object-fit: contain;
+  border-radius: 12px; background: #fff;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+.cert-lb-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.cert-lb-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: #fff; }
+.cert-lb-sub { font-size: 14px; color: var(--txt-2); margin-top: 2px; }
+.cert-lb-pdf { color: var(--accent-bright); font-size: 14px; text-decoration: none; white-space: nowrap; }
+.cert-lb-pdf:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.cert-lb-close,
+.cert-lb-nav {
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  transition: background .2s ease;
+}
+.cert-lb-close:hover, .cert-lb-nav:hover { background: rgba(255, 255, 255, 0.2); }
+.cert-lb-close:focus-visible, .cert-lb-nav:focus-visible { outline: 2px solid var(--accent-bright); outline-offset: 3px; }
+.cert-lb-close { position: absolute; top: 18px; right: 18px; width: 46px; height: 46px; }
+.cert-lb-nav { width: 50px; height: 50px; flex: 0 0 auto; }
+
+@media (max-width: 640px) {
+  /* На узком экране стрелки по бокам съедают ширину картинки — уводим их вниз
+     поверх подложки. */
+  .cert-lb-nav { position: absolute; bottom: 18px; z-index: 1; width: 44px; height: 44px; }
+  .cert-lb-nav.prev { left: 24px; }
+  .cert-lb-nav.next { right: 24px; }
+  .cert-lb-stage { max-width: 96vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cert-lb, .cert-lb-stage { animation: none; }
+}
+
 /* ── Таблица прайса ─────────────────────────────────────────────────────── */
 .table-scroll { overflow-x: auto; margin-top: 24px; }
 .price-table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 15px; }
@@ -262,6 +324,29 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
 
+/* ── Прямые контакты под статьёй ────────────────────────────────────────── */
+/* Дочитавший статью — самый тёплый читатель. Часть таких людей готова
+   написать сразу, и открывать ради этого форму им незачем. */
+.post-contacts {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin-top: 26px;
+}
+.post-contact {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 999px;
+  font-size: 15px; text-decoration: none;
+  color: var(--txt-2);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  transition: color .18s ease, border-color .18s ease, background .18s ease;
+}
+.post-contact:hover {
+  color: var(--txt);
+  border-color: var(--accent-soft-bd, rgba(182, 240, 30, 0.30));
+  background: rgba(182, 240, 30, 0.07);
+}
+.post-contact svg { color: var(--accent-bright); flex: 0 0 auto; }
+
 /* ── Орбита платформ рядом с таймлайном ─────────────────────────────────── */
 /* Правая колонка раздела «Путь» пустовала на всю его высоту. Кольцо из
    названий площадок закрывает пустоту и работает на смысл раздела: за годы
@@ -371,14 +456,14 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
 /* Липкие: на длинной ленте возможность сменить тему не должна уезжать вверх.
    Подложка размыта — под панель во время прокрутки заезжают карточки, и без
    неё текст табов накладывался бы на заголовки статей. */
+/* Без подложки и без sticky. Подложка была нужна, чтобы карточки не
+   просвечивали сквозь липкую панель при прокрутке, но на тёмном фоне она
+   читалась как посторонняя серая плашка поперёк экрана — заметнее самих
+   табов. Панель осталась на месте в потоке: лента короткая, до конца
+   докручивается за пару экранов, и держать фильтры в кадре незачем. */
 .feed-filters {
-  position: sticky; top: 78px; z-index: 20;
   display: flex; flex-wrap: wrap; gap: 8px;
   margin: 0 0 30px;
-  padding: 12px 0;
-  background: color-mix(in srgb, var(--bg, #08080a) 86%, transparent);
-  backdrop-filter: saturate(150%) blur(14px);
-  -webkit-backdrop-filter: saturate(150%) blur(14px);
 }
 .feed-tab {
   display: inline-flex; align-items: center; gap: 8px;
