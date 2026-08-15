@@ -49,7 +49,12 @@ const tracked = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8' 
   .filter((f) => /\.(mjs|jsx|js|html|txt|json|md|css)$/.test(f))
   // dist/ — результат сборки, он перезапишется из исходников. Править его
   // бессмысленно и вводит в заблуждение при проверке диффа.
-  .filter((f) => !f.startsWith('dist/'));
+  .filter((f) => !f.startsWith('dist/'))
+  // Сам скрипт: в нём старый домен лежит в константах OLD_*. Если позволить
+  // заменить их, после первого же запуска скрипт начнёт считать «старым»
+  // новый домен и молча перестанет находить то, что должен. Историю переездов
+  // правим руками.
+  .filter((f) => !f.endsWith('switch-domain.mjs'));
 
 let touched = 0, replacements = 0;
 
