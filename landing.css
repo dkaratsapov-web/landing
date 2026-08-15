@@ -120,7 +120,12 @@
 
   --txt:    #f5f5f7;
   --txt-2:  #a1a1a6;   /* Apple secondary gray on dark */
-  --txt-3:  #6e6e73;
+  /* #82828a, а не #6e6e73. Прежний давал контраст 3.95:1 на фоне страницы —
+     ниже порога WCAG AA (4.5:1) для текста мельче 24px, и PageSpeed отмечал
+     это как ошибку. Этим цветом набраны подписи под цифрами, хлебные крошки
+     и мелкие пояснения — то есть как раз то, что читают с усилием.
+     #82828a даёт 4.83:1 и остаётся заметно тише основного текста. */
+  --txt-3:  #82828a;
 
   /* Accent — single accent, themeable. Default = «Салатовый». fill = button bg,
      bright = links/text, ink = text on the fill, line = optional hairline. */
@@ -181,9 +186,20 @@ section { position: relative; }
 .sec-tight { padding: 50px 0; }
 
 /* Section background tones */
+/* Все секции одного тона. Раньше --tile-a (#0d0d0f) и --tile-b (#151517)
+   давали «микрошаг» между секциями, а на стыках стояли волны-разделители.
+   Шаг в 5–12 единиц RGB на границе двух больших плоскостей глаз читает как
+   полосу — и никакая растушёвка это не лечит: вместо резкой линии получается
+   размазка той же заметности.
+
+   Теперь фон один на всю страницу, а волна осталась лаймовой линией на
+   едином холсте — разделитель никуда не делся, но перепада тона под ним
+   больше нет. Токены --tile-a и --tile-b оставлены: на них завязаны
+   карточки и плашки внутри секций, где перепад работает как надо —
+   маленькая поверхность на большом фоне читается как объект, а не как шов. */
 .bg-pg   { background: var(--pg); }
-.bg-a    { background: var(--tile-a); }
-.bg-b    { background: var(--tile-b); }
+.bg-a    { background: var(--pg); }
+.bg-b    { background: var(--pg); }
 .bg-black{ background: #000; }
 
 /* ---------- Type helpers (Cyrillic-tuned tracking) ---------- */
@@ -396,7 +412,9 @@ h2.section-title {
    даёт у --txt-3 контраст ~3.3:1 при 13px, это ниже порога WCAG AA (4.5:1).
    Юридически значимый текст, набранный нечитаемо, читается как спрятанный. */
 .consent { display: flex; gap: 10px; align-items: flex-start; color: var(--txt-2); font-size: 13px; line-height: 1.5; }
-.consent input { margin-top: 3px; accent-color: var(--accent); width: 16px; height: 16px; flex: 0 0 auto; }
+/* 24px, а не 16: ниже этого размера палец на телефоне промахивается мимо
+   флажка согласия — а без него форма не отправляется. */
+.consent input { margin-top: 1px; accent-color: var(--accent); width: 24px; height: 24px; flex: 0 0 auto; }
 .consent a { color: var(--accent-bright); text-decoration: underline; text-underline-offset: 2px; }
 .consent a:hover { text-decoration-thickness: 2px; }
 
@@ -612,7 +630,11 @@ h2.section-title {
 }
 
 /* ---------- Footer ---------- */
-.footer { background: #000; border-top: 1px solid var(--line); }
+/* Подвал того же тона, что страница. Чёрный фон давал на стыке перепад
+   в 8,7 единицы RGB — самую заметную полосу на сайте, и она была на
+   каждой странице. Отделяет подвал волосяная линия сверху, а не смена
+   тона: тот же приём, что и между секциями. */
+.footer { background: var(--pg, #08080a); border-top: 1px solid var(--line); }
 
 /* ---------- Contact rows ---------- */
 .contact-row {
@@ -1135,3 +1157,48 @@ body.preloading.preloader-done #root {
 
 /* Кнопка Дзена в шапке — см. комментарий в dark.css. */
 @media (max-width: 980px) { .nav-dzen { display: none; } }
+
+
+/* ── Зоны касания ─────────────────────────────────────────────────────────
+   PageSpeed отмечал «области прикосновения недостаточно большие»: пункты
+   мобильного меню имели высоту 20px, ссылки в хлебных крошках — 16–18px.
+   Порог — 24×24 CSS-пикселя, ниже него палец промахивается по соседней
+   строке. Добавляем вертикальные поля, а не увеличиваем кегль: размер
+   текста подобран, а промах лечится площадью. */
+@media (max-width: 980px) {
+  .nav-mobile a, .nav-mob a { min-height: 44px; display: flex; align-items: center; }
+}
+.crumbs a, .crumbs span { display: inline-block; padding: 4px 0; }
+.footer a, .fine a { display: inline-block; padding: 3px 0; }
+
+/* Ссылки внутри текста и флажки согласия. Инлайновая ссылка в абзаце имела
+   высоту 18px, флажок — 13×13: и то и другое ниже порога 24×24, на телефоне
+   палец промахивается. Вертикальные поля у инлайнового элемента расширяют
+   область нажатия, не сдвигая строку. */
+.lead a, .prose p a, p a:not(.btn):not(.proj-case-link) { padding: 4px 0; }
+input[type="checkbox"], input[type="radio"] { width: 24px; height: 24px; }
+
+/* Точки переключения цитат и ссылка-стрелка «Мой путь». Точка была 8×8 —
+   втрое ниже порога 24×24. Увеличиваем область нажатия, а сам кружок
+   оставляем прежнего размера: рисуем его псевдоэлементом по центру. */
+.quote-dot {
+  width: 24px; height: 24px; padding: 0; border: 0; background: none;
+  display: inline-grid; place-items: center; cursor: pointer;
+}
+.quote-dot::before {
+  content: ''; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--txt-3, #82828a); transition: background .25s ease, transform .25s ease;
+}
+.quote-dot.on::before { background: var(--accent, var(--lime, #b6f01e)); transform: scale(1.15); }
+.about-more { min-height: 28px; padding: 4px 0; }
+
+/* Атмосфера героя гаснет до нижнего края секции. Свечения и сетка обрезаются
+   границей <header>, и на стыке оставался перепад тона в 2 единицы — тонкая,
+   но заметная полоса на всю ширину. Маска доводит слой до нуля за 140px
+   до края, поэтому обрывать уже нечего. */
+header.bg-pg > .atmos, .hero > .atmos,
+header.bg-pg > .glow, header.bg-pg > .pattern,
+.hero > .glow, .hero > .pattern {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 140px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 140px), transparent 100%);
+}

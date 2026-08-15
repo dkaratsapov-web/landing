@@ -803,6 +803,11 @@
   function build() {
     box = document.createElement('div');
     box.className = 'shot-lb'; box.hidden = true;
+    /* Модальному окну нужно доступное название, иначе программа чтения
+       с экрана объявляет его как «диалог» без пояснения. */
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Просмотр скриншота');
     box.innerHTML = '<button type="button" class="shot-lb-close" aria-label="Закрыть">&times;</button>'
       + '<button type="button" class="shot-lb-nav prev" aria-label="Предыдущий">&#8249;</button>'
       + '<button type="button" class="shot-lb-nav next" aria-label="Следующий">&#8250;</button>'
