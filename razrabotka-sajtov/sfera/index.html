@@ -240,6 +240,119 @@ span.sm-dot.sm-core { background: var(--line-strong); }
   .in-link::before, .in-link::after { width: 1px; height: 26px; margin: 8px auto; }
 }
 
+/* ── Шесть блоков «что сделано»: разворот с осью ─────────────────────────── */
+.wk-flow { display: grid; gap: 96px; margin-top: 44px; }
+@media (min-width: 1000px) { .wk-flow { gap: 128px; } }
+
+.wk { position: relative; display: grid; gap: 28px; }
+@media (min-width: 1000px) {
+  .wk { grid-template-columns: minmax(0, 38%) minmax(0, 1fr); gap: 56px; padding-left: 34px; }
+  /* Ось слева: тонкий трек на всю высоту блока и лаймовая заливка, которая
+     набегает по мере прокрутки. Шесть отдельных столбиков превращаются
+     в одну непрерывную линию рассказа. */
+  .wk::before {
+    content: ''; position: absolute; left: 0; top: 6px; bottom: -128px;
+    width: 1px; background: var(--line);
+  }
+  .wk:last-child::before { bottom: 6px; }
+  .wk::after {
+    content: ''; position: absolute; left: 0; top: 6px; bottom: -128px;
+    width: 1px; background: var(--accent); transform-origin: top;
+    transform: scaleY(0);
+  }
+  .wk:last-child::after { bottom: 6px; }
+}
+@supports (animation-timeline: view()) {
+  @media (min-width: 1000px) {
+    .js .wk::after {
+      animation: wk-rail linear both;
+      animation-timeline: view();
+      animation-range: cover 12% cover 78%;
+    }
+  }
+}
+@keyframes wk-rail { to { transform: scaleY(1); } }
+
+.wk-head { position: relative; }
+@media (min-width: 1000px) { .wk-head { position: sticky; top: 116px; align-self: start; } }
+
+/* Контурная цифра — не декоративный «пузырь», а узел на оси: она стоит ровно
+   на линии и сообщает, какой это шаг из шести. */
+.wk-num {
+  font-size: clamp(52px, 6vw, 76px); font-weight: 800; line-height: .8;
+  letter-spacing: -.04em; color: transparent;
+  -webkit-text-stroke: 1px var(--line-strong);
+  margin-bottom: 20px;
+  transition: -webkit-text-stroke-color .6s cubic-bezier(.32, .72, 0, 1);
+}
+@media (min-width: 1000px) { .wk-num { margin-left: -34px; padding-left: 34px; } }
+.wk:hover .wk-num { -webkit-text-stroke-color: var(--accent); }
+
+.wk-tag {
+  display: inline-block; margin-bottom: 16px; padding: 5px 12px;
+  border-radius: 999px; border: 1px solid var(--accent-soft-bd);
+  background: var(--accent-soft); color: var(--accent-bright);
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .2em;
+}
+/* Заголовок блока — не заголовок секции: 60px в колонке 38% ширины давал
+   шесть строк и перевешивал содержание справа. */
+.wk h2 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.14; }
+.wk-lead { margin: 16px 0 0; font-size: 16px; line-height: 1.55; color: var(--txt-2); }
+
+/* Лоток и строки: внешняя оболочка с волосяной рамкой, внутри — отдельные
+   плашки со своим радиусом. Плоский список галочек на плоском фоне читался
+   как черновик. */
+.wk-tray {
+  padding: 6px; border-radius: 26px;
+  background: rgba(255, 255, 255, .022);
+  border: 1px solid var(--line);
+}
+.wk-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.wk-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 18px 20px; border-radius: 20px;
+  background: rgba(255, 255, 255, .012);
+  font-size: 15px; line-height: 1.55; color: var(--txt-2);
+  transition: background .5s cubic-bezier(.32, .72, 0, 1),
+              box-shadow .5s cubic-bezier(.32, .72, 0, 1),
+              transform .5s cubic-bezier(.32, .72, 0, 1);
+}
+.wk-item:hover {
+  background: rgba(255, 255, 255, .045);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .09);
+  transform: translateX(3px);
+}
+.wk-item p { margin: 0; }
+.wk-item strong { color: var(--txt); font-weight: 700; }
+
+.wk-check {
+  flex: none; display: grid; place-items: center;
+  width: 22px; height: 22px; margin-top: 1px; border-radius: 50%;
+  border: 1px solid var(--accent-soft-bd); background: var(--accent-soft);
+  color: var(--accent-bright);
+  transition: background .5s cubic-bezier(.32, .72, 0, 1), color .5s cubic-bezier(.32, .72, 0, 1);
+}
+.wk-check svg { width: 11px; height: 9px; }
+.wk-item:hover .wk-check { background: var(--accent); color: var(--accent-ink); }
+
+/* Появление строк — лесенкой, с лёгким расфокусом: элементы не возникают
+   разом, а «доезжают». */
+.js .wk-item { opacity: 0; transform: translateY(14px); }
+@supports (animation-timeline: view()) {
+  .js .wk-item {
+    animation: wk-in .8s var(--d, 0ms) both cubic-bezier(.32, .72, 0, 1);
+    animation-timeline: view();
+    animation-range: entry 6% cover 26%;
+  }
+}
+@supports not (animation-timeline: view()) {
+  .js .wk-item { opacity: 1; transform: none; }
+}
+@keyframes wk-in {
+  from { opacity: 0; transform: translateY(14px); filter: blur(5px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+
 /* ── Список работ ────────────────────────────────────────────────────────── */
 .works { counter-reset: w; display: grid; gap: 0; margin-top: 26px; }
 .works li {
@@ -263,7 +376,9 @@ span.sm-dot.sm-core { background: var(--line-strong); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .js .sm-tile { animation: none !important; opacity: 1; transform: none; }
+  .js .sm-tile, .js .wk-item { animation: none !important; opacity: 1; transform: none; filter: none; }
+  .wk::after { animation: none !important; transform: scaleY(1); }
+  .wk-item, .wk-check, .wk-num { transition: none; }
 }
 </style>
 </head>
@@ -494,82 +609,183 @@ span.sm-dot.sm-core { background: var(--line-strong); }
   </div>
 </section>
 
-<section class="section">
+<section class="section works-section">
   <div class="wrap">
-    <h2 class="reveal">Структура сайта под поисковый спрос: 38 страниц вместо лендинга</h2>
-    <p class="lead reveal">Вместо одностраничника — сеть посадочных страниц, разведённых по типу запроса. Каждая отвечает на свой вопрос и не конкурирует с соседней.</p>
-    <ul class="check-list reveal" style="margin-top:22px;">
-      <li><strong>6 страниц по направлениям проектирования</strong> — магазин, склад, производство, автосервис, административное здание, отель. Состав документации, особенности типа объекта, цены, этапы, FAQ.</li>
-      <li><strong>6 страниц по получению разрешения</strong> — тот же набор типов, но под другой интент: комплект документов, что проверяет уполномоченный орган, из-за чего отказывают, сроки процедуры.</li>
-      <li><strong>7 гео-страниц</strong> — Истра, Клин, Егорьевск, Колюбакино, Люберцы, Кашин, Солнечногорск. На каждой реальный объект компании с фотографиями и номерами разрешений.</li>
-      <li><strong>12 экспертных статей</strong> — 113 000 знаков: ГПЗУ, инженерные изыскания, экспертиза проектной документации, технические условия, легализация самостроя, ввод в эксплуатацию.</li>
-    </ul>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2 class="reveal">Техническое SEO: микроразметка, индексация и перелинковка</h2>
-    <p class="lead reveal">База, без которой структура не работает: поисковик должен понимать, что перед ним, и узнавать об изменениях сразу.</p>
-    <ul class="check-list reveal" style="margin-top:22px;">
-      <li>12 типов микроразметки Schema.org: Organization, ProfessionalService, Service, Article, FAQPage, HowTo, BreadcrumbList, ItemList, CollectionPage, ContactPage, Blog, WebSite.</li>
-      <li>FAQPage на 33 страницах, хлебные крошки на 37 — расширенные сниппеты в выдаче и готовые ответы для нейропоиска.</li>
-      <li>Уникальные title и description на всех страницах — ноль дублей.</li>
-      <li>Sitemap, robots, canonical; служебные страницы закрыты от индексации.</li>
-      <li>IndexNow — мгновенное уведомление Яндекса и Bing об изменениях вместо ожидания робота.</li>
-      <li>Сквозная перелинковка: с гео-страницы на тип объекта, с типа объекта на кейс в этом городе, из статей на коммерческие страницы.</li>
-    </ul>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2 class="reveal">Скорость загрузки и адаптивная вёрстка</h2>
-    <p class="lead reveal">Статическая генерация: страницы отдаются готовым HTML, без ожидания скриптов.</p>
-    <ul class="check-list reveal" style="margin-top:22px;">
-      <li>Главная весит 92 КБ, все изображения в WebP.</li>
-      <li>Адаптив от 320 пикселей, проверен на реальных разрешениях — от iPhone SE до 4K-мониторов.</li>
-      <li>Next.js со статической генерацией — сервер не собирает страницу под каждый запрос.</li>
-    </ul>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2 class="reveal">Заявки и сквозная аналитика: формы, квиз, коллтрекинг</h2>
-    <p class="lead reveal">В B2B с длинным циклом важно не потерять человека на любой стадии и понимать, откуда он пришёл.</p>
-    <ul class="check-list reveal" style="margin-top:22px;">
-      <li>Формы на каждой странице с привязкой к разделу — в заявке видно, откуда пришёл человек.</li>
-      <li>Квиз-калькулятор в 3 шага для тех, кто не готов звонить.</li>
-      <li>Плавающие кнопки мессенджеров: Telegram, MAX, WhatsApp.</li>
-      <li>Яндекс Метрика с вебвизором и картой кликов, коллтрекинг Callibri, трекинг подписок на мессенджер-каналы.</li>
-      <li>Интерактивная карта реализованных объектов на Яндекс Картах.</li>
-    </ul>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2 class="reveal">Контент-маркетинг: лид-магнит, Дзен и VC.ru</h2>
-    <p class="lead reveal">Сайт закрывает горячий спрос, контент — тех, кто ещё изучает процедуру и до заявки не дошёл.</p>
-    <ul class="check-list reveal" style="margin-top:22px;">
-      <li>Лид-магнит: PDF-гид по получению разрешения на строительство — чек-лист из 18 пунктов, отдаётся за подписку.</li>
-      <li>Контент-планы на 15 публикаций для Дзена и 15 для VC.ru с разведением тем по датам.</li>
-      <li>10 готовых статей для Дзена с обложками и инфографикой внутрь текста — каждая уникальна, не копия материалов сайта.</li>
-      <li>Канал в Дзене подключён к сайту: блок на главной, ссылка в шапке, связка в микроразметке.</li>
-    </ul>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2 class="reveal">Инфраструктура: автодеплой и правка контента без вёрстки</h2>
-    <p class="lead reveal">Сайт должен жить после сдачи, а не превращаться в памятник, к которому страшно подходить.</p>
-    <ul class="check-list reveal" style="margin-top:22px;">
-      <li>Автодеплой: правка в репозитории → автоматическая сборка → выкладка на хостинг. Клиенту не нужно ничего загружать руками.</li>
-      <li>Контент вынесен в отдельные файлы, поэтому тексты и кейсы правятся без вёрстки.</li>
-      <li>Новый город или тип объекта добавляется за час по готовому шаблону.</li>
-    </ul>
+    <div class="eyebrow reveal">Что сделано</div>
+    <div class="wk-flow">
+      <article class="wk">
+        <div class="wk-head">
+          <div class="wk-num" aria-hidden="true">01</div>
+          <span class="wk-tag">Структура</span>
+          <h2>Структура сайта под поисковый спрос: 38 страниц вместо лендинга</h2>
+          <p class="wk-lead">Вместо одностраничника — сеть посадочных страниц, разведённых по типу запроса. Каждая отвечает на свой вопрос и не конкурирует с соседней.</p>
+        </div>
+        <div class="wk-tray">
+          <ul class="wk-items">
+          <li class="wk-item" style="--d:0ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p><strong>6 страниц по направлениям проектирования</strong> — магазин, склад, производство, автосервис, административное здание, отель. Состав документации, особенности типа объекта, цены, этапы, FAQ.</p>
+          </li>
+          <li class="wk-item" style="--d:60ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p><strong>6 страниц по получению разрешения</strong> — тот же набор типов, но под другой интент: комплект документов, что проверяет уполномоченный орган, из-за чего отказывают, сроки процедуры.</p>
+          </li>
+          <li class="wk-item" style="--d:120ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p><strong>7 гео-страниц</strong> — Истра, Клин, Егорьевск, Колюбакино, Люберцы, Кашин, Солнечногорск. На каждой реальный объект компании с фотографиями и номерами разрешений.</p>
+          </li>
+          <li class="wk-item" style="--d:180ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p><strong>12 экспертных статей</strong> — 113 000 знаков: ГПЗУ, инженерные изыскания, экспертиза проектной документации, технические условия, легализация самостроя, ввод в эксплуатацию.</p>
+          </li>
+          </ul>
+        </div>
+      </article>
+      <article class="wk">
+        <div class="wk-head">
+          <div class="wk-num" aria-hidden="true">02</div>
+          <span class="wk-tag">Техническое SEO</span>
+          <h2>Техническое SEO: микроразметка, индексация и перелинковка</h2>
+          <p class="wk-lead">База, без которой структура не работает: поисковик должен понимать, что перед ним, и узнавать об изменениях сразу.</p>
+        </div>
+        <div class="wk-tray">
+          <ul class="wk-items">
+          <li class="wk-item" style="--d:0ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>12 типов микроразметки Schema.org: Organization, ProfessionalService, Service, Article, FAQPage, HowTo, BreadcrumbList, ItemList, CollectionPage, ContactPage, Blog, WebSite.</p>
+          </li>
+          <li class="wk-item" style="--d:60ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>FAQPage на 33 страницах, хлебные крошки на 37 — расширенные сниппеты в выдаче и готовые ответы для нейропоиска.</p>
+          </li>
+          <li class="wk-item" style="--d:120ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Уникальные title и description на всех страницах — ноль дублей.</p>
+          </li>
+          <li class="wk-item" style="--d:180ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Sitemap, robots, canonical; служебные страницы закрыты от индексации.</p>
+          </li>
+          <li class="wk-item" style="--d:240ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>IndexNow — мгновенное уведомление Яндекса и Bing об изменениях вместо ожидания робота.</p>
+          </li>
+          <li class="wk-item" style="--d:300ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Сквозная перелинковка: с гео-страницы на тип объекта, с типа объекта на кейс в этом городе, из статей на коммерческие страницы.</p>
+          </li>
+          </ul>
+        </div>
+      </article>
+      <article class="wk">
+        <div class="wk-head">
+          <div class="wk-num" aria-hidden="true">03</div>
+          <span class="wk-tag">Скорость</span>
+          <h2>Скорость загрузки и адаптивная вёрстка</h2>
+          <p class="wk-lead">Статическая генерация: страницы отдаются готовым HTML, без ожидания скриптов.</p>
+        </div>
+        <div class="wk-tray">
+          <ul class="wk-items">
+          <li class="wk-item" style="--d:0ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Главная весит 92 КБ, все изображения в WebP.</p>
+          </li>
+          <li class="wk-item" style="--d:60ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Адаптив от 320 пикселей, проверен на реальных разрешениях — от iPhone SE до 4K-мониторов.</p>
+          </li>
+          <li class="wk-item" style="--d:120ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Next.js со статической генерацией — сервер не собирает страницу под каждый запрос.</p>
+          </li>
+          </ul>
+        </div>
+      </article>
+      <article class="wk">
+        <div class="wk-head">
+          <div class="wk-num" aria-hidden="true">04</div>
+          <span class="wk-tag">Заявки</span>
+          <h2>Заявки и сквозная аналитика: формы, квиз, коллтрекинг</h2>
+          <p class="wk-lead">В B2B с длинным циклом важно не потерять человека на любой стадии и понимать, откуда он пришёл.</p>
+        </div>
+        <div class="wk-tray">
+          <ul class="wk-items">
+          <li class="wk-item" style="--d:0ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Формы на каждой странице с привязкой к разделу — в заявке видно, откуда пришёл человек.</p>
+          </li>
+          <li class="wk-item" style="--d:60ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Квиз-калькулятор в 3 шага для тех, кто не готов звонить.</p>
+          </li>
+          <li class="wk-item" style="--d:120ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Плавающие кнопки мессенджеров: Telegram, MAX, WhatsApp.</p>
+          </li>
+          <li class="wk-item" style="--d:180ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Яндекс Метрика с вебвизором и картой кликов, коллтрекинг Callibri, трекинг подписок на мессенджер-каналы.</p>
+          </li>
+          <li class="wk-item" style="--d:240ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Интерактивная карта реализованных объектов на Яндекс Картах.</p>
+          </li>
+          </ul>
+        </div>
+      </article>
+      <article class="wk">
+        <div class="wk-head">
+          <div class="wk-num" aria-hidden="true">05</div>
+          <span class="wk-tag">Контент</span>
+          <h2>Контент-маркетинг: лид-магнит, Дзен и VC.ru</h2>
+          <p class="wk-lead">Сайт закрывает горячий спрос, контент — тех, кто ещё изучает процедуру и до заявки не дошёл.</p>
+        </div>
+        <div class="wk-tray">
+          <ul class="wk-items">
+          <li class="wk-item" style="--d:0ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Лид-магнит: PDF-гид по получению разрешения на строительство — чек-лист из 18 пунктов, отдаётся за подписку.</p>
+          </li>
+          <li class="wk-item" style="--d:60ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Контент-планы на 15 публикаций для Дзена и 15 для VC.ru с разведением тем по датам.</p>
+          </li>
+          <li class="wk-item" style="--d:120ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>10 готовых статей для Дзена с обложками и инфографикой внутрь текста — каждая уникальна, не копия материалов сайта.</p>
+          </li>
+          <li class="wk-item" style="--d:180ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Канал в Дзене подключён к сайту: блок на главной, ссылка в шапке, связка в микроразметке.</p>
+          </li>
+          </ul>
+        </div>
+      </article>
+      <article class="wk">
+        <div class="wk-head">
+          <div class="wk-num" aria-hidden="true">06</div>
+          <span class="wk-tag">Инфраструктура</span>
+          <h2>Инфраструктура: автодеплой и правка контента без вёрстки</h2>
+          <p class="wk-lead">Сайт должен жить после сдачи, а не превращаться в памятник, к которому страшно подходить.</p>
+        </div>
+        <div class="wk-tray">
+          <ul class="wk-items">
+          <li class="wk-item" style="--d:0ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Автодеплой: правка в репозитории → автоматическая сборка → выкладка на хостинг. Клиенту не нужно ничего загружать руками.</p>
+          </li>
+          <li class="wk-item" style="--d:60ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Контент вынесен в отдельные файлы, поэтому тексты и кейсы правятся без вёрстки.</p>
+          </li>
+          <li class="wk-item" style="--d:120ms">
+            <span class="wk-check"><svg viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5.2 4.3 8.5 11 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <p>Новый город или тип объекта добавляется за час по готовому шаблону.</p>
+          </li>
+          </ul>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
