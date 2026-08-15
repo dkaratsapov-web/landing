@@ -91,6 +91,7 @@ ${drops}
         </div>
       </div>
       <a href="/about/">О себе</a>
+      <a href="/blog/">Блог</a>
       <a href="/keysy/">Кейсы</a>
       <a href="/contacts/">Контакты</a>
     </div>
@@ -110,6 +111,7 @@ ${drops}
   <a href="/kontekstnaya-reklama/">Услуги</a>
 ${mobileDrops}
   <a href="/about/">О себе</a>
+  <a href="/blog/">Блог</a>
   <a href="/keysy/">Кейсы</a>
   <a href="/contacts/">Контакты</a>
 </div>`;
@@ -126,6 +128,7 @@ function footer() {
       ['/razrabotka-sajtov/', 'Разработка сайтов'],
       ['/keysy/', 'Кейсы'],
       ['/about/', 'О себе'],
+      ['/blog/', 'Блог'],
       ['/ceny/', 'Цены'],
       ['/contacts/', 'Контакты'],
     ]],
@@ -298,6 +301,7 @@ ${verify}
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
 <script defer src="/lead-config.js"></script>
 ${metrika}
 ${ld}

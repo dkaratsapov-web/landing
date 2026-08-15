@@ -362,7 +362,7 @@ function Footer({ onCta }) {
           <div>
             <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 16 }}>Навигация</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[['Обо мне', '/about/'], ['Услуги', '#services'], ['Цены', '/ceny/'], ['Кейсы', '#cases'], ['Контакты', '#contacts']].map(([t, h]) =>
+              {[['Обо мне', '/about/'], ['Услуги', '#services'], ['Цены', '/ceny/'], ['Блог', '/blog/'], ['Кейсы', '#cases'], ['Контакты', '#contacts']].map(([t, h]) =>
               <a key={h} href={h} style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>{t}</a>
               )}
             </div>

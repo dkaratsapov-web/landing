@@ -13,6 +13,7 @@ import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
 import { renderPage, seoConfig } from './layout.mjs';
+import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
 
@@ -168,6 +169,7 @@ ${verifyTags}
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
   <link rel="preload" as="image" href="assets/portrait.jpg" fetchpriority="high" />
 
   <script defer src="${REACT}" crossorigin="anonymous"></script>
@@ -281,6 +283,22 @@ for (const page of GENERATED_PAGES) {
   console.log('Generated page', meta.path, (html.length / 1024).toFixed(1) + 'KB');
 }
 
+// ── Блог ────────────────────────────────────────────────────────────────────
+// Статьи (Markdown) → страницы + лента + RSS. Ошибка в фронтматтере валит
+// сборку: статья без даты или заголовка сломала бы и ленту, и микроразметку.
+const posts = loadPosts(srcDir);
+for (const post of posts) {
+  const dir = join(outDir, 'blog', post.slug);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'index.html'), renderPost(post, posts), 'utf8');
+}
+mkdirSync(join(outDir, 'blog'), { recursive: true });
+writeFileSync(join(outDir, 'blog', 'index.html'), renderIndex(posts), 'utf8');
+writeFileSync(join(outDir, 'rss.xml'), renderRss(posts), 'utf8');
+// Исходные .md остаются рядом (их приносит `cp -r project dist` из npm-скрипта);
+// их убирает общая зачистка исходников ниже.
+console.log('Блог:', posts.length, 'статей + лента + RSS');
+
 // Файлы подтверждения прав (yandex_*.html, google*.html) — в корень как есть.
 // README из папки не публикуем: он инструкция для нас, а не часть сайта.
 const verifyDir = join(srcDir, 'verification');
@@ -331,8 +349,20 @@ const SITEMAP_PAGES = [
   { loc: '/contacts/', src: 'contacts/index.html', priority: '0.6', changefreq: 'yearly' },
 ];
 
-const urls = SITEMAP_PAGES.map(({ loc, src, priority, changefreq }) => {
-  const lastmod = gitLastMod(src);
+/* Статьи в карту сайта. lastmod у статьи берём из фронтматтера (updated или
+   date), а не из даты коммита: правка опечатки не должна выглядеть для
+   поисковика обновлением материала. Лента блога — по коммиту, как остальные. */
+const SITEMAP_ALL = [
+  ...SITEMAP_PAGES,
+  { loc: '/blog/', src: 'blog.mjs', priority: '0.7', changefreq: 'weekly' },
+  ...posts.map((p) => ({
+    loc: p.path, src: p.file, priority: '0.7', changefreq: 'yearly',
+    lastmod: p.updated || p.date,
+  })),
+];
+
+const urls = SITEMAP_ALL.map(({ loc, src, priority, changefreq, lastmod: fixed }) => {
+  const lastmod = fixed || gitLastMod(src);
   return '  <url>'
     + `<loc>${SITE}${loc}</loc>`
     + (lastmod ? `<lastmod>${lastmod}</lastmod>` : '')
@@ -345,14 +375,38 @@ writeFileSync(join(outDir, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n'
   + '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
   + urls + '\n</urlset>\n', 'utf8');
-console.log('Generated sitemap.xml:', SITEMAP_PAGES.length, 'URL',
+console.log('Generated sitemap.xml:', SITEMAP_ALL.length, 'URL',
   urls.includes('<lastmod>') ? '(с lastmod)' : '(без lastmod — нет истории git)');
 
 // Strip source files that must never ship to production.
-const STRIP = /\.(jsx|mjs)$/;
-for (const f of readdirSync(outDir)) {
-  if (STRIP.test(f)) { try { rmSync(join(outDir, f)); } catch (e) {} }
+//
+// Обход рекурсивный, и это принципиально: `npm run build` начинается с
+// `cp -r project dist`, поэтому в dist попадает всё дерево исходников —
+// включая вложенные pages/*.mjs, seo.config.json и служебные README. Плоская
+// зачистка по корню их не видела, и они уезжали на боевой сайт.
+const STRIP_FILE = /\.(jsx|mjs|md)$/;
+const STRIP_EXACT = new Set(['seo.config.json']);
+
+function stripSources(dir) {
+  let removed = 0;
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) {
+      removed += stripSources(full);
+      // Каталог, опустевший после зачистки (project/pages, project/verification),
+      // в сборке не нужен — иначе на сайте останется пустая директория.
+      try {
+        if (readdirSync(full).length === 0) rmSync(full, { recursive: true });
+      } catch (e) { /* уже удалён или занят — не критично */ }
+      continue;
+    }
+    if (STRIP_FILE.test(entry.name) || STRIP_EXACT.has(entry.name)) {
+      try { rmSync(full); removed++; } catch (e) { /* уже удалён */ }
+    }
+  }
+  return removed;
 }
+console.log('Вычищено исходников из сборки:', stripSources(outDir));
 
 const totalRaw = results.reduce((a, r) => a + r.raw, 0);
 const totalMin = results.reduce((a, r) => a + r.min, 0);
