@@ -23,10 +23,16 @@ import { writeFileSync, mkdirSync, rmSync, existsSync, readFileSync } from 'node
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
-import { SPECS } from './illustrations.mjs';
+const SPECS_MODULE = process.env.ILL_SPECS || './illustrations.mjs';
+const { SPECS } = await import(SPECS_MODULE);
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const OUT = join(HERE, 'assets', 'blog');
+/* Куда складывать картинки. По умолчанию — в assets сайта, но материалы для
+   Дзена и VC на сайте публиковать нельзя (это дубли), и их иллюстрации не
+   должны попадать в сборку. Для них передаём каталог через ILL_OUT. */
+const OUT = process.env.ILL_OUT
+  ? (process.env.ILL_OUT.startsWith('/') ? process.env.ILL_OUT : join(HERE, '..', process.env.ILL_OUT))
+  : join(HERE, 'assets', 'blog');
 const TMP = join(HERE, '.ill-tmp');
 const CHROME = process.env.CHROME_BIN
   || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
@@ -117,7 +123,10 @@ function cover({ eyebrow, title, withPhoto = true }, w, h) {
       </div>
       ${photo}
     </div>`, `
-    h1{font-size:${h > 700 ? 62 : 54}px}
+    /* Кегль заголовка привязан к высоте кадра: обложка Дзена (1600×900) вдвое
+       крупнее сайтовой, и фиксированный размер оставлял её полупустой. */
+    h1{font-size:${Math.round(h / 11)}px}
+    .eyebrow{font-size:${Math.round(h / 30)}px}
     .photo{width:${Math.round(w * 0.33)}px;flex:none;position:relative;background:#111;overflow:hidden}
     .photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
     .photo::after{content:"";position:absolute;inset:0;
