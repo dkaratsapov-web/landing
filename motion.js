@@ -51,7 +51,31 @@
     walk(root);
   }
 
-  document.querySelectorAll('[data-mo-kinetic]').forEach(kinetic);
+  /* Разбивать заголовок можно только после того, как React закончит гидратацию.
+     Раньше кинетика срабатывала сразу: motion.js стоит в очереди скриптов
+     после app.js, но гидратация в React 18 конкурентная и к этому моменту
+     ещё не завершена. Мы переписывали innerHTML заголовка героя, React видел
+     разметку, не совпадающую с серверной, выбрасывал весь корень и рисовал
+     страницу заново — на перезагрузке это и был видимый рывок.
+     Отладочная сборка React называла узел прямым текстом:
+     «Expected server HTML to contain a matching text node ... in <h1>».
+
+     Заголовки вне React-корня (обычные страницы) разбираем сразу — там ждать
+     нечего и незачем. */
+  function runKinetic() {
+    document.querySelectorAll('[data-mo-kinetic]').forEach(kinetic);
+  }
+  const inRoot = document.querySelector('#root [data-mo-kinetic]');
+  if (!inRoot || document.documentElement.dataset.hydrated === '1') {
+    runKinetic();
+  } else {
+    window.addEventListener('app:hydrated', runKinetic, { once: true });
+    /* Страховка: если React почему-то не поднялся (не догрузился файл),
+       заголовок всё равно должен ожить, а не остаться статичным навсегда. */
+    window.addEventListener('load', () => setTimeout(() => {
+      if (!document.querySelector('.mo-word')) runKinetic();
+    }, 1200), { once: true });
+  }
 
   if (!finePointer) return;
 
