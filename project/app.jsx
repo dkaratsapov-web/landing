@@ -89,8 +89,14 @@ function App() {
   return (
     <ToastProvider>
       <Nav onCta={openLead} />
+      {/* <main> охватывает всё между шапкой и подвалом: без него в дереве
+          доступности нет области основного содержимого, и проверка агентного
+          просмотра считает разметку некорректной. */}
+      <main id="main">
       <Hero variant={t.heroVariant} portrait="assets/portrait.jpg" onCta={openLead} />
-      <SectionWave from="#08080a" to="#0d0d0f" speed={16} />
+      {/* ambient — только здесь: единственный стык под секцией со свечениями
+          и сеткой (герой). См. комментарий у SectionWave. */}
+      <SectionWave from="#08080a" to="#0d0d0f" speed={16} ambient />
       <About />
       <SectionWave from="#0d0d0f" to="#08080a" speed={13} />
       <Services variant={t.servicesVariant} onCta={openLead} />
@@ -106,6 +112,7 @@ function App() {
       <SectionWave from="#08080a" to="#151517" speed={17} />
       <Contacts onCta={openLead} />
       <SectionWave from="#151517" to="#000000" speed={15} />
+      </main>
       <Footer onCta={openLead} />
       {t.showQuiz && <QuizFab onOpen={() => setQuizOpen(true)} />}
       <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />

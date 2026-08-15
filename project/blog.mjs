@@ -307,7 +307,10 @@ function postCard(post) {
         ${post.cover ? `<img class="post-card-cover" src="${post.cover}" alt="" width="600" height="315" loading="lazy">` : ''}
         <div class="post-card-body">
           <div class="post-card-meta">${badge ? `<span class="post-card-tag">${esc(badge)}</span>` : ''}<time datetime="${post.date}">${humanDate(post.date)}</time><span class="post-card-read">${post.reading.label}</span></div>
-          <h3 class="post-card-title">${esc(post.title)}</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">${esc(post.title)}</h2>
           <p class="post-card-desc">${esc(post.description)}</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -361,9 +364,9 @@ export function renderIndex(posts) {
 
   /* Панель фильтров липкая: при прокрутке длинной ленты возможность сменить
      тему не должна уезжать вверх вместе с шапкой. */
-  const tabs = filters.length ? `    <div class="feed-filters" role="tablist" aria-label="Фильтр статей по темам">
-      <button type="button" class="feed-tab is-active" data-filter="*" role="tab" aria-selected="true">Все<span class="feed-tab-n">${posts.length}</span></button>
-${filters.map(({ tag, n }) => `      <button type="button" class="feed-tab" data-filter="${esc(tag.toLowerCase())}" role="tab" aria-selected="false">${esc(tag)}<span class="feed-tab-n">${n}</span></button>`).join('\n')}
+  const tabs = filters.length ? `    <div class="feed-filters" role="group" aria-label="Фильтр статей по темам">
+      <button type="button" class="feed-tab is-active" data-filter="*" aria-pressed="true">Все<span class="feed-tab-n">${posts.length}</span></button>
+${filters.map(({ tag, n }) => `      <button type="button" class="feed-tab" data-filter="${esc(tag.toLowerCase())}" aria-pressed="false">${esc(tag)}<span class="feed-tab-n">${n}</span></button>`).join('\n')}
     </div>` : '';
 
   const body = `${head}
@@ -405,7 +408,7 @@ ${posts.map(postCard).join('\n')}
     tabs.forEach(function (t) {
       var on = t.getAttribute('data-filter') === value;
       t.classList.toggle('is-active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     if (empty) empty.hidden = shown !== 0;
 

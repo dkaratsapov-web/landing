@@ -310,9 +310,9 @@ function Cases({ onCta }) {
           <h2 className="section-title"><Lines text={(window.CONTENT.casesHead || {}).heading} /></h2>
           <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.casesHead || {}).lead}</p>
         </div>
-        <div className="kase-tabs" role="tablist">
+        <div className="kase-tabs" role="group" aria-label="Фильтр кейсов по услуге">
           {CASE_FILTERS.map((f) =>
-          <button key={f.id} type="button" role="tab" aria-selected={filter === f.id}
+          <button key={f.id} type="button" aria-pressed={filter === f.id}
             className={'kase-tab' + (filter === f.id ? ' on' : '')} onClick={() => setFilter(f.id)}>
               {f.label}<span className="kase-tab-n">{count(f.id)}</span>
             </button>

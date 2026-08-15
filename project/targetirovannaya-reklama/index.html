@@ -282,6 +282,11 @@
     </div>
   </div>
 </nav>
+<!-- <main> обязателен: без него в дереве доступности нет области основного
+     содержимого, и проверка агентного просмотра Яндекса помечает разметку
+     как некорректную. -->
+<main id="main">
+
 <div class="nav-mobile" id="navMobile">
   <a href="/kontekstnaya-reklama/">Услуги</a>
   <a href="/kontekstnaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Контекстная реклама</a>
@@ -796,6 +801,8 @@
 </section>
 
 <!-- ===================== ПОДВАЛ ===================== -->
+</main>
+
 <footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
     <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">

@@ -91,6 +91,11 @@
     </div>
   </div>
 </nav>
+<!-- <main> обязателен: без него в дереве доступности нет области основного
+     содержимого, и проверка агентного просмотра Яндекса помечает разметку
+     как некорректную. -->
+<main id="main">
+
 <div class="nav-mobile" id="navMobile">
   <a href="/kontekstnaya-reklama/">Услуги</a>
   <a href="/kontekstnaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Контекстная реклама</a>
@@ -470,16 +475,16 @@
       <p>22 реальных проекта — выберите нишу, и кейсы отфильтруются. Все цифры из реальных проектов.</p>
     </div>
     <div class="kase-filter-group">
-      <div class="kase-tabs reveal" data-group="niche" role="tablist">
-        <button type="button" role="tab" class="kase-tab on" data-filter="all" aria-selected="true">Все<span class="kase-tab-n">22</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="horeca" aria-selected="false">HoReCa<span class="kase-tab-n">5</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="stroy" aria-selected="false">Строительство<span class="kase-tab-n">4</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="proizvod" aria-selected="false">Производство<span class="kase-tab-n">3</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="turizm" aria-selected="false">Туризм<span class="kase-tab-n">2</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="edu" aria-selected="false">Образование<span class="kase-tab-n">2</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="med" aria-selected="false">Медицина<span class="kase-tab-n">2</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="torg" aria-selected="false">Торговля<span class="kase-tab-n">2</span></button>
-        <button type="button" role="tab" class="kase-tab" data-filter="eda" aria-selected="false">Еда<span class="kase-tab-n">2</span></button>
+      <div class="kase-tabs reveal" data-group="niche" role="group" aria-label="Фильтр кейсов по нише">
+        <button type="button" class="kase-tab on" data-filter="all" aria-pressed="true">Все<span class="kase-tab-n">22</span></button>
+        <button type="button" class="kase-tab" data-filter="horeca" aria-pressed="false">HoReCa<span class="kase-tab-n">5</span></button>
+        <button type="button" class="kase-tab" data-filter="stroy" aria-pressed="false">Строительство<span class="kase-tab-n">4</span></button>
+        <button type="button" class="kase-tab" data-filter="proizvod" aria-pressed="false">Производство<span class="kase-tab-n">3</span></button>
+        <button type="button" class="kase-tab" data-filter="turizm" aria-pressed="false">Туризм<span class="kase-tab-n">2</span></button>
+        <button type="button" class="kase-tab" data-filter="edu" aria-pressed="false">Образование<span class="kase-tab-n">2</span></button>
+        <button type="button" class="kase-tab" data-filter="med" aria-pressed="false">Медицина<span class="kase-tab-n">2</span></button>
+        <button type="button" class="kase-tab" data-filter="torg" aria-pressed="false">Торговля<span class="kase-tab-n">2</span></button>
+        <button type="button" class="kase-tab" data-filter="eda" aria-pressed="false">Еда<span class="kase-tab-n">2</span></button>
       </div>
     </div>
     <div class="kfull-grid" id="kaseFullGrid">
@@ -1255,6 +1260,8 @@
 </section>
 
 <!-- ===================== ПОДВАЛ ===================== -->
+</main>
+
 <footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
     <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
@@ -1421,8 +1428,8 @@
     }
 
     tabs.forEach(tab => tab.addEventListener('click', () => {
-      tabs.forEach(t => { t.classList.remove('on'); t.setAttribute('aria-selected', 'false'); });
-      tab.classList.add('on'); tab.setAttribute('aria-selected', 'true');
+      tabs.forEach(t => { t.classList.remove('on'); t.setAttribute('aria-pressed', 'false'); });
+      tab.classList.add('on'); tab.setAttribute('aria-pressed', 'true');
       applyFilter(tab.dataset.filter);
     }));
 

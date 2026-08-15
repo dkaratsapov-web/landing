@@ -4,7 +4,8 @@
   "description": "Лендинг Даниила Карацапова — статический сайт, собирается из JSX.",
   "private": true,
   "scripts": {
-    "build": "rm -rf dist && cp -r project dist && node project/build.mjs project dist"
+    "build": "rm -rf dist && cp -r project dist && node project/build.mjs project dist",
+    "check": "node project/check.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

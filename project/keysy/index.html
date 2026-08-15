@@ -139,6 +139,11 @@
     </div>
   </div>
 </nav>
+<!-- <main> обязателен: без него в дереве доступности нет области основного
+     содержимого, и проверка агентного просмотра Яндекса помечает разметку
+     как некорректную. -->
+<main id="main">
+
 <div class="nav-mobile" id="navMobile">
   <a href="/kontekstnaya-reklama/">Услуги</a>
   <a href="/kontekstnaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Контекстная реклама</a>
@@ -213,27 +218,27 @@
     <div class="kase-filters reveal">
       <div class="kase-filter-group">
         <span class="kase-filter-label">Услуга</span>
-        <div class="kase-tabs" data-group="service" role="tablist">
-          <button type="button" role="tab" class="kase-tab on" data-filter="all" aria-selected="true">Все<span class="kase-tab-n">22</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="context" aria-selected="false">Контекстная реклама<span class="kase-tab-n">22</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="geo" aria-selected="false">GEO-сервисы<span class="kase-tab-n">12</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="analytics" aria-selected="false">Сквозная аналитика<span class="kase-tab-n">12</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="site" aria-selected="false">Разработка сайтов<span class="kase-tab-n">10</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="target" aria-selected="false">Таргетированная реклама<span class="kase-tab-n">4</span></button>
+        <div class="kase-tabs" data-group="service" role="group" aria-label="Фильтр кейсов по услуге">
+          <button type="button" class="kase-tab on" data-filter="all" aria-pressed="true">Все<span class="kase-tab-n">22</span></button>
+          <button type="button" class="kase-tab" data-filter="context" aria-pressed="false">Контекстная реклама<span class="kase-tab-n">22</span></button>
+          <button type="button" class="kase-tab" data-filter="geo" aria-pressed="false">GEO-сервисы<span class="kase-tab-n">12</span></button>
+          <button type="button" class="kase-tab" data-filter="analytics" aria-pressed="false">Сквозная аналитика<span class="kase-tab-n">12</span></button>
+          <button type="button" class="kase-tab" data-filter="site" aria-pressed="false">Разработка сайтов<span class="kase-tab-n">10</span></button>
+          <button type="button" class="kase-tab" data-filter="target" aria-pressed="false">Таргетированная реклама<span class="kase-tab-n">4</span></button>
         </div>
       </div>
       <div class="kase-filter-group">
         <span class="kase-filter-label">Ниша</span>
-        <div class="kase-tabs" data-group="niche" role="tablist">
-          <button type="button" role="tab" class="kase-tab on" data-filter="all" aria-selected="true">Все<span class="kase-tab-n">22</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="horeca" aria-selected="false">Рестораны и досуг<span class="kase-tab-n">5</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="stroy" aria-selected="false">Строительство и ремонт<span class="kase-tab-n">4</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="proizvod" aria-selected="false">Производство и мебель<span class="kase-tab-n">3</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="med" aria-selected="false">Медицина и красота<span class="kase-tab-n">2</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="eda" aria-selected="false">Еда и доставка<span class="kase-tab-n">2</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="torg" aria-selected="false">Торговля и e-commerce<span class="kase-tab-n">2</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="edu" aria-selected="false">Образование<span class="kase-tab-n">2</span></button>
-          <button type="button" role="tab" class="kase-tab" data-filter="turizm" aria-selected="false">Туризм и услуги<span class="kase-tab-n">2</span></button>
+        <div class="kase-tabs" data-group="niche" role="group" aria-label="Фильтр кейсов по нише">
+          <button type="button" class="kase-tab on" data-filter="all" aria-pressed="true">Все<span class="kase-tab-n">22</span></button>
+          <button type="button" class="kase-tab" data-filter="horeca" aria-pressed="false">Рестораны и досуг<span class="kase-tab-n">5</span></button>
+          <button type="button" class="kase-tab" data-filter="stroy" aria-pressed="false">Строительство и ремонт<span class="kase-tab-n">4</span></button>
+          <button type="button" class="kase-tab" data-filter="proizvod" aria-pressed="false">Производство и мебель<span class="kase-tab-n">3</span></button>
+          <button type="button" class="kase-tab" data-filter="med" aria-pressed="false">Медицина и красота<span class="kase-tab-n">2</span></button>
+          <button type="button" class="kase-tab" data-filter="eda" aria-pressed="false">Еда и доставка<span class="kase-tab-n">2</span></button>
+          <button type="button" class="kase-tab" data-filter="torg" aria-pressed="false">Торговля и e-commerce<span class="kase-tab-n">2</span></button>
+          <button type="button" class="kase-tab" data-filter="edu" aria-pressed="false">Образование<span class="kase-tab-n">2</span></button>
+          <button type="button" class="kase-tab" data-filter="turizm" aria-pressed="false">Туризм и услуги<span class="kase-tab-n">2</span></button>
         </div>
       </div>
     </div>
@@ -900,6 +905,8 @@
   </div>
 </section>
 
+</main>
+
 <footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
     <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
@@ -1016,8 +1023,8 @@
 
       g.querySelectorAll('.kase-tab').forEach(tab => tab.addEventListener('click', () => {
         if (dragged) { dragged = false; return; } // был драг, а не клик
-        g.querySelectorAll('.kase-tab').forEach(t => { t.classList.remove('on'); t.setAttribute('aria-selected', 'false'); });
-        tab.classList.add('on'); tab.setAttribute('aria-selected', 'true');
+        g.querySelectorAll('.kase-tab').forEach(t => { t.classList.remove('on'); t.setAttribute('aria-pressed', 'false'); });
+        tab.classList.add('on'); tab.setAttribute('aria-pressed', 'true');
         state[grp] = tab.dataset.filter;
         apply();
       }));
