@@ -83,8 +83,14 @@ copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
 // в punycode-виде.
 writeFileSync(join(outDir, 'CNAME'), 'karatsapov.ru\n', 'utf8');
 
-// Favicon (lime paper plane) — copy verbatim.
-copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
+/* Иконки сайта. Кроме SVG нужны растры: Яндекс.Вебмастер требует favicon
+   размером 120×120 и отдельно ходит за /favicon.ico по корню, не разбирая
+   <link>. Генерируются из favicon.svg скриптом gen-favicons.mjs. */
+for (const f of ['favicon.svg', 'favicon.ico', 'favicon-120.png', 'apple-touch-icon.png']) {
+  const src = join(srcDir, f);
+  if (existsSync(src)) copyFileSync(src, join(outDir, f));
+  else console.warn('build: нет иконки', f, '— запустите node project/gen-favicons.mjs');
+}
 
 // SEO: robots.txt. sitemap.xml генерируется ниже, из фактического списка страниц.
 copyFileSync(join(srcDir, 'robots.txt'), join(outDir, 'robots.txt'));
@@ -249,7 +255,10 @@ ${verifyTags}
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
   <link rel="stylesheet" href="motion.css" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="120x120" href="favicon-120.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
   <link rel="preload" as="image" href="assets/portrait.jpg" fetchpriority="high" />
 

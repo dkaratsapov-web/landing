@@ -73,8 +73,8 @@ const metrika = `<!-- Yandex.Metrika counter -->
 /* ── Навигация ───────────────────────────────────────────────────────────── */
 const PLANE = '<svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>';
 
-const TG_URL = 'https://t.me/Daniil_065';
-const MAX_URL = 'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c';
+export const TG_URL = 'https://t.me/Daniil_065';
+export const MAX_URL = 'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c';
 export const DZEN_URL = 'https://dzen.ru/karatsapov';
 
 /* Пункты выпадающего списка «Услуги». Один источник для десктопа и мобильного
@@ -123,7 +123,7 @@ ${drops}
       <a class="btn btn-ghost btn-sm nav-dzen" href="${DZEN_URL}" target="_blank" rel="noopener noreferrer">
         <svg class="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>Я на Дзен
       </a>
-      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/">Обсудить задачу</a>
+      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/" data-lead-modal>Обсудить задачу</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -346,7 +346,10 @@ ${verify}
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
 <link rel="stylesheet" href="/motion.css">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="120x120" href="/favicon-120.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
 <script defer src="/lead-config.js"></script>
 ${metrika}

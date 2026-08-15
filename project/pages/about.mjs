@@ -157,10 +157,15 @@ export function render() {
      чтения. Дублировать её здесь картинка в картинку значило повторять
      полстраницы; на странице специалиста уместнее сухой перечень
      квалификаций со ссылками на оригиналы. */
-  const certs = CERTS.map(([title, issuer, slug]) => `        <a class="cert-row" href="/assets/certs/${slug}.pdf" target="_blank" rel="noopener noreferrer">
+  /* href на PDF остаётся настоящим: без JS ссылка просто открывает оригинал,
+     как раньше. Скрипт перехватывает клик и показывает разворот в лайтбоксе
+     прямо на странице — уводить человека в новую вкладку с середины страницы
+     значит терять его. data-* несут то, что нужно лайтбоксу. */
+  const certs = CERTS.map(([title, issuer, slug], i) => `        <a class="cert-row" href="/assets/certs/${slug}.pdf" target="_blank" rel="noopener noreferrer"
+           data-cert="${i}" data-cert-img="/assets/certs/${slug}.jpg" data-cert-title="${title}" data-cert-issuer="${issuer}">
           <span class="cert-row-title">${title}</span>
           <span class="cert-row-issuer">${issuer}</span>
-          <span class="cert-row-open">PDF</span>
+          <span class="cert-row-open">Смотреть</span>
         </a>`).join('\n');
 
   const faq = faqItems(FAQ);
@@ -235,6 +240,94 @@ ${certs}
     </div>
   </div>
 </section>
+
+<script>
+/* Лайтбокс сертификатов. Разворот показывается прямо на странице: раньше
+   каждая строка уводила в новую вкладку с PDF, и человек уходил с середины
+   раздела, чтобы посмотреть картинку.
+
+   Прогрессивное улучшение: href на PDF в разметке настоящий, и без JS всё
+   работает как прежде. Скрипт только перехватывает клик.
+
+   Оригинал остаётся доступен — ссылка «Открыть оригинал (PDF)» внутри
+   лайтбокса ведёт на тот же файл. */
+(function () {
+  var rows = [].slice.call(document.querySelectorAll('.cert-row[data-cert]'));
+  if (!rows.length) return;
+
+  var lb = document.createElement('div');
+  lb.className = 'cert-lb';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.hidden = true;
+  lb.innerHTML =
+    '<button type="button" class="cert-lb-close" aria-label="Закрыть">' +
+      '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
+    '</button>' +
+    '<button type="button" class="cert-lb-nav prev" aria-label="Предыдущий">' +
+      '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>' +
+    '</button>' +
+    '<div class="cert-lb-stage">' +
+      '<img alt="">' +
+      '<div class="cert-lb-bar">' +
+        '<div><div class="cert-lb-title"></div><div class="cert-lb-sub"></div></div>' +
+        '<a class="cert-lb-pdf" target="_blank" rel="noopener noreferrer">Открыть оригинал (PDF)</a>' +
+      '</div>' +
+    '</div>' +
+    '<button type="button" class="cert-lb-nav next" aria-label="Следующий">' +
+      '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>' +
+    '</button>';
+  document.body.appendChild(lb);
+
+  var img = lb.querySelector('img');
+  var title = lb.querySelector('.cert-lb-title');
+  var sub = lb.querySelector('.cert-lb-sub');
+  var pdf = lb.querySelector('.cert-lb-pdf');
+  var cur = 0, lastFocused = null;
+
+  function show(i) {
+    cur = (i + rows.length) % rows.length;
+    var r = rows[cur];
+    img.src = r.getAttribute('data-cert-img');
+    img.alt = r.getAttribute('data-cert-title') + ' — сертификат Даниила Карацапова';
+    title.textContent = r.getAttribute('data-cert-title');
+    sub.textContent = r.getAttribute('data-cert-issuer');
+    pdf.href = r.getAttribute('href');
+  }
+  function open(i) {
+    lastFocused = document.activeElement;
+    show(i);
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lb.querySelector('.cert-lb-close').focus();
+  }
+  function close() {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) { try { lastFocused.focus(); } catch (e) {} }
+  }
+
+  rows.forEach(function (r, i) {
+    r.addEventListener('click', function (e) {
+      // Ctrl/Cmd+клик и средняя кнопка — пусть открывают PDF в новой вкладке.
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      open(i);
+    });
+  });
+
+  lb.querySelector('.cert-lb-close').addEventListener('click', close);
+  lb.querySelector('.prev').addEventListener('click', function () { show(cur - 1); });
+  lb.querySelector('.next').addEventListener('click', function () { show(cur + 1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(cur - 1);
+    if (e.key === 'ArrowRight') show(cur + 1);
+  });
+})();
+</script>
 
 <section class="section">
   <div class="wrap">

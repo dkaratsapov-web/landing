@@ -78,7 +78,7 @@ function Nav({ onCta }) {
           <a className="btn btn-ghost btn-sm nav-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer">
             <svg className="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>Я на Дзен
           </a>
-          <a className="btn btn-fill btn-sm nav-cta" href="#contacts"
+          <a className="btn btn-fill btn-sm nav-cta" href="/contacts/"
              onClick={(e) => { e.preventDefault(); onCta(); }}>Обсудить задачу</a>
           <button className="nav-burger" onClick={() => setOpen(o => !o)} aria-label="Меню">
             {open ? <IconClose size={22} /> : <Icon paths={<><path d="M4 7h16M4 12h16M4 17h16" /></>} size={22} />}
@@ -150,7 +150,7 @@ function HeroSplit({ portrait, onCta }) {
           </h1>
           <p className="lead reveal in" style={{ marginTop: 26, maxWidth: 480 }}>{H.sub}</p>
           <div className="reveal in" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="/contacts/" onClick={(e) => { e.preventDefault(); onCta(); }}>
               {H.ctaPrimary}<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href={H.telegramUrl} target="_blank" rel="noopener noreferrer">
@@ -185,7 +185,7 @@ function HeroOverlay({ portrait, onCta }) {
           </h1>
           <p className="lead reveal in" style={{ marginTop: 24, maxWidth: 560, color: '#e6e6ea' }}>{HERO_SUB}</p>
           <div className="reveal in" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="/contacts/" onClick={(e) => { e.preventDefault(); onCta(); }}>
               Обсудить задачу<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">
@@ -219,7 +219,7 @@ function HeroEditorial({ portrait, onCta }) {
         <div className="reveal in" style={{ paddingBottom: 18 }}>
           <p className="lead" style={{ maxWidth: 460 }}>{HERO_SUB}</p>
           <div style={{ display: 'flex', gap: 14, marginTop: 32, flexWrap: 'wrap' }}>
-            <a className="btn btn-fill btn-lg mo-magnetic" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            <a className="btn btn-fill btn-lg mo-magnetic" href="/contacts/" onClick={(e) => { e.preventDefault(); onCta(); }}>
               Обсудить задачу<IconArrowRight size={18} />
             </a>
             <a className="btn btn-ghost btn-lg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">

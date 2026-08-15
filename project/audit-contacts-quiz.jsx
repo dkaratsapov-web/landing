@@ -375,7 +375,7 @@ function Footer({ onCta }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <a href="tel:+79963470065" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>+7 (996) 347-00-65</a>
               <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>Telegram @Daniil_065</a>
-              <a href="#contacts" onClick={(e) => {e.preventDefault();onCta();}} style={{ color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 15 }}>Обсудить задачу</a>
+              <a href="/contacts/" onClick={(e) => {e.preventDefault();onCta();}} style={{ color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 15 }}>Обсудить задачу</a>
             </div>
           </div>
         </div>
