@@ -45,6 +45,7 @@ export const SIZES = {
   'cover-vc':   [1200, 630],
   inline:       [1200, 750],
   'inline-tall': [1200, 950],
+  avatar:       [1080, 1080],
 };
 
 const BRAND = {
@@ -255,7 +256,68 @@ function quote({ text, note }, w, h) {
   `);
 }
 
-const TYPES = { cover, stats, steps, compare, checklist, quote };
+/* ── Тип: аватарка ──────────────────────────────────────────────────────
+   Квадрат, который площадки обрезают в круг. Отсюда два ограничения: всё
+   значимое держим внутри вписанной окружности (углы срежутся) и не ставим
+   мелких деталей — в ленте аватарка около 40 пикселей, там читается один
+   крупный знак и не более двух букв.
+
+   Собственная разметка вместо общей обвязки: подпись, свечения и отбивка
+   снизу здесь не нужны, а поля другие. */
+const PLANE_PATHS = `<path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="CLR"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="CLR"/>`;
+
+function avatar({ variant = 'plane-dark', text = 'ДК' }, w, h) {
+  const looks = {
+    'plane-dark':  { bg: BRAND.bg,     mark: BRAND.accent, ring: 'rgba(182,240,30,.30)' },
+    'plane-lime':  { bg: BRAND.accent, mark: BRAND.ink,    ring: 'rgba(0,0,0,.18)' },
+    'monogram':    { bg: BRAND.bg,     mark: BRAND.accent, ring: 'rgba(182,240,30,.30)' },
+  };
+  const look = looks[variant];
+  if (!look) throw new Error(`avatar: неизвестный вариант «${variant}»`);
+
+  const body = variant === 'monogram'
+    ? `<div class="mono">${esc(text)}</div>`
+    : `<svg class="plane" viewBox="0 0 50 50" fill="none">${PLANE_PATHS.replaceAll('CLR', look.mark)}</svg>`;
+
+  return `<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{height:100%}
+  body{
+    width:${w}px;height:100%;overflow:hidden;background:${look.bg};
+    font-family:"Liberation Sans","DejaVu Sans",sans-serif;
+    display:flex;align-items:center;justify-content:center;position:relative;
+  }
+  /* Подсветка от угла — иначе плоская заливка выглядит как заглушка. */
+  .glow{
+    position:absolute;width:${Math.round(w * 0.9)}px;height:${Math.round(w * 0.9)}px;
+    border-radius:50%;filter:blur(${Math.round(w * 0.09)}px);
+    background:${variant === 'plane-lime' ? '#ffffff' : BRAND.accent};
+    opacity:${variant === 'plane-lime' ? .18 : .13};
+    top:${-Math.round(w * 0.34)}px;left:${-Math.round(w * 0.3)}px;
+  }
+  /* Кольцо по краю: на светлой ленте Дзена очерчивает границу аватарки. */
+  .ring{
+    position:absolute;inset:${Math.round(w * 0.022)}px;border-radius:50%;
+    border:${Math.round(w * 0.011)}px solid ${look.ring};
+  }
+  /* Самолётик в исходном SVG стоит не по центру поля: масса смещена
+     вверх-влево, и в круге это читается как перекос. Сдвигаем оптически. */
+  .plane{
+    width:${Math.round(w * 0.54)}px;height:${Math.round(w * 0.54)}px;position:relative;
+    transform:translate(${Math.round(w * 0.022)}px, ${Math.round(w * 0.018)}px);
+  }
+  .mono{
+    position:relative;color:${look.mark};
+    font-size:${Math.round(w * 0.42)}px;font-weight:700;letter-spacing:-.02em;line-height:1;
+  }
+  </style></head><body>
+    <div class="glow"></div>
+    ${body}
+    <div class="ring"></div>
+  </body></html>`;
+}
+
+const TYPES = { cover, stats, steps, compare, checklist, quote, avatar };
 
 /* ── Рендер ─────────────────────────────────────────────────────────────── */
 mkdirSync(OUT, { recursive: true });
@@ -353,7 +415,8 @@ for (const spec of queue) {
     ], { stdio: 'ignore' });
 
     used = candidate;
-    if (spec.type === 'cover' || await hasSignatureRule(pngPath, w, candidate)) { ok = true; break; }
+    if (spec.type === 'cover' || spec.type === 'avatar'
+      || await hasSignatureRule(pngPath, w, candidate)) { ok = true; break; }
   }
   if (!ok) {
     throw new Error(`${name}: содержимое не помещается даже в ${used}px — сократите текст в спеке`);
