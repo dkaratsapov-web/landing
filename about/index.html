@@ -110,6 +110,12 @@
   <a href="/contacts/">Контакты</a>
 </div>
 
+<!-- <main> обязателен: без него в дереве доступности нет области основного
+     содержимого, и краулер (как и скринридер) не может отделить контент от
+     шапки и подвала. Проверка агентного просмотра Яндекса помечала это как
+     «дерево доступности имеет неверный формат». -->
+<main id="main">
+
 <header class="hero" data-screen-label="О себе">
   <div class="wrap">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span style="margin:0 8px; opacity:.5;">/</span><span aria-current="page">О себе</span></nav>
@@ -471,6 +477,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">

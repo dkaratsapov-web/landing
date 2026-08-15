@@ -898,7 +898,13 @@ h3 { font-weight: 600; }
 .kase-filter-label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--lime); flex: 0 0 auto; }
 .kase-filter-group .kase-tabs { margin-bottom: 0; flex: 1 1 auto; min-width: 0; }
 @media (max-width: 720px) {
-  .kase-filter-group { flex-direction: column; gap: 8px; }
+  /* align-items: stretch обязателен. В строке (десктоп) flex-start выравнивает
+     по верху и это правильно, но здесь контейнер становится колонкой, и
+     поперечная ось — горизонтальная: при flex-start ряд фильтров получает
+     ширину по содержимому (1920px вместо 346px), overflow-x: auto на нём
+     не срабатывает, а body обрезает лишнее. В итоге на телефоне до дальних
+     фильтров нельзя было добраться вообще — ни прокруткой, ни свайпом. */
+  .kase-filter-group { flex-direction: column; align-items: stretch; gap: 8px; }
   .kase-filter-label { padding-top: 0; }
   .kase-filter-group .kase-tabs { margin: 0; padding: 0 0 4px; }
 }

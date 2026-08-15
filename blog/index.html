@@ -109,6 +109,12 @@
   <a href="/contacts/">Контакты</a>
 </div>
 
+<!-- <main> обязателен: без него в дереве доступности нет области основного
+     содержимого, и краулер (как и скринридер) не может отделить контент от
+     шапки и подвала. Проверка агентного просмотра Яндекса помечала это как
+     «дерево доступности имеет неверный формат». -->
+<main id="main">
+
 <header class="hero hero-feed" data-screen-label="Блог">
   <div class="wrap">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span style="margin:0 8px; opacity:.5;">/</span><span aria-current="page">Блог</span></nav>
@@ -124,21 +130,24 @@
 
 <section class="section section-feed">
   <div class="wrap">
-    <div class="feed-filters" role="tablist" aria-label="Фильтр статей по темам">
-      <button type="button" class="feed-tab is-active" data-filter="*" role="tab" aria-selected="true">Все<span class="feed-tab-n">13</span></button>
-      <button type="button" class="feed-tab" data-filter="яндекс директ" role="tab" aria-selected="false">Яндекс Директ<span class="feed-tab-n">10</span></button>
-      <button type="button" class="feed-tab" data-filter="инструкция" role="tab" aria-selected="false">Инструкция<span class="feed-tab-n">6</span></button>
-      <button type="button" class="feed-tab" data-filter="бюджет" role="tab" aria-selected="false">Бюджет<span class="feed-tab-n">4</span></button>
-      <button type="button" class="feed-tab" data-filter="для новичков" role="tab" aria-selected="false">Для новичков<span class="feed-tab-n">4</span></button>
-      <button type="button" class="feed-tab" data-filter="аналитика" role="tab" aria-selected="false">Аналитика<span class="feed-tab-n">3</span></button>
-      <button type="button" class="feed-tab" data-filter="автоматизация" role="tab" aria-selected="false">Автоматизация<span class="feed-tab-n">2</span></button>
+    <div class="feed-filters" role="group" aria-label="Фильтр статей по темам">
+      <button type="button" class="feed-tab is-active" data-filter="*" aria-pressed="true">Все<span class="feed-tab-n">13</span></button>
+      <button type="button" class="feed-tab" data-filter="яндекс директ" aria-pressed="false">Яндекс Директ<span class="feed-tab-n">10</span></button>
+      <button type="button" class="feed-tab" data-filter="инструкция" aria-pressed="false">Инструкция<span class="feed-tab-n">6</span></button>
+      <button type="button" class="feed-tab" data-filter="бюджет" aria-pressed="false">Бюджет<span class="feed-tab-n">4</span></button>
+      <button type="button" class="feed-tab" data-filter="для новичков" aria-pressed="false">Для новичков<span class="feed-tab-n">4</span></button>
+      <button type="button" class="feed-tab" data-filter="аналитика" aria-pressed="false">Аналитика<span class="feed-tab-n">3</span></button>
+      <button type="button" class="feed-tab" data-filter="автоматизация" aria-pressed="false">Автоматизация<span class="feed-tab-n">2</span></button>
     </div>
     <div class="post-grid mo-stagger" id="postGrid">
       <a class="post-card mo-spot" href="/blog/avtostrategii-direkta/" data-tags="яндекс директ|автоматизация|разбор">
         <img class="post-card-cover" src="/assets/blog/avtostrategii-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Автостратегии Яндекс Директа — какую выбрать под задачу</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Автостратегии Яндекс Директа — какую выбрать под задачу</h2>
           <p class="post-card-desc">Разбор автоматических стратегий Директа: максимум кликов, максимум конверсий, оплата за конверсии. Когда автоматика выигрывает у ручного управления, сколько данных ей нужно и почему нельзя менять стратегию каждую неделю.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -147,7 +156,10 @@
         <img class="post-card-cover" src="/assets/blog/direkt-ili-seo-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Яндекс Директ или SEO — что выбрать малому бизнесу</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Яндекс Директ или SEO — что выбрать малому бизнесу</h2>
           <p class="post-card-desc">Сравниваю контекстную рекламу и поисковое продвижение по деньгам, срокам и рискам. Когда Директ выгоднее SEO, когда наоборот и почему на дистанции их обычно совмещают.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -156,7 +168,10 @@
         <img class="post-card-cover" src="/assets/blog/nastroit-direkt-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Как настроить Яндекс Директ самому — пошаговая инструкция</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Как настроить Яндекс Директ самому — пошаговая инструкция</h2>
           <p class="post-card-desc">Пошаговая настройка рекламной кампании в Яндекс Директе с нуля: подготовка, сбор семантики, структура кампаний, объявления, ставки и запуск. Что можно сделать самому и где чаще всего ошибаются.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -165,7 +180,10 @@
         <img class="post-card-cover" src="/assets/blog/okupaemost-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Аналитика</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Как считать окупаемость рекламы — ROI, ROAS и ДРР без путаницы</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Как считать окупаемость рекламы — ROI, ROAS и ДРР без путаницы</h2>
           <p class="post-card-desc">Три показателя, которыми меряют эффективность рекламы, и чем они отличаются. Формулы, примеры расчёта на цифрах и разбор, какой показатель когда применять, чтобы не принять убыточную кампанию за прибыльную.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -174,7 +192,10 @@
         <img class="post-card-cover" src="/assets/blog/master-kampanij-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Мастер кампаний в Яндекс Директе — кому подходит, а кому вредит</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Мастер кампаний в Яндекс Директе — кому подходит, а кому вредит</h2>
           <p class="post-card-desc">Что такое Мастер кампаний, чем он отличается от режима эксперта и в каких случаях им можно пользоваться без потерь. Разбор ограничений автоматического режима и типичных ситуаций, где он сливает бюджет.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -183,7 +204,10 @@
         <img class="post-card-cover" src="/assets/blog/minus-slova-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Минус-слова в Яндекс Директе — как собрать и зачем</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Минус-слова в Яндекс Директе — как собрать и зачем</h2>
           <p class="post-card-desc">Что такое минус-слова, как их собирать до запуска и чистить после, чем отличаются минус-слова кампании и группы. Разбор на примерах, почему без них до двух третей рекламного бюджета уходит нецелевым посетителям.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -192,7 +216,10 @@
         <img class="post-card-cover" src="/assets/blog/celi-metrika-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Аналитика</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Настройка целей в Яндекс Метрике — минимум перед запуском рекламы</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Настройка целей в Яндекс Метрике — минимум перед запуском рекламы</h2>
           <p class="post-card-desc">Какие цели нужно настроить в Яндекс Метрике до старта рекламы и как это сделать: формы, звонки, мессенджеры, составные цели. Почему без целей автостратегии Директа работают вслепую.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -201,7 +228,10 @@
         <img class="post-card-cover" src="/assets/blog/yandex-karty-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Карты</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">5 минут чтения</span></div>
-          <h3 class="post-card-title">Как продвигаться в Яндекс Картах — пошаговая инструкция</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Как продвигаться в Яндекс Картах — пошаговая инструкция</h2>
           <p class="post-card-desc">Что влияет на позицию организации в Яндекс Картах и как поднять карточку в выдаче: заполнение профиля, отзывы, фотографии, рубрики. Разбор по шагам для локального бизнеса.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -210,7 +240,10 @@
         <img class="post-card-cover" src="/assets/blog/net-zayavok-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">5 минут чтения</span></div>
-          <h3 class="post-card-title">Почему реклама не приносит заявок — 9 причин</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Почему реклама не приносит заявок — 9 причин</h2>
           <p class="post-card-desc">Реклама крутится, бюджет тратится, а заявок нет. Разбираю девять причин, которые вижу в чужих кабинетах чаще всего, — от нецелевого трафика и ненастроенных целей до посадочной, которая не отвечает на запрос.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -219,7 +252,10 @@
         <img class="post-card-cover" src="/assets/blog/byudzhet-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Бюджет</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Какой рекламный бюджет нужен малому бизнесу</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Какой рекламный бюджет нужен малому бизнесу</h2>
           <p class="post-card-desc">Как посчитать минимальный рекламный бюджет под свою нишу: формула от количества заявок, стоимости клика и конверсии сайта. Почему 15 000 ₽ в месяц не дают ответа о работе канала и что делать, если больше нет.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -228,7 +264,10 @@
         <img class="post-card-cover" src="/assets/blog/retargeting-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Ретаргетинг в Яндекс Директе — сценарии, которые окупаются</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Ретаргетинг в Яндекс Директе — сценарии, которые окупаются</h2>
           <p class="post-card-desc">Как настроить ретаргетинг в Директе через сегменты Метрики: пять рабочих сценариев возврата посетителей, сроки и частота показов, типичные ошибки. Почему возврат почти всегда дешевле привлечения нового трафика.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -237,7 +276,10 @@
         <img class="post-card-cover" src="/assets/blog/rsya-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">РСЯ — когда включать и как не слить бюджет</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">РСЯ — когда включать и как не слить бюджет</h2>
           <p class="post-card-desc">Чем Рекламная сеть Яндекса отличается от поиска, кому она подходит, а кому нет. Как настроить РСЯ, чистить площадки и не потерять бюджет на мобильных играх и сайтах с накрученными кликами.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -246,7 +288,10 @@
         <img class="post-card-cover" src="/assets/blog/skolko-stoit-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">6 минут чтения</span></div>
-          <h3 class="post-card-title">Сколько стоит контекстная реклама в Яндекс Директ</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Сколько стоит контекстная реклама в Яндекс Директ</h2>
           <p class="post-card-desc">Из чего складывается цена контекстной рекламы: работа специалиста, рекламный бюджет и стоимость клика. Разбираю на цифрах, сколько нужно на старт и почему «настройка за 5 000 ₽» обходится дороже всего.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -282,7 +327,7 @@
     tabs.forEach(function (t) {
       var on = t.getAttribute('data-filter') === value;
       t.classList.toggle('is-active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
     if (empty) empty.hidden = shown !== 0;
 
@@ -309,6 +354,8 @@
   if (location.search) apply(fromUrl(), false);
 })();
 </script>
+
+</main>
 
 <footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">

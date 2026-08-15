@@ -109,6 +109,12 @@
   <a href="/contacts/">Контакты</a>
 </div>
 
+<!-- <main> обязателен: без него в дереве доступности нет области основного
+     содержимого, и краулер (как и скринридер) не может отделить контент от
+     шапки и подвала. Проверка агентного просмотра Яндекса помечала это как
+     «дерево доступности имеет неверный формат». -->
+<main id="main">
+
 <article class="section post">
   <div class="wrap wrap-narrow">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span style="margin:0 8px; opacity:.5;">/</span><a href="/blog/">Блог</a><span style="margin:0 8px; opacity:.5;">/</span><span aria-current="page">Автостратегии Яндекс Директа — какую выбрать под задачу</span></nav>
@@ -252,7 +258,10 @@
         <img class="post-card-cover" src="/assets/blog/direkt-ili-seo-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Яндекс Директ или SEO — что выбрать малому бизнесу</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Яндекс Директ или SEO — что выбрать малому бизнесу</h2>
           <p class="post-card-desc">Сравниваю контекстную рекламу и поисковое продвижение по деньгам, срокам и рискам. Когда Директ выгоднее SEO, когда наоборот и почему на дистанции их обычно совмещают.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -261,7 +270,10 @@
         <img class="post-card-cover" src="/assets/blog/nastroit-direkt-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Как настроить Яндекс Директ самому — пошаговая инструкция</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Как настроить Яндекс Директ самому — пошаговая инструкция</h2>
           <p class="post-card-desc">Пошаговая настройка рекламной кампании в Яндекс Директе с нуля: подготовка, сбор семантики, структура кампаний, объявления, ставки и запуск. Что можно сделать самому и где чаще всего ошибаются.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -270,7 +282,10 @@
         <img class="post-card-cover" src="/assets/blog/okupaemost-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
           <div class="post-card-meta"><span class="post-card-tag">Аналитика</span><time datetime="2026-08-15">15 августа 2026 г.</time><span class="post-card-read">4 минуты чтения</span></div>
-          <h3 class="post-card-title">Как считать окупаемость рекламы — ROI, ROAS и ДРР без путаницы</h3>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Как считать окупаемость рекламы — ROI, ROAS и ДРР без путаницы</h2>
           <p class="post-card-desc">Три показателя, которыми меряют эффективность рекламы, и чем они отличаются. Формулы, примеры расчёта на цифрах и разбор, какой показатель когда применять, чтобы не принять убыточную кампанию за прибыльную.</p>
           <span class="post-card-more">Читать →</span>
         </div>
@@ -278,6 +293,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
