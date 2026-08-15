@@ -120,6 +120,59 @@ const META = {
 };
 const escAttr = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/* ── Микроразметка услуг и сертификатов ─────────────────────────────────────
+   Собирается из content.json, а не пишется руками: услуги и цены там уже
+   есть, и второй список неизбежно разъехался бы с первым — ровно так уже
+   случилось с ценами в мета-описаниях страниц услуг.
+
+   minPrice, а не price: в карточках стоит «от 30 000 ₽», и точная цена в
+   разметке противоречила бы тексту страницы. */
+const offerCatalog = {
+  '@type': 'OfferCatalog',
+  name: 'Услуги интернет-маркетинга',
+  itemListElement: (content.services || []).map((s, i) => {
+    const digits = String(s.price || '').replace(/[^\d]/g, '');
+    return {
+      '@type': 'Offer',
+      position: i + 1,
+      itemOffered: {
+        '@type': 'Service',
+        name: s.name,
+        description: s.result,
+        ...(s.url ? { url: SITE + s.url } : {}),
+        provider: { '@id': SITE + '/#person' },
+        areaServed: 'RU',
+        ...(s.works && s.works.length ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Что входит',
+            itemListElement: s.works.map((w) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: w } })),
+          },
+        } : {}),
+      },
+      ...(digits ? {
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          minPrice: Number(digits),
+          priceCurrency: 'RUB',
+        },
+      } : {}),
+    };
+  }),
+};
+
+/* Сертификаты как hasCredential. Для личного бренда это прямое подтверждение
+   квалификации: девять официальных сертификаций — самая сильная и при этом
+   единственная полностью проверяемая точка доверия на сайте, а в разметке её
+   до сих пор не было вовсе. */
+const credentials = (content.certs || []).map((c) => ({
+  '@type': 'EducationalOccupationalCredential',
+  name: c.title,
+  credentialCategory: 'certificate',
+  ...(c.issuer ? { recognizedBy: { '@type': 'Organization', name: c.issuer.split('·')[0].trim() } } : {}),
+  ...(c.file ? { url: SITE + '/' + c.file.replace(/^\//, '') } : {}),
+}));
 console.log('Prerendered #root:', (rootHtml.length / 1024).toFixed(1), 'KB of HTML');
 
 /* Подтверждение прав в вебмастерах. Проверка идёт по главной, поэтому теги
@@ -218,6 +271,15 @@ ${verifyTags}
         knowsAbout: ['Контекстная реклама', 'Яндекс Директ', 'Таргетированная реклама',
           'VK Ads', 'Яндекс Бизнес', 'Локальное продвижение', 'Веб-аналитика', 'Разработка сайтов'],
         knowsLanguage: 'ru',
+        email: 'd.karatsapov@gmail.com',
+        /* Опыт в digital начинается с 2019 года. Раньше сайт заявлял «с 2017»
+           и «9+ лет», что расходилось со страницей /about/ на том же сайте. */
+        hasOccupation: {
+          '@type': 'Occupation',
+          name: 'Интернет-маркетолог',
+          occupationalCategory: 'Marketing',
+        },
+        hasCredential: credentials,
         sameAs: ['https://t.me/Daniil_065',
           'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c'],
       },
@@ -230,10 +292,20 @@ ${verifyTags}
         image: SITE + '/assets/og/index.jpg',
         founder: { '@id': SITE + '/#person' },
         provider: { '@id': SITE + '/#person' },
-        areaServed: 'RU',
+        areaServed: { '@type': 'Country', name: 'Россия' },
         availableLanguage: 'Russian',
-        priceRange: 'от 30 000 ₽',
-        contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', availableLanguage: 'Russian' },
+        priceRange: 'от 12 000 ₽ до 90 000 ₽ в месяц',
+        telephone: '+7 996 347-00-65',
+        email: 'd.karatsapov@gmail.com',
+        hasOfferCatalog: offerCatalog,
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'customer service',
+          telephone: '+7 996 347-00-65',
+          email: 'd.karatsapov@gmail.com',
+          availableLanguage: 'Russian',
+          areaServed: 'RU',
+        },
       },
       {
         '@type': 'WebSite',
@@ -242,6 +314,20 @@ ${verifyTags}
         name: 'Даниил Карацапов — маркетолог',
         inLanguage: 'ru-RU',
         publisher: { '@id': SITE + '/#person' },
+      },
+      /* WebPage связывает саму страницу с сущностями выше. Без неё главная
+         остаётся набором несвязанных объектов: поисковик видит человека,
+         услугу и сайт, но не то, что эта страница — про них. */
+      {
+        '@type': 'WebPage',
+        '@id': SITE + '/#webpage',
+        url: SITE + '/',
+        name: META.title,
+        description: META.description,
+        inLanguage: 'ru-RU',
+        isPartOf: { '@id': SITE + '/#website' },
+        about: { '@id': SITE + '/#person' },
+        primaryImageOfPage: SITE + '/assets/og/index.jpg',
       },
     ],
   }, null, 2)}
