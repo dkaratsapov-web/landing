@@ -478,8 +478,12 @@ h3 { font-weight: 600; }
 .sd-url { font-size: 13px; color: var(--muted); margin: 8px 0 10px; }
 .sd-desc { font-size: 14.5px; color: var(--ink-2); line-height: 1.5; }
 .sd-links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; }
-.sd-links a { font-size: 13.5px; color: #6ea8ff; cursor: pointer; transition: color .2s ease; }
-.sd-links a:hover { color: var(--lime); text-decoration: underline; }
+/* Это быстрые ссылки внутри макета чужого объявления — картинка, а не
+   навигация. Раньше они были <a> без href: кликнуть нельзя, а проверки
+   считали их ссылками с зоной касания 19px. Теперь <span> в блоке с
+   aria-hidden — скринридер не читает подписи несуществующего сайта. */
+.sd-links span { font-size: 13.5px; color: #6ea8ff; transition: color .2s ease; }
+.ad-slide:hover .sd-links span { color: #8dbcff; }
 
 .fmt-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px;
   transition: transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, background .3s ease; }
@@ -593,8 +597,15 @@ h3 { font-weight: 600; }
 .calc2-budget { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; }
 .calc2-budget-lbl { font-size: 14px; color: var(--muted); }
 .calc2-budget-val { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); white-space: nowrap; }
-.calc2-range { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 6px; cursor: pointer;
-  background: linear-gradient(90deg, var(--lime) var(--p,30%), var(--surface-3) var(--p,30%)); outline: none; }
+/* Высота самого input — 24px, а не 6: тонкая полоска красива, но пальцем в
+   неё не попасть, и PageSpeed справедливо ругался на зону касания 312×6.
+   Полоска теперь рисуется фоном по центру (background-size + no-repeat),
+   а прозрачные 9px сверху и снизу работают как запас для промаха.
+   Внешне не изменилось ничего. */
+.calc2-range { -webkit-appearance: none; appearance: none; width: 100%; height: 24px; cursor: pointer;
+  background-image: linear-gradient(90deg, var(--lime) var(--p,30%), var(--surface-3) var(--p,30%));
+  background-size: 100% 6px; background-position: center; background-repeat: no-repeat;
+  background-color: transparent; border-radius: 6px; outline: none; }
 .calc2-range::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--lime);
   border: 3px solid #0a0a0a; box-shadow: 0 2px 8px rgba(0,0,0,0.45); cursor: pointer; transition: transform .12s; }
 .calc2-range::-webkit-slider-thumb:active { transform: scale(1.15); }
