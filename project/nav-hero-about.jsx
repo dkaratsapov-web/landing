@@ -6,6 +6,7 @@ const NAV_LINKS = [
     ['Маркетинг под ключ', '/kompleksnyj-marketing/'],
     ['Контекстная реклама', '/kontekstnaya-reklama/'],
     ['Разработка сайтов', '/razrabotka-sajtov/'],
+    ['SEO-оптимизация', '/seo-optimizaciya/'],
     ['Таргетированная реклама', '/targetirovannaya-reklama/'],
     ['GEO-сервисы', '/geo-servisy/'],
     ['Промостраницы Яндекса', '/promostranicy/'],

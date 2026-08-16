@@ -23,13 +23,14 @@ import * as kompleksPage from './pages/kompleksnyj-marketing.mjs';
 import * as analitikaPage from './pages/skvoznaya-analitika.mjs';
 import * as auditPage from './pages/audit-reklamy.mjs';
 import * as promoPage from './pages/promostranicy.mjs';
+import * as seoPage from './pages/seo-optimizaciya.mjs';
 
 const SITE = 'https://karatsapov.ru';
 
 /* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
    которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
 const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage, keysSferaPage, keysDiautoPage,
-  kompleksPage, analitikaPage, auditPage, promoPage];
+  kompleksPage, analitikaPage, auditPage, promoPage, seoPage];
 
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
@@ -564,6 +565,7 @@ const SITEMAP_PAGES = [
   { loc: '/skvoznaya-analitika/', src: 'pages/skvoznaya-analitika.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/audit-reklamy/', src: 'pages/audit-reklamy.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/promostranicy/', src: 'pages/promostranicy.mjs', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/seo-optimizaciya/', src: 'pages/seo-optimizaciya.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/keysy/', src: 'keysy/index.html', priority: '0.8', changefreq: 'monthly' },
   { loc: '/razrabotka-sajtov/sfera/', src: 'pages/keys-sfera.mjs', priority: '0.7', changefreq: 'monthly' },
   { loc: '/keysy/diauto69/', src: 'pages/keys-diauto.mjs', priority: '0.7', changefreq: 'monthly' },
