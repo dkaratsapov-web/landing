@@ -213,7 +213,7 @@ ${requisites}
     <p class="lead" style="margin:16px auto 28px; max-width:560px;">Напишите — отвечу лично. Удалю данные по первой просьбе, без объяснения причин.</p>
     <div class="btn-row" style="justify-content:center;">
       <a class="btn btn-fill btn-lg" href="mailto:${OPERATOR.email}">Написать на почту</a>
-      <a class="btn btn-ghost btn-lg" href="/contacts/">Все контакты</a>
+      <a class="btn btn-ghost btn-lg" href="/contacts/" data-lead-modal>Все контакты</a>
     </div>
   </div>
 </section>`;

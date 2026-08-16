@@ -731,7 +731,7 @@ export const NICHES = [
 export const SERVICES = [
   ['context', 'Контекстная реклама', '/kontekstnaya-reklama/'],
   ['geo', 'GEO-сервисы', '/geo-servisy/'],
-  ['analytics', 'Сквозная аналитика', '/kontekstnaya-reklama/'],
+  ['analytics', 'Сквозная аналитика', '/skvoznaya-analitika/'],
   ['site', 'Разработка сайтов', '/razrabotka-sajtov/'],
   ['target', 'Таргетированная реклама', '/targetirovannaya-reklama/'],
 ];

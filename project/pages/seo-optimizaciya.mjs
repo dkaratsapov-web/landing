@@ -193,7 +193,7 @@ ${b.items.map((i) => `          <li>${i}</li>`).join('\n')}
     <h1 class="reveal">Поиск отдаёт <span class="accent">не сразу</span></h1>
     <p class="lead reveal">И это единственное честное, что можно сказать про SEO на первом экране. Дальше — что именно делается, за какие сроки видно первое движение и в каких четырёх случаях за это вообще не стоит браться.</p>
     <div class="btn-row reveal">
-      <a class="btn btn-fill btn-lg" href="/contacts/">Обсудить сайт</a>
+      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить сайт</a>
       <a class="btn btn-ghost btn-lg" href="/blog/direkt-ili-seo/">Статья: Директ или SEO</a>
     </div>
   </div>
@@ -265,7 +265,7 @@ ${faqItems(FAQ)}
       <h2>Посмотрю сайт и скажу, есть ли смысл</h2>
       <p class="lead">Разберу техническое состояние, структуру и спрос в нише. Если по цифрам выйдет, что поиск вам сейчас не по срокам, — скажу прямо и предложу то, что сработает быстрее.</p>
       <div class="btn-row">
-        <a class="btn btn-fill btn-lg" href="/contacts/">Написать мне</a>
+        <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Написать мне</a>
         <a class="btn btn-ghost btn-lg" href="/audit-reklamy/">Аудит рекламы</a>
       </div>
     </div>

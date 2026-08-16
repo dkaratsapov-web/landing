@@ -236,7 +236,7 @@ ${z.items.map((i) => `          <li>${i}</li>`).join('\n')}
 ${f.gets.map((g) => `          <li>${g}</li>`).join('\n')}
         </ul>
         <p class="frm-note">${f.note}</p>
-        <a class="btn ${f.featured ? 'btn-fill' : 'btn-ghost'}" href="/contacts/">${f.cta}</a>
+        <a class="btn ${f.featured ? 'btn-fill' : 'btn-ghost'}" href="/contacts/" data-lead-modal>${f.cta}</a>
       </div>`).join('\n');
 
   const honest = HONEST.map(([t, d]) => `        <div class="hns-i reveal">
@@ -251,7 +251,7 @@ ${f.gets.map((g) => `          <li>${g}</li>`).join('\n')}
     <h1 class="reveal">Реклама идёт, <span class="accent">а заявок нет</span></h1>
     <p class="lead reveal">Открываю кабинет и смотрю, куда уходит бюджет: структура кампаний, минус-слова, стратегии, объявления, цели в аналитике. На выходе — не список из шестидесяти замечаний, а три-четыре вещи, которые дадут результат первыми.</p>
     <div class="btn-row reveal">
-      <a class="btn btn-fill btn-lg" href="/contacts/">Записаться на разбор</a>
+      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Записаться на разбор</a>
       <a class="btn btn-ghost btn-lg" href="/keysy/">Посмотреть кейсы</a>
     </div>
     <div class="hero-stats reveal">
@@ -318,7 +318,7 @@ ${faqItems(FAQ)}
       <h2>Покажите кабинет — скажу, что с ним</h2>
       <p class="lead">Экспресс-разбор ничего не стоит и ни к чему не обязывает. Если окажется, что кампании собраны нормально, а проблема в другом месте, — узнаете об этом за два дня, а не за два месяца.</p>
       <div class="btn-row">
-        <a class="btn btn-fill btn-lg" href="/contacts/">Написать мне</a>
+        <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Написать мне</a>
         <a class="btn btn-ghost btn-lg" href="/kontekstnaya-reklama/">О контекстной рекламе</a>
       </div>
     </div>
