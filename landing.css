@@ -939,7 +939,11 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 .svc-x-body { display: grid; grid-template-rows: 0fr;
   transition: grid-template-rows .45s cubic-bezier(.16,.7,.3,1); }
 .svc-x.open .svc-x-body { grid-template-rows: 1fr; }
-.svc-x-clip { overflow: hidden; min-height: 0; }
+/* clip, а не hidden: обрезка нужна только для раскрытия панели по высоте.
+   hidden сделал бы панель скролл-контейнером, к которому переехал бы
+   view-timeline её содержимого, — и кнопка «Обсудить задачу» внутри
+   .mo-stagger навсегда осталась бы с opacity: 0. */
+.svc-x-clip { overflow: clip; min-height: 0; }
 .svc-x-inner { padding: 2px 28px 20px; }
 .svc-x-detail { display: grid; grid-template-columns: 1.5fr 1fr; gap: 28px;
   padding-top: 18px; border-top: 1px solid var(--line); }

@@ -99,7 +99,10 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
    миниатюрами осталась на главной, здесь она была бы дословным повтором
    полстраницы. Строка даёт то же доказательство компактнее и читается
    сверху вниз как список. */
-.cert-list { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+/* clip, а не hidden: обрезка нужна только чтобы строки не вылезали за
+   скруглённые углы, а hidden сделал бы список скролл-контейнером и убил бы
+   scroll-анимацию появления строк. */
+.cert-list { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 14px; overflow: clip; }
 .cert-row {
   display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) auto;
   gap: 16px; align-items: center;
@@ -358,12 +361,21 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
    Колонка липкая: таймлайн длинный, и кольцо должно оставаться в кадре,
    пока читают пункты, — иначе оно мелькнёт один раз и уедет. */
 .path-grid { display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 56px; align-items: start; }
-/* overflow: hidden обязателен. Чипы платформ вынесены за радиус кольца
-   (translate по --a), поэтому фактическая ширина орбиты больше её 380px:
-   на 1440 колонка вылезала за экран на 31px и давала горизонтальную
-   прокрутку всей страницы. Кольцо декоративное — обрезка по колонке
-   ничего не скрывает, чипы и так уезжают за край при вращении. */
-.orbit-col { position: sticky; top: 120px; display: flex; justify-content: center; overflow: hidden; }
+/* Обрезка обязательна. Чипы платформ вынесены за радиус кольца (translate
+   по --a), поэтому фактическая ширина орбиты больше её 380px: на 1440
+   колонка вылезала за экран на 31px и давала горизонтальную прокрутку всей
+   страницы.
+
+   Именно clip, а не hidden. overflow: hidden делает элемент скролл-
+   контейнером — формально прокручиваемым, хотя пользователь его никогда не
+   прокрутит. А view-timeline считает прогресс относительно ближайшего
+   скролл-контейнера. С hidden таймлайн --orbit привязывался к самой колонке,
+   которая стоит на месте, прогресс навсегда оставался нулевым, и кольцо
+   переставало вращаться совсем. overflow: clip обрезает ровно так же, но
+   скролл-контейнера не создаёт, поэтому таймлайн снова считается от
+   страницы. Это общее правило для всего сайта: обрезаем clip'ом везде, где
+   внутри есть scroll-driven анимация. */
+.orbit-col { position: sticky; top: 120px; display: flex; justify-content: center; overflow: clip; }
 
 .orbit {
   position: relative; width: 380px; height: 380px;
