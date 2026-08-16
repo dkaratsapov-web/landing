@@ -84,6 +84,16 @@ nginx -t
 systemctl reload nginx
 trap - ERR
 
+# systemctl reload возвращает управление сразу, а рабочие процессы nginx
+# переключаются мгновением позже. Проверка сразу после перезагрузки успевает
+# попасть на старые и показывает, что правка не сработала, хотя она в
+# порядке. Ждём, пока www начнёт отвечать переадресацией.
+say "Жду переключения рабочих процессов"
+for _ in $(seq 1 10); do
+  [ "$(curl -s -o /dev/null -w '%{http_code}' https://www.karatsapov.ru)" = "301" ] && break
+  sleep 1
+done
+
 say "Проверяю результат"
 for u in "http://www.karatsapov.ru" "https://www.karatsapov.ru" "https://karatsapov.ru"; do
   printf '   %-32s %s\n' "$u" "$(curl -s -o /dev/null -w '%{http_code} → %{redirect_url}' "$u")"
