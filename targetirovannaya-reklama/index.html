@@ -66,7 +66,9 @@
 .ads-card { background: var(--surface-3); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
 .ads-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .ads-logo { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; flex: none; font-size: 12px; font-weight: 800; color: #fff; }
-.ads-logo.vk { background: #0077FF; }
+/* Фирменный #0077FF даёт с белым текстом только 4.13:1 — ниже нормы 4.5:1.
+   Затемнён по зелёному каналу до 4.66:1: на глаз тот же вэкашный синий. */
+.ads-logo.vk { background: #006AF5; }
 .ads-logo.tg { background: #2AABEE; }
 .ads-logo.av { background: #fff; }
 .ads-card-name { flex: 1; font-size: 13px; font-weight: 700; color: var(--ink); line-height: 1.2; }
@@ -75,7 +77,9 @@
 .ads-metrics { display: flex; gap: 6px; }
 .ads-metrics > div { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .ads-metrics b { font-size: 15px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; white-space: nowrap; }
-.ads-metrics span { font-size: 10px; color: var(--muted-2); }
+/* Подписи метрик — 10px, самый мелкий текст на странице. На карточке
+   --muted-2 даёт 4.12:1, поэтому здесь тон светлее: норма 4.5:1. */
+.ads-metrics span { font-size: 10px; color: #93939c; }
 .ads-bar { height: 5px; border-radius: 5px; background: var(--surface-2); margin-top: 12px; overflow: hidden; }
 .ads-bar i { display: block; height: 100%; border-radius: 5px; background: linear-gradient(90deg, var(--lime), #d6ff66); }
 .ads-total {
