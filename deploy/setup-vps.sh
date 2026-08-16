@@ -54,7 +54,19 @@ HTML
   say "Файлов сайта пока нет — положил заглушку"
 fi
 
-# ── 3. Конфиг ────────────────────────────────────────────────────────────
+# ── 3. Размер корзины для имён ───────────────────────────────────────────
+# Конфиг обслуживает и старый кириллический домен, а его имя в punycode
+# занимает 48 символов. По умолчанию nginx отводит под имена корзину в 64
+# байта и на длинных именах падает с «could not build server_names_hash».
+# Директива живёт только в блоке http, из конфига сайта её не задать.
+say "Проверяю server_names_hash_bucket_size"
+if grep -q server_names_hash_bucket_size /etc/nginx/nginx.conf; then
+  sed -i 's|^\s*#\?\s*server_names_hash_bucket_size.*|\tserver_names_hash_bucket_size 128;|' /etc/nginx/nginx.conf
+else
+  sed -i '/^http {/a \\tserver_names_hash_bucket_size 128;' /etc/nginx/nginx.conf
+fi
+
+# ── 4. Конфиг ────────────────────────────────────────────────────────────
 say "Кладу конфиг nginx"
 if [ -f "$(dirname "$0")/nginx-karatsapov.conf" ]; then
   cp "$(dirname "$0")/nginx-karatsapov.conf" "/etc/nginx/sites-available/$CONF_NAME"
@@ -68,14 +80,14 @@ ln -sf "/etc/nginx/sites-available/$CONF_NAME" "/etc/nginx/sites-enabled/$CONF_N
 # и показывает страницу «Welcome to nginx» вместо нашей.
 rm -f /etc/nginx/sites-enabled/default
 
-# ── 4. Проверка и запуск ─────────────────────────────────────────────────
+# ── 5. Проверка и запуск ─────────────────────────────────────────────────
 say "Проверяю синтаксис"
 nginx -t
 
 systemctl enable nginx >/dev/null 2>&1 || true
 systemctl reload nginx || systemctl restart nginx
 
-# ── 5. Самопроверка ──────────────────────────────────────────────────────
+# ── 6. Самопроверка ──────────────────────────────────────────────────────
 say "Проверяю, что сайт отдаётся локально"
 code=$(curl -s -o /dev/null -w '%{http_code}' -H "Host: $DOMAIN" http://127.0.0.1/)
 if [ "$code" = "200" ]; then
