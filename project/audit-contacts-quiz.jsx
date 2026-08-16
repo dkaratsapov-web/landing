@@ -12,8 +12,23 @@ function Field({ label, children, error }) {
 
 }
 
-/* Отправка заявки в Telegram (Bot API). Фолбэк — WhatsApp с готовым текстом. */
-async function sendLeadTelegram(text) {
+/* Отправка заявки. Первый путь — Telegram Bot API, если в lead-config.js
+   заданы токен и чат. Сейчас они пустые намеренно: файл отдаётся браузеру
+   как есть, и любой секрет в нём публичен (подробности — в комментарии
+   самого lead-config.js). Поэтому рабочий путь — WhatsApp с готовым
+   текстом заявки.
+
+   Функция возвращает не true, а способ доставки. Это принципиально:
+   при отправке через Telegram заявка действительно у владельца, и панель
+   вправе сказать «я получил заявку». При переходе в WhatsApp она только
+   открыта в новой вкладке — отправит её человек. Утверждать в этот момент
+   «я получил» значит врать, а если всплывающее окно ещё и заблокировано
+   браузером, то врать вдвойне: заявка не ушла никуда.
+
+   'tg'  — доставлено ботом
+   'wa'  — открыт WhatsApp, отправляет человек
+   'none'— окно заблокировано, доставки не произошло */
+async function sendLead(text) {
   const TOKEN = window.LEAD_TG_TOKEN || '';
   const CHAT = window.LEAD_TG_CHAT || '';
   if (TOKEN && CHAT) {
@@ -25,11 +40,13 @@ async function sendLeadTelegram(text) {
         + '&text=' + encodeURIComponent(text);
       const r = await fetch(url);
       const j = await r.json().catch(() => ({}));
-      if (r.ok && j && j.ok) return true;
+      if (r.ok && j && j.ok) return 'tg';
     } catch (e) {}
   }
-  try { window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank'); } catch (e) {}
-  return true;
+  try {
+    const w = window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
+    return w ? 'wa' : 'none';
+  } catch (e) { return 'none'; }
 }
 
 function useLeadForm(toast, successMsg, source) {
@@ -39,6 +56,7 @@ function useLeadForm(toast, successMsg, source) {
   const [v, setV] = useStateC({ name: '', phone: '', task: '', consent: false });
   const [err, setErr] = useStateC({});
   const [sent, setSent] = useStateC(false);
+  const [via, setVia] = useStateC('');
   const set = (k) => (e) => {
     const val = k === 'consent' ? e.target.checked : k === 'phone' ? maskPhone(e.target.value) : e.target.value;
     setV((s) => ({ ...s, [k]: val }));
@@ -57,11 +75,25 @@ function useLeadForm(toast, successMsg, source) {
       '👤 Имя: ' + (v.name || '—') + '\n' +
       '📞 Телефон: ' + (v.phone || '—') +
       (v.task ? '\n💬 Задача: ' + v.task : '');
-    sendLeadTelegram(text).catch(() => {});
+    /* Форма закрывается сразу, а способ доставки дописывается, когда он
+       станет известен: держать человека перед крутилкой из-за запроса,
+       который может и не вернуться, незачем. */
+    setVia('wa');
     setSent(true);
-    toast(successMsg);
+    /* Тост показываем после того, как стал известен канал: «заявка
+       отправлена» — правда только для Telegram. При переходе в WhatsApp
+       отправляет человек, и подгонять его сообщением об успехе нечестно. */
+    sendLead(text).then((how) => {
+      setVia(how);
+      toast(how === 'tg' ? successMsg
+        : how === 'wa' ? 'Открыл WhatsApp — осталось нажать «Отправить»'
+        : 'Окно заблокировано браузером. Позвоните или напишите в Telegram');
+    }).catch(() => {
+      setVia('none');
+      toast('Не получилось отправить. Позвоните или напишите в Telegram');
+    });
   };
-  return { v, err, sent, set, submit, reset: () => {setV({ name: '', phone: '', task: '', consent: false });setSent(false);} };
+  return { v, err, sent, via, set, submit, reset: () => {setV({ name: '', phone: '', task: '', consent: false });setSent(false);setVia('');} };
 }
 
 /* ---------------- AUDIT (lead magnet) ---------------- */
@@ -87,7 +119,7 @@ function Audit() {
           </ul>
         </div>
         <div className="reveal card" style={{ padding: 36 }}>
-          {f.sent ? <SuccessPanel onReset={f.reset} title="Готово!" text="Я получил заявку и перезвоню лично, чтобы договориться об аудите." /> :
+          {f.sent ? <SuccessPanel onReset={f.reset} via={f.via} title="Готово!" text="Я получил заявку и перезвоню лично, чтобы договориться об аудите." /> :
 
           <form onSubmit={f.submit} noValidate>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 600, margin: '0 0 22px', color: 'var(--txt)' }}>Заказать аудит</h3>
@@ -118,15 +150,35 @@ function Audit() {
 
 }
 
-function SuccessPanel({ title, text, onReset }) {
+/* via — способ доставки из sendLead(). Текст панели зависит от него, потому
+   что «я получил заявку» правда только для Telegram. Для WhatsApp честная
+   формулировка — «осталось нажать отправить»: до этого момента заявки у
+   владельца нет. Если окно заблокировано, панель перестаёт быть успехом и
+   показывает прямые контакты. */
+function SuccessPanel({ title, text, onReset, via }) {
+  const blocked = via === 'none';
+  const handoff = via === 'wa';
+  const head = blocked ? 'Почти готово' : handoff ? 'Открыл WhatsApp' : title;
+  const body = blocked
+    ? 'Браузер заблокировал новое окно, поэтому заявка не ушла. Напишите или позвоните — отвечу лично.'
+    : handoff
+      ? 'В новой вкладке уже готовый текст заявки — осталось нажать «Отправить». Если вкладка не открылась, свяжитесь напрямую.'
+      : text;
   return (
     <div style={{ textAlign: 'center', padding: '20px 8px' }}>
-      <div style={{ width: 64, height: 64, borderRadius: 'var(--r-full)', background: 'var(--accent)',
+      <div style={{ width: 64, height: 64, borderRadius: 'var(--r-full)',
+        background: blocked ? 'var(--accent-soft)' : 'var(--accent)',
+        border: blocked ? '1px solid var(--accent-soft-bd)' : 'none',
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 22 }}>
-        <IconCheck size={32} style={{ color: 'var(--accent-ink)' }} />
+        <IconCheck size={32} style={{ color: blocked ? 'var(--accent-bright)' : 'var(--accent-ink)' }} />
       </div>
-      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 12px', color: 'var(--txt)' }}>{title}</h3>
-      <p className="muted" style={{ fontSize: 16, lineHeight: 1.5, margin: '0 auto', maxWidth: 320 }}>{text}</p>
+      <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 600, margin: '0 0 12px', color: 'var(--txt)' }}>{head}</h3>
+      <p className="muted" style={{ fontSize: 16, lineHeight: 1.5, margin: '0 auto', maxWidth: 340 }}>{body}</p>
+      {(blocked || handoff) &&
+      <div style={{ display: 'flex', gap: 18, justifyContent: 'center', flexWrap: 'wrap', marginTop: 18 }}>
+        <a href="tel:+79963470065" style={{ color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 15, padding: '4px 0' }}>+7 (996) 347-00-65</a>
+        <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 15, padding: '4px 0' }}>Telegram</a>
+      </div>}
       {onReset && <button className="btn btn-ghost btn-sm" style={{ marginTop: 22 }} onClick={onReset}>Отправить ещё одну</button>}
     </div>);
 
@@ -342,7 +394,7 @@ function QuizModal({ open, onClose }) {
             </form>
           }
 
-          {f.sent && <SuccessPanel title="Скидка 10% — ваша" text="Я получил ответы и закрепил скидку. Перезвоню лично с готовым решением." />}
+          {f.sent && <SuccessPanel via={f.via} title="Скидка 10% — ваша" text="Я получил ответы и закрепил скидку. Перезвоню лично с готовым решением." />}
         </div>
       </div>
     </div>);
@@ -439,7 +491,7 @@ function LeadFormModal({ open, onClose, title, source }) {
           <IconClose size={22} />
         </button>
         <div style={{ padding: '32px 32px 28px' }}>
-          {f.sent ? <SuccessPanel onReset={onClose} title="Готово!" text="Я получил заявку и перезвоню лично." /> :
+          {f.sent ? <SuccessPanel onReset={onClose} via={f.via} title="Готово!" text="Я получил заявку и перезвоню лично." /> :
           <form onSubmit={f.submit} noValidate>
             <span className="eyebrow" style={{ marginBottom: 10, display: 'block' }}>Обсудим проект</span>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 700, margin: '0 0 8px', color: 'var(--txt)' }}>

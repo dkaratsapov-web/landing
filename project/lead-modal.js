@@ -73,7 +73,21 @@
       if (phoneField.classList.contains('invalid')) phoneField.classList.remove('invalid');
     });
 
-    // ---- Отправка в Telegram (GET, без preflight) с фолбэком в WhatsApp ----
+    /* ---- Отправка заявки ----------------------------------------------
+       Первый путь — Telegram Bot API, если в lead-config.js заданы токен и
+       чат. Сейчас они пустые намеренно: файл отдаётся браузеру как есть, и
+       любой секрет в нём публичен. Рабочий путь — WhatsApp с готовым
+       текстом заявки.
+
+       Возвращается способ доставки, а не true. Разница существенная: при
+       отправке ботом заявка действительно у владельца, а при переходе в
+       WhatsApp её отправляет человек — и если браузер заблокировал новое
+       окно, не отправляет никто. Экран «заявка отправлена» в этот момент
+       был бы прямым обманом. */
+    function wa(text) {
+      var w = window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
+      return w ? 'wa' : 'none';
+    }
     function sendLead(text) {
       var TOKEN = window.LEAD_TG_TOKEN || '';
       var CHAT = window.LEAD_TG_CHAT || '';
@@ -84,17 +98,12 @@
           '&text=' + encodeURIComponent(text);
         return fetch(url).then(function (r) {
           return r.json().catch(function () { return {}; }).then(function (j) {
-            if (r.ok && j && j.ok) return true;
-            window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-            return true;
+            if (r.ok && j && j.ok) return 'tg';
+            return wa(text);
           });
-        }).catch(function () {
-          window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-          return true;
-        });
+        }).catch(function () { return wa(text); });
       }
-      window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-      return Promise.resolve(true);
+      return Promise.resolve(wa(text));
     }
 
     function val(id) { var el = document.getElementById(id); return (el && el.value) || ''; }
@@ -116,7 +125,22 @@
         '📞 Телефон: ' + phone.value;
       var btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
-      sendLead(text).then(function () {
+      sendLead(text).then(function (how) {
+        if (how !== 'tg') {
+          var okH = ok.querySelector('h3');
+          var okP = ok.querySelector('p');
+          if (how === 'wa') {
+            okH.textContent = 'Открыл WhatsApp';
+            okP.innerHTML = 'В новой вкладке готовый текст заявки — осталось нажать «Отправить». '
+              + 'Если вкладка не открылась: <a href="tel:+79963470065">+7 (996) 347-00-65</a> '
+              + 'или <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram</a>.';
+          } else {
+            okH.textContent = 'Почти готово';
+            okP.innerHTML = 'Браузер заблокировал новое окно, поэтому заявка не ушла. '
+              + 'Позвоните — <a href="tel:+79963470065">+7 (996) 347-00-65</a> — '
+              + 'или напишите в <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram</a>.';
+          }
+        }
         form.hidden = true;
         ok.hidden = false;
       });
