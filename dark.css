@@ -211,7 +211,12 @@ a { color: inherit; text-decoration: none; }
 
 .page { position: relative; z-index: 1; }
 .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(20px, 4vw, 72px); }
-.wrap-narrow { max-width: 920px; }
+/* Центрирование и поля продублированы из .wrap намеренно. Класс задумывался
+   как модификатор («.wrap .wrap-narrow»), но выглядит самодостаточным, и
+   рано или поздно его ставят один — тогда блок прилипал к левому краю
+   экрана без единого отступа. Значения те же, что у .wrap, поэтому парное
+   написание работает ровно как раньше. */
+.wrap-narrow { max-width: 920px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 72px); }
 .section { padding: var(--sp-section) 0; position: relative; }
 .section-sm { padding: 60px 0; }
 

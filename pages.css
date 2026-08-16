@@ -197,7 +197,10 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
 }
 .price-table tbody th, .price-table tbody td { border-bottom: 1px solid var(--line); }
 .price-table tbody th { font-weight: 600; color: var(--txt); }
-.price-table tbody th a { color: var(--txt); text-decoration: none; }
+/* Ссылка в ячейке — отдельно стоящая, значит норма 24px по высоте на неё
+   распространяется. Поле вертикальное внутри уже существующего padding
+   ячейки, поэтому строка таблицы не растёт. */
+.price-table tbody th a { display: inline-block; padding: 4px 0; color: var(--txt); text-decoration: none; }
 .price-table tbody th a:hover { color: var(--accent-bright); }
 .price-table .cell-price { color: var(--accent-bright); white-space: nowrap; }
 .price-table .cell-note { color: var(--txt-2); }
@@ -250,7 +253,7 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
    компромисс: строка всё ещё в читаемых пределах, а страница перестаёт
    казаться недоделанной на широком мониторе. Само измерение — не ширина
    блока, а длина строки, поэтому кегль внутри чуть подрос вместе с ней. */
-.wrap-narrow { max-width: 1040px; }
+.wrap-narrow { max-width: 1040px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 72px); }
 .post h1 { font-size: 44px; line-height: 1.12; margin: 12px 0 18px; max-width: 26ch; text-wrap: balance; }
 .post-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--txt-3); font-size: 14px; }
 .post-meta-sep { opacity: .5; }
@@ -271,9 +274,18 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
   color: var(--txt-3); margin-bottom: 12px;
 }
-.post-toc ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.post-toc ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; }
 .post-toc li { color: var(--txt-3); font-size: 15px; }
-.post-toc a { color: var(--txt-2); text-decoration: none; }
+/* Строка оглавления — 18px по высоте, и это была самая частая претензия
+   PageSpeed по всему блогу: попасть пальцем в одну строку из шести, стоящих
+   вплотную, нельзя. Ссылка сделана блочной с вертикальным полем, так что
+   зона касания выходит за 24px, а сами пункты по-прежнему стоят компактно:
+   поле у соседей общее, между строками оно не удваивается. */
+.post-toc a {
+  display: block; padding: 5px 0;
+  color: var(--txt-2); text-decoration: none;
+  transition: color .25s ease;
+}
 .post-toc a:hover { color: var(--accent-bright); }
 
 /* ── Блог: текст статьи ─────────────────────────────────────────────────── */
@@ -565,7 +577,10 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px;
 }
 .policy-toc li { color: var(--txt-3); font-size: 15px; }
-.policy-toc a { color: var(--txt-2); text-decoration: none; }
+/* Та же история, что и с оглавлением статьи: строка в 18px — не зона
+   касания. Поле вертикальное, между пунктами оно общее, поэтому список не
+   раздувается. */
+.policy-toc a { display: block; padding: 5px 0; color: var(--txt-2); text-decoration: none; }
 .policy-toc a:hover { color: var(--accent-bright); }
 
 /* scroll-margin — чтобы якорь из оглавления не уводил заголовок под липкую
@@ -588,7 +603,9 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
 }
 .req-k { color: var(--txt-3); }
 .req-v { color: var(--txt-2); }
-.req-v a { color: var(--accent-bright); text-decoration: none; }
+/* Реквизиты — отдельно стоящие ссылки в строке таблицы, а не часть
+   предложения, поэтому на них распространяется норма 24px по высоте. */
+.req-v a { display: inline-block; padding: 4px 0; color: var(--accent-bright); text-decoration: none; }
 .req-v a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Адаптив ────────────────────────────────────────────────────────────── */
