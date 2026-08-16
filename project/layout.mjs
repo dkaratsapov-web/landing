@@ -86,6 +86,7 @@ const SERVICES = [
   ['/targetirovannaya-reklama/', 'Таргетированная реклама'],
   ['/geo-servisy/', 'GEO-сервисы'],
   ['/skvoznaya-analitika/', 'Сквозная аналитика'],
+  ['/audit-reklamy/', 'Аудит рекламы'],
   ['/ceny/', 'Цены'],
 ];
 
