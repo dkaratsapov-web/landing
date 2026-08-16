@@ -8,6 +8,7 @@ const NAV_LINKS = [
     ['Разработка сайтов', '/razrabotka-sajtov/'],
     ['Таргетированная реклама', '/targetirovannaya-reklama/'],
     ['GEO-сервисы', '/geo-servisy/'],
+    ['Промостраницы Яндекса', '/promostranicy/'],
     ['Сквозная аналитика', '/skvoznaya-analitika/'],
     ['Аудит рекламы', '/audit-reklamy/'],
     ['Цены', '/ceny/'],
