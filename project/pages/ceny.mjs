@@ -147,7 +147,7 @@ export function render() {
 ${p.works.map((w) => `          <li>${w}</li>`).join('\n')}
         </ul>
         <div class="price-time">${p.term}</div>
-        <a href="${p.url}" style="color:var(--accent-bright); font-size:14px; text-decoration:none;">Подробнее →</a>
+        <a href="${p.url}" style="display:inline-block; padding:4px 0; color:var(--accent-bright); font-size:14px; text-decoration:none;">Подробнее →</a>
       </div>`).join('\n');
 
   const rows = PRICES.map((p) => `        <tr>

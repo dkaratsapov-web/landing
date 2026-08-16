@@ -58,7 +58,7 @@ function Quotes() {
   }, [done, paused]);
 
   return (
-    <section className="sec quotes-sec bg-b" style={{ overflow: 'hidden' }}>
+    <section className="sec quotes-sec bg-b" style={{ overflow: 'clip' }}>
       <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap wrap-narrow" style={{ maxWidth: 1000 }}
         onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
@@ -125,7 +125,7 @@ function SectionWave({ from = '#08080a', to = '#0d0d0f', height = 88, speed = 15
      подхватывали чужой градиент. */
   const gid = React.useMemo(() => 'wv' + (++waveSeq), []);
   return (
-    <div style={{ position: 'relative', height, overflow: 'hidden',
+    <div style={{ position: 'relative', height, overflow: 'clip',
       background: from, flexShrink: 0, lineHeight: 0, marginTop: -1, marginBottom: -1, zIndex: 2 }}>
       {/* Подхват тона идёт до <svg>, а не после: волна должна рисоваться
           поверх него, иначе подъём ляжет на саму кривую и осветлит её. */}

@@ -137,8 +137,17 @@ function Contacts() {
   const toast = useToast();
   const f = useLeadForm(toast, 'Заявка отправлена. Я перезвоню лично.', 'Контакты');
   const K = window.CONTENT.contacts || {};
+  /* overflow: clip, а не hidden — здесь и во всех остальных секциях.
+     Обрезка нужна только чтобы декоративное свечение не давало
+     горизонтальную прокрутку. Но hidden делает секцию скролл-контейнером, и
+     view-timeline всех блоков внутри начинает считаться от неё, а не от
+     страницы. Секция не прокручивается — прогресс застывает: у блоков в
+     верхней части он застревает на единице (внешне всё в порядке), у нижних —
+     на нуле, и содержимое остаётся невидимым навсегда. Так пропадала кнопка
+     «Назначить встречу». clip обрезает так же, но скролл-контейнера не
+     создаёт. Проверяется в check.mjs («мёртвая scroll-анимация»). */
   return (
-    <section id="contacts" className="sec bg-b" style={{ overflow: 'hidden' }}>
+    <section id="contacts" className="sec bg-b" style={{ overflow: 'clip' }}>
       <Atmos glows={[1, 2]} pattern="grid" drifting={true} />
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'flex-start' }}>
         <div className="reveal">

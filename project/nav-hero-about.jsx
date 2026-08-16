@@ -135,7 +135,7 @@ const HERO_SUB = 'Привлекаю клиентов через интерне�
 function HeroSplit({ portrait, onCta }) {
   const H = window.CONTENT.hero || {};
   return (
-    <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
+    <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'clip' }}>
       <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap hero-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 56,
         alignItems: 'center', paddingTop: 32, paddingBottom: 60 }}>
@@ -172,7 +172,7 @@ function HeroSplit({ portrait, onCta }) {
 
 function HeroOverlay({ portrait, onCta }) {
   return (
-    <header id="top" className="bg-black" style={{ paddingTop: 64, position: 'relative', overflow: 'hidden' }}>
+    <header id="top" className="bg-black" style={{ paddingTop: 64, position: 'relative', overflow: 'clip' }}>
       <div style={{ position: 'relative', minHeight: 'calc(100vh - 64px)', display: 'flex', alignItems: 'flex-end' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: `url(${portrait})`,
           backgroundSize: 'cover', backgroundPosition: 'center 22%', filter: 'saturate(0.96)' }} />
@@ -203,7 +203,7 @@ function HeroOverlay({ portrait, onCta }) {
 
 function HeroEditorial({ portrait, onCta }) {
   return (
-    <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'hidden' }}>
+    <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'clip' }}>
       <Atmos glows={[2, 3]} pattern="dots" />
       <div className="wrap" style={{ paddingTop: 70 }}>
         <span className="eyebrow reveal in">Даниил Карацапов · интернет-маркетолог</span>
@@ -239,7 +239,7 @@ function HeroEditorial({ portrait, onCta }) {
 
 function PortraitFrame({ portrait, short }) {
   return (
-    <div className="mo-parallax" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'hidden',
+    <div className="mo-parallax" style={{ position: 'relative', borderRadius: 'var(--r-lg)', overflow: 'clip',
       aspectRatio: short ? '4 / 3' : '4 / 4', background: 'var(--tile-c)',
       boxShadow: 'var(--product-shadow)', border: '1px solid var(--line)' }}>
       <img src={portrait} alt="Даниил Карацапов" loading="eager"
@@ -430,7 +430,7 @@ function About() {
   const chips = A.chips || [];
   const chipIcons = [IconMap, IconClock];
   return (
-    <section id="about" className="sec bg-a" style={{ position: 'relative', overflow: 'hidden' }}>
+    <section id="about" className="sec bg-a" style={{ position: 'relative', overflow: 'clip' }}>
       <StarField />
       <div className="wrap two-col about-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'stretch' }}>
         <div className="reveal about-col" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 40 }}>
@@ -460,7 +460,7 @@ function About() {
             {STATS.map((s, i) => <StatBlock key={i} s={s} />)}
           </div>
         </div>
-        <div className="reveal about-photo-wrap" style={{ borderRadius: 'var(--r-lg)', overflow: 'hidden',
+        <div className="reveal about-photo-wrap" style={{ borderRadius: 'var(--r-lg)', overflow: 'clip',
           border: '1px solid var(--line)', background: 'var(--tile-b)', minHeight: 0 }}>
           <image-slot id="about-photo" src="assets/about-work.jpg" placeholder="Фото за работой" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
         </div>

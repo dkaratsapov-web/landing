@@ -302,7 +302,7 @@ function Cases({ onCta }) {
   const count = (id) => id === 'all' ? CASES.length : CASES.filter((c) => c.tags.includes(id)).length;
   const list = CASES.filter((c) => filter === 'all' || c.tags.includes(filter));
   return (
-    <section id="cases" className="sec bg-b" style={{ overflow: 'hidden', marginTop: -1 }}>
+    <section id="cases" className="sec bg-b" style={{ overflow: 'clip', marginTop: -1 }}>
       <Atmos glows={[1, 2, 3]} pattern="dots" />
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 820, marginBottom: 30 }}>

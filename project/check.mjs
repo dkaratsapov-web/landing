@@ -280,9 +280,22 @@ for (const path of pages()) {
         }
       });
       if (isNarrow) {
+        /* Ссылка внутри предложения из правила исключена самим стандартом
+           (WCAG 2.5.8, исключение «Inline»): её высоту задаёт интерлиньяж
+           окружающего текста, и раздувать её — значит ломать абзац. Отличаем
+           по соседям: если рядом с ссылкой в том же родителе есть свой текст,
+           она инлайновая. Отдельно стоящая ссылка-строка соседей не имеет и
+           проверяется как обычно. */
+        const inlineInProse = (el) => {
+          if (el.tagName !== 'A') return false;
+          const p = el.parentElement;
+          if (!p) return false;
+          return [...p.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim().length > 1);
+        };
         document.querySelectorAll('a, button, input, summary, [role="button"]').forEach((el) => {
           const r = el.getBoundingClientRect();
           if (r.width < 2 || r.height < 2) return;
+          if (inlineInProse(el)) return;
           if (r.width < 24 || r.height < 24) {
             small.push({ t: ((el.textContent || el.getAttribute('aria-label') || '').trim() || el.tagName).slice(0, 32),
               w: Math.round(r.width), h: Math.round(r.height) });
@@ -344,7 +357,22 @@ for (const path of pages()) {
          он тоже fixed, при реальной прокрутке едет вместе с экраном и шва
          между секциями создать не может по определению. */
       await page.addStyleTag({ content:
-        '.nav,.nav-mobile,.cookie-bar,.quiz-fab,.toast-wrap,.lead-modal,.shot-lb,.bg-fx,body::after{display:none!important}' });
+        /* .mo-grain::before — плёночное зерно. Оно fixed и растянуто на
+           inset: -50%, то есть в окне браузера всегда покрывает экран целиком
+           и кромки не имеет. Но полностраничный скриншот растягивает вьюпорт,
+           зерно покрывает только верхнюю часть снимка, и его нижний край
+           попадал в отчёт как «полоса на стыке» — каждый раз на другом y,
+           потому что слой ещё и дрожит по кадрам анимации. Дефекта нет,
+           поэтому при съёмке слой снимаем. */
+        '.nav,.nav-mobile,.cookie-bar,.quiz-fab,.toast-wrap,.lead-modal,.shot-lb,.bg-fx,'
+        + 'body::after,.mo-grain::before{display:none!important}'
+        /* И снимаем появление по скроллу. Полностраничный снимок делается с
+           нулевой прокрутки: у всего, что ниже сгиба, прогресс view() равен
+           нулю, то есть opacity: 0. Без этой строчки проверка стыков смотрела
+           бы на пустой холст ниже первого экрана и находила «полосы» там, где
+           просто ничего не нарисовано. */
+        + '.reveal,[data-mo="group"]>*,.mo-stagger>*{animation:none!important;'
+        + 'opacity:1!important;transform:none!important;filter:none!important}' });
       await page.waitForTimeout(150);
       const shot = await page.screenshot({ fullPage: true });
       const { data, info } = await sharp(shot).raw().toBuffer({ resolveWithObject: true });
