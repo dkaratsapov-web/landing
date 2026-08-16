@@ -261,3 +261,75 @@ p, .lead, .prose > p {
   ::view-transition-old(root),
   ::view-transition-new(root) { animation: none; }
 }
+
+/* ══ Роли появления ═══════════════════════════════════════════════════════
+   Раньше всё с .reveal выезжало одинаково — на 26 пикселей вверх. Заголовок,
+   абзац, сетка карточек и большая картинка двигались одним движением, и
+   страница проявлялась ровным полотном. Однородность и читается как шаблон:
+   глазу не за что зацепиться.
+
+   Роль ставит motion.js по структуре элемента (см. комментарий там же), а
+   здесь у каждой роли своя подача. Правило одно: двигаем только transform,
+   opacity и filter — их считает композитор, прокрутка не страдает. */
+@supports (animation-timeline: view()) {
+
+  /* Заголовок задаёт такт: короче остальных и раньше начинается. Смещение
+     меньше — крупный текст, уехавший далеко, читается как рывок. */
+  .js .reveal[data-mo="head"] {
+    transform: translateY(16px);
+    animation-range: cover 4% cover 26%;
+  }
+
+  /* Абзац подъезжает мягче и с лёгким расфокусом — так текст «оседает»,
+     а не подпрыгивает. */
+  .js .reveal[data-mo="text"] {
+    transform: translateY(14px);
+    animation-name: mo-reveal-soft;
+    animation-range: cover 7% cover 34%;
+  }
+
+  /* Сетка сама не двигается — вместо неё лесенкой выезжают дети. Иначе
+     получается двойное движение: сначала уезжает контейнер, потом внутри
+     него ещё и карточки. */
+  .js .reveal[data-mo="group"] {
+    opacity: 1; transform: none; animation: none;
+  }
+  .js .reveal[data-mo="group"] > * {
+    opacity: 0;
+    transform: translateY(22px);
+    animation: mo-reveal .01s linear both;
+    animation-timeline: view();
+    animation-range: cover 6% cover 32%;
+  }
+  /* Задержку у scroll-анимации задаёт сдвиг диапазона, а не animation-delay:
+     прогресс считается от прокрутки, время тут ни при чём. */
+  .js .reveal[data-mo="group"] > *:nth-child(2)     { animation-range: cover 9%  cover 35%; }
+  .js .reveal[data-mo="group"] > *:nth-child(3)     { animation-range: cover 12% cover 38%; }
+  .js .reveal[data-mo="group"] > *:nth-child(4)     { animation-range: cover 15% cover 41%; }
+  .js .reveal[data-mo="group"] > *:nth-child(5)     { animation-range: cover 18% cover 44%; }
+  .js .reveal[data-mo="group"] > *:nth-child(6)     { animation-range: cover 21% cover 47%; }
+  .js .reveal[data-mo="group"] > *:nth-child(n+7)   { animation-range: cover 24% cover 50%; }
+
+  /* Картинка или схема подъезжает с лёгким приближением — как будто камера
+     наводится. Масштаб маленький: 0.965, а не 0.9, иначе видно «прыжок». */
+  .js .reveal[data-mo="media"] {
+    transform: translateY(18px) scale(.965);
+    animation-name: mo-reveal-media;
+    animation-range: cover 5% cover 36%;
+  }
+}
+
+@keyframes mo-reveal-soft {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes mo-reveal-media {
+  to { opacity: 1; transform: none; }
+}
+
+/* Роли выключаются вместе со всем остальным движением. */
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal[data-mo="group"] > * {
+    animation: none !important; opacity: 1 !important; transform: none !important;
+  }
+}

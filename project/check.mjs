@@ -143,14 +143,67 @@ for (const path of pages()) {
     await page.waitForTimeout(600);
 
     /* Прокручиваем всю страницу: без этого не сработают ленивые картинки и
-       scroll-анимации, и проверка увидит пустоту там, где всё в порядке. */
-    await page.evaluate(async () => {
-      for (let y = 0; y < document.body.scrollHeight; y += 500) {
-        window.scrollTo(0, y);
-        await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 16)));
+       scroll-анимации, и проверка увидит пустоту там, где всё в порядке.
+
+       Заодно замеряем сами scroll-анимации. Повод: `overflow: hidden`,
+       поставленный ради одной горизонтальной прокрутки, делает элемент
+       скролл-контейнером, к которому молча переезжает view-timeline всех
+       потомков. Контейнер не прокручивается — прогресс навсегда ноль,
+       анимация мертва, а с `fill: both` содержимое ещё и остаётся скрытым.
+       По коду это не видно никак, computed-стиль тоже врёт: он отдаёт
+       базовые значения. Единственный честный способ — прокрутить страницу
+       и посмотреть, сдвинулся ли прогресс хоть на сколько-нибудь.
+
+       Ругаемся только на застрявшие в нуле: анимация, доехавшая до конца
+       ещё до первого замера, стоит на единице — это норма, она отработала. */
+    const deadAnim = await page.evaluate(async () => {
+      /* На сайте включён scroll-behavior: smooth. Без этой строчки каждый
+         window.scrollTo превращается в плавный переезд, за 16 мс страница
+         сдвигается на десяток пикселей, и замер показывает, что не работает
+         вообще ничего. Прокрутка проверки должна быть мгновенной. */
+      const prevBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = 'auto';
+      const tracked = [];
+      for (const el of document.querySelectorAll('*')) {
+        /* Внутри закрытой модалки, свёрнутого <details> и схлопнутой вкладки
+           таймлайн неактивен по определению — содержимое не показано. Это не
+           дефект, а нормальная работа аккордеона, поэтому такие элементы в
+           замер не берём. checkVisibility() схлопнутую панель не ловит: она
+           не display:none, у неё просто нулевая высота, — отсюда вторая
+           проверка по предкам. */
+        if (!el.checkVisibility || !el.checkVisibility()) continue;
+        let collapsed = false;
+        for (let n = el; n && n !== document.body; n = n.parentElement) {
+          if (n.getBoundingClientRect().height === 0) { collapsed = true; break; }
+        }
+        if (collapsed) continue;
+        for (const a of el.getAnimations()) {
+          const tl = a.timeline;
+          if (!tl || tl.constructor === DocumentTimeline) continue;
+          tracked.push({ el, a, max: 0 });
+        }
       }
-      window.scrollTo(0, 0);
+      const sample = () => tracked.forEach((t) => {
+        const p = t.a.effect.getComputedTiming().progress;
+        if (typeof p === 'number' && p > t.max) t.max = p;
+      });
+      const end = document.documentElement.scrollHeight;
+      for (let y = 0; y <= end; y += 300) {
+        window.scrollTo({ top: y, behavior: 'instant' });
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(r, 20))));
+        sample();
+      }
+      window.scrollTo({ top: 0, behavior: 'instant' });
       await new Promise((r) => setTimeout(r, 300));
+      sample();
+      document.documentElement.style.scrollBehavior = prevBehavior;
+
+      const name = (el) => el.tagName.toLowerCase() +
+        (typeof el.className === 'string' && el.className.trim()
+          ? '.' + el.className.trim().split(/\s+/).slice(0, 2).join('.') : '');
+      const seen = new Set();
+      return tracked.filter((t) => t.max === 0).map((t) => name(t.el))
+        .filter((n) => (seen.has(n) ? false : (seen.add(n), true)));
     });
 
     const dom = await page.evaluate(() => {
@@ -250,6 +303,10 @@ for (const path of pages()) {
       add(path, width, 'горизонтальная прокрутка', `${dom.scrollWidth}px против ${width}px — что-то вылезает за экран`);
     }
     for (const src of dom.broken) add(path, width, 'битая картинка', src);
+    for (const n of deadAnim.slice(0, 5)) {
+      add(path, width, 'мёртвая scroll-анимация',
+        `${n} — прогресс не сдвинулся с нуля за всю прокрутку; обычно виноват overflow: hidden у предка (нужен overflow: clip)`);
+    }
     if (externalScriptFailed) {
       const cascade = /is not defined|is not a function|Cannot read propert/;
       const real = errors.filter((e) => !cascade.test(e));

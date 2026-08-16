@@ -126,7 +126,7 @@ const ABOUT_CSS = `<style>
 .tools {
   display: grid; gap: 1px; margin-top: 34px;
   background: var(--line);              /* фон проступает в зазорах — это и есть линии */
-  border: 1px solid var(--line); border-radius: 22px; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 22px; overflow: clip;
 }
 @media (min-width: 820px) { .tools { grid-template-columns: 1fr 1fr; } }
 
