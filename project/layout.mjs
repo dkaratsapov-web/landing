@@ -319,6 +319,8 @@ export function renderPage({
       && `<meta name="google-site-verification" content="${esc(seoConfig.googleVerification)}" />`,
     seoConfig.mailruVerification
       && `<meta name="mailru-verification" content="${esc(seoConfig.mailruVerification)}" />`,
+    seoConfig.zenVerification
+      && `<meta name="zen-verification" content="${esc(seoConfig.zenVerification)}" />`,
   ].filter(Boolean).join('\n');
 
   const ld = schema

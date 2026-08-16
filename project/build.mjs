@@ -198,6 +198,10 @@ const verifyTags = [
   ['yandex-verification', seoConfig.yandexVerification],
   ['google-site-verification', seoConfig.googleVerification],
   ['mailru-verification', seoConfig.mailruVerification],
+  /* Дзен подтверждает права на сайт, чтобы связать канал с доменом: ссылки
+     из статей перестают считаться внешними и в карточке канала появляется
+     сайт. Проверяется только главная. */
+  ['zen-verification', seoConfig.zenVerification],
 ].filter(([, v]) => v)
   .map(([name, v]) => `  <meta name="${name}" content="${v}" />`)
   .join('\n');
