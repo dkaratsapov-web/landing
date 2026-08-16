@@ -80,10 +80,12 @@ export const DZEN_URL = 'https://dzen.ru/karatsapov';
 /* Пункты выпадающего списка «Услуги». Один источник для десктопа и мобильного
    меню — иначе они разъезжаются. */
 const SERVICES = [
+  ['/kompleksnyj-marketing/', 'Маркетинг под ключ'],
   ['/kontekstnaya-reklama/', 'Контекстная реклама'],
   ['/razrabotka-sajtov/', 'Разработка сайтов'],
   ['/targetirovannaya-reklama/', 'Таргетированная реклама'],
   ['/geo-servisy/', 'GEO-сервисы'],
+  ['/skvoznaya-analitika/', 'Сквозная аналитика'],
   ['/ceny/', 'Цены'],
 ];
 

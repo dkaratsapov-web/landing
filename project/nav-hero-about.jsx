@@ -2,11 +2,13 @@
 const { useState: useStateA, useEffect: useEffectA, useRef: useRefA } = React;
 
 const NAV_LINKS = [
-  ['Услуги', '/kontekstnaya-reklama/', [
+  ['Услуги', '/kompleksnyj-marketing/', [
+    ['Маркетинг под ключ', '/kompleksnyj-marketing/'],
     ['Контекстная реклама', '/kontekstnaya-reklama/'],
     ['Разработка сайтов', '/razrabotka-sajtov/'],
     ['Таргетированная реклама', '/targetirovannaya-reklama/'],
     ['GEO-сервисы', '/geo-servisy/'],
+    ['Сквозная аналитика', '/skvoznaya-analitika/'],
     ['Цены', '/ceny/'],
   ]],
   ['О себе', '/about/'],
