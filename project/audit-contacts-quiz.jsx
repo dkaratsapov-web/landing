@@ -363,7 +363,7 @@ function Footer({ onCta }) {
   return (
     <footer className="footer">
       <div className="wrap" style={{ paddingTop: 64, paddingBottom: 40 }}>
-        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 40, paddingBottom: 40,
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr 1fr 1fr', gap: 40, paddingBottom: 40,
           borderBottom: '1px solid var(--line)' }}>
           <div>
             <a className="brand" href="#top" style={{ fontSize: 20 }}><BrandPlane />Даниил Карацапов</a>
@@ -371,10 +371,25 @@ function Footer({ onCta }) {
               Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.
             </p>
           </div>
+          {/* Раньше здесь была одна колонка «Навигация», а услуги в ней
+              представлял якорь #services. То есть самая авторитетная
+              страница сайта не ссылалась ни на одну страницу услуги — ни для
+              человека, ни для поисковика. Теперь услуги вынесены в
+              собственную колонку и ведут на страницы, а не на блок. Список
+              продублирован из NAV_LINKS сознательно: главная собирается
+              отдельно от layout.mjs, и общего источника у них нет. */}
           <div>
-            <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 16 }}>Навигация</div>
+            <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 16 }}>Услуги</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[['Обо мне', '/about/'], ['Услуги', '#services'], ['Цены', '/ceny/'], ['Блог', '/blog/'], ['Кейсы', '#cases'], ['Контакты', '#contacts']].map(([t, h]) =>
+              {NAV_LINKS[0][2].filter(([, h]) => h !== '/ceny/').map(([t, h]) =>
+              <a key={h} href={h} style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>{t}</a>
+              )}
+            </div>
+          </div>
+          <div>
+            <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 16 }}>Разделы</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {[['Обо мне', '/about/'], ['Кейсы', '/keysy/'], ['Блог', '/blog/'], ['Цены', '/ceny/'], ['Контакты', '/contacts/']].map(([t, h]) =>
               <a key={h} href={h} style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>{t}</a>
               )}
             </div>

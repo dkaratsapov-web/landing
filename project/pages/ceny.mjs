@@ -75,7 +75,7 @@ const PRICES = [
     term: 'Настройка 5–10 дней',
     price: 'от 12 000 ₽/мес',
     note: 'сопровождение',
-    url: '/kontekstnaya-reklama/',
+    url: '/skvoznaya-analitika/',
     works: [
       'Яндекс Метрика, цели и события',
       'Коллтрекинг и отслеживание форм',
@@ -105,7 +105,7 @@ const PRICES = [
     term: 'Старт за 1–2 недели',
     price: 'от 90 000 ₽/мес',
     note: 'зависит от объёма работ',
-    url: '/contacts/',
+    url: '/kompleksnyj-marketing/',
     works: [
       'Стратегия и медиаплан под бизнес',
       'Все каналы привлечения под ключ',

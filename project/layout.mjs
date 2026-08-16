@@ -154,12 +154,14 @@ function legalLine() {
 }
 
 function footer() {
+  /* Колонка услуг берётся из SERVICES, а не переписывается руками: список
+     услуг вырос до девяти пунктов, и вторая его копия разъехалась бы с
+     меню на первой же новой странице. «Цены» из неё убраны — они уходят
+     во вторую колонку, к остальным разделам сайта. */
   const cols = [
-    ['Навигация', [
+    ['Услуги', SERVICES.filter(([href]) => href !== '/ceny/')],
+    ['Разделы', [
       ['/', 'Главная'],
-      ['/kontekstnaya-reklama/', 'Контекстная реклама'],
-      ['/razrabotka-sajtov/', 'Разработка сайтов'],
-  ['/seo-optimizaciya/', 'SEO-оптимизация'],
       ['/keysy/', 'Кейсы'],
       ['/about/', 'О себе'],
       ['/blog/', 'Блог'],
@@ -176,7 +178,7 @@ ${links.map(([h, l]) => `          <a href="${h}" style="${FOOT_LINK}">${l}</a>`
 
   return `<footer class="footer">
   <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
-    <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
+    <div class="footer-grid" style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
       <div>
         <a class="brand" href="/" style="font-size: 20px;">${PLANE}Даниил Карацапов</a>
         <p style="color: var(--muted); margin: 18px 0 0; font-size: 15px; line-height: 1.55; max-width: 300px;">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
