@@ -204,7 +204,9 @@ mkdirSync(join(OUT, 'vc'), { recursive: true });
 for (const platform of ['dzen', 'vc']) {
   console.log(platform + ':');
   const dir = join(HERE, platform);
-  for (const f of readdirSync(dir).filter((x) => x.endsWith('.md'))) {
+  /* Руководство по публикации — инструкция к архиву, а не статья.
+     В zip оно кладётся из .md как есть, в Word его переводить незачем. */
+  for (const f of readdirSync(dir).filter((x) => x.endsWith('.md') && x !== 'KAK-PUBLIKOVAT.md')) {
     await build(join(dir, f), join(OUT, platform, f.replace(/\.md$/, '.docx')));
   }
 }

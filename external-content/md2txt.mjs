@@ -99,7 +99,11 @@ let n = 0;
 for (const platform of ['dzen', 'vc']) {
   const src = join(HERE, platform);
   let files;
-  try { files = readdirSync(src).filter((f) => f.endsWith('.md')); } catch { continue; }
+  /* Руководство по публикации — не статья, а инструкция к архиву. Его
+     конвертировать незачем: в zip оно кладётся из .md как есть. */
+  try {
+    files = readdirSync(src).filter((f) => f.endsWith('.md') && f !== 'KAK-PUBLIKOVAT.md');
+  } catch { continue; }
   const dir = join(OUT, platform);
   mkdirSync(dir, { recursive: true });
   for (const f of files) {
