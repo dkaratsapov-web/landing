@@ -15,6 +15,7 @@ import { prerenderApp } from './prerender.mjs';
 import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import { cases, CASE_SETS } from './service-kit.mjs';
+import { CASE_PAGES, caseGrid, CASE_GRID_CSS } from './case-page.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
 import * as politikaPage from './pages/politika.mjs';
@@ -31,7 +32,11 @@ const SITE = 'https://karatsapov.ru';
 /* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
    которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
 const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage, keysSferaPage, keysDiautoPage,
-  kompleksPage, analitikaPage, auditPage, promoPage, seoPage];
+  kompleksPage, analitikaPage, auditPage, promoPage, seoPage,
+  /* Двадцать одна страница кейса собирается из cases-data.mjs. Руками их не
+     пишем: у кейса одна и та же структура — задача, действия, цифры, — и
+     двадцать одна копия этой структуры разъедется на второй же правке. */
+  ...CASE_PAGES];
 
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
@@ -505,6 +510,16 @@ for (const p of SUBPAGES) {
        себе копию данных по кейсам не должны — иначе цифры на странице услуги
        и на витрине разъедутся, как уже было. Неизвестный ключ валит сборку:
        молча вставленная пустота страшнее упавшего билда. */
+    /* Витрина кейсов: сетка, фильтры со счётчиками и скрипт фильтрации.
+       Стили и скрипт подставляются вместе с разметкой — порознь их легко
+       забыть, и страница молча теряет фильтр. */
+    if (page.includes('<!--#kasegrid-->')) {
+      page = page.replace('<!--#kasegrid-->', caseGrid())
+        .replace('</head>', `  <style>${CASE_GRID_CSS}</style>\n</head>`)
+        /* Скрипт фильтрации не подставляем: на витрине уже есть свой, более
+           умелый — он же прокручивает ленту вкладок колесом и перетаскиванием.
+           Ему поменяны селекторы под новую сетку. */;
+    }
     page = page.replace(/<!--#cases:([a-z]+)-->/g, (_, key) => {
       const set = CASE_SETS[key];
       if (!set) throw new Error(`build: нет подборки кейсов «${key}» (страница ${p})`);
@@ -690,6 +705,13 @@ const SITEMAP_PAGES = [
   { loc: '/keysy/', src: 'keysy/index.html', priority: '0.8', changefreq: 'monthly' },
   { loc: '/razrabotka-sajtov/sfera/', src: 'pages/keys-sfera.mjs', priority: '0.7', changefreq: 'monthly' },
   { loc: '/keysy/diauto69/', src: 'pages/keys-diauto.mjs', priority: '0.7', changefreq: 'monthly' },
+  /* Страницы кейсов: приоритет ниже посадочных под услуги — это
+     доказательная база, а не точки входа по коммерческим запросам. Источник
+     для lastmod один на всех, cases-data.mjs: правка данных кейса и есть
+     обновление его страницы. */
+  ...CASE_PAGES.map((p) => ({
+    loc: p.meta.path, src: 'cases-data.mjs', priority: '0.6', changefreq: 'yearly',
+  })),
   { loc: '/about/', src: 'pages/about.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/ceny/', src: 'pages/ceny.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/contacts/', src: 'contacts/index.html', priority: '0.6', changefreq: 'yearly' },

@@ -42,8 +42,9 @@
 export const CASES = [
   {
     id: 'everest',
-    slug: 'restoran-premium-patriarshie',
+    slug: 'yandex-direkt-dlya-restorana-premium',
     label: 'Ресторан премиум-класса у Патриарших',
+    h1: 'Яндекс Директ для ресторана премиум-класса',
     field: 'Ресторан премиум-класса',
     geo: 'Москва, Садовое кольцо',
     img: 'assets/cases/everest-siberia.jpg',
@@ -65,7 +66,7 @@ export const CASES = [
       ['−27%', 'стоимость лида (CPL)'],
       ['+19%', 'средний чек за счёт премиум-аудитории'],
     ],
-    related: ['premialnyj-lounge-bar-moskva', 'restoran-na-rublevke'],
+    related: ['yandex-direkt-dlya-lounge-bara', 'reklama-dlya-zagorodnogo-restorana'],
     seo: {
       title: 'Кейс: продвижение ресторана премиум-класса в Москве — +64% броней',
       description: 'Как я продвигал премиальный ресторан на Садовом кольце у Патриарших: Яндекс Директ, Яндекс Бизнес и сквозная аналитика. +64% броней за 3 месяца, ROI 298%, CPL −27%, средний чек +19%.',
@@ -73,8 +74,9 @@ export const CASES = [
   },
   {
     id: 'kalyanaya',
-    slug: 'kalyannaya-lounge-v-tsentre-moskvy',
+    slug: 'prodvizhenie-kalyannoj',
     label: 'Кальянная-лаунж в центре Москвы',
+    h1: 'Комплексное продвижение кальянной',
     field: 'Кальянная / лаунж-бар',
     geo: 'Москва, центр',
     img: 'assets/cases/kalyanaya.jpg',
@@ -96,7 +98,7 @@ export const CASES = [
       ['−34%', 'стоимость лида (CPL)'],
       ['9 000+', 'посетителей сайта в месяц'],
     ],
-    related: ['premialnyj-lounge-bar-moskva', 'karaoke-klub-spb'],
+    related: ['yandex-direkt-dlya-lounge-bara', 'prodvizhenie-karaoke-kluba'],
     seo: {
       title: 'Кейс: продвижение кальянной и лаунж-бара в Москве — +82% заявок',
       description: 'Запуск кальянной в центре Москвы с нуля: сайт, Яндекс Директ, Яндекс Бизнес, сквозная аналитика. +82% заявок за 2 месяца, ROI 327%, CPL −34%, 9 000+ посетителей сайта в месяц.',
@@ -104,8 +106,9 @@ export const CASES = [
   },
   {
     id: 'massiv-mebel',
-    slug: 'proizvodstvo-mebeli-iz-massiva',
+    slug: 'yandex-direkt-dlya-proizvodstva-mebeli',
     label: 'Производство мебели из массива, Москва',
+    h1: 'Яндекс Директ для производства мебели',
     field: 'Производство мебели из массива',
     geo: 'Москва',
     img: 'assets/cases/massiv-mebel.jpg',
@@ -127,7 +130,7 @@ export const CASES = [
       ['−29%', 'стоимость лида (CPL)'],
       ['31% → 58%', 'доля целевых заявок'],
     ],
-    related: ['mebelnoe-proizvodstvo-kostanaj', 'proizvodstvo-upakovki-tver'],
+    related: ['sajt-i-reklama-dlya-mebelnogo-proizvodstva', 'prodvizhenie-proizvodstva-upakovki'],
     seo: {
       title: 'Кейс: реклама производства мебели из массива — доля целевых заявок 31% → 58%',
       description: 'Продвижение производства премиальной мебели из массива в Москве: Яндекс Директ и сквозная аналитика. Доля целевых заявок выросла с 31% до 58%, ROI 264%, CPL −29%.',
@@ -138,6 +141,7 @@ export const CASES = [
     slug: 'sfera',
     named: true,
     label: 'Проектное бюро «Сфера»',
+    h1: 'Сайт и реклама для проектного бюро',
     field: 'Проектирование и разрешения на строительство',
     geo: 'Москва и МО',
     img: 'assets/dev/sfera/glavnaya.webp',
@@ -158,7 +162,7 @@ export const CASES = [
       ['−36%', 'стоимость обращения после коллтрекинга'],
       ['34% → 61%', 'доля звонков, дошедших до диалога'],
     ],
-    related: ['karkasnye-doma-tver', 'proizvodstvo-upakovki-tver'],
+    related: ['yandex-direkt-dlya-stroitelnoj-kompanii', 'prodvizhenie-proizvodstva-upakovki'],
     seo: {
       title: 'Кейс: сайт и реклама проектного бюро «Сфера» — 38 страниц под B2B-запросы',
       description: 'Сайт инженерно-проектного бюро на 38 посадочных страниц, реклама в Яндекс Директ под узкий B2B-спрос и коллтрекинг. +49% целевых обращений, ROI 213%, стоимость обращения −36%.',
@@ -166,8 +170,9 @@ export const CASES = [
   },
   {
     id: 'school',
-    slug: 'chastnaya-shkola-moskva',
+    slug: 'prodvizhenie-chastnoj-shkoly',
     label: 'Частная школа в Москве',
+    h1: 'Комплексное продвижение частной школы',
     field: 'Частная школа',
     geo: 'Москва',
     img: 'assets/cases/school.jpg',
@@ -189,7 +194,7 @@ export const CASES = [
       ['+42%', 'набор в классы и группы'],
       ['+82', 'отзыва в Яндекс Бизнес за полгода'],
     ],
-    related: ['detskij-centr-razvitiya-tver', 'kovorking-sochi'],
+    related: ['yandex-direkt-dlya-detskogo-centra', 'prodvizhenie-kovorkinga'],
     seo: {
       title: 'Кейс: продвижение частной школы в Москве — набор +42%, ROI 322%',
       description: 'Полный цикл digital-маркетинга для частной школы: сайт, Яндекс Директ, VK Ads, Яндекс Бизнес и сквозная аналитика. +400% посетителей сайта, набор в классы +42%, ROI 322% за полгода.',
@@ -197,8 +202,9 @@ export const CASES = [
   },
   {
     id: 'profildoors',
-    slug: 'salony-mezhkomnatnyh-dverej',
+    slug: 'reklama-dlya-salonov-dverej',
     label: 'Сеть салонов межкомнатных дверей',
+    h1: 'Реклама для сети салонов межкомнатных дверей',
     field: 'Сеть салонов межкомнатных дверей',
     geo: 'Москва',
     img: 'assets/cases/profildoors.jpg',
@@ -220,7 +226,7 @@ export const CASES = [
       ['−38%', 'стоимость лида (CPL)'],
       ['ДРР 7,3%', 'доля рекламных расходов'],
     ],
-    related: ['plastikovye-okna-tver', 'magazin-tehniki-apple-tver'],
+    related: ['reklama-dlya-proizvoditelya-okon', 'yandex-direkt-dlya-magazina-tehniki'],
     seo: {
       title: 'Кейс: реклама сети салонов межкомнатных дверей — продажи +45%, ДРР 7,3%',
       description: 'Digital-стратегия для сети салонов межкомнатных дверей в Москве: Яндекс Директ, VK Ads, Яндекс Бизнес и сквозная аналитика. Продажи +45% за 2 месяца, CPL −38%, ДРР 7,3%.',
@@ -228,8 +234,9 @@ export const CASES = [
   },
   {
     id: 'tosun',
-    slug: 'servis-transferov-antaliya',
+    slug: 'prodvizhenie-servisa-transferov',
     label: 'Сервис трансферов в Анталии',
+    h1: 'Сайт и реклама для сервиса трансферов',
     field: 'Сервис трансферов',
     geo: 'Анталия, Турция',
     img: 'assets/cases/tosun.jpg',
@@ -250,7 +257,7 @@ export const CASES = [
       ['65%', 'трафика из поиска Google Ads'],
       ['−18%', 'затрат на рекламу после оптимизации'],
     ],
-    related: ['kovorking-sochi', 'mebelnoe-proizvodstvo-kostanaj'],
+    related: ['prodvizhenie-kovorkinga', 'sajt-i-reklama-dlya-mebelnogo-proizvodstva'],
     seo: {
       title: 'Кейс: сайт и Google Ads для сервиса трансферов в Турции — +85% заявок',
       description: 'Разработка сайта и продвижение сервиса трансферов в Анталии через Google Ads. +85% заявок за 2 месяца, ROAS 450%, 65% трафика из поиска, расходы на рекламу −18% после оптимизации.',
@@ -258,8 +265,9 @@ export const CASES = [
   },
   {
     id: 'okna',
-    slug: 'plastikovye-okna-tver',
+    slug: 'reklama-dlya-proizvoditelya-okon',
     label: 'Производство пластиковых окон в Твери',
+    h1: 'Реклама для производителя пластиковых окон',
     field: 'Производство пластиковых окон',
     geo: 'Тверь',
     img: 'assets/cases/okna.jpg',
@@ -281,7 +289,7 @@ export const CASES = [
       ['40%', 'заказов из VK Ads'],
       ['+1200', 'подписчиков в группе ВК'],
     ],
-    related: ['karkasnye-doma-tver', 'salony-mezhkomnatnyh-dverej'],
+    related: ['yandex-direkt-dlya-stroitelnoj-kompanii', 'reklama-dlya-salonov-dverej'],
     seo: {
       title: 'Кейс: реклама производства пластиковых окон в Твери — 40% заказов из VK Ads',
       description: 'Продвижение производства пластиковых окон в Твери: Яндекс Директ, VK Ads, оформление сообщества ВКонтакте и сквозная аналитика. ROI 220%, CPL −30%, 40% заказов из VK Ads.',
@@ -289,8 +297,9 @@ export const CASES = [
   },
   {
     id: 'mebeline',
-    slug: 'mebelnoe-proizvodstvo-kostanaj',
+    slug: 'sajt-i-reklama-dlya-mebelnogo-proizvodstva',
     label: 'Мебельное производство в Костанае',
+    h1: 'Сайт и реклама для мебельного производства',
     field: 'Производитель мебели',
     geo: 'Костанай, Казахстан',
     img: 'assets/cases/mebeline.jpg',
@@ -311,7 +320,7 @@ export const CASES = [
       ['4 500+', 'посещений сайта в месяц'],
       ['1 500 000 ₸', 'средняя стоимость заказа'],
     ],
-    related: ['proizvodstvo-mebeli-iz-massiva', 'servis-transferov-antaliya'],
+    related: ['yandex-direkt-dlya-proizvodstva-mebeli', 'prodvizhenie-servisa-transferov'],
     seo: {
       title: 'Кейс: сайт и Google Ads для мебельного производства — заявки +85%, ROI 340%',
       description: 'Разработка сайта с каталогом и продвижение мебельного производства в Костанае через Google Ads. +85% заявок за 2 месяца, ROI 340%, 4 500+ посещений сайта в месяц.',
@@ -319,8 +328,9 @@ export const CASES = [
   },
   {
     id: 'ipapa',
-    slug: 'magazin-tehniki-apple-tver',
+    slug: 'yandex-direkt-dlya-magazina-tehniki',
     label: 'Магазин техники Apple в Твери',
+    h1: 'Яндекс Директ для магазина техники',
     field: 'Магазин техники Apple',
     geo: 'Тверь',
     img: 'assets/cases/ipapa.jpg',
@@ -342,7 +352,7 @@ export const CASES = [
       ['33%', 'лидов даёт Яндекс Бизнес'],
       ['−45%', 'стоимость заявки (CPL)'],
     ],
-    related: ['salony-mezhkomnatnyh-dverej', 'optovyj-magazin-suvenirov'],
+    related: ['reklama-dlya-salonov-dverej', 'yandex-direkt-dlya-optovogo-magazina'],
     seo: {
       title: 'Кейс: реклама магазина техники Apple в Твери — продажи +53%, ROI 420%',
       description: 'Продвижение официального реселлера Apple в Твери: Яндекс Директ, Яндекс Бизнес и сквозная аналитика с расчётом окупаемости по моделям. Продажи +53%, ROI 420%, CPL −45%.',
@@ -350,8 +360,9 @@ export const CASES = [
   },
   {
     id: 'nebo',
-    slug: 'premialnyj-lounge-bar-moskva',
+    slug: 'yandex-direkt-dlya-lounge-bara',
     label: 'Премиальный лаунж-бар в Москве',
+    h1: 'Яндекс Директ для lounge-бара',
     field: 'Lounge Bar',
     geo: 'Москва',
     img: 'assets/cases/nebo.jpg',
@@ -372,7 +383,7 @@ export const CASES = [
       ['170+', 'броней в месяц из Директа'],
       ['40%', 'новых клиентов из Яндекс Бизнес'],
     ],
-    related: ['kalyannaya-lounge-v-tsentre-moskvy', 'restoran-premium-patriarshie'],
+    related: ['prodvizhenie-kalyannoj', 'yandex-direkt-dlya-restorana-premium'],
     seo: {
       title: 'Кейс: продвижение лаунж-бара в Москве — бронирования +90%, ROI 520%',
       description: 'Привлечение гостей в премиальный лаунж-бар: Яндекс Директ с акцентом на будние спецпредложения, Яндекс Бизнес и сквозная аналитика с учётом повторных визитов. +90% броней, ROI 520%.',
@@ -380,8 +391,9 @@ export const CASES = [
   },
   {
     id: 'artlife',
-    slug: 'kovorking-sochi',
+    slug: 'prodvizhenie-kovorkinga',
     label: 'Коворкинг в центре Сочи',
+    h1: 'Комплексное продвижение коворкинга',
     field: 'Коворкинг',
     geo: 'Сочи',
     img: 'assets/cases/artlife.jpg',
@@ -403,7 +415,7 @@ export const CASES = [
       ['+250%', 'посетителей сайта за 3 месяца'],
       ['+50%', 'постоянная заполняемость пространства'],
     ],
-    related: ['servis-transferov-antaliya', 'chastnaya-shkola-moskva'],
+    related: ['prodvizhenie-servisa-transferov', 'prodvizhenie-chastnoj-shkoly'],
     seo: {
       title: 'Кейс: продвижение коворкинга в Сочи с нуля — бронирования +80%, ROI 400%',
       description: 'Комплексное продвижение коворкинга в центре Сочи: сайт с онлайн-бронированием, Яндекс Директ, VK Ads, SEO, SMM и Яндекс Бизнес. +80% бронирований, ROI 400%, заполняемость +50%.',
@@ -411,8 +423,9 @@ export const CASES = [
   },
   {
     id: 'bmclinic',
-    slug: 'mnogoprofilnaya-klinika-moskva',
+    slug: 'yandex-direkt-dlya-mediczinskoj-kliniki',
     label: 'Многопрофильная клиника в Москве',
+    h1: 'Яндекс Директ для медицинской клиники',
     field: 'Многопрофильная клиника',
     geo: 'Москва',
     img: 'assets/cases/bmclinic.jpg',
@@ -433,7 +446,7 @@ export const CASES = [
       ['55%', 'онлайн-записей через Яндекс Бизнес'],
       ['−28%', 'неэффективных расходов на рекламу'],
     ],
-    related: ['salon-krasoty-tver', 'chastnaya-shkola-moskva'],
+    related: ['reklama-dlya-salona-krasoty', 'prodvizhenie-chastnoj-shkoly'],
     seo: {
       title: 'Кейс: реклама многопрофильной клиники в Москве — записи +120%',
       description: 'Digital-продвижение медицинского центра: Яндекс Директ по направлениям, онлайн-запись через Яндекс Бизнес, сквозная аналитика. Записи на приём +120%, средний чек +25%, лишние расходы −28%.',
@@ -441,8 +454,9 @@ export const CASES = [
   },
   {
     id: 'kaspack',
-    slug: 'proizvodstvo-upakovki-tver',
+    slug: 'prodvizhenie-proizvodstva-upakovki',
     label: 'Производство упаковки в Твери',
+    h1: 'Комплексное продвижение производства упаковки',
     field: 'Производство упаковки',
     geo: 'Тверь',
     img: 'assets/cases/kaspack.jpg',
@@ -463,7 +477,7 @@ export const CASES = [
       ['ROI 520%', 'рекламы'],
       ['35%', 'клиентов сделали повторный заказ'],
     ],
-    related: ['proizvodstvo-mebeli-iz-massiva', 'optovyj-magazin-suvenirov'],
+    related: ['yandex-direkt-dlya-proizvodstva-mebeli', 'yandex-direkt-dlya-optovogo-magazina'],
     seo: {
       title: 'Кейс: сайт и B2B-реклама производства упаковки — заявки +150%, ROI 520%',
       description: 'Полный цикл продвижения производителя упаковочных материалов: сайт-витрина, Яндекс Директ по B2B-запросам, Яндекс Бизнес и сквозная аналитика. Заявки +150%, CPL −60%, ROI 520%.',
@@ -471,8 +485,9 @@ export const CASES = [
   },
   {
     id: 'berezka',
-    slug: 'restoran-na-rublevke',
+    slug: 'reklama-dlya-zagorodnogo-restorana',
     label: 'Премиальный ресторан на Рублёвке',
+    h1: 'Яндекс Директ и карты для загородного ресторана',
     field: 'Премиальный ресторан',
     geo: 'Рублёво-Успенское шоссе, МО',
     img: 'assets/cases/berezka.jpg',
@@ -491,7 +506,7 @@ export const CASES = [
       ['65%', 'новых гостей из Яндекс Бизнес'],
       ['ТОП-3', 'по запросу «рестораны на Рублёвке»'],
     ],
-    related: ['restoran-premium-patriarshie', 'premialnyj-lounge-bar-moskva'],
+    related: ['yandex-direkt-dlya-restorana-premium', 'yandex-direkt-dlya-lounge-bara'],
     seo: {
       title: 'Кейс: продвижение ресторана на Рублёвке — бронирования +110%, ТОП-3',
       description: 'Привлечение гостей в премиальный загородный ресторан: Яндекс Директ с точной географией и Яндекс Бизнес. +110% бронирований за 5 месяцев, ТОП-3 по ключевому запросу, 65% гостей с карты.',
@@ -499,8 +514,9 @@ export const CASES = [
   },
   {
     id: 'karkas',
-    slug: 'karkasnye-doma-tver',
+    slug: 'yandex-direkt-dlya-stroitelnoj-kompanii',
     label: 'Строительство каркасных домов в Твери',
+    h1: 'Яндекс Директ для строительной компании',
     field: 'Строительство каркасных домов',
     geo: 'Тверь',
     img: 'assets/cases/karkas.jpg',
@@ -521,7 +537,7 @@ export const CASES = [
       ['66%', 'заказов пришло из РСЯ'],
       ['ROI 280%', 'рекламы'],
     ],
-    related: ['plastikovye-okna-tver', 'sfera'],
+    related: ['reklama-dlya-proizvoditelya-okon', 'sfera'],
     seo: {
       title: 'Кейс: реклама строительства каркасных домов — заявки +120% при том же бюджете',
       description: 'Продвижение строительства каркасных домов в Твери при ограниченном бюджете: упор на РСЯ, кампании по типовым проектам, Яндекс Бизнес. Заявки +120%, CPL −45%, 66% заказов из РСЯ.',
@@ -529,8 +545,9 @@ export const CASES = [
   },
   {
     id: 'alankara',
-    slug: 'optovyj-magazin-suvenirov',
+    slug: 'yandex-direkt-dlya-optovogo-magazina',
     label: 'Оптовый магазин сувениров, Балашиха',
+    h1: 'Яндекс Директ для оптового интернет-магазина',
     field: 'Оптовый интернет-магазин сувениров',
     geo: 'Балашиха · поставки по РФ',
     img: 'assets/cases/alankara.jpg',
@@ -551,7 +568,7 @@ export const CASES = [
       ['+5,2%', 'конверсия сайта'],
       ['42 города', 'география заказов по РФ'],
     ],
-    related: ['proizvodstvo-upakovki-tver', 'magazin-tehniki-apple-tver'],
+    related: ['prodvizhenie-proizvodstva-upakovki', 'yandex-direkt-dlya-magazina-tehniki'],
     seo: {
       title: 'Кейс: Яндекс Директ для оптового магазина сувениров — заказы +150%',
       description: 'Перезапуск рекламы оптового интернет-магазина сувениров: семантика под опт, выход на всю Россию, автоматизация заявок. Оптовые заказы +150% за полгода, 42 города, конверсия +5,2%.',
@@ -559,8 +576,9 @@ export const CASES = [
   },
   {
     id: 'ledizoj',
-    slug: 'dostavka-zamorozhennoj-edy',
+    slug: 'sajt-i-reklama-dlya-dostavki-edy',
     label: 'Доставка замороженной еды в Москве',
+    h1: 'Сайт и реклама для доставки еды',
     field: 'Доставка замороженной еды',
     geo: 'Москва',
     img: 'assets/cases/ledizoj.jpg',
@@ -581,7 +599,7 @@ export const CASES = [
       ['ТОП-5', 'в поиске по ключевым запросам'],
       ['−50%', 'затрат на поддержку сайта'],
     ],
-    related: ['dostavka-zdorovogo-pitaniya', 'optovyj-magazin-suvenirov'],
+    related: ['reklama-dlya-dostavki-pitaniya', 'yandex-direkt-dlya-optovogo-magazina'],
     seo: {
       title: 'Кейс: сайт для доставки замороженной еды — заказы +70%, обработка 15→5 минут',
       description: 'Разработка сайта с каталогом и корзиной для сервиса доставки замороженной здоровой еды плюс реклама в Яндекс Директ. Онлайн-заказы +70%, обработка заказа с 15 до 5 минут, ТОП-5 в поиске.',
@@ -589,8 +607,9 @@ export const CASES = [
   },
   {
     id: 'zojefina',
-    slug: 'dostavka-zdorovogo-pitaniya',
+    slug: 'reklama-dlya-dostavki-pitaniya',
     label: 'Доставка здорового питания в Москве',
+    h1: 'Реклама для доставки здорового питания',
     field: 'Доставка здорового питания',
     geo: 'Москва',
     img: 'assets/cases/zojefina.jpg',
@@ -611,7 +630,7 @@ export const CASES = [
       ['−35%', 'стоимость лида (CPL)'],
       ['+45%', 'повторных заказов'],
     ],
-    related: ['dostavka-zamorozhennoj-edy', 'salon-krasoty-tver'],
+    related: ['sajt-i-reklama-dlya-dostavki-edy', 'reklama-dlya-salona-krasoty'],
     seo: {
       title: 'Кейс: сайт и реклама доставки здорового питания — ROI 580%',
       description: 'Разработка сайта и Яндекс Директ для сервиса доставки здорового питания со сквозной аналитикой по повторным заказам. Заказы +120% за 4 месяца, ROI 580%, CPL −35%, повторные +45%.',
@@ -619,8 +638,9 @@ export const CASES = [
   },
   {
     id: 'mishlenium',
-    slug: 'detskij-centr-razvitiya-tver',
+    slug: 'yandex-direkt-dlya-detskogo-centra',
     label: 'Детский центр развития в Твери',
+    h1: 'Яндекс Директ для детского центра',
     field: 'Детский центр развития',
     geo: 'Тверь',
     img: 'assets/cases/mishlenium.jpg',
@@ -641,7 +661,7 @@ export const CASES = [
       ['65%', 'новых клиентов из рекламы'],
       ['80%', 'заполняемость групп в межсезонье'],
     ],
-    related: ['chastnaya-shkola-moskva', 'salon-krasoty-tver'],
+    related: ['prodvizhenie-chastnoj-shkoly', 'reklama-dlya-salona-krasoty'],
     seo: {
       title: 'Кейс: реклама детского центра развития — записи +120%, 80% групп в межсезонье',
       description: 'Контекстная реклама для детской школы развития интеллекта в Твери: кампании по возрасту и задаче родителя, упор на пробное занятие. Записи +120%, CPL −42%, заполняемость вне сезона 80%.',
@@ -649,8 +669,9 @@ export const CASES = [
   },
   {
     id: 'blondinki',
-    slug: 'salon-krasoty-tver',
+    slug: 'reklama-dlya-salona-krasoty',
     label: 'Салон красоты в Твери',
+    h1: 'Реклама для салона красоты',
     field: 'Салон красоты',
     geo: 'Тверь',
     img: 'assets/cases/blondinki.jpg',
@@ -671,7 +692,7 @@ export const CASES = [
       ['35 000+', 'охват в VK'],
       ['ROI 320%', 'рекламы'],
     ],
-    related: ['mnogoprofilnaya-klinika-moskva', 'detskij-centr-razvitiya-tver'],
+    related: ['yandex-direkt-dlya-mediczinskoj-kliniki', 'yandex-direkt-dlya-detskogo-centra'],
     seo: {
       title: 'Кейс: продвижение салона красоты — онлайн-записи с 12% до 77%',
       description: 'Digital-стратегия для салона красоты в Твери: VK Ads, Яндекс Бизнес с онлайн-записью и точечный Директ. Новые клиенты +75% за 3 месяца, онлайн-записи с 12% до 77%, ROI 320%.',
@@ -679,8 +700,9 @@ export const CASES = [
   },
   {
     id: 'royalneva',
-    slug: 'karaoke-klub-spb',
+    slug: 'prodvizhenie-karaoke-kluba',
     label: 'Караоке-клуб в Санкт-Петербурге',
+    h1: 'Комплексное продвижение караоке-клуба',
     field: 'Караоке-клуб',
     geo: 'Санкт-Петербург',
     img: 'assets/cases/royalneva.jpg',
@@ -702,7 +724,7 @@ export const CASES = [
       ['ROI 351%', 'рекламы'],
       ['12 000+', 'посетителей сайта в месяц'],
     ],
-    related: ['kalyannaya-lounge-v-tsentre-moskvy', 'premialnyj-lounge-bar-moskva'],
+    related: ['prodvizhenie-kalyannoj', 'yandex-direkt-dlya-lounge-bara'],
     seo: {
       title: 'Кейс: запуск караоке-клуба в Санкт-Петербурге — заявки +78%, ROI 351%',
       description: 'Комплексный запуск караоке-клуба с нуля: сайт с онлайн-бронированием, Яндекс Директ, Яндекс Бизнес, SEO и сквозная аналитика. +78% заявок за 2 месяца, CPL −31%, 12 000+ посетителей сайта.',
