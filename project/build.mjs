@@ -12,7 +12,7 @@ import { execFileSync } from 'node:child_process';
 import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
-import { renderPage, seoConfig, decorate, nav, SERVICE_GROUPS } from './layout.mjs';
+import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
@@ -489,6 +489,7 @@ for (const p of SUBPAGES) {
         + '  <script defer src="/section-fx.js"></script>\n</head>');
     }
     page = replaceNav(page, p);
+    if (!page.includes('mob-dock')) page = page.replace('</body>', mobileDock() + '\n</body>');
     writeFileSync(join(outDir, p, 'index.html'), decorate(page), 'utf8');
     console.log('Copied subpage', p + '/index.html');
   }
