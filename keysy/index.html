@@ -114,12 +114,21 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://karatsapov.ru/"},{"@type":"ListItem","position":2,"name":"Кейсы","item":"https://karatsapov.ru/keysy/"}]}</script>
   <link rel="stylesheet" href="/section-fx.css">
   <link rel="stylesheet" href="/nav.css">
+  <link rel="stylesheet" href="/footer.css">
   <script defer src="/section-fx.js"></script>
   <style>
 /* ── Витрина кейсов ──────────────────────────────────────────────────────── */
 .kg { display: grid; gap: 14px; margin-top: 26px; }
 @media (min-width: 700px)  { .kg { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1080px) { .kg { grid-template-columns: repeat(3, 1fr); } }
+/* Снимок в карточке — во всю её ширину, без внутреннего поля: фотография,
+   отступившая от краёв рамки, читается как вложенная картинка в документе, а
+   не как обложка карточки. */
+.kg-img { position: relative; aspect-ratio: 16 / 9; margin: -24px -22px 16px;
+  border-radius: 17px 17px 0 0; overflow: hidden; }
+.kg-img img { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; }
+
 .kg-i { display: flex; flex-direction: column; padding: 24px 22px 20px;
   border: 1px solid var(--line); border-radius: 18px; background: var(--surface);
   text-decoration: none; color: inherit;
@@ -353,6 +362,7 @@
     </div>
     <div class="kg" id="kaseGrid">
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-restorana-premium/" data-tags="context geo horeca analytics" style="--d:0">
+        <div class="kg-img kg-img-ph"><span>Ресторан премиум-класса</span><img src="/assets/cases/everest-siberia.jpg" alt="Ресторан премиум-класса, Москва, Садовое кольцо" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Ресторан премиум-класса</div>
         <h3 class="kg-t">Яндекс Директ для ресторана премиум-класса</h3>
         <div class="kg-geo">Москва, Садовое кольцо</div>
@@ -363,6 +373,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/prodvizhenie-kalyannoj/" data-tags="site context geo horeca analytics" style="--d:1">
+        <div class="kg-img kg-img-ph"><span>Кальянная / лаунж-бар</span><img src="/assets/cases/kalyanaya-msk.jpg" alt="Кальянная / лаунж-бар, Москва, центр" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Кальянная / лаунж-бар</div>
         <h3 class="kg-t">Комплексное продвижение кальянной</h3>
         <div class="kg-geo">Москва, центр</div>
@@ -373,6 +384,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-proizvodstva-mebeli/" data-tags="context proizvod analytics" style="--d:2">
+        <div class="kg-img kg-img-ph"><span>Производство мебели из массива</span><img src="/assets/cases/massiv-mebel.jpg" alt="Производство мебели из массива, Москва" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Производство мебели из массива</div>
         <h3 class="kg-t">Яндекс Директ для производства мебели</h3>
         <div class="kg-geo">Москва</div>
@@ -383,6 +395,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/razrabotka-sajtov/sfera/" data-tags="site context analytics stroy" style="--d:3">
+        <div class="kg-img kg-img-ph"><span>Проектирование и разрешения на строительство</span><img src="/assets/dev/sfera/glavnaya.webp" alt="Проектирование и разрешения на строительство, Москва и МО" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Проектирование и разрешения на строительство</div>
         <h3 class="kg-t">Сайт и реклама для проектного бюро</h3>
         <div class="kg-geo">Москва и МО</div>
@@ -393,6 +406,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/prodvizhenie-chastnoj-shkoly/" data-tags="site context geo target analytics edu" style="--d:4">
+        <div class="kg-img kg-img-ph"><span>Частная школа</span><img src="/assets/cases/school.jpg" alt="Частная школа, Москва" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Частная школа</div>
         <h3 class="kg-t">Комплексное продвижение частной школы</h3>
         <div class="kg-geo">Москва</div>
@@ -403,6 +417,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/reklama-dlya-salonov-dverej/" data-tags="context geo target analytics torg" style="--d:5">
+        <div class="kg-img kg-img-ph"><span>Сеть салонов межкомнатных дверей</span><img src="/assets/cases/profildoors.jpg" alt="Сеть салонов межкомнатных дверей, Москва" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Сеть салонов межкомнатных дверей</div>
         <h3 class="kg-t">Реклама для сети салонов межкомнатных дверей</h3>
         <div class="kg-geo">Москва</div>
@@ -413,6 +428,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/prodvizhenie-servisa-transferov/" data-tags="site context turizm" style="--d:6">
+        <div class="kg-img kg-img-ph"><span>Сервис трансферов</span><img src="/assets/cases/tosun.jpg" alt="Сервис трансферов, Анталия, Турция" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Сервис трансферов</div>
         <h3 class="kg-t">Сайт и реклама для сервиса трансферов</h3>
         <div class="kg-geo">Анталия, Турция</div>
@@ -423,6 +439,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/reklama-dlya-proizvoditelya-okon/" data-tags="context target proizvod analytics" style="--d:7">
+        <div class="kg-img kg-img-ph"><span>Производство пластиковых окон</span><img src="/assets/cases/okna.jpg" alt="Производство пластиковых окон, Тверь" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Производство пластиковых окон</div>
         <h3 class="kg-t">Реклама для производителя пластиковых окон</h3>
         <div class="kg-geo">Тверь</div>
@@ -433,6 +450,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/sajt-i-reklama-dlya-mebelnogo-proizvodstva/" data-tags="site context proizvod" style="--d:8">
+        <div class="kg-img kg-img-ph"><span>Производитель мебели</span><img src="/assets/cases/mebeline.jpg" alt="Производитель мебели, Костанай, Казахстан" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Производитель мебели</div>
         <h3 class="kg-t">Сайт и реклама для мебельного производства</h3>
         <div class="kg-geo">Костанай, Казахстан</div>
@@ -443,6 +461,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-magazina-tehniki/" data-tags="context geo analytics torg" style="--d:9">
+        <div class="kg-img kg-img-ph"><span>Магазин техники Apple</span><img src="/assets/cases/ipapa.jpg" alt="Магазин техники Apple, Тверь" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Магазин техники Apple</div>
         <h3 class="kg-t">Яндекс Директ для магазина техники</h3>
         <div class="kg-geo">Тверь</div>
@@ -453,6 +472,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-lounge-bara/" data-tags="context geo horeca analytics" style="--d:10">
+        <div class="kg-img kg-img-ph"><span>Lounge Bar</span><img src="/assets/cases/nebo.jpg" alt="Lounge Bar, Москва" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Lounge Bar</div>
         <h3 class="kg-t">Яндекс Директ для lounge-бара</h3>
         <div class="kg-geo">Москва</div>
@@ -463,6 +483,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/prodvizhenie-kovorkinga/" data-tags="site context target geo turizm analytics" style="--d:11">
+        <div class="kg-img kg-img-ph"><span>Коворкинг</span><img src="/assets/cases/artlife.jpg" alt="Коворкинг, Сочи" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Коворкинг</div>
         <h3 class="kg-t">Комплексное продвижение коворкинга</h3>
         <div class="kg-geo">Сочи</div>
@@ -473,6 +494,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-mediczinskoj-kliniki/" data-tags="context geo med analytics" style="--d:12">
+        <div class="kg-img kg-img-ph"><span>Многопрофильная клиника</span><img src="/assets/cases/bmclinic.jpg" alt="Многопрофильная клиника, Москва" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Многопрофильная клиника</div>
         <h3 class="kg-t">Яндекс Директ для медицинской клиники</h3>
         <div class="kg-geo">Москва</div>
@@ -483,6 +505,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/prodvizhenie-proizvodstva-upakovki/" data-tags="site context geo proizvod analytics" style="--d:13">
+        <div class="kg-img kg-img-ph"><span>Производство упаковки</span><img src="/assets/cases/kaspack.jpg" alt="Производство упаковки, Тверь" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Производство упаковки</div>
         <h3 class="kg-t">Комплексное продвижение производства упаковки</h3>
         <div class="kg-geo">Тверь</div>
@@ -493,6 +516,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/reklama-dlya-zagorodnogo-restorana/" data-tags="context geo horeca" style="--d:14">
+        <div class="kg-img kg-img-ph"><span>Премиальный ресторан</span><img src="/assets/cases/berezka.jpg" alt="Премиальный ресторан, Рублёво-Успенское шоссе, МО" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Премиальный ресторан</div>
         <h3 class="kg-t">Яндекс Директ и карты для загородного ресторана</h3>
         <div class="kg-geo">Рублёво-Успенское шоссе, МО</div>
@@ -503,6 +527,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-stroitelnoj-kompanii/" data-tags="context geo stroy" style="--d:15">
+        <div class="kg-img kg-img-ph"><span>Строительство каркасных домов</span><img src="/assets/cases/karkas.jpg" alt="Строительство каркасных домов, Тверь" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Строительство каркасных домов</div>
         <h3 class="kg-t">Яндекс Директ для строительной компании</h3>
         <div class="kg-geo">Тверь</div>
@@ -513,6 +538,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-optovogo-magazina/" data-tags="context torg" style="--d:16">
+        <div class="kg-img kg-img-ph"><span>Оптовый интернет-магазин сувениров</span><img src="/assets/cases/alankara.jpg" alt="Оптовый интернет-магазин сувениров, Балашиха · поставки по РФ" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Оптовый интернет-магазин сувениров</div>
         <h3 class="kg-t">Яндекс Директ для оптового интернет-магазина</h3>
         <div class="kg-geo">Балашиха · поставки по РФ</div>
@@ -523,6 +549,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/sajt-i-reklama-dlya-dostavki-edy/" data-tags="site context eda" style="--d:17">
+        <div class="kg-img kg-img-ph"><span>Доставка замороженной еды</span><img src="/assets/cases/ledizoj.jpg" alt="Доставка замороженной еды, Москва" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Доставка замороженной еды</div>
         <h3 class="kg-t">Сайт и реклама для доставки еды</h3>
         <div class="kg-geo">Москва</div>
@@ -533,6 +560,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/reklama-dlya-dostavki-pitaniya/" data-tags="site context eda analytics" style="--d:18">
+        <div class="kg-img kg-img-ph"><span>Доставка здорового питания</span></div>
         <div class="kg-f">Доставка здорового питания</div>
         <h3 class="kg-t">Реклама для доставки здорового питания</h3>
         <div class="kg-geo">Москва</div>
@@ -543,6 +571,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/yandex-direkt-dlya-detskogo-centra/" data-tags="context edu" style="--d:19">
+        <div class="kg-img kg-img-ph"><span>Детский центр развития</span></div>
         <div class="kg-f">Детский центр развития</div>
         <h3 class="kg-t">Яндекс Директ для детского центра</h3>
         <div class="kg-geo">Тверь</div>
@@ -553,6 +582,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/reklama-dlya-salona-krasoty/" data-tags="context target geo med" style="--d:20">
+        <div class="kg-img kg-img-ph"><span>Салон красоты</span></div>
         <div class="kg-f">Салон красоты</div>
         <h3 class="kg-t">Реклама для салона красоты</h3>
         <div class="kg-geo">Тверь</div>
@@ -563,6 +593,7 @@
         <span class="kg-go">Смотреть кейс <span class="arr" aria-hidden="true">→</span></span>
       </a>
       <a class="kg-i" href="/keysy/prodvizhenie-karaoke-kluba/" data-tags="site context geo horeca analytics" style="--d:21">
+        <div class="kg-img kg-img-ph"><span>Караоке-клуб</span><img src="/assets/cases/royalneva.jpg" alt="Караоке-клуб, Санкт-Петербург" loading="lazy" decoding="async" onerror="this.remove()"></div>
         <div class="kg-f">Караоке-клуб</div>
         <h3 class="kg-t">Комплексное продвижение караоке-клуба</h3>
         <div class="kg-geo">Санкт-Петербург</div>
@@ -580,40 +611,29 @@
 </main>
 
 <footer class="footer">
-  <div class="wrap" style="padding-top:38px; padding-bottom:24px;">
-    <div class="footer-grid" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 26px 36px; padding-bottom: 26px; border-bottom: 1px solid var(--line);">
+  <div class="wrap foot">
+    <div class="foot-top">
       <div>
         <a class="brand" href="/" style="font-size: 20px;"><svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>Даниил Карацапов</a>
-        <p style="color: var(--muted); margin: 12px 0 0; font-size: 14px; line-height: 1.5; max-width: 300px;">
-          Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.
-        </p>
+        <p class="foot-about">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
       </div>
-      <div>
-        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 11px;">Навигация</div>
-        <div style="display: flex; flex-direction: column; gap: 7px;">
-          <a href="/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Главная</a>
-          <a href="/kontekstnaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контекстная реклама</a>
-          <a href="/keysy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Кейсы</a>
-          <a href="/about/" style="color: var(--muted); text-decoration: none; font-size: 15px;">О себе</a>
-          <a href="/ceny/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Цены</a>
-          <a href="/blog/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Блог</a>
-          <a href="/contacts/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контакты</a>
-        </div>
-      </div>
-      <div>
-        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 11px;">Связь</div>
-        <div style="display: flex; flex-direction: column; gap: 7px;">
-          <a href="tel:+79963470065" style="color: var(--muted); text-decoration: none; font-size: 15px;">+7 (996) 347-00-65</a>
-          <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 15px;">Telegram @Daniil_065</a>
-          <a href="https://wa.me/79963470065" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 15px;">WhatsApp</a>
-          <a href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" style="color: var(--muted); text-decoration: none; font-size: 15px;">MAX</a>
-          <a href="mailto:d.karatsapov@gmail.com" style="color: var(--lime); text-decoration: none; font-size: 15px;">d.karatsapov@gmail.com</a>
-        </div>
+      <div class="foot-contacts">
+        <a href="tel:+79963470065">+7 (996) 347-00-65</a>
+        <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram @Daniil_065</a>
+        <a class="foot-mail" href="mailto:d.karatsapov@gmail.com">d.karatsapov@gmail.com</a>
       </div>
     </div>
-    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 18px;">
-      <span style="color: var(--muted-2); font-size: 13px; line-height: 1.5;">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+    <nav class="foot-nav" aria-label="Разделы сайта">
+      <a href="/">Главная</a>
+      <a href="/ceny/">Цены</a>
+      <a href="/keysy/">Кейсы</a>
+      <a href="/blog/">Блог</a>
+      <a href="/about/">О себе</a>
+      <a href="/contacts/">Контакты</a>
+    </nav>
+    <div class="foot-legal">
+      <span>© 2026 Карацапов Даниил. Интернет-маркетинг.</span>
+      <a href="/politika/">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>
