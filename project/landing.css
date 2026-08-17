@@ -1257,6 +1257,9 @@ header.bg-pg > .glow, header.bg-pg > .pattern,
    донизу. Здесь она работает как основа под декором секций, а не как рисунок
    сама по себе: её задача — не дать фону стать плоской заливкой. */
 .page-atmos .pattern-grid {
+  /* Слой на клетку больше вьюпорта с каждой стороны: он едет через transform,
+     и без запаса на краю открывался бы шов. */
+  inset: -78px;
   background-image:
     linear-gradient(to right, rgba(255,255,255,0.024) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255,255,255,0.024) 1px, transparent 1px);
@@ -1264,9 +1267,12 @@ header.bg-pg > .glow, header.bg-pg > .pattern,
   -webkit-mask-image: radial-gradient(ellipse 92% 88% at 66% 20%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 84%);
   mask-image: radial-gradient(ellipse 92% 88% at 66% 20%, #000 0%, rgba(0,0,0,0.5) 44%, transparent 84%);
 }
-/* Шаг сдвига равен клетке — иначе на стыке цикла рисунок дёргается. */
+/* Шаг сдвига равен клетке — иначе на стыке цикла рисунок дёргается.
+   Через transform, а не background-position: сетка растянута на весь экран,
+   и её перерисовка на каждом кадре была вторым по стоимости местом на
+   странице после слоёв секций. */
 .page-atmos .pattern-grid.drifting { animation: gridmove78 54s linear infinite; }
-@keyframes gridmove78 { from { background-position: 0 0, 0 0; } to { background-position: 78px 78px, 78px 78px; } }
+@keyframes gridmove78 { to { transform: translate(78px, 78px); } }
 /* Свечения расставлены по вьюпорту, а не по секции: два сверху и снизу,
    чтобы на любом экране в кадре было хотя бы одно. */
 .page-atmos .pg-g1 { width: 620px; height: 620px; top: -180px; left: -160px;
@@ -1331,6 +1337,11 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
    на котором остановилась, и появление секции не выглядит как рывок.
    Селектор через :not, чтобы не перечислять восемь вариантов по именам. */
 .sec-fx:not(.live)::before, .sec-fx:not(.live)::after { animation-play-state: paused; }
+/* will-change здесь намеренно нет. Анимация transform и без него уходит в
+   композитор, а явное will-change заставляет держать отдельную текстуру под
+   каждый псевдоэлемент — при нескольких живых секциях это несколько
+   полноэкранных текстур в видеопамяти без выигрыша по кадрам. Замер разницы
+   не показал. */
 
 /* ── mesh: мягкие цветные пятна в медленном дрейфе ──
    Разные оттенки намеренно: одним акцентом пятна сливаются в ровное
@@ -1354,21 +1365,33 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
 .fx-mesh.flip::after { right: auto; left: -8%; bottom: auto; top: -24%; }
 
 /* ── beams: наклонные световые полосы ──
-   Рисунок наклоняется поворотом обёртки, а едет сдвигом фона ровно на период
-   (320px). Так цикл замыкается без рывка. Крутить и двигать одним transform
-   нельзя — второе перезапишет первое. */
-.fx-beams::before, .fx-beams::after { content: ''; position: absolute; inset: -45%; }
+   Наклон задан углом самого градиента, а не поворотом элемента. Так transform
+   остаётся свободным для движения — а движение обязано идти именно через
+   transform: сдвиг background-position заставляет браузер перерисовывать слой
+   на каждом кадре, и на слое во весь экран это стоит дороже всего остального
+   на странице вместе взятого.
+
+   Ось градиента под 15°, значит полосы наклонены на те же 15° к горизонтали.
+   Сдвиг по вертикали меняет фазу на d·cos15°, поэтому бесшовный шаг равен
+   периоду, делённому на cos15°: 200 / 0.966 ≈ 207.1px. Обе полосы — широкая
+   белая и тонкая акцентная — лежат в одном слое с общим периодом, чтобы их
+   двигал один transform.
+
+   Запас слоя равен шагу сдвига и задан в пикселях, а не в процентах. С
+   запасом в 60% слой выходил в 2.2 раза шире и выше блока — впятеро больше
+   пикселей на растеризацию, и это оказалось самой дорогой строчкой во всём
+   декоре. */
+.fx-beams::before, .fx-beams::after { content: ''; position: absolute; inset: -215px 0; }
 .fx-beams::before {
-  transform: rotate(-15deg);
-  background: repeating-linear-gradient(to bottom,
-    transparent 0 148px, rgba(255,255,255,0.028) 148px 206px, transparent 206px 320px);
-  animation: fxSlideY 30s linear infinite;
+  background-image:
+    repeating-linear-gradient(15deg, transparent 0 92px, rgba(255,255,255,0.028) 92px 131px, transparent 131px 200px),
+    repeating-linear-gradient(15deg, transparent 0 30px, color-mix(in srgb, var(--accent) 11%, transparent) 30px 34px, transparent 34px 200px);
+  animation: fxBeams 34s linear infinite;
 }
 .fx-beams::after {
-  transform: rotate(-15deg);
-  background: repeating-linear-gradient(to bottom,
-    transparent 0 470px, color-mix(in srgb, var(--accent) 11%, transparent) 470px 476px, transparent 476px 900px);
-  animation: fxSlideYSlow 46s linear infinite;
+  background: radial-gradient(ellipse 40% 46% at 74% 40%,
+    color-mix(in srgb, var(--accent) 9%, transparent) 0%, transparent 68%);
+  animation: fxFloatB 40s ease-in-out infinite;
 }
 
 /* ── strings: вертикальные нити с параллаксом ──
@@ -1384,10 +1407,16 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
    едут в разные стороны — получается параллакс, а не решётка. Шаг сдвига
    равен периоду каждого набора, поэтому цикл замыкается незаметно. */
 .fx-strings::before {
-  content: ''; position: absolute; inset: 0;
-  background-image:
-    repeating-linear-gradient(to right, rgba(255,255,255,0.055) 0 1px, transparent 1px 96px),
-    repeating-linear-gradient(to right, rgba(255,255,255,0.03) 0 1px, transparent 1px 37px);
+  content: ''; position: absolute; inset: 0 -120px;
+  /* Три линии разной яркости внутри одного периода в 96px — вместо двух
+     наборов с разным шагом. Наборов было два ради параллакса, но два разных
+     шага нельзя двигать одним transform, а движение через background-position
+     обходится в перерисовку слоя на каждом кадре. Неравномерная яркость даёт
+     тот же эффект ритма и стоит ровно ноль. */
+  background-image: repeating-linear-gradient(to right,
+    rgba(255,255,255,0.055) 0 1px, transparent 1px 32px,
+    rgba(255,255,255,0.022) 32px 33px, transparent 33px 64px,
+    rgba(255,255,255,0.034) 64px 65px, transparent 65px 96px);
   animation: fxStrings 40s linear infinite;
 }
 .fx-strings::after {
@@ -1401,7 +1430,7 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
    Два одинаковых слоя со сдвигом в полцикла. Одним слоем в конце анимации
    получается пустая пауза: кольца уже растворились, новые ещё не пошли. */
 .fx-rings::before, .fx-rings::after {
-  content: ''; position: absolute; inset: -40%;
+  content: ''; position: absolute; inset: -19%;
   background: repeating-radial-gradient(circle at 50% 50%,
     transparent 0 54px, rgba(255,255,255,0.085) 54px 55.5px, transparent 55.5px 110px);
   animation: fxRings 18s linear infinite;
@@ -1412,7 +1441,7 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
    Полосы под 45°, период поперёк 24px. По горизонтали сдвигать надо на
    24/sin45 ≈ 33.94px — на любой другой величине рисунок прыгает. */
 .fx-weave::before {
-  content: ''; position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0 -48px;
   background-image: repeating-linear-gradient(45deg,
     rgba(255,255,255,0.05) 0 1px, transparent 1px 24px);
   animation: fxWeave 22s linear infinite;
@@ -1426,7 +1455,7 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
 
 /* ── spark: точечное поле и проходящий по нему блик ── */
 .fx-spark::before {
-  content: ''; position: absolute; inset: 0;
+  content: ''; position: absolute; inset: -40px;
   background-image: radial-gradient(rgba(255,255,255,0.075) 1.2px, transparent 1.3px);
   background-size: 30px 30px;
   animation: fxDots 36s linear infinite;
@@ -1440,7 +1469,7 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
 
 /* ── aurora: широкая полоса света, медленно перетекающая ── */
 .fx-aurora::before {
-  content: ''; position: absolute; inset: -30% -10%;
+  content: ''; position: absolute; inset: -90px -8%;
   background: linear-gradient(102deg,
     transparent 24%,
     color-mix(in srgb, var(--accent) 12%, transparent) 44%,
@@ -1456,12 +1485,14 @@ section > .sec-fx ~ * { position: relative; z-index: 1; }
 
 @keyframes fxFloatA { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(70px,50px) scale(1.1); } }
 @keyframes fxFloatB { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-60px,-44px) scale(1.07); } }
-@keyframes fxSlideY { from { background-position: 0 0; } to { background-position: 0 320px; } }
-@keyframes fxSlideYSlow { from { background-position: 0 0; } to { background-position: 0 900px; } }
-@keyframes fxStrings { from { background-position: 0 0, 0 0; } to { background-position: 96px 0, -37px 0; } }
+/* Шаги подобраны по периоду рисунка: на любой другой величине цикл
+   замыкается рывком. beams — 300/cos15°, strings — период 96px,
+   weave — 24/sin45°, spark — размер клетки точек. */
+@keyframes fxBeams { to { transform: translateY(-207.1px); } }
+@keyframes fxStrings { to { transform: translateX(96px); } }
 @keyframes fxRings { from { transform: scale(0.72); opacity: 0; } 22% { opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
-@keyframes fxWeave { from { background-position: 0 0; } to { background-position: 33.94px 0; } }
-@keyframes fxDots { from { background-position: 0 0; } to { background-position: 30px -30px; } }
+@keyframes fxWeave { to { transform: translateX(33.94px); } }
+@keyframes fxDots { to { transform: translate(30px,-30px); } }
 @keyframes fxSweep { 0%,100% { transform: translateX(0); } 50% { transform: translateX(62%); } }
 @keyframes fxAurora { 0%,100% { transform: translateX(-6%) skewX(0deg); } 50% { transform: translateX(6%) skewX(-4deg); } }
 

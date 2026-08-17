@@ -390,12 +390,31 @@ function StarField() {
         ctx.fillStyle = 'rgba(196, 245, 62, 0.7)';
         ctx.fill();
       }
-    } else {
+    }
+
+    /* Цикл крутится, только пока блок в кадре. Раньше он шёл всё время: две
+       сотни звёзд пересчитывались и перерисовывались шестьдесят раз в секунду
+       и когда посетитель читал кейсы, и когда заполнял форму внизу страницы.
+       На быстрой машине это незаметно, на обычной складывается с остальным
+       движением на странице и даёт ту самую вязкость при прокрутке.
+
+       Наблюдатель ставится и в режиме пониженного движения тоже: там кадр
+       статичный, но пересчитывать его при возврате в кадр всё равно не нужно,
+       поэтому в reduce-ветке цикл просто не запускается. */
+    let io = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      io = new IntersectionObserver(([e]) => {
+        if (e.isIntersecting) { if (!reduce && !raf) frame(); }
+        else { cancelAnimationFrame(raf); raf = 0; }
+      }, { rootMargin: '120px 0px' });
+      io.observe(wrap);
+    } else if (!reduce) {
       frame();
     }
 
     return () => {
       cancelAnimationFrame(raf);
+      if (io) io.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('touchmove', onTouch);

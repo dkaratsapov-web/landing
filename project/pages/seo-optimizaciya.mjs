@@ -16,6 +16,7 @@
    встанет и сюда.
 */
 import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
+import { SVC_CSS, hero, mockSerp, related } from '../service-kit.mjs';
 
 export const meta = {
   path: '/seo-optimizaciya/',
@@ -186,18 +187,39 @@ ${b.items.map((i) => `          <li>${i}</li>`).join('\n')}
     return `        <div class="nof-i"><strong>${head}.</strong>${rest.join('. ')}</div>`;
   }).join('\n');
 
-  const body = `<header class="hero" data-screen-label="SEO-оптимизация">
-  <div class="wrap">
-    ${crumbs.visible}
-    <div class="eyebrow reveal">SEO</div>
-    <h1 class="reveal">Поиск отдаёт <span class="accent">не сразу</span></h1>
-    <p class="lead reveal">И это единственное честное, что можно сказать про SEO на первом экране. Дальше — что именно делается, за какие сроки видно первое движение и в каких четырёх случаях за это вообще не стоит браться.</p>
-    <div class="btn-row reveal">
-      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить сайт</a>
-      <a class="btn btn-ghost btn-lg" href="/blog/direkt-ili-seo/">Статья: Директ или SEO</a>
-    </div>
-  </div>
-</header>
+  /* Макет выдачи, а не абстрактная картинка: страница про поиск, и первое,
+     что стоит показать, — как выглядит результат работы. Рекламное место
+     сверху здесь не случайно: оно показывает, что органика и контекст стоят
+     на одной странице, а это ровно тот выбор, который разбирается ниже. */
+  const serp = mockSerp({
+    query: 'производство мебели на заказ москва',
+    items: [
+      { ad: true, title: 'Мебель на заказ — от 7 дней', url: 'mebel-primer.ru', desc: 'Замер бесплатно. Рассрочка. Гарантия 3 года.' },
+      { on: true, pos: '1', title: 'Производство мебели на заказ в Москве — цены и сроки',
+        url: 'vash-sajt.ru › proizvodstvo', desc: 'Собственный цех, замер за 1 день, договор с фиксированной ценой. Более 400 проектов за 6 лет.' },
+      { title: 'Мебель на заказ в Москве — каталог', url: 'katalog-primer.ru › mebel', desc: 'Кухни, шкафы, гардеробные. Фото работ, отзывы клиентов.' },
+    ],
+    cap: 'Место в органической выдаче не оплачивается за переход: расход не растёт вместе с трафиком.',
+  });
+
+  const body = `${hero({
+    label: 'SEO-оптимизация',
+    crumbs: crumbs.visible,
+    eyebrow: 'SEO-оптимизация · Яндекс и Google',
+    h1: 'SEO-оптимизация сайта <span class="accent">под поисковый спрос</span>',
+    utp: 'Готовлю сайт так, чтобы поиск начал его показывать: техническая база, структура под спрос, тексты и коммерческие факторы. <b>Без обещаний «ТОП-1 за месяц»</b> — со сроками, которые можно проверить.',
+    lead: 'Работаю сам, без перепродажи подряда. Ниже — что именно делается, за какие сроки видно первое движение и в каких четырёх случаях за SEO не стоит браться вовсе.',
+    ctas: `          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Разобрать мой сайт</a>
+          <a class="btn btn-ghost btn-lg" href="/blog/direkt-ili-seo/">Статья: Директ или SEO</a>`,
+    /* Цифры — то, что человек хочет знать до разговора: когда будет видно
+       результат и чем это отличается от рекламы по расходу. */
+    factList: [
+      ['3–4 <span>мес</span>', 'до первых сдвигов по позициям'],
+      ['6–12 <span>мес</span>', 'до ощутимого поискового трафика'],
+      ['<span>0 ₽</span> за клик', 'переход из органики ничего не стоит'],
+    ],
+    visual: serp,
+  })}
 
 <section class="section">
   <div class="wrap">
@@ -259,6 +281,8 @@ ${faqItems(FAQ)}
   </div>
 </section>
 
+${related('/seo-optimizaciya/', ['/kontekstnaya-reklama/', '/razrabotka-sajtov/', '/geo-servisy/'])}
+
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
@@ -295,5 +319,5 @@ ${faqItems(FAQ)}
     },
   ];
 
-  return { body, schema, extraHead: SEO_CSS };
+  return { body, schema, extraHead: `<style>${SVC_CSS}</style>` + SEO_CSS };
 }
