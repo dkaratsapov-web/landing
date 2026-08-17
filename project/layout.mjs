@@ -169,19 +169,21 @@ function footer() {
       ['/contacts/', 'Контакты'],
     ]],
   ];
+  /* Колонка услуг раскладывается в два столбца: девять пунктов в один
+     столбец растягивали футер вдвое выше остальных колонок. */
   const navCol = cols.map(([head, links]) => `      <div>
-        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 16px;">${head}</div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 11px;">${head}</div>
+        <div style="display: grid; grid-template-columns: ${links.length > 5 ? 'repeat(2, minmax(0, 1fr))' : '1fr'}; gap: 7px 24px;">
 ${links.map(([h, l]) => `          <a href="${h}" style="${FOOT_LINK}">${l}</a>`).join('\n')}
         </div>
       </div>`).join('\n');
 
   return `<footer class="footer">
-  <div class="wrap" style="padding-top:64px; padding-bottom:40px;">
-    <div class="footer-grid" style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line);">
+  <div class="wrap" style="padding-top:38px; padding-bottom:24px;">
+    <div class="footer-grid" style="display: grid; grid-template-columns: 1.1fr 1.5fr 0.8fr 0.9fr; gap: 26px 36px; padding-bottom: 26px; border-bottom: 1px solid var(--line);">
       <div>
         <a class="brand" href="/" style="font-size: 20px;">${PLANE}Даниил Карацапов</a>
-        <p style="color: var(--muted); margin: 18px 0 0; font-size: 15px; line-height: 1.55; max-width: 300px;">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
+        <p style="color: var(--muted); margin: 12px 0 0; font-size: 14px; line-height: 1.5; max-width: 300px;">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
       </div>
 ${navCol}
       <div>
@@ -193,7 +195,7 @@ ${navCol}
         </div>
       </div>
     </div>
-    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px;">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 18px;">
       <span style="color: var(--muted); font-size: 13px; line-height: 1.5;">© 2026 ${OPERATOR.name}. Интернет-маркетинг.${legalLine()}</span>
       <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
     </div>
