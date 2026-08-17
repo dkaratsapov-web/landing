@@ -428,6 +428,67 @@ writeFileSync(join(outDir, 'index.html'), html, 'utf8');
    четырнадцати ссылок против двадцати на генерируемых, — и при переходе
    между страницами подвал заметно менялся. Теперь копий нет: разметка
    берётся из layout.mjs, как и меню. */
+/* Бегущая строка. Трек содержит два одинаковых набора и едет на -50%: в
+   момент, когда первый набор уехал, на его месте оказывается второй, и петля
+   незаметна. Работает это ровно до тех пор, пока один набор шире экрана.
+   На гео-сервисах набор из шести коротких слов — около 1400px, и на широком
+   мониторе лента обрывалась справа: половина трека уже уехала, а показывать
+   на её месте было нечего.
+
+   Размножаем набор на сборке, а не в разметке: количество копий — свойство
+   ширины экрана, а не содержания, и держать его руками в трёх файлах значит
+   однажды забыть.
+
+   Число копий считается по длине текста в наборе: у одной ленты элемент —
+   короткое слово, у другой целое предложение, и одинаковое число копий даёт
+   либо дыру, либо трек в 37 000 пикселей. */
+function widenMarquees(html) {
+  return html.replace(/(<div class="marquee-track">)([\s\S]*?)(<\/div>)/g, (all, open, inner, close) => {
+    const items = splitMarqueeItems(inner);
+    if (items.length < 2 || items.length % 2) return all;
+    /* В разметке набор уже лежит дважды — берём половину за оригинал. */
+    const half = items.slice(0, items.length / 2);
+    const set = half.join('\n    ');
+
+    /* Сколько копий нужно, считаем по длине текста, а не берём с потолка.
+       Двенадцать копий на всех давали ленте контекста трек в 37 000px:
+       там элемент — целое предложение, и двух копий уже хватало с запасом.
+       Оценка грубая (символ ≈ 11px при здешних кеглях), но ошибиться она
+       может только в большую сторону, а лишний десяток span дешевле дыры. */
+    const TARGET = 4200;                                  // перекрывает 4K
+    const width = half.reduce((sum, it) =>
+      sum + it.replace(/<[^>]+>/g, '').trim().length * 11 + 56, 0);
+    const copies = Math.min(16, Math.max(2, Math.ceil(TARGET / Math.max(width, 1)) * 2));
+
+    return `${open}\n    ${Array(copies).fill(set).join('\n    ')}\n  ${close}`;
+  });
+}
+
+/* Разбор элементов ленты. Регулярка здесь не годится: у ленты-предупреждения
+   внутри элемента лежат ещё три span — иконка, выделения и разделитель, — и
+   «до первого </span>» отрезает элемент посередине. Считаем вложенность. */
+function splitMarqueeItems(inner) {
+  const OPEN = '<span class="marquee-item">';
+  const items = [];
+  let i = inner.indexOf(OPEN);
+  while (i >= 0) {
+    let depth = 0;
+    let j = i;
+    for (;;) {
+      const nextOpen = inner.indexOf('<span', j);
+      const nextClose = inner.indexOf('</span>', j);
+      if (nextClose < 0) return [];                       // разметка битая — не трогаем
+      if (nextOpen >= 0 && nextOpen < nextClose) { depth++; j = nextOpen + 5; continue; }
+      depth--;
+      j = nextClose + 7;
+      if (depth === 0) break;
+    }
+    items.push(inner.slice(i, j));
+    i = inner.indexOf(OPEN, j);
+  }
+  return items;
+}
+
 function replaceFooter(html, pageName) {
   const start = html.indexOf('<footer');
   const end = html.indexOf('</footer>', start);
@@ -562,7 +623,7 @@ for (const p of SUBPAGES) {
       if (!set) throw new Error(`build: нет подборки кейсов «${key}» (страница ${p})`);
       return cases(set);
     });
-    page = replaceFooter(replaceNav(page, p), p);
+    page = widenMarquees(replaceFooter(replaceNav(page, p), p));
     if (!page.includes('mob-dock')) page = page.replace('</body>', mobileDock() + '\n</body>');
     writeFileSync(join(outDir, p, 'index.html'), decorate(page), 'utf8');
     console.log('Copied subpage', p + '/index.html');
