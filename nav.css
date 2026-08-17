@@ -63,3 +63,66 @@
   padding-left: 18px; font-size: 16px;
   color: var(--lime-bright, var(--accent-bright, #c4f53e));
 }
+
+
+/* ── Шапка не должна прыгать между страницами ────────────────────────────
+   При прокрутке шапка «прилипала»: съезжала с 18px до 10px и обзаводилась
+   фоном. На одной странице это читается как приятная мелочь, но при
+   переходе на другую страница открывается сверху — и шапка отскакивает
+   обратно на 18px. Замер: были проскроллены, шапка на 10px, перешли —
+   стало 18px, разница в восемь пикселей на каждом переходе. Владелец сайта
+   описал это как «шапка скачет», и он прав.
+
+   Само прилипание остаётся: фон, граница и тень при прокрутке появляются
+   по-прежнему. Убрано только смещение по вертикали — оно и давало скачок,
+   а к сути эффекта отношения не имеет. */
+.nav.scrolled { top: 18px; }
+@media (max-width: 900px) {
+  .nav, .nav.scrolled { top: 10px; }
+}
+
+/* ── Быстрая связь на телефоне ───────────────────────────────────────────
+   Две кнопки, закреплённые внизу: слева Telegram, справа звонок. На
+   телефоне это два самых коротких пути до разговора, и оба обычно
+   находятся в самом низу страницы — то есть за десятком экранов прокрутки.
+
+   Только для телефонов: на десктопе номер и мессенджеры и так стоят в
+   шапке, а плавающие кнопки поверх контента там читаются как баннер.
+
+   Размер 54px — заметно больше порога в 24px, ниже которого палец
+   промахивается, и достаётся большим пальцем при хвате одной рукой. */
+.mob-dock { display: none; }
+@media (max-width: 640px) {
+  .mob-dock {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    position: fixed; z-index: 60; pointer-events: none;
+    left: 14px; right: 14px;
+    /* safe-area — чтобы кнопки не заезжали под полосу жестов на iPhone. */
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+  .mob-dock-btn {
+    pointer-events: auto;
+    width: 54px; height: 54px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 10px 28px rgba(0,0,0,.55);
+    transition: transform .18s cubic-bezier(.32,.72,0,1);
+  }
+  .mob-dock-btn:active { transform: scale(.93); }
+  .mob-dock-tg {
+    background: rgba(18,18,20,0.94); border: 1px solid var(--line-strong, rgba(255,255,255,.14));
+    color: var(--accent-bright, var(--lime-bright, #c4f53e));
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  }
+  .mob-dock-call {
+    background: var(--accent-bright, var(--lime-bright, #c4f53e)); border: none; color: #0c1402;
+  }
+  .mob-dock-btn svg { width: 24px; height: 24px; display: block; }
+
+  /* Кнопка квиза («Рассчитать проект») на телефоне и так скрыта штатным
+     правилом в landing.css — за место с доком они не спорят.
+
+     Подвал получает запас снизу: без него последние ссылки и строка с
+     копирайтом уходят под кнопки, а это единственное место страницы, где
+     док реально что-то перекрывает. */
+  .footer { padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+}
