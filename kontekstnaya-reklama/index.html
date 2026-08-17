@@ -44,6 +44,80 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Контекстная реклама в Яндекс Директ","provider":{"@type":"Person","name":"Даниил Карацапов"},"description":"Настройка и ведение рекламных кампаний в Яндекс Директ без агентской наценки","areaServed":"RU","url":"https://karatsapov.ru/kontekstnaya-reklama/"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://karatsapov.ru/"},{"@type":"ListItem","position":2,"name":"Контекстная реклама","item":"https://karatsapov.ru/kontekstnaya-reklama/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Сколько стоит контекстная реклама?","acceptedAnswer":{"@type":"Answer","text":"Стоимость складывается из двух частей: фиксированная плата за ведение кабинета (от 30 000 ₽/мес.) и рекламный бюджет, который уходит напрямую в Яндекс Директ. Точную сумму рассчитываю под вашу нишу на бесплатной консультации."}},{"@type":"Question","name":"Как быстро я получу первые заявки?","acceptedAnswer":{"@type":"Answer","text":"Первые клиенты приходят уже через 1–3 дня после запуска — без долгого ожидания и сложных этапов подготовки."}},{"@type":"Question","name":"Чем контекстная реклама лучше SEO?","acceptedAnswer":{"@type":"Answer","text":"Контекст даёт результат сразу, а не через месяцы продвижения. Вы платите за клики и конверсии заинтересованных пользователей и в любой момент контролируете расход и объём трафика."}},{"@type":"Question","name":"Можно ли настроить рекламу без сайта?","acceptedAnswer":{"@type":"Answer","text":"Да. Можно вести трафик на квиз, лендинг или профиль в Яндекс Бизнес. Но для большинства ниш я рекомендую посадочную страницу — она заметно повышает конверсию. При необходимости разработаю сайт под ключ."}},{"@type":"Question","name":"Как вы снижаете стоимость заявки?","acceptedAnswer":{"@type":"Answer","text":"За счёт точного таргетинга, проработки семантики, A/B‑тестов объявлений и регулярной оптимизации ставок. Чем выше релевантность и CTR — тем дешевле клик и заявка."}},{"@type":"Question","name":"Что входит в «ведение рекламы»?","acceptedAnswer":{"@type":"Answer","text":"Ежемесячная настройка и оптимизация кампаний, корректировка ставок и объявлений, добавление новых запросов, анализ конкурентов, ретаргетинг и подробные ежемесячные отчёты."}},{"@type":"Question","name":"Как вы отчитываетесь о работе?","acceptedAnswer":{"@type":"Answer","text":"Подключаю сквозную аналитику и присылаю регулярные прозрачные отчёты: вы всегда видите, на что тратится бюджет и какой он даёт результат."}},{"@type":"Question","name":"Можно ли приостановить рекламу?","acceptedAnswer":{"@type":"Answer","text":"Да, кампании можно поставить на паузу и возобновить в любой момент — остаток бюджета в Яндекс Директ при этом сохраняется."}}]}</script>
+<style>
+/* ── Услуги по контексту: разовая работа и цикл ──────────────────────────
+   Две услуги отличаются не объёмом, а природой: аудит заканчивается
+   документом, ведение повторяется каждый месяц. Раньше обе были одинаковыми
+   нумерованными списками, и это различие терялось. Теперь слева чек-лист
+   проверок, справа — цикл по неделям.
+
+   Префикс krs-: имена вроде .svc-card на странице уже заняты. */
+.krs { display: grid; gap: 18px; }
+@media (min-width: 900px) { .krs { grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr); } }
+.krs-card { border: 1px solid var(--line); border-radius: 20px; padding: 32px; background: var(--surface);
+  display: flex; flex-direction: column; }
+.krs-main { border-color: var(--line-2); background: linear-gradient(165deg, var(--surface-2), var(--surface)); }
+.krs-card h3 { margin: 0 0 10px; font-size: clamp(21px, 2.2vw, 26px); }
+.krs-kind { display: inline-block; align-self: flex-start; margin-bottom: 14px;
+  padding: 5px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  background: rgba(255,255,255,.06); color: var(--muted); }
+.krs-kind.on { background: var(--lime); color: var(--lime-ink, #0c1402); }
+.krs-lead { margin: 0 0 20px; font-size: 15px; line-height: 1.6; color: var(--muted); }
+
+/* Проверки — галочками, без нумерации: порядок здесь не важен, важен охват. */
+.krs-check { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.krs-check li { position: relative; padding-left: 26px; font-size: 15px; line-height: 1.5; color: var(--ink, #fff); }
+.krs-check li::before { content: '✓'; position: absolute; left: 0; top: 0;
+  color: var(--lime-bright); font-weight: 700; }
+
+/* Недели — наоборот, с номерами и вертикальной линией: здесь порядок и есть
+   смысл, работа идёт по кругу. */
+.krs-weeks { list-style: none; margin: 0; padding: 0 0 0 2px; display: flex; flex-direction: column; }
+.krs-weeks li { position: relative; display: grid; grid-template-columns: 92px minmax(0, 1fr);
+  gap: 14px; padding: 13px 0 13px 22px; font-size: 15px; line-height: 1.5; color: var(--ink, #fff); }
+.krs-weeks li::before { content: ''; position: absolute; left: 0; top: 20px;
+  width: 9px; height: 9px; border-radius: 50%; background: var(--lime); }
+/* Линия соединяет точки и обрывается на последней — цикл ведут дальше уже
+   следующий месяц, дорисовывать её в пустоту незачем. */
+.krs-weeks li:not(:last-child)::after { content: ''; position: absolute; left: 4px; top: 29px;
+  bottom: -13px; width: 1px; background: var(--line-2, rgba(255,255,255,.12)); }
+.krs-w { font-size: 13px; font-weight: 700; color: var(--lime-bright); white-space: nowrap; padding-top: 1px; }
+
+.krs-out, .krs-always { margin-top: 20px; padding: 16px 18px; border-radius: 14px;
+  background: rgba(255,255,255,.035); border: 1px solid var(--line);
+  font-size: 14.5px; line-height: 1.55; color: var(--muted); }
+.krs-out b, .krs-always b { display: block; margin-bottom: 4px; color: var(--ink, #fff); font-size: 13px;
+  letter-spacing: .05em; text-transform: uppercase; font-weight: 700; }
+
+/* margin-top: auto прижимает цену и кнопку к низу карточки. Содержимое у
+   карточек разной длины, и без этого две цены и два призыва стояли бы на
+   разных уровнях — глаз читает это как перекос вёрстки. Карточки при этом
+   тянутся до одной высоты (align-items у сетки не трогаем: stretch по
+   умолчанию — как раз то, что нужно). */
+.krs-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px;
+  margin: 22px 0 18px; padding-top: 18px; border-top: 1px solid var(--line);
+  margin-top: auto; }
+.krs-price { font-size: 19px; font-weight: 700; color: var(--ink, #fff); }
+.krs-price.on { color: var(--lime-bright); }
+.krs-term { font-size: 14px; color: var(--muted); }
+/* У .btn-row своего margin-top: auto быть не должно: два auto в одной
+   колонке делят свободное место между собой, и кнопка отрывается от цены.
+   Низ карточки прижимает .krs-foot, кнопка едет следом. */
+.krs-card .btn-row { margin-top: 0; }
+
+/* На телефоне колонка в 92px под подпись недели съедала четверть ширины, и
+   строки вроде «Корректировка ставок и перераспределение бюджета» ломались
+   на четыре куска. Подпись уходит над текстом — она короткая, отдельная
+   строка ей ничего не стоит, а текст получает всю ширину. */
+@media (max-width: 560px) {
+  .krs-card { padding: 24px 20px; }
+  .krs-weeks li { grid-template-columns: minmax(0, 1fr); gap: 3px; padding-left: 20px; }
+  .krs-weeks li::before { top: 18px; }
+  .krs-weeks li:not(:last-child)::after { top: 27px; }
+  .krs-out, .krs-always { padding: 14px 16px; }
+}
+</style>
   <link rel="stylesheet" href="/section-fx.css">
   <link rel="stylesheet" href="/nav.css">
   <script defer src="/section-fx.js"></script>
@@ -463,28 +537,53 @@
       <p class="eyebrow">Что я делаю</p>
       <h2>Услуги по <span class="accent">контекстной рекламе</span></h2>
     </div>
-    <div class="svc-grid stagger">
-      <div class="card svc-card">
+    <!-- Здесь стояли две одинаковые карточки с нумерованными списками 01–05 и
+         01–06. Услуги при этом разные по природе: аудит — разовая работа с
+         результатом в виде документа, ведение — процесс, который повторяется
+         каждый месяц. Одинаковая форма это различие прятала, а оно и есть
+         главное при выборе. Теперь слева перечень проверок, справа —
+         месячный цикл по неделям. -->
+    <div class="krs">
+      <div class="krs-card">
+        <div class="krs-kind">Разовая работа</div>
         <h3>Аудит рекламных кампаний</h3>
-        <ul class="svc-steps">
-          <li><span class="idx">01</span><span>Проверка текущих настроек и эффективности рекламы</span></li>
-          <li><span class="idx">02</span><span>Анализ ключевых слов, объявлений и ставок</span></li>
-          <li><span class="idx">03</span><span>Выявление ошибок и нецелевых расходов</span></li>
-          <li><span class="idx">04</span><span>Рекомендации по улучшению показателей</span></li>
-          <li><span class="idx">05</span><span>Отчёт с пошаговым планом оптимизации</span></li>
+        <p class="krs-lead">Открываю кабинет и смотрю пять зон, где чаще всего утекает бюджет.</p>
+        <ul class="krs-check">
+          <li>Структура кампаний и настройки</li>
+          <li>Ключевые слова и минус-слова</li>
+          <li>Объявления, ставки и стратегии</li>
+          <li>Нецелевые расходы и площадки</li>
+          <li>Цели и события в аналитике</li>
         </ul>
+        <div class="krs-out">
+          <b>На выходе</b>
+          Письменный отчёт: что чинить первым, что вторым, а что не трогать вовсе.
+        </div>
+        <div class="krs-foot">
+          <span class="krs-price">Экспресс — бесплатно</span>
+          <span class="krs-term">2–3 дня</span>
+        </div>
         <div class="btn-row"><a class="btn btn-ghost" href="/contacts/" data-lead-modal>Заказать аудит</a></div>
       </div>
-      <div class="card svc-card feature">
+
+      <div class="krs-card krs-main">
+        <div class="krs-kind on">Каждый месяц</div>
         <h3>Настройка и ведение рекламы</h3>
-        <ul class="svc-steps">
-          <li><span class="idx">01</span><span>Ежемесячная настройка и оптимизация кампаний</span></li>
-          <li><span class="idx">02</span><span>Регулярная корректировка ставок и объявлений</span></li>
-          <li><span class="idx">03</span><span>Добавление новых ключевых запросов</span></li>
-          <li><span class="idx">04</span><span>Анализ конкурентов и обновление стратегии</span></li>
-          <li><span class="idx">05</span><span>Ретаргетинг для возврата ушедших клиентов</span></li>
-          <li><span class="idx">06</span><span>Подробные ежемесячные отчёты</span></li>
-        </ul>
+        <p class="krs-lead">Реклама без ведения деградирует: конкуренты меняют ставки, запросы обрастают мусором, объявления выгорают. Поэтому работа идёт циклом.</p>
+        <ol class="krs-weeks">
+          <li><span class="krs-w">1&nbsp;неделя</span><span>Чистка поисковых запросов и площадок, минус-слова</span></li>
+          <li><span class="krs-w">2&nbsp;неделя</span><span>Корректировка ставок и перераспределение бюджета</span></li>
+          <li><span class="krs-w">3&nbsp;неделя</span><span>Тесты объявлений и новых ключевых запросов</span></li>
+          <li><span class="krs-w">4&nbsp;неделя</span><span>Отчёт по цифрам и план на следующий месяц</span></li>
+        </ol>
+        <div class="krs-always">
+          <b>Постоянно, вне цикла</b>
+          Ретаргетинг на ушедших, слежение за конкурентами, реакция на просадки — не по расписанию, а когда происходит.
+        </div>
+        <div class="krs-foot">
+          <span class="krs-price on">от 30 000 ₽/мес</span>
+          <span class="krs-term">запуск за 3–5 дней</span>
+        </div>
         <div class="btn-row"><a class="btn btn-lime" href="/contacts/" data-lead-modal>Заказать ведение <span class="arr">→</span></a></div>
       </div>
     </div>
