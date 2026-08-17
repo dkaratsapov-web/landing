@@ -779,8 +779,66 @@
 </section>
 <div class="sec-edge edge-node" aria-hidden="true"><span class="rule"></span><span class="node"></span></div>
 
+<!-- Блок кейсов подставляется на сборке из cases-data.mjs — здесь только
+     маркер. Данные по кейсам лежат в одном месте на весь сайт, и держать их
+     копию в разметке статической страницы значит гарантированно её
+     рассинхронизировать: цифры в кейсах уже расходились так однажды. -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Доказательства</div>
+      <h2>Кейсы по картам и справочникам</h2>
+      <p class="lead">Три проекта, где карточка в Яндекс Бизнесе стала отдельным каналом заявок. Названия убраны, цифры — из отчётов.</p>
+    </div>
+    <div class="pcase-grid stagger">
+      <article class="pcase">
+        <div class="pcase-top">
+          <div class="pcase-field">Премиальный ресторан</div>
+          <h3 class="pcase-name">Премиальный ресторан на Рублёвке</h3>
+          <div class="pcase-geo">Рублёво-Успенское шоссе, МО</div>
+        </div>
+        <div class="pcase-metrics">
+          <div class="pcase-m"><div class="pcase-mv">+110%</div><div class="pcase-ml">бронирований за 5 месяцев</div></div>
+          <div class="pcase-m"><div class="pcase-mv">65%</div><div class="pcase-ml">новых гостей из Яндекс Бизнес</div></div>
+          <div class="pcase-m"><div class="pcase-mv">ТОП-3</div><div class="pcase-ml">по запросу «рестораны на Рублёвке»</div></div>
+        </div>
+        <div class="kase-chips pcase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span></div>
+      </article>
+      <article class="pcase">
+        <div class="pcase-top">
+          <div class="pcase-field">Магазин техники Apple</div>
+          <h3 class="pcase-name">Магазин техники Apple в Твери</h3>
+          <div class="pcase-geo">Тверь</div>
+        </div>
+        <div class="pcase-metrics">
+          <div class="pcase-m"><div class="pcase-mv">+53%</div><div class="pcase-ml">продаж</div></div>
+          <div class="pcase-m"><div class="pcase-mv">ROI 420%</div><div class="pcase-ml">рекламы</div></div>
+          <div class="pcase-m"><div class="pcase-mv">33%</div><div class="pcase-ml">лидов даёт Яндекс Бизнес</div></div>
+        </div>
+        <div class="kase-chips pcase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика</span></div>
+      </article>
+      <article class="pcase">
+        <div class="pcase-top">
+          <div class="pcase-field">Многопрофильная клиника</div>
+          <h3 class="pcase-name">Многопрофильная клиника в Москве</h3>
+          <div class="pcase-geo">Москва</div>
+        </div>
+        <div class="pcase-metrics">
+          <div class="pcase-m"><div class="pcase-mv">+120%</div><div class="pcase-ml">записей на приём</div></div>
+          <div class="pcase-m"><div class="pcase-mv">5 900 ₽</div><div class="pcase-ml">средний чек (+25%)</div></div>
+          <div class="pcase-m"><div class="pcase-mv">55%</div><div class="pcase-ml">онлайн-записей через Яндекс Бизнес</div></div>
+        </div>
+        <div class="kase-chips pcase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика</span></div>
+      </article>
+    </div>
+    <p class="pcase-all reveal"><a class="btn btn-ghost" href="/keysy/">Все 22 кейса <span class="arr" aria-hidden="true">→</span></a></p>
+  </div>
+</section>
+<div class="sec-edge edge-hairline" aria-hidden="true"><span class="rule"></span><span class="glint"></span></div>
+
 <!-- ===================== ТАРИФЫ ===================== -->
 <section id="tarify" class="section">
+  <div class="sec-fx fx-beams" aria-hidden="true"></div>
   <div class="wrap">
     <div class="section-head center reveal">
       <p class="eyebrow center">Тарифы</p>
@@ -832,7 +890,7 @@
     <p class="tariff-note reveal">Бюджет на платное размещение (реклама на картах, подписки сервисов) оплачивается отдельно, напрямую сервисам. Цифры в тарифах — ориентир, итоговую стоимость согласуем после аудита.</p>
   </div>
 </section>
-<div class="sec-edge edge-hairline" aria-hidden="true"><span class="rule"></span><span class="glint"></span></div>
+<div class="sec-edge edge-chevron" aria-hidden="true"><svg viewBox="0 0 1200 84" preserveAspectRatio="none"><defs><linearGradient id="edg28" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--accent-bright)" stop-opacity="0"/><stop offset="50%" stop-color="var(--accent-bright)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--accent-bright)" stop-opacity="0"/></linearGradient></defs><path d="M0 30 L600 58 L1200 30" stroke="url(#edg28)"/></svg></div>
 
 <!-- ===================== БЕГУЩАЯ СТРОКА ===================== -->
 <div class="marquee reveal" aria-hidden="true">
@@ -854,7 +912,6 @@
 
 <!-- ===================== FAQ ===================== -->
 <section id="faq" class="section">
-  <div class="sec-fx fx-beams" aria-hidden="true"></div>
   <div class="wrap">
     <div class="section-head center reveal">
       <p class="eyebrow center">Частые вопросы</p>
@@ -872,10 +929,11 @@
     </div>
   </div>
 </section>
-<div class="sec-edge edge-chevron" aria-hidden="true"><svg viewBox="0 0 1200 84" preserveAspectRatio="none"><defs><linearGradient id="edg28" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--accent-bright)" stop-opacity="0"/><stop offset="50%" stop-color="var(--accent-bright)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--accent-bright)" stop-opacity="0"/></linearGradient></defs><path d="M0 30 L600 58 L1200 30" stroke="url(#edg28)"/></svg></div>
+<div class="sec-edge edge-dashes" aria-hidden="true"><span class="rule"></span></div>
 
 <!-- ===================== ФИНАЛЬНЫЙ CTA ===================== -->
 <section id="contacts" class="section">
+  <div class="sec-fx fx-spark" aria-hidden="true"></div>
   <div class="wrap">
     <div class="final-card reveal">
       <h2>Узнайте, сколько клиентов вы теряете <span class="accent">на картах</span> прямо сейчас</h2>
