@@ -1,19 +1,30 @@
 /* nav-hero-about.jsx — Nav, Hero (3 layout variants), About. Exported to window. */
 const { useState: useStateA, useEffect: useEffectA, useRef: useRefA } = React;
 
-const NAV_LINKS = [
-  ['Услуги', '/kompleksnyj-marketing/', [
+/* Группы должны совпадать с SERVICE_GROUPS из layout.mjs: там меню для
+   остальных страниц, здесь — для главной. Сборка сверяет оба списка и падает
+   при расхождении, так что разъехаться они уже не могут. */
+const SERVICE_GROUPS = [
+  ['Маркетинг', [
     ['Маркетинг под ключ', '/kompleksnyj-marketing/'],
     ['Контекстная реклама', '/kontekstnaya-reklama/'],
+    ['Таргетированная реклама', '/targetirovannaya-reklama/'],
+    ['Промостраницы Яндекса', '/promostranicy/'],
+    ['GEO-сервисы', '/geo-servisy/'],
+  ]],
+  ['Разработка', [
     ['Разработка сайтов', '/razrabotka-sajtov/'],
     ['SEO-оптимизация', '/seo-optimizaciya/'],
-    ['Таргетированная реклама', '/targetirovannaya-reklama/'],
-    ['GEO-сервисы', '/geo-servisy/'],
-    ['Промостраницы Яндекса', '/promostranicy/'],
+  ]],
+  ['Аналитика', [
     ['Сквозная аналитика', '/skvoznaya-analitika/'],
     ['Аудит рекламы', '/audit-reklamy/'],
-    ['Цены', '/ceny/'],
   ]],
+];
+
+const NAV_LINKS = [
+  ['Услуги', '/kompleksnyj-marketing/', SERVICE_GROUPS],
+  ['Цены', '/ceny/'],
   ['О себе', '/about/'],
   ['Блог', '/blog/'],
   ['Кейсы', '/keysy/'],
@@ -57,13 +68,18 @@ function Nav({ onCta }) {
                   {t}<svg className="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </span>
                 <div className="nav-dropdown">
-                  {sub.map(([st, sh]) =>
-                    sh.startsWith('/') ? (
-                      <a key={sh} href={sh} className="nav-drop-link">{st}</a>
-                    ) : (
-                      <a key={sh} href={sh} className="nav-drop-link" onClick={(e) => go(e, sh)}>{st}</a>
-                    )
-                  )}
+                  {sub.map(([group, items]) => (
+                    <div key={group} className="nav-drop-col">
+                      <div className="nav-drop-title">{group}</div>
+                      {items.map(([st, sh]) =>
+                        sh.startsWith('/') ? (
+                          <a key={sh} href={sh} className="nav-drop-link">{st}</a>
+                        ) : (
+                          <a key={sh} href={sh} className="nav-drop-link" onClick={(e) => go(e, sh)}>{st}</a>
+                        )
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             ) : h.startsWith('/') ? (
@@ -100,16 +116,22 @@ function Nav({ onCta }) {
               <a href={h} onClick={h.startsWith('/') ? (() => setOpen(false)) : ((e) => go(e, h))}
                  style={{ color: 'var(--txt)', textDecoration: 'none', fontSize: 18, padding: '12px 0',
                    borderBottom: sub ? 'none' : '1px solid var(--line)' }}>{t}</a>
-              {sub && sub.map(([st, sh]) => (
-                sh.startsWith('/') ? (
-                  <a key={sh} href={sh}
-                     style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 16, padding: '10px 0 10px 18px',
-                       borderBottom: '1px solid var(--line)' }}>{st}</a>
-                ) : (
-                  <a key={sh} href={sh} onClick={(e) => go(e, sh)}
-                     style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 16, padding: '10px 0 10px 18px',
-                       borderBottom: '1px solid var(--line)' }}>{st}</a>
-                )
+              {sub && sub.map(([group, items]) => (
+                <React.Fragment key={group}>
+                  <span style={{ color: 'var(--txt-3)', fontSize: 12, letterSpacing: '.1em',
+                    textTransform: 'uppercase', padding: '14px 0 6px' }}>{group}</span>
+                  {items.map(([st, sh]) => (
+                    sh.startsWith('/') ? (
+                      <a key={sh} href={sh}
+                         style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 16, padding: '10px 0 10px 18px',
+                           borderBottom: '1px solid var(--line)' }}>{st}</a>
+                    ) : (
+                      <a key={sh} href={sh} onClick={(e) => go(e, sh)}
+                         style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 16, padding: '10px 0 10px 18px',
+                           borderBottom: '1px solid var(--line)' }}>{st}</a>
+                    )
+                  ))}
+                </React.Fragment>
               ))}
             </React.Fragment>
           ))}

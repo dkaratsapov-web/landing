@@ -77,28 +77,48 @@ export const TG_URL = 'https://t.me/Daniil_065';
 export const MAX_URL = 'https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c';
 export const DZEN_URL = 'https://dzen.ru/karatsapov';
 
-/* Пункты выпадающего списка «Услуги». Один источник для десктопа и мобильного
-   меню — иначе они разъезжаются. */
-const SERVICES = [
-  ['/kompleksnyj-marketing/', 'Маркетинг под ключ'],
-  ['/kontekstnaya-reklama/', 'Контекстная реклама'],
-  ['/razrabotka-sajtov/', 'Разработка сайтов'],
-  ['/seo-optimizaciya/', 'SEO-оптимизация'],
-  ['/targetirovannaya-reklama/', 'Таргетированная реклама'],
-  ['/geo-servisy/', 'GEO-сервисы'],
-  ['/promostranicy/', 'Промостраницы Яндекса'],
-  ['/skvoznaya-analitika/', 'Сквозная аналитика'],
-  ['/audit-reklamy/', 'Аудит рекламы'],
-  ['/ceny/', 'Цены'],
+/* Пункты выпадающего списка «Услуги». Один источник для десктопа, мобильного
+   меню и статических страниц — иначе они разъезжаются.
+
+   Услуги в меню разложены по трём смыслам: чем привлекаем, что делаем с
+   сайтом, чем меряем. Плоский список из десяти пунктов приходилось читать
+   целиком, чтобы понять, есть ли нужное, — а по группам видно сразу.
+
+   «Цены» отсюда вынесены наверх, отдельным пунктом. Это не услуга, и внутри
+   выпадающего списка услуг они терялись ровно там, где их ищут чаще всего.
+
+   Порядок внутри групп — от общего к частному, а не по алфавиту: первым
+   идёт то, с чего чаще начинают разговор. */
+export const SERVICE_GROUPS = [
+  ['Маркетинг', [
+    ['/kompleksnyj-marketing/', 'Маркетинг под ключ'],
+    ['/kontekstnaya-reklama/', 'Контекстная реклама'],
+    ['/targetirovannaya-reklama/', 'Таргетированная реклама'],
+    ['/promostranicy/', 'Промостраницы Яндекса'],
+    ['/geo-servisy/', 'GEO-сервисы'],
+  ]],
+  ['Разработка', [
+    ['/razrabotka-sajtov/', 'Разработка сайтов'],
+    ['/seo-optimizaciya/', 'SEO-оптимизация'],
+  ]],
+  ['Аналитика', [
+    ['/skvoznaya-analitika/', 'Сквозная аналитика'],
+    ['/audit-reklamy/', 'Аудит рекламы'],
+  ]],
 ];
 
-function nav() {
-  const drops = SERVICES
-    .map(([href, label]) => `          <a href="${href}" class="nav-drop-link">${label}</a>`)
-    .join('\n');
-  const mobileDrops = SERVICES
-    .map(([href, label]) => `  <a href="${href}" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">${label}</a>`)
-    .join('\n');
+export function nav() {
+  const drops = SERVICE_GROUPS.map(([title, items]) => `          <div class="nav-drop-col">
+            <div class="nav-drop-title">${title}</div>
+${items.map(([href, label]) => `            <a href="${href}" class="nav-drop-link">${label}</a>`).join('\n')}
+          </div>`).join('\n');
+  /* В мобильном меню группы тоже подписаны, но без колонок: там всё в один
+     столбец, и подпись — единственное, что отделяет одну группу от другой. */
+  const mobileDrops = SERVICE_GROUPS.map(([title, items]) =>
+    `  <span class="nav-mobile-group">${title}</span>\n`
+    + items.map(([href, label]) =>
+      `  <a href="${href}" class="nav-mobile-sub">${label}</a>`).join('\n')
+  ).join('\n');
 
   return `<nav class="nav" id="siteNav">
   <div class="wrap">
@@ -113,6 +133,7 @@ function nav() {
 ${drops}
         </div>
       </div>
+      <a href="/ceny/">Цены</a>
       <a href="/about/">О себе</a>
       <a href="/blog/">Блог</a>
       <a href="/keysy/">Кейсы</a>
@@ -136,6 +157,7 @@ ${drops}
 <div class="nav-mobile" id="navMobile">
   <a href="/kontekstnaya-reklama/">Услуги</a>
 ${mobileDrops}
+  <a href="/ceny/">Цены</a>
   <a href="/about/">О себе</a>
   <a href="/blog/">Блог</a>
   <a href="/keysy/">Кейсы</a>
@@ -154,12 +176,15 @@ function legalLine() {
 }
 
 function footer() {
-  /* Колонка услуг берётся из SERVICES, а не переписывается руками: список
-     услуг вырос до девяти пунктов, и вторая его копия разъехалась бы с
-     меню на первой же новой странице. «Цены» из неё убраны — они уходят
-     во вторую колонку, к остальным разделам сайта. */
+  /* Колонка услуг берётся из SERVICE_GROUPS, а не переписывается руками:
+     список услуг вырос до девяти пунктов, и вторая его копия разъехалась бы
+     с меню на первой же новой странице. Группы здесь разворачиваются в
+     плоский перечень: в подвале подписи групп были бы третьим уровнем
+     заголовков подряд — «Услуги», потом «Маркетинг», потом сами ссылки, —
+     и колонка стала бы выше остальных вдвое. «Цены» стоят во второй
+     колонке, к остальным разделам сайта. */
   const cols = [
-    ['Услуги', SERVICES.filter(([href]) => href !== '/ceny/')],
+    ['Услуги', SERVICE_GROUPS.flatMap(([, items]) => items)],
     ['Разделы', [
       ['/', 'Главная'],
       ['/keysy/', 'Кейсы'],
@@ -426,6 +451,7 @@ ${verify}
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
 <link rel="stylesheet" href="/section-fx.css">
+<link rel="stylesheet" href="/nav.css">
 <link rel="stylesheet" href="/motion.css">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">

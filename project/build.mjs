@@ -12,7 +12,7 @@ import { execFileSync } from 'node:child_process';
 import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
-import { renderPage, seoConfig, decorate } from './layout.mjs';
+import { renderPage, seoConfig, decorate, nav, SERVICE_GROUPS } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
@@ -86,6 +86,7 @@ copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
 /* Декор секций и разделители — общие для главной и внутренних страниц. */
 copyFileSync(join(srcDir, 'section-fx.css'), join(outDir, 'section-fx.css'));
 copyFileSync(join(srcDir, 'section-fx.js'), join(outDir, 'section-fx.js'));
+copyFileSync(join(srcDir, 'nav.css'), join(outDir, 'nav.css'));
 
 // Домен для GitHub Pages. Пишется на каждой сборке: этим файлом Pages и
 // определяет, по какому адресу отдавать сайт, и без него привязка слетает.
@@ -263,6 +264,7 @@ ${verifyTags}
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
   <link rel="stylesheet" href="section-fx.css" />
+  <link rel="stylesheet" href="nav.css" />
   <script defer src="section-fx.js"></script>
   <link rel="stylesheet" href="motion.css" />
   <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -392,6 +394,78 @@ ${scriptTags}
 `;
 writeFileSync(join(outDir, 'index.html'), html, 'utf8');
 
+/* Меню на статических страницах подменяется на сборке.
+   Раньше у каждой из шести страниц была своя копия шапки и мобильного меню
+   в HTML. Любая правка меню означала обход всех файлов вручную, и одна-две
+   страницы каждый раз оставались со старым списком — ровно так на сайте и
+   разъезжались пункты. Теперь источник один: nav() из layout.mjs.
+
+   Замена по границам тегов, а не разбором HTML: разметка своя, границы
+   предсказуемы, и лишняя зависимость ради шести файлов не нужна. Но если
+   границы вдруг не найдутся, сборка обязана упасть — молча оставить старое
+   меню хуже, чем не собраться. */
+function replaceNav(html, pageName) {
+  const fresh = nav();
+  const navHtml = fresh.slice(0, fresh.indexOf('</nav>') + 6);
+  const mobHtml = fresh.slice(fresh.indexOf('<div class="nav-mobile"'));
+
+  const navStart = html.indexOf('<nav class="nav"');
+  const navEnd = html.indexOf('</nav>', navStart);
+  if (navStart < 0 || navEnd < 0) {
+    throw new Error(`build: на странице ${pageName} не найдена шапка <nav class="nav">`);
+  }
+  let out = html.slice(0, navStart) + navHtml + html.slice(navEnd + 6);
+
+  const mobStart = out.indexOf('<div class="nav-mobile"');
+  if (mobStart < 0) {
+    throw new Error(`build: на странице ${pageName} не найдено мобильное меню .nav-mobile`);
+  }
+  /* Мобильное меню — плоский список ссылок без вложенных <div>, поэтому его
+     конец — первый же </div> после последнего пункта. */
+  const mobEnd = out.indexOf('</div>', out.indexOf('/contacts/', mobStart));
+  if (mobEnd < 0) {
+    throw new Error(`build: на странице ${pageName} не найден конец .nav-mobile`);
+  }
+  return out.slice(0, mobStart) + mobHtml + out.slice(mobEnd + 6);
+}
+
+/* Сверка меню главной с меню остальных страниц.
+   Главная — React-приложение, её меню собирает nav-hero-about.jsx и живёт
+   отдельным списком; остальные страницы берут SERVICE_GROUPS из layout.mjs.
+   Два списка одного и того же — это приглашение им разойтись, и уж точно
+   не тогда, когда правку делают в спешке. Сборка падает при первом же
+   расхождении: неверное меню в проде хуже несобранного деплоя.
+
+   Сверяем состав и порядок, а не формат: в jsx пары идут как
+   [название, адрес], здесь — [адрес, название]. */
+function checkNavInSync() {
+  const jsx = readFileSync(join(srcDir, 'nav-hero-about.jsx'), 'utf8');
+  const start = jsx.indexOf('const SERVICE_GROUPS');
+  const end = jsx.indexOf('];', start);
+  if (start < 0 || end < 0) throw new Error('build: в nav-hero-about.jsx не найден SERVICE_GROUPS');
+  const block = jsx.slice(start, end);
+
+  const fromJsx = [...block.matchAll(/\['([^']+)',\s*'(\/[^']*)'\]/g)].map((m) => m[2]);
+  const fromLayout = SERVICE_GROUPS.flatMap(([, items]) => items.map(([href]) => href));
+
+  const a = fromJsx.join(' → ');
+  const b = fromLayout.join(' → ');
+  if (a !== b) {
+    throw new Error('build: меню главной и меню остальных страниц разошлись.\n'
+      + `  nav-hero-about.jsx: ${a || '(пусто)'}\n`
+      + `  layout.mjs:         ${b}`);
+  }
+
+  const groupsJsx = [...block.matchAll(/\['([^']+)',\s*\[/g)].map((m) => m[1]);
+  const groupsLayout = SERVICE_GROUPS.map(([title]) => title);
+  if (groupsJsx.join(' → ') !== groupsLayout.join(' → ')) {
+    throw new Error('build: названия групп в меню разошлись.\n'
+      + `  nav-hero-about.jsx: ${groupsJsx.join(' → ')}\n`
+      + `  layout.mjs:         ${groupsLayout.join(' → ')}`);
+  }
+}
+checkNavInSync();
+
 // Static subpages — copy each folder's index.html verbatim so the deploy is
 // complete (CI builds dist from scratch; without this the subpages vanish).
 const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
@@ -411,8 +485,10 @@ for (const p of SUBPAGES) {
     if (!page.includes('section-fx.css')) {
       page = page.replace('</head>',
         '  <link rel="stylesheet" href="/section-fx.css">\n'
+        + '  <link rel="stylesheet" href="/nav.css">\n'
         + '  <script defer src="/section-fx.js"></script>\n</head>');
     }
+    page = replaceNav(page, p);
     writeFileSync(join(outDir, p, 'index.html'), decorate(page), 'utf8');
     console.log('Copied subpage', p + '/index.html');
   }
