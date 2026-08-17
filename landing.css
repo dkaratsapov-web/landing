@@ -197,9 +197,16 @@ section { position: relative; }
    больше нет. Токены --tile-a и --tile-b оставлены: на них завязаны
    карточки и плашки внутри секций, где перепад работает как надо —
    маленькая поверхность на большом фоне читается как объект, а не как шов. */
-.bg-pg   { background: var(--pg); }
-.bg-a    { background: var(--pg); }
-.bg-b    { background: var(--pg); }
+/* Фоны секций прозрачные — и это главное решение против полос на стыках.
+   Пока у каждой секции был свой непрозрачный фон и свой слой атмосферы,
+   границы между блоками неизбежно расходились: свечение гасло к краю,
+   разделитель-волна оставался без фона вовсе, и получался тёмный провал
+   в семьдесят пикселей. Лечили это трижды и трижды возвращалось, потому
+   что чинили следствие.
+   Теперь цвет один — на body, а атмосфера одна на всю страницу и лежит
+   под содержимым. Стыков между фонами больше нет физически: их некому
+   образовать. */
+.bg-pg, .bg-a, .bg-b { background: transparent; }
 .bg-black{ background: #000; }
 
 /* ---------- Type helpers (Cyrillic-tuned tracking) ---------- */
@@ -707,12 +714,23 @@ h2.section-title {
    Restrained, accent-tinted, sits behind content. Honors
    prefers-reduced-motion (drift freezes, opacity stays).
    ============================================================ */
-.atmos { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
-  contain: strict;   /* isolate paint/layout so background drift doesn't repaint the section */
-  /* fade the animated background toward the top/bottom edges so glows don't form
-     hard blobs at section borders — smooths the transition between blocks */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%); }
+.atmos { position: absolute; inset: 0; overflow: clip; pointer-events: none; z-index: 0;
+  contain: strict;   /* слой не перерисовывает секцию при дрейфе свечений */ }
+
+/* Маска стоит на свечениях, а не на всём слое. Разница принципиальная, и
+   именно из-за неё на стыках держалась тёмная полоса.
+   Гашение всего .atmos убирало у краёв секции и сетку тоже. Складывалось
+   три тёмных участка подряд: низ секции без фона, разделитель-волна, у
+   которого своего фона нет вовсе, и верх следующей секции. Суммарно около
+   семидесяти пикселей заметно темнее остального — это и читалось как
+   чёрная полоса между блоками.
+   Теперь сетка идёт до краёв и переходит через разделитель непрерывно, а
+   гасятся только пятна света — ради чего маска и вводилась: чтобы свечение
+   не обрывалось на границе блока жёстким пятном. */
+.atmos .glow {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 82%, transparent 100%);
+}
 .no-atmos .atmos { display: none; }
 section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-index: 1; }
 
@@ -1206,3 +1224,41 @@ header.bg-pg > .glow, header.bg-pg > .pattern,
   -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 140px), transparent 100%);
   mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 140px), transparent 100%);
 }
+
+/* Сетка внутри разделителя-волны. Повторяет .pattern-grid один в один,
+   включая размер клетки, — иначе на стыке видно смещение рисунка.
+   Без маски: разделитель низкий, гасить в нём нечего, а любое затухание
+   вернуло бы ту самую тёмную полосу. */
+.wave-grid {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.no-atmos .wave-grid { display: none; }
+
+
+/* ── Общая атмосфера страницы ────────────────────────────────────────────
+   Один слой на всю главную вместо слоя в каждой секции. Закреплён во
+   вьюпорте: при прокрутке сетка и свечения остаются на месте, содержимое
+   едет поверх. Побочная выгода — перерисовки нет вовсе, слой считается
+   один раз. */
+.page-atmos { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: clip; }
+.page-atmos .pattern { position: absolute; inset: 0; }
+.page-atmos .glow { position: absolute; border-radius: 50%; }
+/* Свечения расставлены по вьюпорту, а не по секции: два сверху и снизу,
+   чтобы на любом экране в кадре было хотя бы одно. */
+.page-atmos .pg-g1 { width: 620px; height: 620px; top: -180px; left: -160px;
+  background: radial-gradient(circle, rgba(182,240,30,0.10) 0%, rgba(182,240,30,0.05) 34%, rgba(182,240,30,0.015) 58%, transparent 76%);
+  animation: drift1 26s ease-in-out infinite; }
+.page-atmos .pg-g2 { width: 540px; height: 540px; bottom: -160px; right: -140px;
+  background: radial-gradient(circle, rgba(182,240,30,0.07) 0%, rgba(182,240,30,0.035) 34%, rgba(182,240,30,0.012) 58%, transparent 76%);
+  animation: drift2 32s ease-in-out infinite; }
+/* Содержимое поднято над атмосферой. Без этого фиксированный слой перекрыл
+   бы текст: в потоке он идёт раньше, но position: fixed выносит его наверх.
+   Селекторы без привязки к классу body намеренно: landing.css грузит только
+   главная, на других страницах своя атмосфера в dark.css. */
+#root > main, #root > footer, #root > .nav, #root > .nav-mobile,
+main, .footer, .nav, .nav-mobile { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .page-atmos .glow { animation: none !important; } }
