@@ -190,54 +190,48 @@ function legalLine() {
   return bits.length ? ` ${bits.join(' · ')}.` : '';
 }
 
-function footer() {
-  /* Колонка услуг берётся из SERVICE_GROUPS, а не переписывается руками:
-     список услуг вырос до девяти пунктов, и вторая его копия разъехалась бы
-     с меню на первой же новой странице. Группы здесь разворачиваются в
-     плоский перечень: в подвале подписи групп были бы третьим уровнем
-     заголовков подряд — «Услуги», потом «Маркетинг», потом сами ссылки, —
-     и колонка стала бы выше остальных вдвое. «Цены» стоят во второй
-     колонке, к остальным разделам сайта. */
-  const cols = [
-    ['Услуги', SERVICE_GROUPS.flatMap(([, items]) => items)],
-    ['Разделы', [
-      ['/', 'Главная'],
-      ['/keysy/', 'Кейсы'],
-      ['/about/', 'О себе'],
-      ['/blog/', 'Блог'],
-      ['/ceny/', 'Цены'],
-      ['/contacts/', 'Контакты'],
-    ]],
-  ];
-  /* Колонка услуг раскладывается в два столбца: девять пунктов в один
-     столбец растягивали футер вдвое выше остальных колонок. */
-  const navCol = cols.map(([head, links]) => `      <div>
-        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 11px;">${head}</div>
-        <div style="display: grid; grid-template-columns: ${links.length > 5 ? 'repeat(2, minmax(0, 1fr))' : '1fr'}; gap: 7px 24px;">
-${links.map(([h, l]) => `          <a href="${h}" style="${FOOT_LINK}">${l}</a>`).join('\n')}
-        </div>
-      </div>`).join('\n');
+/* Разделы подвала. Один список на весь сайт: раньше подвал существовал в
+   четырёх копиях — в этом файле, в главной на React и в статических
+   страницах, — и копии разошлись по составу ссылок. */
+export const FOOTER_LINKS = [
+  ['/', 'Главная'],
+  ['/ceny/', 'Цены'],
+  ['/keysy/', 'Кейсы'],
+  ['/blog/', 'Блог'],
+  ['/about/', 'О себе'],
+  ['/contacts/', 'Контакты'],
+];
+
+export const FOOTER_ABOUT = 'Частный интернет-маркетолог. Контекст, таргет, '
+  + 'сайты и аналитика — лично, от аудита до заявок.';
+
+/* Перечня услуг в подвале больше нет. Это были те же девять ссылок, что и в
+   меню на каждой странице: сквозные ссылки поисковики учитывают скупо, а
+   подвал из-за них разрастался в четыре колонки. Услуги остались в меню, в
+   ценах и в блоках смежных услуг на самих страницах услуг. */
+export function siteFooter() {
+  const links = FOOTER_LINKS
+    .map(([h, t]) => `      <a href="${h}">${t}</a>`).join('\n');
 
   return `<footer class="footer">
-  <div class="wrap" style="padding-top:38px; padding-bottom:24px;">
-    <div class="footer-grid" style="display: grid; grid-template-columns: 1.1fr 1.5fr 0.8fr 0.9fr; gap: 26px 36px; padding-bottom: 26px; border-bottom: 1px solid var(--line);">
+  <div class="wrap foot">
+    <div class="foot-top">
       <div>
         <a class="brand" href="/" style="font-size: 20px;">${PLANE}Даниил Карацапов</a>
-        <p style="color: var(--muted); margin: 12px 0 0; font-size: 14px; line-height: 1.5; max-width: 300px;">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
+        <p class="foot-about">${FOOTER_ABOUT}</p>
       </div>
-${navCol}
-      <div>
-        <div style="color: var(--muted-2); font-size: 13px; margin-bottom: 16px;">Связь</div>
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <a href="tel:+79963470065" style="${FOOT_LINK}">+7 (996) 347-00-65</a>
-          <a href="${TG_URL}" target="_blank" rel="noopener noreferrer" style="${FOOT_LINK}">Telegram @Daniil_065</a>
-          <a href="mailto:d.karatsapov@gmail.com" style="color: var(--lime); text-decoration: none; font-size: 15px;">d.karatsapov@gmail.com</a>
-        </div>
+      <div class="foot-contacts">
+        <a href="tel:${OPERATOR.phoneTel}">${OPERATOR.phone}</a>
+        <a href="${TG_URL}" target="_blank" rel="noopener noreferrer">Telegram @Daniil_065</a>
+        <a class="foot-mail" href="mailto:${OPERATOR.email}">${OPERATOR.email}</a>
       </div>
     </div>
-    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 18px;">
-      <span style="color: var(--muted); font-size: 13px; line-height: 1.5;">© 2026 ${OPERATOR.name}. Интернет-маркетинг.${legalLine()}</span>
-      <a href="/politika/" style="color: var(--muted); font-size: 13px; text-decoration: none;">Политика конфиденциальности</a>
+    <nav class="foot-nav" aria-label="Разделы сайта">
+${links}
+    </nav>
+    <div class="foot-legal">
+      <span>© 2026 ${OPERATOR.name}. Интернет-маркетинг.${legalLine()}</span>
+      <a href="/politika/">Политика конфиденциальности</a>
     </div>
   </div>
 </footer>`;
@@ -467,6 +461,7 @@ ${verify}
 <link rel="stylesheet" href="/pages.css">
 <link rel="stylesheet" href="/section-fx.css">
 <link rel="stylesheet" href="/nav.css">
+<link rel="stylesheet" href="/footer.css">
 <link rel="stylesheet" href="/motion.css">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -501,7 +496,7 @@ ${decorate(body)}
 
 </main>
 
-${footer()}
+${siteFooter()}
 
 </div>
 

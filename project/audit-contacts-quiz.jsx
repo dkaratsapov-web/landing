@@ -403,66 +403,46 @@ function QuizFab({ onOpen }) {
 }
 
 /* ---------------- FOOTER ---------------- */
-function Footer({ onCta }) {
+/* Подвал сокращён и приведён к общему виду. Раньше их было четыре разных:
+   здесь, в layout.mjs и по копии в статических страницах — состав ссылок
+   разошёлся, и подвал менялся на глазах при переходе между страницами.
+   Разметка теперь совпадает с layout.mjs до класса; сборка сверяет списки
+   ссылок и падает при расхождении, как уже делает для меню. */
+const FOOTER_LINKS = [
+  ['/', 'Главная'],
+  ['/ceny/', 'Цены'],
+  ['/keysy/', 'Кейсы'],
+  ['/blog/', 'Блог'],
+  ['/about/', 'О себе'],
+  ['/contacts/', 'Контакты'],
+];
+
+function Footer() {
   return (
     <footer className="footer">
-      <div className="wrap" style={{ paddingTop: 38, paddingBottom: 24 }}>
-        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.1fr 1.5fr 0.8fr 0.9fr', gap: '26px 36px', paddingBottom: 26,
-          borderBottom: '1px solid var(--line)' }}>
+      <div className="wrap foot">
+        <div className="foot-top">
           <div>
             <a className="brand" href="#top" style={{ fontSize: 20 }}><BrandPlane />Даниил Карацапов</a>
-            <p className="muted" style={{ margin: '12px 0 0', fontSize: 14, lineHeight: 1.5, maxWidth: 300 }}>
+            <p className="foot-about">
               Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.
             </p>
           </div>
-          {/* Раньше здесь была одна колонка «Навигация», а услуги в ней
-              представлял якорь #services. То есть самая авторитетная
-              страница сайта не ссылалась ни на одну страницу услуги — ни для
-              человека, ни для поисковика. Теперь услуги вынесены в
-              собственную колонку и ведут на страницы, а не на блок. Список
-              продублирован из NAV_LINKS сознательно: главная собирается
-              отдельно от layout.mjs, и общего источника у них нет.
-
-              Группы разворачиваются в плоский перечень, и пропустить это
-              нельзя. После разбивки меню по группам NAV_LINKS[0][2] стал
-              массивом групп — футер честно вывел их названия как ссылки
-              («Маркетинг», «Разработка», «Аналитика»), а адресом подставил
-              весь вложенный массив, приведённый к строке. Такая ссылка ведёт
-              на 404, и владелец сайта нашёл её раньше меня. */}
-          <div>
-            <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 11 }}>Услуги</div>
-            {/* Два столбца: девять пунктов в один растягивали футер вдвое
-                выше соседних колонок. */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '7px 24px' }}>
-              {NAV_LINKS[0][2].flatMap(([, items]) => items).map(([t, h]) =>
-              <a key={h} href={h} style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>{t}</a>
-              )}
-            </div>
-          </div>
-          <div>
-            <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 11 }}>Разделы</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-              {[['Обо мне', '/about/'], ['Кейсы', '/keysy/'], ['Блог', '/blog/'], ['Цены', '/ceny/'], ['Контакты', '/contacts/']].map(([t, h]) =>
-              <a key={h} href={h} style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>{t}</a>
-              )}
-            </div>
-          </div>
-          <div>
-            <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 11 }}>Связь</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-              <a href="tel:+79963470065" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>+7 (996) 347-00-65</a>
-              <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>Telegram @Daniil_065</a>
-              <a href="/contacts/" onClick={(e) => {e.preventDefault();onCta();}} style={{ color: 'var(--accent-bright)', textDecoration: 'none', fontSize: 15 }}>Обсудить задачу</a>
-            </div>
+          <div className="foot-contacts">
+            <a href="tel:+79963470065">+7 (996) 347-00-65</a>
+            <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram @Daniil_065</a>
+            <a className="foot-mail" href="mailto:d.karatsapov@gmail.com">d.karatsapov@gmail.com</a>
           </div>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, paddingTop: 18 }}>
-          <span className="fine">© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
-          <a href="/politika/" className="fine" style={{ color: 'var(--txt-2)', textDecoration: 'none' }}>Политика конфиденциальности</a>
+        <nav className="foot-nav" aria-label="Разделы сайта">
+          {FOOTER_LINKS.map(([h, t]) => <a key={h} href={h}>{t}</a>)}
+        </nav>
+        <div className="foot-legal">
+          <span>© 2026 Даниил Карацапов. Интернет-маркетинг.</span>
+          <a href="/politika/">Политика конфиденциальности</a>
         </div>
       </div>
     </footer>);
-
 }
 
 /* ---------------- LEAD FORM MODAL (universal popup) ---------------- */

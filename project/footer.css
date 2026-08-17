@@ -1,0 +1,80 @@
+/* footer.css — подвал, одинаковый на всех страницах.
+
+   Было четыре разных подвала: на генерируемых страницах двадцать ссылок, на
+   главной девятнадцать, на статических от двенадцати до четырнадцати —
+   каждая страница несла свою копию разметки, и копии разъехались. При
+   переходе между страницами подвал менялся на глазах.
+
+   Стало: одна разметка из layout.mjs, одни стили здесь, подстановка на
+   сборке для страниц со своим <head>.
+
+   Почему короче. В подвале лежал полный список услуг в две колонки — те же
+   девять пунктов, что и в меню на каждой странице. Ссылочный вес это давало
+   слабый (сквозные ссылки поисковики учитывают скупо), а подвал вырастал в
+   четыре колонки, и глазу в нём было не за что зацепиться. Осталось то, за
+   чем в подвал реально приходят: контакты и разделы.
+
+   Файл подключается последним, как и nav.css: он перекрывает исторические
+   правила .footer из landing.css и dark.css. */
+
+.footer .foot { padding-top: 40px; padding-bottom: 26px; }
+
+/* Верх: слева кто это, справа как связаться. Две колонки, а не четыре. */
+.foot-top {
+  display: grid; gap: 24px;
+  padding-bottom: 24px; border-bottom: 1px solid var(--line, rgba(255,255,255,.09));
+}
+@media (min-width: 760px) {
+  .foot-top { grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 40px; }
+}
+
+/* Логотип возвращаем во флекс. В landing.css и dark.css есть правило
+   `.footer a { display: inline-block }` — оно добавлялось ради вертикальных
+   полей под палец и заодно перебивало inline-flex у .brand: значок вставал
+   отдельной строкой над именем. */
+.footer .brand { display: inline-flex; align-items: center; gap: 11px; }
+
+.foot-about {
+  margin: 12px 0 0; max-width: 42ch;
+  font-size: 14px; line-height: 1.55;
+  color: var(--muted, var(--txt-2, #a1a1a6));
+}
+
+.foot-contacts { display: flex; flex-direction: column; gap: 9px; }
+@media (min-width: 760px) { .foot-contacts { align-items: flex-end; } }
+.foot-contacts a {
+  font-size: 15px; text-decoration: none;
+  color: var(--muted, var(--txt-2, #a1a1a6));
+  /* Вертикальные поля — под палец: без них ссылка в подвале даёт зону
+     касания в 18px при норме 24. */
+  padding: 3px 0;
+}
+.foot-contacts a:hover { color: var(--ink, #f5f5f7); }
+.foot-mail { color: var(--lime, var(--accent, #b6f01e)) !important; }
+
+/* Разделы — строкой, а не колонкой: шесть коротких ссылок в ряд занимают
+   одну строку вместо шести и читаются как оглавление, а не как список. */
+.foot-nav {
+  display: flex; flex-wrap: wrap; gap: 10px 26px;
+  padding: 18px 0 4px;
+}
+.foot-nav a {
+  font-size: 15px; text-decoration: none; padding: 3px 0;
+  color: var(--muted, var(--txt-2, #a1a1a6));
+}
+.foot-nav a:hover { color: var(--ink, #f5f5f7); }
+
+.foot-legal {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px 20px;
+  padding-top: 16px; margin-top: 14px;
+  border-top: 1px solid var(--line, rgba(255,255,255,.09));
+  font-size: 13px; line-height: 1.5;
+  color: var(--muted, var(--txt-2, #a1a1a6));
+}
+.foot-legal a { color: inherit; text-decoration: none; padding: 3px 0; }
+.foot-legal a:hover { color: var(--ink, #f5f5f7); }
+
+/* Старая сетка подвала осталась в landing.css и dark.css со своими
+   медиазапросами. Гасим её здесь, чтобы не выискивать все места: разметки с
+   этим классом больше нет ни на одной странице. */
+.footer .footer-grid { display: none; }

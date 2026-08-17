@@ -12,7 +12,8 @@ import { execFileSync } from 'node:child_process';
 import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
-import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS } from './layout.mjs';
+import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS,
+  siteFooter, FOOTER_LINKS } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import { cases, CASE_SETS } from './service-kit.mjs';
 import { CASE_PAGES, caseGrid, CASE_GRID_CSS } from './case-page.mjs';
@@ -93,6 +94,7 @@ copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
 copyFileSync(join(srcDir, 'section-fx.css'), join(outDir, 'section-fx.css'));
 copyFileSync(join(srcDir, 'section-fx.js'), join(outDir, 'section-fx.js'));
 copyFileSync(join(srcDir, 'nav.css'), join(outDir, 'nav.css'));
+copyFileSync(join(srcDir, 'footer.css'), join(outDir, 'footer.css'));
 
 // Домен для GitHub Pages. Пишется на каждой сборке: этим файлом Pages и
 // определяет, по какому адресу отдавать сайт, и без него привязка слетает.
@@ -282,6 +284,7 @@ ${verifyTags}
   <link rel="stylesheet" href="landing.css" />
   <link rel="stylesheet" href="section-fx.css" />
   <link rel="stylesheet" href="nav.css" />
+  <link rel="stylesheet" href="footer.css" />
   <script defer src="section-fx.js"></script>
   <link rel="stylesheet" href="motion.css" />
   <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -421,6 +424,19 @@ writeFileSync(join(outDir, 'index.html'), html, 'utf8');
    предсказуемы, и лишняя зависимость ради шести файлов не нужна. Но если
    границы вдруг не найдутся, сборка обязана упасть — молча оставить старое
    меню хуже, чем не собраться. */
+/* Подвал статических страниц. Каждая несла свою копию — от двенадцати до
+   четырнадцати ссылок против двадцати на генерируемых, — и при переходе
+   между страницами подвал заметно менялся. Теперь копий нет: разметка
+   берётся из layout.mjs, как и меню. */
+function replaceFooter(html, pageName) {
+  const start = html.indexOf('<footer');
+  const end = html.indexOf('</footer>', start);
+  if (start < 0 || end < 0) {
+    throw new Error(`build: на странице ${pageName} не найден подвал <footer>`);
+  }
+  return html.slice(0, start) + siteFooter() + html.slice(end + '</footer>'.length);
+}
+
 function replaceNav(html, pageName) {
   const fresh = nav();
   const navHtml = fresh.slice(0, fresh.indexOf('</nav>') + 6);
@@ -455,6 +471,25 @@ function replaceNav(html, pageName) {
 
    Сверяем состав и порядок, а не формат: в jsx пары идут как
    [название, адрес], здесь — [адрес, название]. */
+/* Подвал главной живёт в JSX и собирается отдельно от layout.mjs — общего
+   источника у них нет. Сверяем списки ссылок: разойдясь, они снова дадут два
+   разных подвала, а заметно это станет только при переходе со страницы на
+   страницу, то есть не сразу. */
+function checkFooterInSync() {
+  const jsx = readFileSync(join(srcDir, 'audit-contacts-quiz.jsx'), 'utf8');
+  const start = jsx.indexOf('const FOOTER_LINKS');
+  const end = jsx.indexOf('];', start);
+  if (start < 0 || end < 0) throw new Error('build: в audit-contacts-quiz.jsx не найден FOOTER_LINKS');
+  const fromJsx = [...jsx.slice(start, end).matchAll(/\['(\/[^']*)',\s*'([^']+)'\]/g)]
+    .map((m) => `${m[1]} ${m[2]}`).join(' → ');
+  const fromLayout = FOOTER_LINKS.map(([h, t]) => `${h} ${t}`).join(' → ');
+  if (fromJsx !== fromLayout) {
+    throw new Error('build: подвал главной и подвал остальных страниц разошлись.\n'
+      + `  audit-contacts-quiz.jsx: ${fromJsx || '(пусто)'}\n`
+      + `  layout.mjs:              ${fromLayout}`);
+  }
+}
+
 function checkNavInSync() {
   const jsx = readFileSync(join(srcDir, 'nav-hero-about.jsx'), 'utf8');
   const start = jsx.indexOf('const SERVICE_GROUPS');
@@ -482,6 +517,7 @@ function checkNavInSync() {
   }
 }
 checkNavInSync();
+checkFooterInSync();
 
 // Static subpages — copy each folder's index.html verbatim so the deploy is
 // complete (CI builds dist from scratch; without this the subpages vanish).
@@ -503,6 +539,7 @@ for (const p of SUBPAGES) {
       page = page.replace('</head>',
         '  <link rel="stylesheet" href="/section-fx.css">\n'
         + '  <link rel="stylesheet" href="/nav.css">\n'
+        + '  <link rel="stylesheet" href="/footer.css">\n'
         + '  <script defer src="/section-fx.js"></script>\n</head>');
     }
     /* Блок кейсов по маркеру <!--#cases:КЛЮЧ-->. Статические страницы не
@@ -525,7 +562,7 @@ for (const p of SUBPAGES) {
       if (!set) throw new Error(`build: нет подборки кейсов «${key}» (страница ${p})`);
       return cases(set);
     });
-    page = replaceNav(page, p);
+    page = replaceFooter(replaceNav(page, p), p);
     if (!page.includes('mob-dock')) page = page.replace('</body>', mobileDock() + '\n</body>');
     writeFileSync(join(outDir, p, 'index.html'), decorate(page), 'utf8');
     console.log('Copied subpage', p + '/index.html');

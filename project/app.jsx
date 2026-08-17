@@ -136,7 +136,7 @@ function App() {
       <Contacts onCta={openLead} />
       <SectionEdge variant="hairline" />
       </main>
-      <Footer onCta={openLead} />
+      <Footer />
       {t.showQuiz && <QuizFab onOpen={() => setQuizOpen(true)} />}
       <QuizModal open={quizOpen} onClose={() => setQuizOpen(false)} />
       <LeadFormModal open={leadOpen} onClose={() => setLeadOpen(false)} />

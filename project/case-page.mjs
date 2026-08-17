@@ -8,11 +8,11 @@
    Гнать их через тяжёлый каркас значит получить страницу с пустыми
    рамками там, где должны быть снимки.
 
-   Про фотографии. На страницах кейсов их нет намеренно. Снимки в портфолио
-   сняты «как есть» — на части из них вывеска с названием заведения, и
-   обезличенный заголовок над фотографией вывески выглядит нелепо: текст
-   говорит «магазин техники», картинка называет бренд. Либо обезличиваем
-   по-настоящему, либо не обезличиваем вовсе; выбрано первое.
+   Про фотографии. Снимки остаются — обезличиваются только названия. На
+   части фотографий видна вывеска, и владелец сайта решил это оставить:
+   живой снимок объекта убеждает сильнее, чем пустая плашка. У трёх кейсов
+   снимка нет вовсе, поэтому вёрстка обязана выглядеть прилично и без
+   картинки — вместо неё выводится плашка с нишей, а не битый <img>.
 
    Про заголовки. h1 — это поисковый запрос («Яндекс Директ для
    строительной компании»), а не название проекта. По названию бренда никто
@@ -71,6 +71,32 @@ const CASE_PAGE_CSS = `
   color: var(--lime-bright); font-variant-numeric: tabular-nums; }
 .kp-num-l { margin-top: 6px; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
 
+/* Снимок объекта между шапкой и цифрами. Если фотографии нет, блока нет
+   вовсе: пустая плашка в 21:9 читается как дыра в вёрстке, а не как «здесь
+   могла быть картинка». На витрине она, наоборот, нужна — там карточки
+   стоят в ряд, и без неё соседи разъезжаются по высоте.
+ 21:9 — намеренно узкая полоса:
+   фотографии сняты на телефон в разных пропорциях, и общая рамка приводит
+   их к одному виду, а object-fit не даёт растянуть кадр. */
+.kp-shot { margin-top: 30px; }
+.kp-img { position: relative; aspect-ratio: 21 / 9; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--line); }
+.kp-img img { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; }
+@media (max-width: 700px) { .kp-img { aspect-ratio: 16 / 10; } }
+
+/* Плашка под снимком: она же запасной вариант, когда фотографии нет. Лежит
+   в потоке всегда, картинка просто накрывает её сверху. */
+.kp-img-ph, .kg-img-ph {
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #16241c, #0b120e);
+}
+.kp-img-ph > span, .kg-img-ph > span {
+  padding: 0 24px; text-align: center;
+  font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.34);
+}
+
 .kp-body { max-width: 68ch; }
 .kp-body p { font-size: 16.5px; line-height: 1.7; color: var(--muted); margin: 0 0 18px; }
 
@@ -108,6 +134,21 @@ const CASE_PAGE_CSS = `
 .kp-rel-m { margin-top: 12px; font-size: 14px; color: var(--muted); }
 .kp-all { margin: 26px 0 0; text-align: center; }
 `;
+
+
+/* Снимок кейса. У трёх кейсов из двадцати двух фотографии нет, и это не
+   исключение «на потом»: половина клиентов материалов не передаёт. Пустой
+   src даёт в браузере иконку битой картинки, поэтому вместо него — плашка с
+   нишей. onerror дополнительно страхует от пропавшего файла: картинка
+   убирается, плашка под ней остаётся видна. */
+function shot(c, cls) {
+  if (!c.img) {
+    return `<div class="${cls} ${cls}-ph"><span>${c.field}</span></div>`;
+  }
+  return `<div class="${cls} ${cls}-ph"><span>${c.field}</span>`
+    + `<img src="/${c.img}" alt="${c.field}, ${c.geo}" loading="lazy" decoding="async"`
+    + ` onerror="this.remove()"></div>`;
+}
 
 const chips = (list) => `<div class="kase-chips">${list
   .map((s) => `<span class="kase-chip">${s}</span>`).join('')}</div>`;
@@ -156,6 +197,7 @@ export function casePage(c) {
       <span class="kp-meta-i">География: <b>${c.geo}</b></span>
       ${chips(c.services)}
     </div>
+    ${c.img ? `<div class="kp-shot reveal">${shot(c, 'kp-img')}</div>` : ''}
     <div class="kp-nums stagger">
 ${nums}
     </div>
@@ -287,6 +329,7 @@ export function caseGrid() {
     const [v, l] = c.metrics[0];
     const [v2, l2] = c.metrics[1] || [];
     return `      <a class="kg-i" href="${caseUrl(c.slug)}" data-tags="${c.tags.join(' ')}" style="--d:${i}">
+        ${shot(c, 'kg-img')}
         <div class="kg-f">${c.field}</div>
         <h3 class="kg-t">${c.h1}</h3>
         <div class="kg-geo">${c.geo}</div>
@@ -319,6 +362,14 @@ export const CASE_GRID_CSS = `
 .kg { display: grid; gap: 14px; margin-top: 26px; }
 @media (min-width: 700px)  { .kg { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1080px) { .kg { grid-template-columns: repeat(3, 1fr); } }
+/* Снимок в карточке — во всю её ширину, без внутреннего поля: фотография,
+   отступившая от краёв рамки, читается как вложенная картинка в документе, а
+   не как обложка карточки. */
+.kg-img { position: relative; aspect-ratio: 16 / 9; margin: -24px -22px 16px;
+  border-radius: 17px 17px 0 0; overflow: hidden; }
+.kg-img img { position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; }
+
 .kg-i { display: flex; flex-direction: column; padding: 24px 22px 20px;
   border: 1px solid var(--line); border-radius: 18px; background: var(--surface);
   text-decoration: none; color: inherit;
