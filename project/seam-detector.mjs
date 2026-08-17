@@ -54,26 +54,37 @@ export function findSeams(data, info) {
   const hits = [];
   for (const [side, xs] of Object.entries(edges)) {
     const tone = (y) => rowTone(data, info.width, info.channels, y, xs);
+    /* Среднее и размах по всему окну, а не пара отсчётов по его краям.
+       Проба по краям промахивалась на любом узоре, шаг которого близок к
+       длине окна: дуги фоновых колец идут через двадцать четыре пикселя, и
+       обе пробы попадали на соседние дуги — сверху одинаково, снизу
+       одинаково, «ровная плоскость». Размах это ловит сразу: внутри узора
+       тон гуляет на три единицы, внутри настоящей плоскости — на доли. */
+    const band = (from, to) => {
+      let sum = 0, min = Infinity, max = -Infinity;
+      for (let y = from; y <= to; y++) {
+        const v = tone(y);
+        sum += v;
+        if (v < min) min = v;
+        if (v > max) max = v;
+      }
+      return { avg: sum / (to - from + 1), spread: max - min };
+    };
     let last = -99;
     for (let y = HOLD + 2; y < info.height - HOLD - 2; y++) {
-      const d = tone(y) - tone(y - 1);
-      if (Math.abs(d) < JUMP) continue;
-      /* Ступенька, а не градиент: тон держится ровно по обе стороны.
-         Окна одинаковые и длиной в HOLD — это и есть то, что отличает полосу
-         от рисунка. С коротким окном проверка считала полосой любую тонкую
-         линию фона: дуга контура шириной в пару пикселей даёт точно такой же
-         скачок тона, как настоящая граница, и на семи строках они
-         неразличимы. Отдельная проба на середине окна нужна против частого
-         узора: линии с шагом ровно в десять пикселей попадали и в -10, и в
-         -20, обе давали одинаковый «ровный» отсчёт, и зона узора читалась
-         как сплошная светлая плоскость. */
-      if (Math.abs(tone(y - 1) - tone(y - HOLD)) > FLAT) continue;
-      if (Math.abs(tone(y - 1) - tone(y - HOLD / 2)) > FLAT) continue;
-      if (Math.abs(tone(y + HOLD) - tone(y + 2)) > FLAT) continue;
-      if (Math.abs(tone(y + HOLD) - tone(y)) > FLAT) continue;
+      if (Math.abs(tone(y) - tone(y - 1)) < JUMP) continue;
       if (y - last < 10) continue;
+      const above = band(y - HOLD, y - 1);
+      const below = band(y, y + HOLD - 1);
+      /* Ступенька между двумя плоскостями: обе ровные, и тона у них разные.
+         Полоса, которую видит глаз, — это прослойка в десятки пикселей (та,
+         что владелец находил на стыках, была около семидесяти), поэтому
+         длина окна в двадцать строк оставляет дефекту тройной запас. */
+      if (above.spread > FLAT * 2 || below.spread > FLAT * 2) continue;
+      const d = below.avg - above.avg;
+      if (Math.abs(d) < JUMP) continue;
       last = y;
-      hits.push({ side, y, d, up: tone(y - 1), dn: tone(y) });
+      hits.push({ side, y, d, up: above.avg, dn: below.avg });
     }
   }
   hits.sort((a, b) => a.y - b.y);

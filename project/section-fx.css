@@ -1,0 +1,360 @@
+/* section-fx.css — декоративные слои внутри секций и разделители между ними.
+
+   Общий файл: подключается и главной, и всеми внутренними страницами. Раньше
+   лежал в landing.css, который грузит только главная, — и остальной сайт
+   оставался с одной ровной подложкой на всё.
+
+   Условие, при котором это безопасно, одно и то же везде: под всей страницей
+   должен идти непрерывный фон, а у секций своего непрозрачного фона быть не
+   должно. На главной непрерывность держит .page-atmos, на внутренних — .bg-fx.
+   Оба закреплены во вьюпорте, поэтому стыка «фон к фону» не существует в
+   принципе, и полосе между блоками взяться неоткуда.
+*/
+
+/* ============================================================
+   SECTION FX — свой декоративный слой у каждой секции
+   ============================================================
+   Зачем: общая атмосфера страницы одна на всё, и без этого слоя сайт
+   выглядит одинаково сверху донизу. Раньше разнообразие давали отдельные
+   атмосферы в каждой секции — и ровно они порождали тёмные полосы на
+   стыках: фон секции гас к краю, а у разделителя своего фона не было.
+
+   Почему здесь этого не происходит. Секции остаются прозрачными, под ними
+   по-прежнему лежит непрерывная основа: .page-atmos на главной, .bg-fx на
+   внутренних. Декор кладётся ПОВЕРХ неё и гаснет в ноль к своим краям. У границы секции
+   виден только общий фон — тон на всех стыках одинаковый, обрывать нечего.
+
+   Отсюда два правила, которые нельзя нарушать:
+   • не давать секциям непрозрачный фон;
+   • не снимать маску с .sec-fx и не доводить её вплотную к краю.
+
+   Маска стоит на самом слое, а не на его содержимом. Это ровно обратно
+   тому, как сделано в .atmos, и разница по делу: там слой нёс ещё и сетку,
+   которая обязана идти непрерывно, поэтому гасить приходилось только пятна
+   света. Здесь непрерывную основу держит .page-atmos, а в .sec-fx лежит
+   один декор — его и надо гасить целиком.
+
+   Проверка — не на глаз: node project/check.mjs меряет тон пикселями по
+   обе стороны каждого стыка. Порог заметности 1.5 единицы. */
+
+.sec-fx {
+  position: absolute; inset: 0; overflow: clip; pointer-events: none;
+  z-index: 0;
+  contain: strict;   /* декор не заставляет секцию пересчитывать раскладку */
+  /* Затухание в долях высоты блока, а не в пикселях. С фиксированными 96px
+     получалось так: декор гас за 96px до низа секции, потом шёл разделитель
+     в 84px, потом ещё 96px разгона в следующей секции — и на стыке зияла
+     тёмная зона почти в триста пикселей. Ровно та полоса, от которой всё и
+     затевалось, только сделанная моими же руками. На главной перепад не
+     дотягивал до порога заметности, на внутренних страницах дотянул сразу на
+     семи адресах.
+
+     С долями резкой границы «есть декор / нет декора» не возникает вовсе:
+     яркость меняется плавно по всей высоте блока, и стыку неоткуда взяться
+     при любой его высоте. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 34%, #000 66%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 34%, #000 66%, transparent 100%);
+}
+/* Слой позиционируется от секции, значит секции нужен собственный контекст.
+   overflow: clip его не создаёт — это разные вещи.
+
+   Правило по тегу, а не по классу. Первая версия ловила .sec и header — и
+   пропустила .section-sm на статических страницах: у тех секций точки отсчёта
+   не оказалось, inset: 0 отмерился от всей страницы, и слой растянулся на
+   семнадцать тысяч пикселей поверх всего документа. Классов у секций на сайте
+   четыре штуки (sec, section, section-sm, hero), и перечислять их — значит
+   однажды снова забыть один. */
+section:has(> .sec-fx), header:has(> .sec-fx) { position: relative; }
+section > .sec-fx ~ *, header > .sec-fx ~ * { position: relative; z-index: 1; }
+.no-atmos .sec-fx { display: none; }
+
+/* Движение только у секций рядом с экраном — класс вешает IntersectionObserver
+   в SectionFx. Пауза, а не отключение: анимация продолжится с того же кадра,
+   на котором остановилась, и появление секции не выглядит как рывок.
+   Селектор через :not, чтобы не перечислять восемь вариантов по именам. */
+.sec-fx:not(.live)::before, .sec-fx:not(.live)::after { animation-play-state: paused; }
+/* will-change здесь намеренно нет. Анимация transform и без него уходит в
+   композитор, а явное will-change заставляет держать отдельную текстуру под
+   каждый псевдоэлемент — при нескольких живых секциях это несколько
+   полноэкранных текстур в видеопамяти без выигрыша по кадрам. Замер разницы
+   не показал. */
+
+/* ── mesh: мягкие цветные пятна в медленном дрейфе ──
+   Разные оттенки намеренно: одним акцентом пятна сливаются в ровное
+   подсвеченное поле, двумя — читается объём. */
+.fx-mesh::before, .fx-mesh::after { content: ''; position: absolute; border-radius: 50%; }
+.fx-mesh::before {
+  width: min(62vw, 760px); aspect-ratio: 1; top: -22%; left: -12%;
+  background: radial-gradient(circle,
+    color-mix(in srgb, var(--accent) 15%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 6%, transparent) 34%, transparent 68%);
+  animation: fxFloatA 34s ease-in-out infinite;
+}
+.fx-mesh::after {
+  width: min(54vw, 640px); aspect-ratio: 1; bottom: -26%; right: -10%;
+  background: radial-gradient(circle, rgba(88,150,255,0.085) 0%, rgba(88,150,255,0.03) 36%, transparent 68%);
+  animation: fxFloatB 44s ease-in-out infinite;
+}
+/* Зеркальная раскладка тех же пятен — чтобы вариант можно было повторить
+   на другой секции, и он не читался как та же самая картинка. */
+.fx-mesh.flip::before { left: auto; right: -12%; top: auto; bottom: -20%; }
+.fx-mesh.flip::after { right: auto; left: -8%; bottom: auto; top: -24%; }
+
+/* ── beams: наклонные световые полосы ──
+   Наклон задан углом самого градиента, а не поворотом элемента. Так transform
+   остаётся свободным для движения — а движение обязано идти именно через
+   transform: сдвиг background-position заставляет браузер перерисовывать слой
+   на каждом кадре, и на слое во весь экран это стоит дороже всего остального
+   на странице вместе взятого.
+
+   Ось градиента под 15°, значит полосы наклонены на те же 15° к горизонтали.
+   Сдвиг по вертикали меняет фазу на d·cos15°, поэтому бесшовный шаг равен
+   периоду, делённому на cos15°: 200 / 0.966 ≈ 207.1px. Обе полосы — широкая
+   белая и тонкая акцентная — лежат в одном слое с общим периодом, чтобы их
+   двигал один transform.
+
+   Запас слоя равен шагу сдвига и задан в пикселях, а не в процентах. С
+   запасом в 60% слой выходил в 2.2 раза шире и выше блока — впятеро больше
+   пикселей на растеризацию, и это оказалось самой дорогой строчкой во всём
+   декоре. */
+.fx-beams::before, .fx-beams::after { content: ''; position: absolute; inset: -215px 0; }
+.fx-beams::before {
+  background-image:
+    repeating-linear-gradient(15deg, transparent 0 92px, rgba(255,255,255,0.028) 92px 131px, transparent 131px 200px),
+    repeating-linear-gradient(15deg, transparent 0 30px, color-mix(in srgb, var(--accent) 11%, transparent) 30px 34px, transparent 34px 200px);
+  animation: fxBeams 34s linear infinite;
+}
+.fx-beams::after {
+  background: radial-gradient(ellipse 40% 46% at 74% 40%,
+    color-mix(in srgb, var(--accent) 9%, transparent) 0%, transparent 68%);
+  animation: fxFloatB 40s ease-in-out infinite;
+}
+
+/* ── strings: вертикальные нити с параллаксом ──
+   Здесь стояли концентрические контуры, и от них пришлось отказаться:
+   у любой замкнутой кривой есть участки, где она идёт горизонтально, а
+   почти горизонтальная дуга размазывается по строкам и читается ровно как
+   тёмная полоса — пиксельная проверка находила скачок тона до пяти единиц
+   при пороге в полторы. Вынос центра за угол проблему не решил, а только
+   перенёс её с одного края блока на другой.
+
+   Вертикальные линии от этого свободны по построению: горизонтальной
+   границы они не образуют ни при каком сдвиге. Два набора с разным шагом
+   едут в разные стороны — получается параллакс, а не решётка. Шаг сдвига
+   равен периоду каждого набора, поэтому цикл замыкается незаметно. */
+.fx-strings::before {
+  content: ''; position: absolute; inset: 0 -120px;
+  /* Три линии разной яркости внутри одного периода в 96px — вместо двух
+     наборов с разным шагом. Наборов было два ради параллакса, но два разных
+     шага нельзя двигать одним transform, а движение через background-position
+     обходится в перерисовку слоя на каждом кадре. Неравномерная яркость даёт
+     тот же эффект ритма и стоит ровно ноль. */
+  background-image: repeating-linear-gradient(to right,
+    rgba(255,255,255,0.055) 0 1px, transparent 1px 32px,
+    rgba(255,255,255,0.022) 32px 33px, transparent 33px 64px,
+    rgba(255,255,255,0.034) 64px 65px, transparent 65px 96px);
+  animation: fxStrings 40s linear infinite;
+}
+.fx-strings::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, transparent 28%,
+    color-mix(in srgb, var(--accent) 9%, transparent) 46%, transparent 64%);
+  animation: fxSweep 30s ease-in-out infinite;
+}
+
+/* ── rings: расходящиеся волны ──
+   Центр вынесен за левый край, и это не вкусовое решение. У окружности с
+   центром внутри блока есть верхняя и нижняя точки, где дуга идёт строго
+   горизонтально через весь блок, — та же болезнь, что была у контуров: почти
+   горизонтальная дуга размазывается по строкам и читается как тёмная полоса.
+   Проверка ловила её на странице контекста, причём не всегда: кольца
+   анимируются, и попадёт дуга в кадр или нет, зависело от фазы.
+
+   С центром за краем в блоке видны только боковые участки дуг — они идут
+   почти вертикально, и горизонтальных касательных не остаётся ни при какой
+   фазе. Полностью это вопрос не сняло: дуга большого радиуса идёт вдоль
+   колонки замера и даёт по ней длинный участок повышенного тона — то есть
+   опасны оказались не только горизонтальные касательные, но и вертикальные.
+   Поэтому яркость колец подобрана так, чтобы перепад оставался ниже порога
+   заметности при любой их ориентации. Начало координат для масштабирования сдвинуто туда же, иначе волны
+   расходились бы не от своего центра, а просто ехали вбок.
+
+   Два одинаковых слоя со сдвигом в полцикла: одним в конце анимации выходит
+   пустая пауза — прежние волны растворились, новые ещё не пошли. */
+.fx-rings::before, .fx-rings::after {
+  content: ''; position: absolute; inset: -19%;
+  background: repeating-radial-gradient(circle at -10% 44%,
+    transparent 0 54px, rgba(255,255,255,0.058) 54px 55.5px, transparent 55.5px 110px);
+  transform-origin: -10% 44%;
+  animation: fxRings 18s linear infinite;
+}
+.fx-rings::after { animation-delay: -9s; }
+
+/* ── weave: диагональная штриховка ──
+   Полосы под 45°, период поперёк 24px. По горизонтали сдвигать надо на
+   24/sin45 ≈ 33.94px — на любой другой величине рисунок прыгает. */
+.fx-weave::before {
+  content: ''; position: absolute; inset: 0 -48px;
+  background-image: repeating-linear-gradient(45deg,
+    rgba(255,255,255,0.032) 0 1px, transparent 1px 24px);
+  animation: fxWeave 22s linear infinite;
+}
+.fx-weave::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 38%,
+    color-mix(in srgb, var(--accent) 9%, transparent) 52%, transparent 66%);
+  animation: fxFloatA 40s ease-in-out infinite;
+}
+
+/* ── spark: точечное поле и проходящий по нему блик ── */
+.fx-spark::before {
+  content: ''; position: absolute; inset: -40px;
+  background-image: radial-gradient(rgba(255,255,255,0.075) 1.2px, transparent 1.3px);
+  background-size: 30px 30px;
+  animation: fxDots 36s linear infinite;
+}
+.fx-spark::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 38% 62% at 14% 42%,
+    color-mix(in srgb, var(--accent) 13%, transparent) 0%, transparent 70%);
+  animation: fxSweep 26s ease-in-out infinite;
+}
+
+/* ── aurora: широкая полоса света, медленно перетекающая ── */
+.fx-aurora::before {
+  content: ''; position: absolute; inset: -90px -8%;
+  background: linear-gradient(102deg,
+    transparent 24%,
+    color-mix(in srgb, var(--accent) 12%, transparent) 44%,
+    rgba(88,150,255,0.07) 56%,
+    transparent 74%);
+  animation: fxAurora 28s ease-in-out infinite;
+}
+.fx-aurora::after {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.1px);
+  background-size: 44px 44px;
+}
+
+@keyframes fxFloatA { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(70px,50px) scale(1.1); } }
+@keyframes fxFloatB { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-60px,-44px) scale(1.07); } }
+/* Шаги подобраны по периоду рисунка: на любой другой величине цикл
+   замыкается рывком. beams — 300/cos15°, strings — период 96px,
+   weave — 24/sin45°, spark — размер клетки точек. */
+@keyframes fxBeams { to { transform: translateY(-207.1px); } }
+@keyframes fxStrings { to { transform: translateX(96px); } }
+@keyframes fxRings { from { transform: scale(0.72); opacity: 0; } 22% { opacity: 1; } to { transform: scale(1.35); opacity: 0; } }
+@keyframes fxWeave { to { transform: translateX(33.94px); } }
+@keyframes fxDots { to { transform: translate(30px,-30px); } }
+@keyframes fxSweep { 0%,100% { transform: translateX(0); } 50% { transform: translateX(62%); } }
+@keyframes fxAurora { 0%,100% { transform: translateX(-6%) skewX(0deg); } 50% { transform: translateX(6%) skewX(-4deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Гасим движение, но не сам декор: без него страница снова станет
+     однородной, а просьба была ровно об обратном. */
+  .sec-fx::before, .sec-fx::after,
+  .fx-mesh::before, .fx-mesh::after,
+  .fx-beams::before, .fx-beams::after,
+  .fx-strings::before, .fx-strings::after,
+  .fx-rings::before, .fx-rings::after,
+  .fx-weave::before, .fx-weave::after,
+  .fx-spark::before, .fx-spark::after,
+  .fx-aurora::before { animation: none !important; }
+  /* Кольца без анимации застревают на opacity: 0 из первого кадра. */
+  .fx-rings::before, .fx-rings::after { opacity: 0.6; }
+}
+
+
+/* ============================================================
+   SECTION EDGE — разделители между блоками
+   ============================================================
+   Восемь одинаковых волн подряд читались как приём, который забыли
+   выключить. Здесь четыре разных перехода; волна осталась в двух местах,
+   где она уместна, — под героем и перед контактами.
+
+   У всех разделителей фон прозрачный, и это не стилистика, а требование.
+   Именно разделитель без собственного фона на фоне непрозрачных секций
+   и давал тёмную полосу. Пока фон страницы непрерывен, прозрачная
+   полоса невидима; стоит вернуть сюда заливку — полоса вернётся вместе
+   с ней. Рисуем только тонкие линии и метки. */
+
+.sec-edge {
+  position: relative; height: 84px; flex-shrink: 0; z-index: 2;
+  background: transparent; pointer-events: none; overflow: clip;
+  display: flex; align-items: center; justify-content: center;
+}
+.sec-edge .rule { position: absolute; left: 0; right: 0; top: 50%; height: 1px; }
+
+/* ── hairline: линия с пробегающим бликом ── */
+.edge-hairline .rule {
+  background: linear-gradient(to right, transparent,
+    rgba(255,255,255,0.09) 24%, rgba(255,255,255,0.09) 76%, transparent);
+}
+.edge-hairline .glint {
+  position: absolute; top: 50%; left: 0; width: 220px; height: 1px; margin-top: -0.5px;
+  background: linear-gradient(to right, transparent,
+    var(--accent-bright, #b6f01e), transparent);
+  /* Едет через transform, а не через left: сдвиг по left пересчитывает
+     раскладку на каждом кадре, transform — нет. */
+  animation: edgeGlint 11s ease-in-out infinite;
+}
+@keyframes edgeGlint {
+  0%   { transform: translateX(-260px); opacity: 0; }
+  14%  { opacity: 0.85; }
+  86%  { opacity: 0.85; }
+  100% { transform: translateX(calc(100vw + 60px)); opacity: 0; }
+}
+
+/* ── dashes: марширующий пунктир ──
+   Сдвиг ровно на период рисунка (26px), иначе на стыке цикла дёргается. */
+.edge-dashes .rule {
+  background-image: repeating-linear-gradient(to right,
+    rgba(255,255,255,0.15) 0 12px, transparent 12px 26px);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent);
+  animation: edgeMarch 3.4s linear infinite;
+}
+@keyframes edgeMarch { from { background-position: 0 0; } to { background-position: 26px 0; } }
+
+/* ── node: линия, разомкнутая ромбом посередине ──
+   Маска вырезает в линии окно под метку — иначе линия проходит сквозь
+   ромб и он читается как случайно наложенный элемент. */
+.edge-node .rule {
+  background: linear-gradient(to right, transparent,
+    rgba(255,255,255,0.10) 28%, rgba(255,255,255,0.10) 72%, transparent);
+  -webkit-mask-image: linear-gradient(to right, #000 0 calc(50% - 24px),
+    transparent calc(50% - 24px) calc(50% + 24px), #000 calc(50% + 24px) 100%);
+  mask-image: linear-gradient(to right, #000 0 calc(50% - 24px),
+    transparent calc(50% - 24px) calc(50% + 24px), #000 calc(50% + 24px) 100%);
+}
+.edge-node .node {
+  position: relative; width: 11px; height: 11px;
+  border: 1px solid var(--accent-bright, #b6f01e);
+  animation: edgeNode 7s ease-in-out infinite;
+}
+@keyframes edgeNode {
+  0%, 100% { transform: rotate(45deg) scale(1); opacity: 0.5; }
+  50%      { transform: rotate(135deg) scale(1.2); opacity: 1; }
+}
+
+/* ── chevron: пологий излом, который прочерчивается по кругу ── */
+.edge-chevron svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.edge-chevron path {
+  fill: none; stroke-width: 1.2; stroke-linecap: round;
+  stroke-dasharray: 1300; stroke-dashoffset: 1300;
+  animation: edgeDraw 14s ease-in-out infinite;
+}
+@keyframes edgeDraw {
+  0%       { stroke-dashoffset: 1300; }
+  45%, 60% { stroke-dashoffset: 0; }
+  100%     { stroke-dashoffset: -1300; }
+}
+
+@media (max-width: 720px) { .sec-edge { height: 62px; } }
+@media (prefers-reduced-motion: reduce) {
+  .edge-hairline .glint, .edge-dashes .rule,
+  .edge-node .node, .edge-chevron path { animation: none !important; }
+  .edge-hairline .glint { opacity: 0; }
+  .edge-node .node { transform: rotate(45deg); opacity: 0.8; }
+  .edge-chevron path { stroke-dashoffset: 0; }
+}

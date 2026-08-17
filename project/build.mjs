@@ -12,7 +12,7 @@ import { execFileSync } from 'node:child_process';
 import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
-import { renderPage, seoConfig } from './layout.mjs';
+import { renderPage, seoConfig, decorate } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
@@ -83,6 +83,9 @@ copyFileSync(join(srcDir, 'motion.js'), join(outDir, 'motion.js'));
 copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
 // Компоненты страниц из layout.mjs (/about/, /ceny/, блог).
 copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
+/* Декор секций и разделители — общие для главной и внутренних страниц. */
+copyFileSync(join(srcDir, 'section-fx.css'), join(outDir, 'section-fx.css'));
+copyFileSync(join(srcDir, 'section-fx.js'), join(outDir, 'section-fx.js'));
 
 // Домен для GitHub Pages. Пишется на каждой сборке: этим файлом Pages и
 // определяет, по какому адресу отдавать сайт, и без него привязка слетает.
@@ -259,6 +262,8 @@ ${verifyTags}
   <script>document.documentElement.className+=" js"</script>
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
+  <link rel="stylesheet" href="section-fx.css" />
+  <script defer src="section-fx.js"></script>
   <link rel="stylesheet" href="motion.css" />
   <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -395,7 +400,20 @@ for (const p of SUBPAGES) {
   const srcPage = join(srcDir, p, 'index.html');
   if (existsSync(srcPage)) {
     mkdirSync(join(outDir, p), { recursive: true });
-    copyFileSync(srcPage, join(outDir, p, 'index.html'));
+    /* Не побайтовое копирование: этим страницам, как и генерируемым, нужен
+       декор секций. Вставляем его на сборке, а не в исходниках, — иначе
+       разметку пришлось бы править вручную в шести файлах и держать
+       чередование вариантов в голове.
+
+       Стили и скрипт декора подключаются здесь же, если их ещё нет: у этих
+       страниц свои <head>, они не проходят через общий шаблон. */
+    let page = readFileSync(srcPage, 'utf8');
+    if (!page.includes('section-fx.css')) {
+      page = page.replace('</head>',
+        '  <link rel="stylesheet" href="/section-fx.css">\n'
+        + '  <script defer src="/section-fx.js"></script>\n</head>');
+    }
+    writeFileSync(join(outDir, p, 'index.html'), decorate(page), 'utf8');
     console.log('Copied subpage', p + '/index.html');
   }
 }

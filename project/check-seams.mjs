@@ -78,6 +78,13 @@ const CASES = [
   { name: 'узор из тонких линий каждые 60px', expect: 'нет',
     css: 'main::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;'
       + 'background:repeating-linear-gradient(to bottom,transparent 0 58px,rgba(255,255,255,.07) 58px 60px)}' },
+  /* Тот же узор, но с шагом чуть больше окна проверки. Ровно на нём детектор
+     и промахивался: обе пробы по краям окна попадали на соседние линии и
+     показывали «сверху ровно, снизу ровно», хотя между ними был не переход
+     между плоскостями, а очередная линия рисунка. */
+  { name: 'частый узор с шагом 24px', expect: 'нет',
+    css: 'main::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;'
+      + 'background:repeating-linear-gradient(to bottom,transparent 0 19px,rgba(255,255,255,.09) 19px 24px)}' },
 ];
 
 const browser = await chromium.launch();

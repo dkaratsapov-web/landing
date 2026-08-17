@@ -300,6 +300,74 @@ export function breadcrumbs(trail) {
 /* ── Страница целиком ────────────────────────────────────────────────────── */
 /* Обязательное: title, description, path (со слэшами по краям), body.
    schema — массив объектов JSON-LD. ogImage — путь от корня сайта. */
+/* ── Декор секций ────────────────────────────────────────────────────────
+   Раздаётся автоматически, а не расставляется руками по страницам. Причин
+   две. Страниц два с лишним десятка, и вручную их не удержать в
+   согласованном виде: где-то забудешь слой, где-то поставишь два подряд
+   одинаковых. И вторая: набор вариантов должен чередоваться, а это условие
+   на последовательность — его удобно выразить счётчиком, а не разметкой.
+
+   Условие безопасности то же, что на главной, и оно уже выполнено: под всей
+   страницей идёт непрерывный .bg-fx, закреплённый во вьюпорте, а у секций
+   своего непрозрачного фона нет. Значит стыка «фон к фону» не существует, и
+   полосе между блоками взяться неоткуда.
+
+   Простые замены по строке, без разбора HTML: разметка здесь своя, её
+   формируют соседние модули этого же проекта, и структура предсказуема. */
+const FX_ORDER = ['mesh', 'strings', 'weave', 'rings', 'beams', 'spark', 'aurora'];
+const EDGE_ORDER = ['dashes', 'node', 'hairline', 'chevron'];
+
+let edgeSeq = 0;
+function sectionEdge(variant) {
+  /* Уникальный id градиента на весь сайт. Дубли id — невалидный документ, а
+     браузер вдобавок связывает stroke="url(#id)" с первым найденным узлом,
+     так что второй разделитель подхватывал бы чужой градиент. */
+  const gid = 'edg' + (++edgeSeq);
+  const inner = variant === 'chevron'
+    ? `<svg viewBox="0 0 1200 84" preserveAspectRatio="none"><defs>`
+      + `<linearGradient id="${gid}" x1="0%" y1="0%" x2="100%" y2="0%">`
+      + `<stop offset="0%" stop-color="var(--accent-bright)" stop-opacity="0"/>`
+      + `<stop offset="50%" stop-color="var(--accent-bright)" stop-opacity="0.5"/>`
+      + `<stop offset="100%" stop-color="var(--accent-bright)" stop-opacity="0"/>`
+      + `</linearGradient></defs><path d="M0 30 L600 58 L1200 30" stroke="url(#${gid})"/></svg>`
+    : '<span class="rule"></span>'
+      + (variant === 'hairline' ? '<span class="glint"></span>' : '')
+      + (variant === 'node' ? '<span class="node"></span>' : '');
+  return `<div class="sec-edge edge-${variant}" aria-hidden="true">${inner}</div>`;
+}
+
+export function decorate(body) {
+  let n = 0;
+  /* Слой не в каждую секцию, а через одну. Причин две, и обе весомые.
+
+     Ритм: страница, где фактура есть везде, читается так же ровно, как
+     страница, где её нет нигде. Чередование «блок с фактурой — блок чистый»
+     как раз и даёт разницу между блоками, ради которой всё затевалось.
+
+     Цена: замер прокрутки страницы контекста, где секций дюжина, показал
+     57мс со слоями против 34мс без них. Половина слоёв — половина расхода,
+     а на глаз потери нет. */
+  let out = body.replace(
+    /(<(?:section|header)\b[^>]*\bclass="[^"]*\b(?:section|section-sm|sec|hero)\b[^"]*"[^>]*>)/g,
+    (tag) => {
+      const i = n++;
+      if (i % 2) return tag;
+      return `${tag}\n  <div class="sec-fx fx-${FX_ORDER[(i >> 1) % FX_ORDER.length]}" aria-hidden="true"></div>`;
+    }
+  );
+  /* Разделитель — только там, где секция действительно граничит с секцией.
+     Заглядывание вперёд, а не просто замена </section>: закрывающий тег
+     последней секции перед подвалом разделителя не требует. */
+  let e = 0;
+  /* Между закрывающим и следующим открывающим тегом на статических страницах
+     стоят комментарии-разделители («ЦИТАТА 1», «ПРЕИМУЩЕСТВА» и такие же).
+     Первая версия требовала, чтобы секции шли встык, и на этих страницах не
+     нашла ни одного стыка вовсе. */
+  out = out.replace(/<\/section>(\s*(?:<!--[^]*?-->\s*)*)(?=<section\b)/g,
+    (m, gap) => `</section>\n${sectionEdge(EDGE_ORDER[e++ % EDGE_ORDER.length])}${gap}`);
+  return out;
+}
+
 export function renderPage({
   title, description, path, body,
   ogImage = '/assets/og-cover.jpg', ogType = 'website',
@@ -357,12 +425,14 @@ ${verify}
 <link rel="preload" href="/assets/fonts/nunito-cyrillic-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
+<link rel="stylesheet" href="/section-fx.css">
 <link rel="stylesheet" href="/motion.css">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="120x120" href="/favicon-120.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
+<script defer src="/section-fx.js"></script>
 <script defer src="/lead-config.js"></script>
 ${metrika}
 ${ld}
@@ -386,7 +456,7 @@ ${nav()}
      «дерево доступности имеет неверный формат». -->
 <main id="main">
 
-${body}
+${decorate(body)}
 
 </main>
 
