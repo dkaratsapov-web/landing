@@ -13,7 +13,7 @@ import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
 import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS,
-  siteFooter, FOOTER_LINKS } from './layout.mjs';
+  siteFooter, FOOTER_LINKS, quizFab } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import { cases, CASE_SETS } from './service-kit.mjs';
 import { CASE_PAGES, caseGrid, CASE_GRID_CSS } from './case-page.mjs';
@@ -625,6 +625,13 @@ for (const p of SUBPAGES) {
     });
     page = widenMarquees(replaceFooter(replaceNav(page, p), p));
     if (!page.includes('mob-dock')) page = page.replace('</body>', mobileDock() + '\n</body>');
+    /* Кнопка «Рассчитать проект». На таргете квиз есть на самой странице —
+       туда и ведём якорем, а не на главную: отправлять человека на другую
+       страницу за тем, что у него уже под рукой, глупо. */
+    if (!page.includes('quiz-fab')) {
+      const href = page.includes('id="quiz"') ? '#quiz' : '/?quiz=1';
+      page = page.replace('</body>', quizFab(href) + '\n</body>');
+    }
     writeFileSync(join(outDir, p, 'index.html'), decorate(page), 'utf8');
     console.log('Copied subpage', p + '/index.html');
   }

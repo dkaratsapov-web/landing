@@ -69,6 +69,19 @@ function App() {
   const [leadOpen, setLeadOpen] = useStateApp(false);
   useReveal();
 
+  /* Кнопка «Рассчитать проект» есть на всех страницах, но сам квиз живёт
+     только здесь. С внутренних страниц кнопка ведёт на главную с ?quiz=1 —
+     и открывает его сразу, без поиска глазами по экрану. Параметр из адреса
+     убираем: иначе он попадёт в закладку и в поделённую ссылку, и человек
+     будет каждый раз открывать главную с всплывающим окном. */
+  React.useEffect(() => {
+    if (new URLSearchParams(location.search).get('quiz') !== '1') return;
+    setQuizOpen(true);
+    const url = location.pathname + location.hash;
+    history.replaceState(null, '', url);
+  }, []);
+
+
   // фоновые узоры можно отключить
   React.useEffect(() => {
     document.documentElement.classList.toggle('no-atmos', t.atmos === false);

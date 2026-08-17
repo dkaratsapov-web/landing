@@ -180,6 +180,21 @@ export function mobileDock() {
 </div>`;
 }
 
+/* ── Кнопка «Рассчитать проект» ──────────────────────────────────────────
+   На главной это React-кнопка, открывающая квиз во всплывающем окне. На
+   остальных страницах квиза нет, поэтому здесь ссылка на главную с ?quiz=1
+   — она откроет тот же квиз сразу после загрузки.
+
+   Только десктоп: на телефоне внизу уже стоят звонок и Telegram, третья
+   плавающая кнопка перекрыла бы содержимое. Правило скрытия — там же, где
+   стили кнопки. */
+export function quizFab(href = '/?quiz=1') {
+  return `<a class="quiz-fab" href="${href}">
+  <span class="quiz-fab-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></span>
+  Рассчитать проект
+</a>`;
+}
+
 /* ── Футер ───────────────────────────────────────────────────────────────── */
 const FOOT_LINK = 'color: var(--muted); text-decoration: none; font-size: 15px;';
 
@@ -500,6 +515,7 @@ ${siteFooter()}
 
 </div>
 
+${quizFab()}
 ${mobileDock()}
 
 ${PAGE_SCRIPTS}
