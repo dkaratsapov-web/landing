@@ -43,7 +43,7 @@ const PRICES = [
     name: 'Таргетированная реклама',
     tag: 'VK Ads · Telegram Ads · Avito Ads',
     term: 'Запуск за 4–6 дней',
-    price: 'от 18 000 ₽/мес',
+    price: 'от 20 000 ₽/мес',
     note: 'ведение кампаний',
     url: '/targetirovannaya-reklama/',
     works: [
@@ -103,7 +103,7 @@ const PRICES = [
     name: 'Комплексный маркетинг',
     tag: 'Проект целиком',
     term: 'Старт за 1–2 недели',
-    price: 'от 90 000 ₽/мес',
+    price: 'от 65 000 ₽/мес',
     note: 'зависит от объёма работ',
     url: '/kompleksnyj-marketing/',
     works: [
@@ -150,11 +150,14 @@ ${p.works.map((w) => `          <li>${w}</li>`).join('\n')}
         <a href="${p.url}" style="display:inline-block; padding:4px 0; color:var(--accent-bright); font-size:14px; text-decoration:none;">Подробнее →</a>
       </div>`).join('\n');
 
+  /* data-label дублирует заголовок столбца. На телефоне таблица раскладывается
+     в карточки (см. pages.css), и подпись берётся отсюда: строка вне таблицы
+     теряет связь с шапкой, и «3–5 дней» без пояснения повисает в воздухе. */
   const rows = PRICES.map((p) => `        <tr>
           <th scope="row"><a href="${p.url}">${p.name}</a></th>
-          <td class="cell-price">${p.price}</td>
-          <td class="cell-note">${p.note}</td>
-          <td class="cell-term">${p.term}</td>
+          <td class="cell-price" data-label="Стоимость">${p.price}</td>
+          <td class="cell-note" data-label="Что входит">${p.note}</td>
+          <td class="cell-term" data-label="Срок запуска">${p.term}</td>
         </tr>`).join('\n');
 
   const faq = faqItems(FAQ);

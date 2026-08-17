@@ -321,7 +321,7 @@ ${verifyTags}
         provider: { '@id': SITE + '/#person' },
         areaServed: { '@type': 'Country', name: 'Россия' },
         availableLanguage: 'Russian',
-        priceRange: 'от 12 000 ₽ до 90 000 ₽ в месяц',
+        priceRange: 'от 12 000 ₽ до 65 000 ₽ в месяц',
         telephone: '+7 996 347-00-65',
         email: 'd.karatsapov@gmail.com',
         hasOfferCatalog: offerCatalog,
@@ -538,7 +538,7 @@ ${priceLines}
 результатами, ROI по ним 264–520%.
 
 Ведение контекстной рекламы — от 30 000 ₽ в месяц, таргетированной — от
-18 000 ₽, лендинг — от 60 000 ₽. Полный прайс: ${SITE}/pricing.md
+20 000 ₽, лендинг — от 60 000 ₽. Полный прайс: ${SITE}/pricing.md
 
 ## Услуги
 ${svcList}

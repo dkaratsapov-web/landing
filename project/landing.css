@@ -516,19 +516,26 @@ h2.section-title {
   .swipe-hint .i, .swipe-hint .swipe-dot { animation: none; opacity: 1; }
 }
 
-/* ---------- Services: full-width snap carousel on phones ---------- */
+/* ---------- Услуги на телефоне: список, а не карусель ----------
+   Здесь была горизонтальная карусель с карточкой ровно во всю ширину экрана.
+   Итог: из пяти услуг человек видел одну, соседних не было видно даже краем,
+   и блок читался как недогрузившийся. Для главного блока страницы это дорого:
+   он и отвечает на вопрос «что вы делаете».
+
+   Карусель уместна там, где элементы однородны и их можно не смотреть все —
+   кейсы, сертификаты. Перечень услуг к таким не относится: его читают
+   целиком, и вертикальный список для этого и придуман. */
 @media (max-width: 640px) {
   .svc-x-stack {
-    flex-direction: row !important; align-items: stretch;
-    gap: 12px !important; overflow-x: auto; overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-    margin: 0 -22px; padding: 0 16px;
-    scroll-padding-left: 16px;
-    scrollbar-width: none;
+    flex-direction: column !important;
+    gap: 12px !important;
+    overflow: visible;
+    margin: 0 !important; padding: 0 !important;
   }
-  .svc-x-stack::-webkit-scrollbar { display: none; }
-  /* calc(100vw - 32px) = экран минус отступы 16px с каждой стороны */
-  .svc-x { flex: 0 0 calc(100vw - 32px); max-width: calc(100vw - 32px); scroll-snap-align: start; }
+  .svc-x { flex: initial; max-width: none; }
+  /* Подсказка «листайте вбок» осталась бы враньём: листать больше нечего.
+     Скрываем только у этого блока — у кейсов и сертификатов она по делу. */
+  .swipe-hint:has(+ .svc-x-stack) { display: none; }
   /* Cases keep carousel */
   .case-list {
     flex-direction: row !important; align-items: stretch;
@@ -1010,8 +1017,6 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 
 @media (max-width: 720px) {
   .svc-x-head { grid-template-columns: auto 1fr auto auto; gap: 12px; padding: 20px; }
-  /* в свёрнутой карточке опускаем нижнюю границу — больше воздуха снизу */
-  .svc-x:not(.open) .svc-x-head { padding-bottom: 30px; }
   .svc-x-result { display: none; }
   .svc-x-titles { min-width: 0; }
   .svc-x-more { padding: 7px 11px; font-size: 13px; }
@@ -1019,20 +1024,25 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
   .svc-x-detail { grid-template-columns: 1fr; gap: 14px; }
   .svc-x-list { grid-template-columns: 1fr; gap: 5px 0; }
   .svc-x-list li { font-size: 13.5px; }
-  .svc-x-label { font-size: 11px; margin-bottom: 6px; }
+  .svc-x-label { font-size: 12px; margin-bottom: 6px; }
 }
 
-/* На узких телефонах — grid: icon | title+tag | chevron */
+/* На узких телефонах — grid: иконка | название и тег | шеврон.
+   По центру, а не по верхнему краю: карточки теперь идут списком, и лишний
+   воздух под коротким заголовком умножался на пять пунктов подряд —
+   перечень выглядел разреженным без всякой на то причины. */
 @media (max-width: 480px) {
   .svc-x-head {
     display: grid;
     grid-template-columns: 44px 1fr 28px;
-    gap: 16px;
-    padding: 20px;
-    align-items: start;
+    gap: 14px;
+    padding: 18px 20px;
+    align-items: center;
   }
   .svc-x-name   { font-size: 17px; line-height: 1.3; }
-  .svc-x-tag    { font-size: 11.5px; }
+  /* Не мельче двенадцати: ниже этого текст на телефоне уже не читают,
+     а щурятся. */
+  .svc-x-tag    { font-size: 12.5px; }
   .svc-x-result { display: none; }
   .svc-x-more   { display: none; }
   .svc-x-meta-val { font-size: 14px; line-height: 1.4; word-break: break-word; }
@@ -1080,21 +1090,25 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 @media (max-width: 1040px) {
   .proc-chain .proc-link { display: none; }   /* segments only read across a single row */
 }
-/* Phones: turn the steps into a horizontal snap carousel and bring the
-   animated chain (flowing links + node pulse) back since they line up again. */
+/* Телефон: шаги идут сверху вниз.
+   Была горизонтальная карусель по 230px на шаг. При ширине экрана в 390px
+   второй шаг обрезался краем прямо посередине слова — «а что слива…», — и это
+   читалось не как «пролистай дальше», а как сломанная вёрстка.
+
+   Порядок действий вообще естественнее читать сверху вниз: у списка есть
+   начало и конец, у горизонтальной ленты — нет. Соединители цепочки при этом
+   гасим: они рисуют связь по горизонтали и в столбце указывают в пустоту. */
 @media (max-width: 640px) {
   .proc-grid {
-    display: flex !important; gap: 0 !important;
-    overflow-x: auto; scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
-    margin: 0 -22px; padding: 6px 22px 16px;
-    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
+    display: flex !important; flex-direction: column;
+    gap: 26px !important;
+    overflow: visible;
+    margin: 0 !important; padding: 0 !important;
   }
-  .proc-grid::-webkit-scrollbar { height: 6px; }
-  .proc-grid::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
-  .proc-step { flex: 0 0 64%; max-width: 230px; scroll-snap-align: start; }
-  .proc-chain .proc-link { display: block; }            /* re-enable flowing connector */
+  .proc-step { flex: initial; max-width: none; }
+  .proc-chain .proc-link { display: none; }
   .proc-step:last-child .proc-node-row { padding-right: 0; }
+  .swipe-hint:has(+ .proc-grid) { display: none; }
 }
 
 /* ---------- Wave section dividers ---------- */
