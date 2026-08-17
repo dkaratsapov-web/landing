@@ -446,7 +446,28 @@ h2.section-title {
 .icon-tile .i { width: 24px; height: 24px; }
 
 /* ---------- Certificates ---------- */
-.cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 22px; }
+/* Один ряд с горизонтальной прокруткой вместо сетки в три строки. Девять
+   сертификатов сеткой занимали пол-экрана по высоте и читались как склад,
+   а не как доказательство. В ряду они работают иначе: видно, что их много,
+   и глаз идёт вдоль, а не вниз.
+
+   overflow-x: auto делает контейнер скролл-контейнером, поэтому у
+   вложенных элементов не должно быть scroll-driven анимаций — они
+   привязались бы к нему и застыли. Проверяется в check.mjs. */
+.cert-grid {
+  display: flex; gap: 18px;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
+  margin: 0 -22px; padding: 4px 22px 16px;
+  scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
+  /* Затухание у правого края — подсказка, что ряд продолжается. Дешевле и
+     честнее, чем стрелка: она обещает клик, а тут просто прокрутка. */
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 64px), transparent 100%);
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 64px), transparent 100%);
+}
+.cert-grid::-webkit-scrollbar { height: 6px; }
+.cert-grid::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
+.cert-card { flex: 0 0 224px; scroll-snap-align: start; }
 /* On phones: horizontal snap carousel instead of a tall vertical stack */
 @media (max-width: 640px) {
   .hero-cta-row { gap: 12px !important; }
@@ -459,15 +480,10 @@ h2.section-title {
   .hero-trust-item { flex: 1 1 0; min-width: 0; overflow: hidden; }
   .hero-trust-v { font-size: 18px !important; }
   .hero-trust-l { font-size: 11px !important; word-break: break-word; }
-  .cert-grid {
-    display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
-    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
-    margin: 0 -22px; padding: 4px 22px 14px;
-    scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent;
-  }
-  .cert-grid::-webkit-scrollbar { height: 6px; }
-  .cert-grid::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 3px; }
-  .cert-card { flex: 0 0 70%; max-width: 250px; scroll-snap-align: start; }
+  /* На телефоне карточка шире и прилипает жёстче: пролистывание пальцем
+     должно останавливаться ровно на карточке. */
+  .cert-grid { gap: 14px; scroll-snap-type: x mandatory; }
+  .cert-card { flex: 0 0 70%; max-width: 250px; }
 }
 
 /* ---------- Swipe hint (mobile-only, text-free swipe animation) ---------- */
