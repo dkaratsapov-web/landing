@@ -206,6 +206,19 @@ for (const path of pages()) {
       const broken = [...document.images]
         .filter((i) => i.getAttribute('src') && i.complete && i.naturalWidth === 0)
         .map((i) => i.getAttribute('src'));
+      /* Ссылки с мусором в адресе. Ловят случай, когда в href попал не адрес,
+         а целая структура данных: массив пар, приведённый к строке, даёт
+         href="Сквозная аналитика,/skvoznaya-analitika/,Аудит рекламы,…".
+         Внешне ссылка выглядит нормально, подпись у неё правильная, и
+         заметить это можно только кликнув — владелец сайта так и нашёл,
+         а я к тому моменту уже отчитался, что всё собралось.
+
+         Признаки: запятая или пробел внутри адреса. В нормальных внутренних
+         адресах сайта их не бывает; внешние ссылки и почту пропускаем. */
+      const junkLinks = [...document.querySelectorAll('a[href]')]
+        .map((a) => a.getAttribute('href'))
+        .filter((h) => h && !/^(https?:|mailto:|tel:|#)/.test(h))
+        .filter((h) => /[,\s]/.test(h));
       /* Верхняя граница каждой волны-разделителя в координатах документа. */
       const seams = [...document.querySelectorAll('.wave-svg')]
         .map((s) => Math.round(s.parentElement.getBoundingClientRect().top + window.scrollY));
@@ -213,6 +226,7 @@ for (const path of pages()) {
         overflow: de.scrollWidth - de.clientWidth,
         scrollWidth: de.scrollWidth,
         broken,
+        junkLinks: [...new Set(junkLinks)],
         seams,
         h1: document.querySelectorAll('h1').length,
         title: document.title,
@@ -306,6 +320,10 @@ for (const path of pages()) {
       add(path, width, 'горизонтальная прокрутка', `${dom.scrollWidth}px против ${width}px — что-то вылезает за экран`);
     }
     for (const src of dom.broken) add(path, width, 'битая картинка', src);
+    for (const h of dom.junkLinks.slice(0, 5)) {
+      add(path, width, 'мусор в адресе ссылки',
+        `href="${h.slice(0, 90)}" — в адрес попала не строка адреса, а что-то ещё`);
+    }
     for (const n of deadAnim.slice(0, 5)) {
       add(path, width, 'мёртвая scroll-анимация',
         `${n} — прогресс не сдвинулся с нуля за всю прокрутку; обычно виноват overflow: hidden у предка (нужен overflow: clip)`);

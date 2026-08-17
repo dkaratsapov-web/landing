@@ -249,37 +249,28 @@ function MeetInPerson() {
         Иногда один разговор за чашкой кофе заменяет десяток переписок.
       </p>
 
-      <div className="meet-map">
-        <svg viewBox="0 0 460 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Карта выезда: Тверская и Московская области">
-          {/* region: Тверская */}
-          <path className="meet-region meet-region-tver"
-            d="M70 70 L150 50 L210 78 L205 130 L150 165 L92 150 L58 110 Z" />
-          {/* region: Московская */}
-          <path className="meet-region meet-region-msk"
-            d="M205 130 L210 78 L300 95 L360 140 L350 215 L270 245 L205 205 L185 160 Z" />
-
-          {/* travel route */}
-          <path className="meet-route" d="M135 110 Q210 90 285 175" />
-          {/* moving vehicle */}
-          <g className="meet-mover">
-            <circle r="9" className="meet-mover-dot" />
-            <path d="M-4 0h8M0 -4v8" stroke="#0c1402" strokeWidth="1.6" strokeLinecap="round" />
-          </g>
-
-          {/* pin: Тверь */}
-          <g className="meet-pin" transform="translate(135 110)">
-            <circle className="meet-pulse" r="6" />
-            <circle className="meet-pin-core" r="6" />
-          </g>
-          <text x="135" y="92" className="meet-label" textAnchor="middle">Тверь</text>
-
-          {/* pin: Москва */}
-          <g className="meet-pin meet-pin-2" transform="translate(285 175)">
-            <circle className="meet-pulse" r="7" />
-            <circle className="meet-pin-core" r="7" />
-          </g>
-          <text x="285" y="157" className="meet-label" textAnchor="middle">Москва</text>
-        </svg>
+      {/* Здесь была карта: два многоугольника, изображавшие Тверскую и
+          Московскую области. Узнать в них области было нельзя — просто пятна,
+          — а половина плашки под ними пустовала. Схема маршрута говорит то
+          же самое, но точно: два города, расстояние и время за рулём. Цифры
+          здесь работают лучше картинки — они отвечают на настоящий вопрос
+          «а вы вообще доедете». */}
+      <div className="meet-route-map">
+        <div className="meet-line" aria-hidden="true">
+          <span className="meet-stop meet-stop-a" />
+          <span className="meet-track" />
+          <span className="meet-car"><IconCar size={13} /></span>
+          <span className="meet-stop meet-stop-b" />
+        </div>
+        <div className="meet-cities">
+          <span className="meet-city">Тверь<b>дом</b></span>
+          <span className="meet-city meet-city-r">Москва<b>1–2 раза в неделю</b></span>
+        </div>
+        <div className="meet-facts">
+          <span className="meet-fact"><b>~170 км</b>между городами</span>
+          <span className="meet-fact"><b>2 часа</b>за рулём в одну сторону</span>
+          <span className="meet-fact"><b>бесплатно</b>выезд на первую встречу</span>
+        </div>
       </div>
 
       <div className="meet-tags">
@@ -430,13 +421,20 @@ function Footer({ onCta }) {
               человека, ни для поисковика. Теперь услуги вынесены в
               собственную колонку и ведут на страницы, а не на блок. Список
               продублирован из NAV_LINKS сознательно: главная собирается
-              отдельно от layout.mjs, и общего источника у них нет. */}
+              отдельно от layout.mjs, и общего источника у них нет.
+
+              Группы разворачиваются в плоский перечень, и пропустить это
+              нельзя. После разбивки меню по группам NAV_LINKS[0][2] стал
+              массивом групп — футер честно вывел их названия как ссылки
+              («Маркетинг», «Разработка», «Аналитика»), а адресом подставил
+              весь вложенный массив, приведённый к строке. Такая ссылка ведёт
+              на 404, и владелец сайта нашёл её раньше меня. */}
           <div>
             <div style={{ color: 'var(--txt-3)', fontSize: 13, marginBottom: 11 }}>Услуги</div>
             {/* Два столбца: девять пунктов в один растягивали футер вдвое
                 выше соседних колонок. */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '7px 24px' }}>
-              {NAV_LINKS[0][2].filter(([, h]) => h !== '/ceny/').map(([t, h]) =>
+              {NAV_LINKS[0][2].flatMap(([, items]) => items).map(([t, h]) =>
               <a key={h} href={h} style={{ color: 'var(--txt-2)', textDecoration: 'none', fontSize: 15 }}>{t}</a>
               )}
             </div>
