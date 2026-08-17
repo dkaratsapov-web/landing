@@ -28,6 +28,7 @@
 <link rel="stylesheet" href="/dark.css">
 <link rel="stylesheet" href="/pages.css">
 <link rel="stylesheet" href="/section-fx.css">
+<link rel="stylesheet" href="/nav.css">
 <link rel="stylesheet" href="/motion.css">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -72,18 +73,27 @@
       <div class="nav-item-drop">
         <a href="/kontekstnaya-reklama/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="nav-dropdown">
-          <a href="/kompleksnyj-marketing/" class="nav-drop-link">Маркетинг под ключ</a>
-          <a href="/kontekstnaya-reklama/" class="nav-drop-link">Контекстная реклама</a>
-          <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a>
-          <a href="/seo-optimizaciya/" class="nav-drop-link">SEO-оптимизация</a>
-          <a href="/targetirovannaya-reklama/" class="nav-drop-link">Таргетированная реклама</a>
-          <a href="/geo-servisy/" class="nav-drop-link">GEO-сервисы</a>
-          <a href="/promostranicy/" class="nav-drop-link">Промостраницы Яндекса</a>
-          <a href="/skvoznaya-analitika/" class="nav-drop-link">Сквозная аналитика</a>
-          <a href="/audit-reklamy/" class="nav-drop-link">Аудит рекламы</a>
-          <a href="/ceny/" class="nav-drop-link">Цены</a>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Маркетинг</div>
+            <a href="/kompleksnyj-marketing/" class="nav-drop-link">Маркетинг под ключ</a>
+            <a href="/kontekstnaya-reklama/" class="nav-drop-link">Контекстная реклама</a>
+            <a href="/targetirovannaya-reklama/" class="nav-drop-link">Таргетированная реклама</a>
+            <a href="/promostranicy/" class="nav-drop-link">Промостраницы Яндекса</a>
+            <a href="/geo-servisy/" class="nav-drop-link">GEO-сервисы</a>
+          </div>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Разработка</div>
+            <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a>
+            <a href="/seo-optimizaciya/" class="nav-drop-link">SEO-оптимизация</a>
+          </div>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Аналитика</div>
+            <a href="/skvoznaya-analitika/" class="nav-drop-link">Сквозная аналитика</a>
+            <a href="/audit-reklamy/" class="nav-drop-link">Аудит рекламы</a>
+          </div>
         </div>
       </div>
+      <a href="/ceny/">Цены</a>
       <a href="/about/">О себе</a>
       <a href="/blog/">Блог</a>
       <a href="/keysy/">Кейсы</a>
@@ -106,16 +116,19 @@
 </nav>
 <div class="nav-mobile" id="navMobile">
   <a href="/kontekstnaya-reklama/">Услуги</a>
-  <a href="/kompleksnyj-marketing/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Маркетинг под ключ</a>
-  <a href="/kontekstnaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Контекстная реклама</a>
-  <a href="/razrabotka-sajtov/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Разработка сайтов</a>
-  <a href="/seo-optimizaciya/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">SEO-оптимизация</a>
-  <a href="/targetirovannaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Таргетированная реклама</a>
-  <a href="/geo-servisy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">GEO-сервисы</a>
-  <a href="/promostranicy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Промостраницы Яндекса</a>
-  <a href="/skvoznaya-analitika/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Сквозная аналитика</a>
-  <a href="/audit-reklamy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Аудит рекламы</a>
-  <a href="/ceny/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Цены</a>
+  <span class="nav-mobile-group">Маркетинг</span>
+  <a href="/kompleksnyj-marketing/" class="nav-mobile-sub">Маркетинг под ключ</a>
+  <a href="/kontekstnaya-reklama/" class="nav-mobile-sub">Контекстная реклама</a>
+  <a href="/targetirovannaya-reklama/" class="nav-mobile-sub">Таргетированная реклама</a>
+  <a href="/promostranicy/" class="nav-mobile-sub">Промостраницы Яндекса</a>
+  <a href="/geo-servisy/" class="nav-mobile-sub">GEO-сервисы</a>
+  <span class="nav-mobile-group">Разработка</span>
+  <a href="/razrabotka-sajtov/" class="nav-mobile-sub">Разработка сайтов</a>
+  <a href="/seo-optimizaciya/" class="nav-mobile-sub">SEO-оптимизация</a>
+  <span class="nav-mobile-group">Аналитика</span>
+  <a href="/skvoznaya-analitika/" class="nav-mobile-sub">Сквозная аналитика</a>
+  <a href="/audit-reklamy/" class="nav-mobile-sub">Аудит рекламы</a>
+  <a href="/ceny/">Цены</a>
   <a href="/about/">О себе</a>
   <a href="/blog/">Блог</a>
   <a href="/keysy/">Кейсы</a>
@@ -321,11 +334,11 @@
         <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 24px;">
           <a href="/kompleksnyj-marketing/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Маркетинг под ключ</a>
           <a href="/kontekstnaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Контекстная реклама</a>
+          <a href="/targetirovannaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Таргетированная реклама</a>
+          <a href="/promostranicy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Промостраницы Яндекса</a>
+          <a href="/geo-servisy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">GEO-сервисы</a>
           <a href="/razrabotka-sajtov/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Разработка сайтов</a>
           <a href="/seo-optimizaciya/" style="color: var(--muted); text-decoration: none; font-size: 15px;">SEO-оптимизация</a>
-          <a href="/targetirovannaya-reklama/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Таргетированная реклама</a>
-          <a href="/geo-servisy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">GEO-сервисы</a>
-          <a href="/promostranicy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Промостраницы Яндекса</a>
           <a href="/skvoznaya-analitika/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Сквозная аналитика</a>
           <a href="/audit-reklamy/" style="color: var(--muted); text-decoration: none; font-size: 15px;">Аудит рекламы</a>
         </div>

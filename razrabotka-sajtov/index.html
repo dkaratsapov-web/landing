@@ -314,6 +314,7 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://karatsapov.ru/"},{"@type":"ListItem","position":2,"name":"Разработка сайтов","item":"https://karatsapov.ru/razrabotka-sajtov/"}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Сколько времени займёт разработка?","acceptedAnswer":{"@type":"Answer","text":"Лендинг — 7–10 рабочих дней, корпоративный сайт — 14–21 день. Срок зависит от объёма правок и скорости обратной связи с вашей стороны. Я всегда называю реальные сроки, а не обещаю «за 3 дня» и потом затягиваю."}},{"@type":"Question","name":"На какой платформе делаете сайт?","acceptedAnswer":{"@type":"Answer","text":"Пишу на чистом HTML/CSS/JS — никаких конструкторов (Tilda, Wix, WordPress). Это даёт максимальную скорость загрузки и полный контроль над кодом. При необходимости могу сделать на CMS — обсудим."}},{"@type":"Question","name":"Смогу ли я самостоятельно редактировать сайт?","acceptedAnswer":{"@type":"Answer","text":"Да. Базовые правки (тексты, цены, контакты) разберёт любой, кто умеет открыть файл в редакторе. Для регулярных обновлений могу настроить простую CMS или настраиваемый JSON-файл с контентом."}},{"@type":"Question","name":"Занимаетесь ли вы хостингом и доменом?","acceptedAnswer":{"@type":"Answer","text":"Да — помогаю выбрать хостинг, купить домен и настроить DNS. Если хотите, можно подключить GitHub Pages (бесплатно) или любой платный хостинг на ваш выбор."}},{"@type":"Question","name":"Что если сайт нужно будет доработать после запуска?","acceptedAnswer":{"@type":"Answer","text":"Мелкие правки после сдачи — бесплатно в течение 2 недель. Дальнейшие доработки оплачиваются по часовой ставке. Многие клиенты заказывают у меня и сайт, и рекламу — поэтому нахожусь в контексте и могу быстро вносить изменения."}},{"@type":"Question","name":"Можно ли заказать только дизайн или только верстку?","acceptedAnswer":{"@type":"Answer","text":"Берусь за проекты под ключ — от прототипа до запуска. Отдельно верстать чужой макет или делать только дизайн не берусь: важно контролировать всю цепочку, чтобы отвечать за результат."}}]}</script>
   <link rel="stylesheet" href="/section-fx.css">
+  <link rel="stylesheet" href="/nav.css">
   <script defer src="/section-fx.js"></script>
 </head>
 <body>
@@ -337,13 +338,27 @@
       <div class="nav-item-drop">
         <a href="/kontekstnaya-reklama/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="nav-dropdown">
-          <a href="/kompleksnyj-marketing/" class="nav-drop-link">Маркетинг под ключ</a><a href="/kontekstnaya-reklama/" class="nav-drop-link">Контекстная реклама</a>
-          <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a><a href="/seo-optimizaciya/" class="nav-drop-link">SEO-оптимизация</a>
-          <a href="/targetirovannaya-reklama/" class="nav-drop-link">Таргетированная реклама</a>
-          <a href="/geo-servisy/" class="nav-drop-link">GEO-сервисы</a><a href="/promostranicy/" class="nav-drop-link">Промостраницы Яндекса</a><a href="/skvoznaya-analitika/" class="nav-drop-link">Сквозная аналитика</a><a href="/audit-reklamy/" class="nav-drop-link">Аудит рекламы</a>
-          <a href="/ceny/" class="nav-drop-link">Цены</a>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Маркетинг</div>
+            <a href="/kompleksnyj-marketing/" class="nav-drop-link">Маркетинг под ключ</a>
+            <a href="/kontekstnaya-reklama/" class="nav-drop-link">Контекстная реклама</a>
+            <a href="/targetirovannaya-reklama/" class="nav-drop-link">Таргетированная реклама</a>
+            <a href="/promostranicy/" class="nav-drop-link">Промостраницы Яндекса</a>
+            <a href="/geo-servisy/" class="nav-drop-link">GEO-сервисы</a>
+          </div>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Разработка</div>
+            <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a>
+            <a href="/seo-optimizaciya/" class="nav-drop-link">SEO-оптимизация</a>
+          </div>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Аналитика</div>
+            <a href="/skvoznaya-analitika/" class="nav-drop-link">Сквозная аналитика</a>
+            <a href="/audit-reklamy/" class="nav-drop-link">Аудит рекламы</a>
+          </div>
         </div>
       </div>
+      <a href="/ceny/">Цены</a>
       <a href="/about/">О себе</a>
       <a href="/blog/">Блог</a>
       <a href="/keysy/">Кейсы</a>
@@ -356,8 +371,10 @@
       <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
       </a>
-      <a class="btn btn-ghost btn-sm nav-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer"><svg class="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>Я на Дзен</a>
-      <button type="button" class="btn btn-lime btn-sm nav-cta" onclick="window.openLeadModal && window.openLeadModal()">Обсудить задачу</button>
+      <a class="btn btn-ghost btn-sm nav-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer">
+        <svg class="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>Я на Дзен
+      </a>
+      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/" data-lead-modal>Обсудить задачу</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -369,11 +386,19 @@
 
 <div class="nav-mobile" id="navMobile">
   <a href="/kontekstnaya-reklama/">Услуги</a>
-  <a href="/kompleksnyj-marketing/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Маркетинг под ключ</a><a href="/kontekstnaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Контекстная реклама</a>
-  <a href="/razrabotka-sajtov/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Разработка сайтов</a><a href="/seo-optimizaciya/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">SEO-оптимизация</a>
-  <a href="/targetirovannaya-reklama/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Таргетированная реклама</a>
-  <a href="/geo-servisy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">GEO-сервисы</a><a href="/promostranicy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Промостраницы Яндекса</a><a href="/skvoznaya-analitika/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Сквозная аналитика</a><a href="/audit-reklamy/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Аудит рекламы</a>
-  <a href="/ceny/" style="padding-left:18px; font-size:16px; color:var(--lime-bright);">Цены</a>
+  <span class="nav-mobile-group">Маркетинг</span>
+  <a href="/kompleksnyj-marketing/" class="nav-mobile-sub">Маркетинг под ключ</a>
+  <a href="/kontekstnaya-reklama/" class="nav-mobile-sub">Контекстная реклама</a>
+  <a href="/targetirovannaya-reklama/" class="nav-mobile-sub">Таргетированная реклама</a>
+  <a href="/promostranicy/" class="nav-mobile-sub">Промостраницы Яндекса</a>
+  <a href="/geo-servisy/" class="nav-mobile-sub">GEO-сервисы</a>
+  <span class="nav-mobile-group">Разработка</span>
+  <a href="/razrabotka-sajtov/" class="nav-mobile-sub">Разработка сайтов</a>
+  <a href="/seo-optimizaciya/" class="nav-mobile-sub">SEO-оптимизация</a>
+  <span class="nav-mobile-group">Аналитика</span>
+  <a href="/skvoznaya-analitika/" class="nav-mobile-sub">Сквозная аналитика</a>
+  <a href="/audit-reklamy/" class="nav-mobile-sub">Аудит рекламы</a>
+  <a href="/ceny/">Цены</a>
   <a href="/about/">О себе</a>
   <a href="/blog/">Блог</a>
   <a href="/keysy/">Кейсы</a>
