@@ -1275,6 +1275,9 @@ header.bg-pg > .glow, header.bg-pg > .pattern,
    бы текст: в потоке он идёт раньше, но position: fixed выносит его наверх.
    Селекторы без привязки к классу body намеренно: landing.css грузит только
    главная, на других страницах своя атмосфера в dark.css. */
-#root > main, #root > footer, #root > .nav, #root > .nav-mobile,
-main, .footer, .nav, .nav-mobile { position: relative; z-index: 1; }
+main, .footer { position: relative; z-index: 1; }
+/* Шапке и мобильному меню задаём только слой. position им трогать нельзя:
+   шапка закреплена при прокрутке, и relative её открепляет — ровно так я
+   её и сломал, когда выносил атмосферу на уровень страницы. */
+.nav-mobile { z-index: 30; }
 @media (prefers-reduced-motion: reduce) { .page-atmos .glow { animation: none !important; } }
