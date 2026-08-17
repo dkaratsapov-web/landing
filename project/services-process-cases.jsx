@@ -85,6 +85,7 @@ function ServicesGrid() {
   const [open, setOpen] = useStateB(-1);
   return (
     <section id="services" className="sec bg-pg">
+      <SectionFx variant="beams" />
       <div className="wrap">
         <ServiceHead />
         <SwipeHint />
@@ -102,6 +103,7 @@ function ServicesGrid() {
 function ServicesRows() {
   return (
     <section id="services" className="sec bg-pg">
+      <SectionFx variant="beams" />
       <div className="wrap">
         <ServiceHead />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -129,6 +131,7 @@ function ServicesFeature() {
   const s = SERVICES[active];
   return (
     <section id="services" className="sec bg-pg">
+      <SectionFx variant="beams" />
       <div className="wrap">
         <ServiceHead />
         <div className="feat-grid" style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: 40 }}>
@@ -189,6 +192,7 @@ function Certificates() {
   const c = open >= 0 ? CERTS[open] : null;
   return (
     <section id="certs" className="sec bg-b">
+      <SectionFx variant="strings" />
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 680, marginBottom: 48 }}>
           <span className="eyebrow">{(window.CONTENT.certsHead || {}).eyebrow}</span>
@@ -238,6 +242,7 @@ function Certificates() {
 function Process() {
   return (
     <section id="process" className="sec bg-pg">
+      <SectionFx variant="rings" />
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 680, marginBottom: 56 }}>
           <span className="eyebrow">{(window.CONTENT.processHead || {}).eyebrow}</span>
@@ -303,6 +308,7 @@ function Cases({ onCta }) {
   const list = CASES.filter((c) => filter === 'all' || c.tags.includes(filter));
   return (
     <section id="cases" className="sec bg-b" style={{ overflow: 'clip', marginTop: -1 }}>
+      <SectionFx variant="weave" />
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 820, marginBottom: 30 }}>
           <span className="eyebrow">{(window.CONTENT.casesHead || {}).eyebrow}</span>

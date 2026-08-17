@@ -114,23 +114,27 @@ function App() {
           доступности нет области основного содержимого, и проверка агентного
           просмотра считает разметку некорректной. */}
       <main id="main">
+      {/* Разделители намеренно разные. Волна оставлена в двух местах — под
+          героем и перед контактами: восемь одинаковых волн подряд читались
+          как приём, который забыли выключить. Декор самих секций задаётся
+          внутри них через <SectionFx>. */}
       <Hero variant={t.heroVariant} portrait="assets/portrait.jpg" onCta={openLead} />
       <SectionWave from="#08080a" to="#08080a" speed={16} />
       <About />
-      <SectionWave from="#08080a" to="#08080a" speed={13} />
+      <SectionEdge variant="dashes" />
       <Services variant={t.servicesVariant} onCta={openLead} />
-      <SectionWave from="#08080a" to="#08080a" speed={18} />
+      <SectionEdge variant="node" />
       <Certificates />
-      <SectionWave from="#08080a" to="#08080a" speed={14} />
+      <SectionEdge variant="hairline" />
       <Process data-comment-anchor="a0b41ccc3a-h3-158-15" />
-      <SectionWave from="#08080a" to="#08080a" speed={16} />
+      <SectionEdge variant="chevron" />
       <Quotes />
       <Cases onCta={openLead} />
-      <SectionWave from="#08080a" to="#08080a" speed={13} />
+      <SectionEdge variant="node" />
       <Audit />
-      <SectionWave from="#08080a" to="#08080a" speed={17} />
+      <SectionWave from="#08080a" to="#08080a" speed={13} />
       <Contacts onCta={openLead} />
-      <SectionWave from="#08080a" to="#08080a" speed={15} />
+      <SectionEdge variant="hairline" />
       </main>
       <Footer onCta={openLead} />
       {t.showQuiz && <QuizFab onOpen={() => setQuizOpen(true)} />}

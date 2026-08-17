@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build": "rm -rf dist && cp -r project dist && node project/build.mjs project dist",
-    "check": "node project/check.mjs"
+    "check": "node project/check.mjs",
+    "check:seams": "node project/check-seams.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

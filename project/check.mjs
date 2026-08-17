@@ -32,6 +32,7 @@ import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, extname, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { findSeams, SHOT_CSS } from './seam-detector.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'dist');
 const PORT = 4757;
@@ -99,17 +100,6 @@ function pages() {
   const xml = readFileSync(join(ROOT, 'sitemap.xml'), 'utf8');
   return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
     .map((m) => m[1].replace(/^https?:\/\/[^/]+/, ''));
-}
-
-/* Средний цвет строки пикселей по нескольким колонкам: одна колонка может
-   попасть на картинку или текст и дать ложное срабатывание. */
-function rowTone(px, width, channels, y, xs) {
-  let s = 0;
-  for (const x of xs) {
-    const i = (width * y + x) * channels;
-    s += (px[i] + px[i + 1] + px[i + 2]) / 3;
-  }
-  return s / xs.length;
 }
 
 const findings = [];
@@ -340,57 +330,19 @@ for (const path of pages()) {
        волны нет вовсе. Владелец сайта находил их глазами после того, как
        я отчитывался, что всё чисто.
 
-       Теперь сканируется вся страница по колонке пикселей: ищем строку, где
-       тон скачком меняется больше чем на полторы единицы, а сверху и снизу
-       от неё держится ровно. Ровно так это и видит глаз — резкая граница
-       двух больших плоскостей. Плавный градиент проверку не тревожит:
-       там соседние строки отличаются на доли единицы.
-
-       Пробы берём в поле страницы (x = 6/14/22). На отступах контента они
-       попадали на текст и карточки и давали ложные срабатывания. */
+       Само правило поиска — в seam-detector.mjs, там же разобран каждый порог.
+       Оно вынесено отдельным модулем ради check-seams.mjs: тот проверяет саму
+       проверку — подсовывает ей заведомый дефект и заведомый узор и смотрит,
+       различает ли она их. Копия правила в двух файлах рано или поздно
+       разойдётся, и самотест начнёт подтверждать не то правило, что работает. */
     if (width === 1440) {
-      /* Фиксированные элементы (шапка, плашка cookie, кнопка квиза) в
-         полностраничном снимке впечатываются один раз — как правило у нижнего
-         края — и создают ступеньку там, где на самой странице ничего нет.
-         Это артефакт съёмки, а не дефект вёрстки, поэтому на время замера
-         прячем всё, что вынуто из потока. Сюда же .bg-fx — слой свечений:
-         он тоже fixed, при реальной прокрутке едет вместе с экраном и шва
-         между секциями создать не может по определению. */
-      await page.addStyleTag({ content:
-        /* .mo-grain::before — плёночное зерно. Оно fixed и растянуто на
-           inset: -50%, то есть в окне браузера всегда покрывает экран целиком
-           и кромки не имеет. Но полностраничный скриншот растягивает вьюпорт,
-           зерно покрывает только верхнюю часть снимка, и его нижний край
-           попадал в отчёт как «полоса на стыке» — каждый раз на другом y,
-           потому что слой ещё и дрожит по кадрам анимации. Дефекта нет,
-           поэтому при съёмке слой снимаем. */
-        '.nav,.nav-mobile,.cookie-bar,.quiz-fab,.toast-wrap,.lead-modal,.shot-lb,.bg-fx,'
-        + 'body::after,.mo-grain::before{display:none!important}'
-        /* И снимаем появление по скроллу. Полностраничный снимок делается с
-           нулевой прокрутки: у всего, что ниже сгиба, прогресс view() равен
-           нулю, то есть opacity: 0. Без этой строчки проверка стыков смотрела
-           бы на пустой холст ниже первого экрана и находила «полосы» там, где
-           просто ничего не нарисовано. */
-        + '.reveal,[data-mo="group"]>*,.mo-stagger>*{animation:none!important;'
-        + 'opacity:1!important;transform:none!important;filter:none!important}' });
+      await page.addStyleTag({ content: SHOT_CSS });
       await page.waitForTimeout(150);
       const shot = await page.screenshot({ fullPage: true });
       const { data, info } = await sharp(shot).raw().toBuffer({ resolveWithObject: true });
-      const xs = [6, 14, 22];
-      const tone = (y) => rowTone(data, info.width, info.channels, y, xs);
-      const hits = [];
-      for (let y = 9; y < info.height - 9; y++) {
-        const d = tone(y) - tone(y - 1);
-        if (Math.abs(d) < 1.5) continue;
-        /* Ступенька, а не градиент: до и после границы тон держится ровно. */
-        if (Math.abs(tone(y - 1) - tone(y - 8)) > 0.6) continue;
-        if (Math.abs(tone(y + 7) - tone(y)) > 0.6) continue;
-        if (hits.length && y - hits[hits.length - 1].y < 10) continue;
-        hits.push({ y, d, up: tone(y - 1), dn: tone(y) });
-      }
-      for (const h of hits) {
+      for (const h of findSeams(data, info)) {
         add(path, width, 'полоса на стыке',
-          `y=${h.y}: тон ${h.up.toFixed(1)} → ${h.dn.toFixed(1)} (скачок ${h.d.toFixed(1)}) — граница видна как полоса`);
+          `y=${h.y} (${h.side}): тон ${h.up.toFixed(1)} → ${h.dn.toFixed(1)} (скачок ${h.d.toFixed(1)}) — граница видна как полоса`);
       }
     }
 

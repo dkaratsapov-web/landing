@@ -59,6 +59,7 @@ function Quotes() {
 
   return (
     <section className="sec quotes-sec bg-b" style={{ overflow: 'clip' }}>
+      <SectionFx variant="aurora" />
       <div className="wrap wrap-narrow" style={{ maxWidth: 1000 }}
         onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
         <div className="reveal" style={{ textAlign: 'center', marginBottom: 8 }}>
@@ -161,4 +162,69 @@ function SectionWave({ from = '#08080a', to = '#0d0d0f', height = 88, speed = 15
   );
 }
 
-Object.assign(window, { Atmos, Quotes, SectionWave });
+/* ---------- SectionFx: декоративный слой внутри секции ----------
+   Разметки нет вовсе: сам рисунок живёт в ::before/::after, вся работа в CSS
+   (блок SECTION FX в landing.css), там же объяснено, почему этот слой не
+   возвращает тёмные полосы на стыках. Здесь важно одно: слой должен быть
+   ПЕРВЫМ ребёнком секции, а самой секции нужен position: relative — иначе
+   inset: 0 отсчитается не от неё. */
+function SectionFx({ variant = 'mesh', flip = false }) {
+  const ref = useRefE(null);
+  /* Анимации ставятся на паузу, пока секция далеко от экрана. Слоёв восемь,
+     каждый во всю ширину, и часть из них двигает background-position — это
+     перерисовка целого слоя на кадр. Держать её для блоков, которых на экране
+     нет, незачем. Запас в 300px, чтобы к моменту появления движение уже шло:
+     иначе видно, как рисунок трогается с места.
+     IntersectionObserver, а не обработчик прокрутки, — обработчик считает на
+     каждом кадре прокрутки и сам по себе стоит дороже, чем экономит. */
+  useEffectE(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(
+      ([e]) => el.classList.toggle('live', e.isIntersecting),
+      { rootMargin: '300px 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <div ref={ref} className={'sec-fx fx-' + variant + (flip ? ' flip' : '')} aria-hidden="true" />
+  );
+}
+
+/* ---------- SectionEdge: разделители между блоками ----------
+   Фон прозрачный у всех вариантов, и это не вкусовое решение — см.
+   комментарий к .sec-edge в landing.css. */
+let edgeSeq = 0;
+function SectionEdge({ variant = 'hairline' }) {
+  /* Сквозной счётчик, а не хеш от параметров: один и тот же вариант стоит на
+     странице по нескольку раз, и id градиента выходил одинаковым. Дубль id —
+     невалидный документ, а браузер вдобавок связывает stroke="url(#id)" с
+     первым найденным узлом, так что второй разделитель подхватывал чужой
+     градиент. На волне я этот же грабль уже собрал. */
+  const gid = React.useMemo(() => 'edg' + (++edgeSeq), []);
+  return (
+    <div className={'sec-edge edge-' + variant} aria-hidden="true">
+      {variant === 'chevron' ? (
+        <svg viewBox="0 0 1200 84" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id={gid} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="var(--accent-bright)" stopOpacity="0" />
+              <stop offset="50%" stopColor="var(--accent-bright)" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="var(--accent-bright)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <path d="M0 30 L600 58 L1200 30" stroke={`url(#${gid})`} />
+        </svg>
+      ) : (
+        <>
+          <span className="rule" />
+          {variant === 'hairline' && <span className="glint" />}
+          {variant === 'node' && <span className="node" />}
+        </>
+      )}
+    </div>
+  );
+}
+
+Object.assign(window, { Atmos, Quotes, SectionWave, SectionFx, SectionEdge });

@@ -102,6 +102,7 @@ function Audit() {
   const f = useLeadForm(toast, 'Заявка на аудит отправлена. Я перезвоню лично.', 'Аудит');
   return (
     <section id="audit" className="sec bg-pg">
+      <SectionFx variant="spark" />
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'center' }}>
         <div className="reveal">
           <span className="eyebrow">Бесплатный аудит</span>
@@ -200,6 +201,7 @@ function Contacts() {
      создаёт. Проверяется в check.mjs («мёртвая scroll-анимация»). */
   return (
     <section id="contacts" className="sec bg-b" style={{ overflow: 'clip' }}>
+      <SectionFx variant="mesh" flip />
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'flex-start' }}>
         <div className="reveal">
           <span className="eyebrow">{K.eyebrow}</span>
