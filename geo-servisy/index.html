@@ -183,11 +183,75 @@
 .gcmp-list li.ok::before { content: '✓'; color: var(--lime-bright); font-weight: 700; }
 .gcmp-note { margin: 20px 0 0; font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 900px; }
 
-/* Что входит */
-.incl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-.incl-card { display: flex; gap: 18px; }
-.incl-card .ic-body h3 { font-size: 19px; margin: 0 0 8px; }
-.incl-card .ic-body p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+/* ── Что входит: две половины вместо восьми одинаковых карточек ──────────
+   Рамок нет намеренно. Восемь коробок на экране создавали рябь, при которой
+   глазу не за что зацепиться. Здесь границу держат разделители между
+   строками и отступ между колонками — этого достаточно, чтобы список
+   читался как список, и не больше. */
+.gwrk { display: grid; gap: 34px 44px; }
+@media (min-width: 900px) {
+  .gwrk { grid-template-columns: 1fr 1fr; gap: 0 48px; grid-template-rows: auto auto; }
+  /* subgrid — чтобы списки в обеих колонках начинались на одной высоте.
+     Подводки разной длины (две строки против трёх) съезжали, и первый пункт
+     правой колонки оказывался ниже левого на строку. Там, где subgrid не
+     поддерживается, правило просто игнорируется и колонки живут как раньше:
+     хуже прежнего не станет. */
+  .gwrk-g { display: grid; grid-row: span 2; grid-template-rows: subgrid; align-content: start; }
+}
+
+/* Разделитель между колонками только на широком экране: в один столбец он
+   превратился бы в линию поперёк страницы и разрезал бы блок пополам. */
+@media (min-width: 900px) {
+  .gwrk-g + .gwrk-g { padding-left: 48px; margin-left: -48px;
+    border-left: 1px solid var(--line); }
+}
+
+.gwrk-h { margin-bottom: 20px; }
+.gwrk-h h3 { margin: 10px 0 8px; font-size: clamp(20px, 2vw, 24px); letter-spacing: -0.02em; }
+.gwrk-h p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 46ch; }
+.gwrk-step { display: inline-block; padding: 4px 11px; border-radius: var(--r-pill);
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(255,255,255,.06); color: var(--muted); }
+.gwrk-step.on { background: var(--lime); color: var(--lime-ink); }
+
+.gwrk-list { list-style: none; margin: 0; padding: 0; }
+.gwrk-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 14px;
+  padding: 16px 0; border-top: 1px solid var(--line); }
+.gwrk-list li b { display: block; margin-bottom: 4px; font-size: 16px; font-weight: 700;
+  letter-spacing: -0.01em; }
+.gwrk-list li div { font-size: 14.5px; line-height: 1.55; color: var(--muted); }
+.gwrk-i { color: var(--lime-bright); }
+.gwrk-i svg { width: 20px; height: 20px; display: block; margin-top: 2px; }
+
+/* ── Этапы: две фазы вместо шести равных колонок ─────────────────────────
+   Ширина колонок фаз — 4 к 2, ровно по числу шагов внутри. Так шаги во всех
+   шести колонках выходят одинаковой ширины, и деление на фазы не заставляет
+   один шаг быть вдвое шире другого. */
+.gph { display: grid; gap: 26px; }
+@media (min-width: 1000px) { .gph { grid-template-columns: 4fr 2fr; gap: 0 30px; } }
+
+.gph-hd { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px;
+  padding-bottom: 12px; margin-bottom: 4px; }
+.gph-tag { padding: 4px 11px; border-radius: var(--r-pill);
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: rgba(255,255,255,.06); color: var(--muted); }
+.gph-tag.on { background: var(--lime); color: var(--lime-ink); }
+.gph-when { font-size: 13.5px; color: var(--muted); }
+
+.gph-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+@media (min-width: 700px) {
+  .gph-4 { grid-template-columns: repeat(4, 1fr); }
+  .gph-2 { grid-template-columns: repeat(2, 1fr); }
+}
+/* Линия сверху вместо рамки вокруг: шаг — это отрезок пути, а не коробка.
+   Ряд линий поверх колонок читается как шкала, по которой идёт работа. */
+.gph-s { padding-top: 16px; border-top: 2px solid var(--line-2); }
+.gph-loop .gph-s { border-top-color: var(--lime); }
+.gph-n { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 800;
+  letter-spacing: .06em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gph-loop .gph-n { color: var(--lime-bright); }
+.gph-s h3 { margin: 0 0 6px; font-size: 17px; letter-spacing: -0.01em; }
+.gph-s p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
 
 /* Сравнение специалист vs агентство */
 .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
@@ -252,14 +316,12 @@
   .geo-plat-grid { grid-template-columns: repeat(2, 1fr); }
   .niche-grid { grid-template-columns: repeat(2, 1fr); }
   .result-grid, .tariff-grid { grid-template-columns: 1fr; }
-  .incl-grid, .vs-grid { grid-template-columns: 1fr; }
-  .steps-grid.geo-steps { grid-template-columns: repeat(2, 1fr) !important; }
+  .vs-grid { grid-template-columns: 1fr; }
   .trust-row { gap: 10px; }
 }
 @media (max-width: 640px) {
   .geo-plat-grid { grid-template-columns: 1fr; }
   .niche-grid { grid-template-columns: 1fr; }
-  .steps-grid.geo-steps { grid-template-columns: 1fr !important; }
   .vs-card, .tariff { padding: 28px 22px; }
 }
 </style>
@@ -593,38 +655,42 @@
       <h2>Что входит в <span class="accent">продвижение в гео-сервисах</span></h2>
       <p>Беру на себя весь цикл — от аудита текущих карточек до регулярного ведения и отчётности.</p>
     </div>
-    <div class="incl-grid stagger">
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
-        <div class="ic-body"><h3>Аудит и анализ конкурентов</h3><p>Разбор текущих карточек и анализ конкурентов на картах: что мешает быть в топе.</p></div>
+    <!-- Восемь одинаковых карточек с иконками читались как один длинный
+         список, в котором нечего искать: все пункты выглядели равнозначными.
+         А они делятся на две разные по смыслу половины — сначала карточка
+         должна существовать и быть правильной, потом она должна приводить
+         людей. Вторая половина без первой бессмысленна, первая без второй
+         быстро выдыхается. Разделение это и показывает.
+
+         Карточек здесь больше нет: восемь коробок с рамками на одном экране
+         давали рябь. Строки с разделителями держат тот же порядок тише. -->
+    <div class="gwrk stagger">
+      <div class="gwrk-g">
+        <div class="gwrk-h">
+          <span class="gwrk-step">Сначала</span>
+          <h3>Сама карточка</h3>
+          <p>Чтобы она была на всех площадках, была заполнена правильно и не выглядела заброшенной.</p>
+        </div>
+        <ul class="gwrk-list">
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span><div><b>Аудит и анализ конкурентов</b>Разбор текущих карточек и анализ конкурентов на картах: что мешает быть в топе.</div></li>
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span><div><b>Регистрация и верификация</b>Создание и подтверждение профилей в Яндекс Бизнес, 2ГИС и Google.</div></li>
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg></span><div><b>Упаковка и оптимизация</b>Название, корректные категории, контакты, часы, описание с ключами, товары и услуги с ценами.</div></li>
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></span><div><b>Визуал: фото и видео</b>Загрузка качественных фотографий, видео и обложек, которые повышают доверие.</div></li>
+        </ul>
       </div>
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
-        <div class="ic-body"><h3>Регистрация и верификация</h3><p>Создание и подтверждение профилей в Яндекс Бизнес, 2ГИС и Google.</p></div>
-      </div>
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg></span>
-        <div class="ic-body"><h3>Упаковка и оптимизация карточки</h3><p>Название, корректные категории, контакты, часы, описание с ключами, товары и услуги с ценами.</p></div>
-      </div>
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></span>
-        <div class="ic-body"><h3>Визуал: фото и видео</h3><p>Загрузка качественных фотографий, видео и обложек, которые повышают доверие.</p></div>
-      </div>
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
-        <div class="ic-body"><h3>Отзывы и репутация</h3><p>Стратегия сбора новых отзывов, ответы на них, работа с негативом и обжалование.</p></div>
-      </div>
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span>
-        <div class="ic-body"><h3>Платное продвижение</h3><p>Настройка приоритетного размещения и рекламы: подписка Яндекс Бизнес, реклама на картах, приоритет в 2ГИС.</p></div>
-      </div>
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18"></path><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M8 2v4M16 2v4"></path></svg></span>
-        <div class="ic-body"><h3>Регулярное ведение</h3><p>Посты, акции и своевременное обновление информации в карточках.</p></div>
-      </div>
-      <div class="card hover incl-card">
-        <span class="icon-tile" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
-        <div class="ic-body"><h3>Аналитика и отчётность</h3><p>Отслеживание звонков, маршрутов и переходов; понятный отчёт раз в месяц.</p></div>
+
+      <div class="gwrk-g">
+        <div class="gwrk-h">
+          <span class="gwrk-step on">Дальше</span>
+          <h3>Поток клиентов</h3>
+          <p>Оформить один раз мало: позиции держатся, пока карточка живёт — с отзывами, обновлениями и присмотром за цифрами.</p>
+        </div>
+        <ul class="gwrk-list">
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><div><b>Отзывы и репутация</b>Стратегия сбора новых отзывов, ответы на них, работа с негативом и обжалование.</div></li>
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg></span><div><b>Платное продвижение</b>Приоритетное размещение и реклама: подписка Яндекс Бизнес, реклама на картах, приоритет в 2ГИС.</div></li>
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18"></path><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M8 2v4M16 2v4"></path></svg></span><div><b>Регулярное ведение</b>Посты, акции и своевременное обновление информации в карточках.</div></li>
+        <li><span class="gwrk-i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span><div><b>Аналитика и отчётность</b>Отслеживание звонков, маршрутов и переходов; понятный отчёт раз в месяц.</div></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -639,17 +705,40 @@
       <h2>Этапы продвижения <span class="accent">на картах</span></h2>
       <p>Прозрачный процесс — от бесплатного аудита до регулярной отчётности.</p>
     </div>
-    <p class="scroll-hint" aria-hidden="true">
-      <span class="swipe-dot"></span><span class="swipe-dot"></span><span class="swipe-dot"></span>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-    </p>
-    <div class="steps-grid geo-steps stagger" style="grid-template-columns:repeat(6,1fr);">
-      <div class="step"><div class="n">01</div><h3>Аудит</h3><p>Бесплатно смотрю текущие карточки и точки роста.</p></div>
-      <div class="step"><div class="n">02</div><h3>Стратегия</h3><p>Анализ конкурентов и план: что мешает быть в топе.</p></div>
-      <div class="step"><div class="n">03</div><h3>Оформление</h3><p>Оптимизация карточек на всех нужных площадках.</p></div>
-      <div class="step"><div class="n">04</div><h3>Запуск</h3><p>Старт отзывов и платного продвижения.</p></div>
-      <div class="step"><div class="n">05</div><h3>Ведение</h3><p>Обновления, посты, работа с отзывами.</p></div>
-      <div class="step"><div class="n">06</div><h3>Отчётность</h3><p>Отчёты и корректировка стратегии по результатам.</p></div>
+<!-- Шесть равных колонок на десктопе давали шесть узких столбиков
+         текста, а на телефоне превращались в карусель с подсказкой
+         «листайте». При этом шаги не равнозначны: первые четыре делаются
+         один раз и укладываются в первые недели, последние два повторяются
+         дальше каждый месяц. Разделение на две фазы это показывает и заодно
+         снимает тесноту — в ряду теперь четыре колонки и две, а не шесть.
+
+         Сроки взяты не с потолка: страница ниже, в ответах на вопросы, уже
+         говорит про эффект в первые недели, рост за 1–3 месяца и отчёт раз
+         в месяц. Подписи фаз повторяют это, а не добавляют новых обещаний. -->
+    <div class="gph stagger">
+      <div class="gph-ph">
+        <div class="gph-hd">
+          <span class="gph-tag">Первые недели</span>
+          <span class="gph-when">делается один раз</span>
+        </div>
+        <ol class="gph-list gph-4">
+        <li class="gph-s"><span class="gph-n">01</span><h3>Аудит</h3><p>Бесплатно смотрю текущие карточки и точки роста.</p></li>
+        <li class="gph-s"><span class="gph-n">02</span><h3>Стратегия</h3><p>Анализ конкурентов и план: что мешает быть в топе.</p></li>
+        <li class="gph-s"><span class="gph-n">03</span><h3>Оформление</h3><p>Оптимизация карточек на всех нужных площадках.</p></li>
+        <li class="gph-s"><span class="gph-n">04</span><h3>Запуск</h3><p>Старт отзывов и платного продвижения.</p></li>
+        </ol>
+      </div>
+
+      <div class="gph-ph gph-loop">
+        <div class="gph-hd">
+          <span class="gph-tag on">Дальше</span>
+          <span class="gph-when">месяц за месяцем</span>
+        </div>
+        <ol class="gph-list gph-2">
+        <li class="gph-s"><span class="gph-n">05</span><h3>Ведение</h3><p>Обновления, посты, работа с отзывами.</p></li>
+        <li class="gph-s"><span class="gph-n">06</span><h3>Отчётность</h3><p>Отчёты и корректировка стратегии по результатам.</p></li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>
