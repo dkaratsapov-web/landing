@@ -52,6 +52,135 @@
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Аудит рекламных кампаний","serviceType":"Аудит интернет-рекламы","description":"Разбор действующих кампаний в Яндекс Директе и других каналах: структура, семантика, стратегии, объявления, аналитика. Экспресс-разбор бесплатно, подробный аудит — с письменным отчётом.","url":"https://karatsapov.ru/audit-reklamy/","areaServed":{"@type":"Country","name":"Россия"},"provider":{"@type":"Person","name":"Даниил Карацапов","url":"https://karatsapov.ru"},"hasOfferCatalog":{"@type":"OfferCatalog","name":"Форматы аудита","itemListElement":[{"@type":"Offer","name":"Экспресс-разбор","description":"Смотрю то, что видно без доступов: выдачу по вашим запросам, объявления конкурентов, сайт, скорость, путь до заявки. Если дадите гостевой доступ к Метрике — посмотрю и её.","price":"0","priceCurrency":"RUB"},{"@type":"Offer","name":"Подробный аудит","description":"Работа с доступом к кабинету, Метрике и, если есть, CRM. Прохожу все пять зон из списка выше, поднимаю отчёты по поисковым фразам и площадкам, считаю окупаемость по кампаниям."}]}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Сколько стоит аудит?","acceptedAnswer":{"@type":"Answer","text":"Экспресс-разбор — бесплатно. Подробный аудит с письменным отчётом оплачивается, стоимость зависит от числа кампаний, каналов и от того, нужно ли смотреть аналитику и CRM. Называю её после того, как посмотрю кабинет: заранее это была бы цифра с потолка. Прайс на остальные услуги — на странице цен."}},{"@type":"Question","name":"Какие доступы нужны?","acceptedAnswer":{"@type":"Answer","text":"Для экспресс-разбора — ничего, достаточно адреса сайта и списка регионов. Для подробного аудита нужен гостевой доступ к рекламному кабинету и Метрике, по возможности — к CRM. Гостевой доступ даёт право читать, а не менять: настройки я не трогаю."}},{"@type":"Question","name":"Вы будете переделывать кампании?","acceptedAnswer":{"@type":"Answer","text":"В рамках аудита — нет. Аудит заканчивается отчётом и разбором. Внедрять правки можете вы, ваш подрядчик или я отдельной работой — это уже другой договор, и решение за вами."}},{"@type":"Question","name":"А если у меня всё настроено нормально?","acceptedAnswer":{"@type":"Answer","text":"Тогда я так и напишу, а в отчёте останется то, что можно улучшить, и оценка потенциала канала. Это бывает чаще, чем принято думать: иногда проблема не в кампаниях, а в цене, сроках или обработке заявок — и об этом полезнее узнать честно."}},{"@type":"Question","name":"Аудит только Яндекс Директа?","acceptedAnswer":{"@type":"Answer","text":"Не только. Смотрю Директ, VK Ads, Telegram Ads, карты и справочники — то, что у вас запущено. Отдельно можно разобрать сайт и аналитику: часто настоящая причина слабых результатов лежит там, а не в кампаниях."}}]}</script>
 <style>
+/* ── Первый экран ────────────────────────────────────────────────────────
+   Две колонки: слева смысл, справа макет. На узком экране макет уходит
+   вниз, а не сжимается: интерфейс шириной в 320px нечитаем и превращается
+   в декоративное пятно. */
+.svc-hero { display: grid; gap: 44px; align-items: center; }
+@media (min-width: 1080px) {
+  .svc-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 44%); gap: 56px; }
+}
+.svc-hero .lead { max-width: 560px; }
+
+/* h1 держит поисковый запрос, поэтому набирается плотно и не разъезжается
+   на три строки: длинный заголовок в две строки читается как заголовок,
+   в четыре — как абзац. */
+.svc-hero h1 { font-size: clamp(32px, 4.4vw, 58px); line-height: 1.04; letter-spacing: -0.03em; margin: 0; }
+
+/* УТП — отдельная строка между заголовком и лидом. Не курсив и не серый:
+   это второе по важности предложение на странице после h1. */
+.svc-utp {
+  margin: 20px 0 0; max-width: 620px;
+  font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; font-weight: 600;
+  color: var(--txt); letter-spacing: -0.01em;
+}
+.svc-utp b { color: var(--accent-bright); font-weight: 600; }
+
+/* ── Цифры под первым экраном ────────────────────────────────────────────
+   Не карточки: рамка вокруг числа превращает факт в плашку. Разделены
+   тонкими линиями — так это читается как строка показателей. */
+.svc-facts { display: grid; gap: 1px; margin-top: 40px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+@media (min-width: 620px) { .svc-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.svc-fact { background: var(--pg, #08080a); padding: 20px 22px 20px 0; }
+@media (min-width: 620px) { .svc-fact { padding-left: 22px; } .svc-fact:first-child { padding-left: 0; } }
+.svc-fact-v {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(24px, 2.6vw, 31px); font-weight: 700; letter-spacing: -0.02em;
+  color: var(--txt); line-height: 1.1; white-space: nowrap;
+}
+.svc-fact-v span { color: var(--accent-bright); }
+.svc-fact-l { margin-top: 7px; font-size: 13.5px; line-height: 1.4; color: var(--txt-3); max-width: 22ch; }
+
+/* ── Общая рамка макета ──────────────────────────────────────────────────
+   Все макеты живут в одной оболочке: шапка с адресом и светлое или тёмное
+   поле внутри. Без рамки чужой интерфейс на тёмной странице читается как
+   сбой вёрстки, а не как «вот так это выглядит». */
+.mock { border-radius: 16px; overflow: clip; border: 1px solid var(--line-strong, rgba(255,255,255,.14));
+  background: #111115; box-shadow: 0 30px 90px rgba(0,0,0,.65); }
+.mock-bar { display: flex; align-items: center; gap: 9px; padding: 10px 13px; background: #1a1a1e; border-bottom: 1px solid var(--line); }
+.mock-dots { display: flex; gap: 5px; flex: none; }
+.mock-dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+.mock-dots i:nth-child(1) { background: #ff5f57; }
+.mock-dots i:nth-child(2) { background: #febc2e; }
+.mock-dots i:nth-child(3) { background: #28c840; }
+.mock-url {
+  flex: 1; min-width: 0; padding: 4px 11px; border-radius: 6px;
+  background: rgba(255,255,255,.06); font-size: 11.5px; color: var(--txt-3);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mock-cap { margin: 13px 2px 0; font-size: 13px; line-height: 1.5; color: var(--txt-3); }
+
+/* ── Макет: поисковая выдача ─────────────────────────────────────────── */
+.mk-serp { background: #f6f6f7; padding: 15px 16px 18px; }
+.mk-q { display: flex; align-items: center; gap: 9px; padding: 8px 13px; border-radius: 999px; background: #fff; border: 1px solid #dcdce0; }
+.mk-q-t { font-size: 13px; color: #21201f; }
+.mk-q-go { margin-left: auto; font-size: 11.5px; color: #6b6b70; }
+.mk-res { margin-top: 13px; display: flex; flex-direction: column; gap: 13px; }
+.mk-item { position: relative; padding-left: 0; }
+.mk-item-tag { display: inline-block; margin-bottom: 4px; padding: 1px 6px; border-radius: 4px; font-size: 9.5px; font-weight: 700; letter-spacing: .04em; background: #ffe4a0; color: #6b4a00; }
+.mk-item-t { font-size: 13.5px; line-height: 1.3; color: #2b47b3; font-weight: 500; }
+.mk-item-u { margin-top: 3px; font-size: 11px; color: #3a7d3a; }
+.mk-item-d { margin-top: 4px; font-size: 11.5px; line-height: 1.45; color: #4d4d52; }
+.mk-item.on { padding: 10px 12px; margin: 0 -12px; border-radius: 10px; background: #eaf6d8; box-shadow: inset 2px 0 0 #7cb518; }
+.mk-pos { position: absolute; right: 10px; top: 10px; font-size: 10px; font-weight: 700; color: #4a7a11; }
+
+/* ── Макет: кабинет рекламной системы ───────────────────────────────── */
+.mk-cab { padding: 14px 15px 17px; background: #16161a; }
+.mk-row { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 9px; background: rgba(255,255,255,.03); border: 1px solid var(--line); }
+.mk-row + .mk-row { margin-top: 7px; }
+.mk-row-n { font-size: 12.5px; color: var(--txt-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-row-v { font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--txt-3); white-space: nowrap; }
+.mk-flag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.mk-flag.bad { background: rgba(255,90,77,.14); color: #ff8a80; }
+.mk-flag.ok { background: var(--accent-soft, rgba(182,240,30,.13)); color: var(--accent-bright); }
+.mk-row.alert { border-color: rgba(255,90,77,.32); background: rgba(255,90,77,.05); }
+.mk-head { display: flex; gap: 8px; margin-bottom: 11px; }
+.mk-tab { font-size: 11px; padding: 4px 10px; border-radius: 999px; color: var(--txt-3); border: 1px solid var(--line); }
+.mk-tab.on { color: var(--accent-bright); border-color: var(--accent-soft-bd, rgba(182,240,30,.3)); }
+
+/* ── Макет: отчёт аналитики ─────────────────────────────────────────── */
+.mk-rep { padding: 15px 16px 18px; background: #16161a; }
+.mk-rep-head { display: grid; grid-template-columns: minmax(0,1.4fr) repeat(3, minmax(0,1fr)); gap: 8px;
+  padding-bottom: 9px; border-bottom: 1px solid var(--line); font-size: 10.5px; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--txt-3); }
+.mk-rep-row { display: grid; grid-template-columns: minmax(0,1.4fr) repeat(3, minmax(0,1fr)); gap: 8px;
+  padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; align-items: center; }
+.mk-rep-row:last-child { border-bottom: 0; }
+.mk-rep-src { color: var(--txt-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-rep-n { font-variant-numeric: tabular-nums; color: var(--txt-3); }
+.mk-rep-n.win { color: var(--accent-bright); font-weight: 700; }
+.mk-rep-n.lose { color: #ff8a80; }
+
+/* ── Макет: карточка в ленте ────────────────────────────────────────── */
+.mk-feed { padding: 14px; background: #16161a; display: flex; flex-direction: column; gap: 11px; }
+.mk-card { border-radius: 12px; overflow: clip; border: 1px solid var(--line); background: rgba(255,255,255,.03); }
+.mk-card-img { height: 84px; background: linear-gradient(120deg, rgba(182,240,30,.16), rgba(182,240,30,.03) 60%, transparent), #1d1d22; }
+.mk-card-b { padding: 11px 13px 13px; }
+.mk-card-t { font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--txt); }
+.mk-card-m { margin-top: 7px; display: flex; gap: 10px; font-size: 10.5px; color: var(--txt-3); }
+.mk-card.on { border-color: var(--accent-soft-bd, rgba(182,240,30,.3)); }
+
+/* ── Смежные услуги ─────────────────────────────────────────────────────
+   Не «читайте также» списком внизу, а полноценный блок: он и навигация,
+   и перелинковка. Проверка ссылочного графа показала, что без него новые
+   страницы получали по одной входящей ссылке из текста. */
+.svc-rel { display: grid; gap: 1px; margin-top: 34px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 20px; overflow: clip; }
+@media (min-width: 760px) { .svc-rel { grid-template-columns: repeat(3, 1fr); } }
+.svc-rel-i {
+  display: block; padding: 26px 26px 24px; background: var(--surface);
+  color: inherit; text-decoration: none;
+  transition: background .4s cubic-bezier(.32,.72,0,1);
+}
+.svc-rel-i:hover { background: rgba(255,255,255,.035); }
+.svc-rel-t { display: flex; align-items: baseline; gap: 9px; font-size: 18px; font-weight: 700; color: var(--txt); }
+.svc-rel-t .arr { color: var(--accent-bright); transition: transform .4s cubic-bezier(.32,.72,0,1); }
+.svc-rel-i:hover .arr { transform: translateX(4px); }
+.svc-rel-d { margin: 10px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--txt-3); }
+.svc-rel-p { margin-top: 12px; font-size: 13px; color: var(--accent-bright); font-variant-numeric: tabular-nums; }
+</style><style>
 /* ── Зоны проверки ───────────────────────────────────────────────────────
    Раскладка «крупный номер и название слева, перечень поломок справа».
    Ключевое решение — не карточки: пять карточек с рамками превратили бы
@@ -209,17 +338,60 @@
   <div class="sec-fx fx-mesh" aria-hidden="true"></div>
   <div class="wrap">
     <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span style="margin:0 8px; opacity:.5;">/</span><span aria-current="page">Аудит рекламы</span></nav>
-    <div class="eyebrow reveal">Аудит</div>
-    <h1 class="reveal">Реклама идёт, <span class="accent">а заявок нет</span></h1>
-    <p class="lead reveal">Открываю кабинет и смотрю, куда уходит бюджет: структура кампаний, минус-слова, стратегии, объявления, цели в аналитике. На выходе — не список из шестидесяти замечаний, а три-четыре вещи, которые дадут результат первыми.</p>
-    <div class="btn-row reveal">
-      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Записаться на разбор</a>
-      <a class="btn btn-ghost btn-lg" href="/keysy/">Посмотреть кейсы</a>
+    <div class="svc-hero">
+      <div>
+        <div class="eyebrow reveal">Аудит рекламы · Директ, сайт, аналитика</div>
+        <h1 class="reveal">Аудит рекламных кампаний <span class="accent">в Яндекс Директе</span></h1>
+        <p class="svc-utp reveal">Нахожу, куда уходит бюджет, и называю три-четыре правки, которые дадут результат первыми. <b>Экспресс-разбор — бесплатно</b>, без обязательств продолжать со мной.</p>
+        <p class="lead reveal">Смотрю структуру кампаний, минус-слова, стратегии, объявления и цели в аналитике. На выходе не список из шестидесяти замечаний, а понятный порядок действий: что чинить сегодня, что через неделю, а что не трогать вовсе.</p>
+        <div class="btn-row reveal">
+          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Записаться на разбор</a>
+          <a class="btn btn-ghost btn-lg" href="/keysy/">Посмотреть кейсы</a>
+        </div>
+      </div>
+      <div class="reveal" aria-hidden="true">
+        <div class="mock">
+          <div class="mock-bar"><span class="mock-dots"><i></i><i></i><i></i></span><span class="mock-url">direct.yandex.ru / кампании</span></div>
+          <div class="mk-cab">
+            <div class="mk-head"><span class="mk-tab on">Все</span><span class="mk-tab">Поиск</span><span class="mk-tab">РСЯ</span></div>
+            <div class="mk-row alert">
+              <span class="mk-row-n">Поиск · Общие запросы</span>
+              <span class="mk-row-v">43 800 ₽</span>
+              <span class="mk-flag bad">нет минус-слов</span>
+            </div>
+            <div class="mk-row alert">
+              <span class="mk-row-n">РСЯ · Ретаргетинг</span>
+              <span class="mk-row-v">11 200 ₽</span>
+              <span class="mk-flag bad">цель не настроена</span>
+            </div>
+            <div class="mk-row">
+              <span class="mk-row-n">Поиск · Бренд</span>
+              <span class="mk-row-v">4 100 ₽</span>
+              <span class="mk-flag ok">в норме</span>
+            </div>
+            <div class="mk-row alert">
+              <span class="mk-row-n">РСЯ · Интересы</span>
+              <span class="mk-row-v">29 400 ₽</span>
+              <span class="mk-flag bad">площадки не чистились</span>
+            </div>
+          </div>
+        </div>
+        <p class="mock-cap">Так это обычно и выглядит: кампании работают, деньги списываются, а половина расхода уходит по запросам, которые никто не собирался оплачивать.</p>
+      </div>
     </div>
-    <div class="hero-stats reveal">
-      <div class="stat"><div class="num">5 зон</div><div class="lbl">от структуры кампаний до аналитики</div></div>
-      <div class="stat"><div class="num">2–3 дня</div><div class="lbl">на бесплатный экспресс-разбор</div></div>
-      <div class="stat"><div class="num">до <span class="accent">⅔</span></div><div class="lbl">бюджета уходит впустую без минус-слов</div></div>
+    <div class="svc-facts reveal">
+        <div class="svc-fact">
+          <div class="svc-fact-v"><span>5</span> зон</div>
+          <div class="svc-fact-l">от структуры кампаний до целей в аналитике</div>
+        </div>
+        <div class="svc-fact">
+          <div class="svc-fact-v">2–3 <span>дня</span></div>
+          <div class="svc-fact-l">на бесплатный экспресс-разбор</div>
+        </div>
+        <div class="svc-fact">
+          <div class="svc-fact-v">до <span>⅔</span></div>
+          <div class="svc-fact-l">бюджета уходит впустую без минус-слов</div>
+        </div>
     </div>
   </div>
 </header>
@@ -363,9 +535,38 @@
     </div>
   </div>
 </section>
-<div class="sec-edge edge-chevron" aria-hidden="true"><svg viewBox="0 0 1200 84" preserveAspectRatio="none"><defs><linearGradient id="edg70" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--accent-bright)" stop-opacity="0"/><stop offset="50%" stop-color="var(--accent-bright)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--accent-bright)" stop-opacity="0"/></linearGradient></defs><path d="M0 30 L600 58 L1200 30" stroke="url(#edg70)"/></svg></div>
+<div class="sec-edge edge-chevron" aria-hidden="true"><svg viewBox="0 0 1200 84" preserveAspectRatio="none"><defs><linearGradient id="edg72" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--accent-bright)" stop-opacity="0"/><stop offset="50%" stop-color="var(--accent-bright)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--accent-bright)" stop-opacity="0"/></linearGradient></defs><path d="M0 30 L600 58 L1200 30" stroke="url(#edg72)"/></svg></div>
 
 <section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Смежные услуги</div>
+      <h2>Что ещё закрываю сам</h2>
+      <p class="lead">Работаю не по одному каналу, поэтому связка собирается целиком — без второго подрядчика и без стыков, на которых теряется результат.</p>
+    </div>
+    <div class="svc-rel reveal">
+      <a class="svc-rel-i" href="/kontekstnaya-reklama/">
+        <span class="svc-rel-t">Контекстная реклама <span class="arr" aria-hidden="true">→</span></span>
+        <p class="svc-rel-d">Яндекс Директ: поиск, РСЯ, ретаргетинг. Забирает спрос, который уже есть.</p>
+        <div class="svc-rel-p">от 30 000 ₽/мес</div>
+      </a>
+      <a class="svc-rel-i" href="/skvoznaya-analitika/">
+        <span class="svc-rel-t">Сквозная аналитика <span class="arr" aria-hidden="true">→</span></span>
+        <p class="svc-rel-d">Связка рекламы, звонков и CRM: видно деньги, а не клики.</p>
+        <div class="svc-rel-p">от 12 000 ₽/мес</div>
+      </a>
+      <a class="svc-rel-i" href="/razrabotka-sajtov/">
+        <span class="svc-rel-t">Разработка сайтов <span class="arr" aria-hidden="true">→</span></span>
+        <p class="svc-rel-d">Посадочная под рекламный запрос, а не «чтобы было красиво».</p>
+        <div class="svc-rel-p">от 60 000 ₽</div>
+      </a>
+    </div>
+  </div>
+</section>
+<div class="sec-edge edge-dashes" aria-hidden="true"><span class="rule"></span></div>
+
+<section class="section">
+  <div class="sec-fx fx-rings" aria-hidden="true"></div>
   <div class="wrap">
     <div class="cta-final reveal">
       <h2>Покажите кабинет — скажу, что с ним</h2>
