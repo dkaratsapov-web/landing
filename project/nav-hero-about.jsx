@@ -141,7 +141,6 @@ function HeroSplit({ portrait, onCta }) {
   const H = window.CONTENT.hero || {};
   return (
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'clip' }}>
-      <Atmos glows={[1, 3]} pattern="grid" drifting={true} />
       <div className="wrap hero-split-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: 56,
         alignItems: 'center', paddingTop: 32, paddingBottom: 60 }}>
         <div className="hero-copy">
@@ -209,7 +208,6 @@ function HeroOverlay({ portrait, onCta }) {
 function HeroEditorial({ portrait, onCta }) {
   return (
     <header id="top" className="bg-pg" style={{ paddingTop: 64, overflow: 'clip' }}>
-      <Atmos glows={[2, 3]} pattern="dots" />
       <div className="wrap" style={{ paddingTop: 70 }}>
         <span className="eyebrow reveal in">Даниил Карацапов · интернет-маркетолог</span>
         <h1 className="display reveal in" style={{ fontSize: 'clamp(42px, 8.5vw, 120px)', lineHeight: 0.98, letterSpacing: '-0.03em' }}>

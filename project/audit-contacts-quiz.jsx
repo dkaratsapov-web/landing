@@ -200,7 +200,6 @@ function Contacts() {
      создаёт. Проверяется в check.mjs («мёртвая scroll-анимация»). */
   return (
     <section id="contacts" className="sec bg-b" style={{ overflow: 'clip' }}>
-      <Atmos glows={[1, 2]} pattern="grid" drifting={true} />
       <div className="wrap two-col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'flex-start' }}>
         <div className="reveal">
           <span className="eyebrow">{K.eyebrow}</span>
