@@ -12,6 +12,7 @@
    Метрика показывает клики, а деньги живут в CRM, и между ними пусто.
 */
 import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
+import { SVC_CSS, hero, mockReport, related } from '../service-kit.mjs';
 
 export const meta = {
   path: '/skvoznaya-analitika/',
@@ -179,22 +180,32 @@ export function render() {
           </div>
         </div>`).join('\n');
 
-  const body = `<header class="hero" data-screen-label="Сквозная аналитика">
-  <div class="wrap">
-    ${crumbs.visible}
-    <div class="eyebrow reveal">Аналитика</div>
-    <h1 class="reveal">Видно не клики, <span class="accent">а деньги</span></h1>
-    <p class="lead reveal">Рекламный кабинет знает про расход, Метрика — про визиты, CRM — про выручку. Между ними разрыв, и в нём теряется главный ответ: какая кампания окупилась. Сквозная аналитика соединяет цепочку от показа до сделки.</p>
-    <div class="btn-row reveal">
-      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить задачу</a>
-      <a class="btn btn-ghost btn-lg" href="/ceny/">Посмотреть цены</a>
-    </div>
-    <div class="prt reveal">
-      <span class="prt-badge">Официальный партнёр Roistat</span>
-      <p class="prt-txt">Собираю на Roistat, Яндекс Метрике и коллтрекинге — по задаче, а не по привычке. Сервисы вы оплачиваете напрямую им: наценки на них у меня нет.</p>
-    </div>
-  </div>
-</header>
+  const body = `${hero({
+    label: 'Сквозная аналитика',
+    crumbs: crumbs.visible,
+    eyebrow: 'Сквозная аналитика · Roistat, Метрика, коллтрекинг',
+    h1: 'Настройка сквозной аналитики <span class="accent">для рекламы и CRM</span>',
+    utp: 'Показываю, какая кампания принесла деньги, а какая только клики. <b>Официальный партнёр Roistat</b> — сервисы вы оплачиваете напрямую им, наценки на них у меня нет.',
+    lead: 'Рекламный кабинет знает про расход, Метрика — про визиты, CRM — про выручку. Между ними разрыв, и в нём теряется главный ответ: что окупилось. Связываю цепочку от показа до сделки и учу читать отчёт без аналитика.',
+    ctas: `          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить задачу</a>
+          <a class="btn btn-ghost btn-lg" href="/ceny/">Посмотреть цены</a>`,
+    factList: [
+      ['5–10 <span>дней</span>', 'на настройку и проверку связок'],
+      ['от 12 000 <span>₽</span>', 'в месяц за сопровождение'],
+      ['<span>1</span> отчёт', 'вместо трёх систем, которые спорят между собой'],
+    ],
+    visual: mockReport({
+      url: 'roistat.com / отчёт по источникам',
+      head: ['Источник', 'Расход', 'Сделки', 'Прибыль'],
+      rows: [
+        ['Директ · Поиск', '84 200 ₽', '19', '+312 000 ₽', 'win'],
+        ['Директ · РСЯ', '61 500 ₽', '4', '−12 400 ₽', 'lose'],
+        ['VK Ads', '38 000 ₽', '9', '+96 500 ₽', ''],
+        ['Яндекс Карты', '20 000 ₽', '14', '+188 000 ₽', 'win'],
+      ],
+      cap: 'В кабинете РСЯ выглядит нормально: клики дешевле поиска. Прибыль показывает обратное — и без такой таблицы это не видно.',
+    }),
+  })}
 
 <section class="section">
   <div class="wrap">
@@ -246,6 +257,8 @@ ${faqItems(FAQ)}
   </div>
 </section>
 
+${related('/skvoznaya-analitika/', ['/kontekstnaya-reklama/', '/audit-reklamy/', '/kompleksnyj-marketing/'])}
+
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
@@ -296,5 +309,5 @@ ${faqItems(FAQ)}
     },
   ];
 
-  return { body, schema, extraHead: SA_CSS };
+  return { body, schema, extraHead: `<style>${SVC_CSS}</style>` + SA_CSS };
 }

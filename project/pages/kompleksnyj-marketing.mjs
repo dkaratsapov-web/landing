@@ -15,6 +15,7 @@
    Цены сверены с project/pages/ceny.mjs и content.json. Меняются втроём.
 */
 import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
+import { SVC_CSS, hero, related } from '../service-kit.mjs';
 
 export const meta = {
   path: '/kompleksnyj-marketing/',
@@ -313,37 +314,32 @@ ${l.works.map((w) => `          <li>${w}</li>`).join('\n')}
     return `        <div class="nofit-i"><strong>${head}.</strong>${rest.join('. ')}</div>`;
   }).join('\n');
 
-  const body = `<header class="hero" data-screen-label="Комплексный маркетинг">
-  <div class="wrap">
-    ${crumbs.visible}
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow reveal">Маркетинг под ключ</div>
-        <h1 class="reveal">Трафик, сайт и аналитика — <span class="accent">в одних руках</span></h1>
-        <p class="lead reveal">Разделённый маркетинг ломается на стыках: реклама ведёт на страницу, которую делал не тот, кто её продаёт, а данные собирает третий. Я закрываю всю цепочку целиком, поэтому за результат отвечает один человек — и спорить не с кем.</p>
-        <div class="btn-row reveal">
-          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить проект</a>
-          <a class="btn btn-ghost btn-lg" href="/keysy/">Посмотреть кейсы</a>
-        </div>
-        <div class="hero-stats reveal">
-          <div class="stat"><div class="num">от 90 000 <span class="accent">₽</span></div><div class="lbl">в месяц, фиксированно</div></div>
-          <div class="stat"><div class="num">70+ ниш</div><div class="lbl">с измеримым результатом</div></div>
-          <div class="stat"><div class="num">с 2019</div><div class="lbl">в digital, три агентства до этого</div></div>
-        </div>
-      </div>
-      <div class="hero-visual reveal" aria-hidden="true">
-        <div class="chain">
+  const body = `${hero({
+    label: 'Комплексный маркетинг',
+    crumbs: crumbs.visible,
+    eyebrow: 'Маркетинг под ключ · один ответственный',
+    h1: 'Комплексный интернет-маркетинг <span class="accent">под ключ</span>',
+    utp: 'Реклама, посадочная и аналитика собираются как одна система, а не как три отдельных подряда. <b>За результат отвечает один человек</b> — и спорить не с кем.',
+    lead: 'Разделённый маркетинг ломается на стыках: реклама ведёт на страницу, которую делал не тот, кто её продаёт, а данные собирает третий. Беру цепочку целиком — от медиаплана до отчёта, по которому видно прибыль, а не клики.',
+    ctas: `          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить проект</a>
+          <a class="btn btn-ghost btn-lg" href="/keysy/">Посмотреть кейсы</a>`,
+    factList: [
+      ['от 90 000 <span>₽</span>', 'в месяц, фиксированно'],
+      ['<span>70+</span> ниш', 'с измеримым результатом'],
+      ['с <span>2019</span>', 'в digital, три агентства до этого'],
+    ],
+    /* Схема слоёв остаётся своя: она объясняет ровно то, ради чего страница
+       и написана, — что услуги стыкуются в одну цепочку. Готовый макет
+       интерфейса из общего набора сказал бы здесь меньше. */
+    visual: `        <div class="chain">
 ${LAYERS.map((l) => `          <div class="chain-node">
             <span class="chain-n">${l.n}</span>
             <span class="chain-name">${l.name}</span>
           </div>`).join('\n')}
           <div class="chain-brace"></div>
           <div class="chain-brace-lbl">одна ответственность</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+        </div>`,
+  })}
 
 <section class="section">
   <div class="wrap">
@@ -409,6 +405,8 @@ ${faqItems(FAQ)}
   </div>
 </section>
 
+${related('/kompleksnyj-marketing/', ['/kontekstnaya-reklama/', '/razrabotka-sajtov/', '/skvoznaya-analitika/'])}
+
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
@@ -467,5 +465,5 @@ ${faqItems(FAQ)}
     },
   ];
 
-  return { body, schema, extraHead: KM_CSS };
+  return { body, schema, extraHead: `<style>${SVC_CSS}</style>` + KM_CSS };
 }

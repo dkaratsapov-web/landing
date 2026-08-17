@@ -18,6 +18,7 @@
    только владелец назовёт вилку, она встаёт в PRICE_NOTE и в /ceny/.
 */
 import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
+import { SVC_CSS, hero, mockFeed, related } from '../service-kit.mjs';
 
 export const meta = {
   path: '/promostranicy/',
@@ -187,18 +188,29 @@ export function render() {
     return `        <div class="nof-i"><strong>${head}.</strong>${rest.join('. ')}</div>`;
   }).join('\n');
 
-  const body = `<header class="hero" data-screen-label="Промостраницы">
-  <div class="wrap">
-    ${crumbs.visible}
-    <div class="eyebrow reveal">Промостраницы Яндекса</div>
-    <h1 class="reveal">Когда поиска <span class="accent">не хватает</span></h1>
-    <p class="lead reveal">Контекст забирает тех, кто уже сформулировал запрос. Если таких мало, бюджет упирается в потолок независимо от размера. Промостраницы разговаривают с человеком до запроса — статьёй, за дочитывание которой вы и платите.</p>
-    <div class="btn-row reveal">
-      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить задачу</a>
-      <a class="btn btn-ghost btn-lg" href="/kontekstnaya-reklama/">Про контекстную рекламу</a>
-    </div>
-  </div>
-</header>
+  const body = `${hero({
+    label: 'Промостраницы',
+    crumbs: crumbs.visible,
+    eyebrow: 'Промостраницы Яндекса · статья вместо объявления',
+    h1: 'Промостраницы Яндекса <span class="accent">— настройка и ведение</span>',
+    utp: 'Статья вместо объявления: платите за дочитывание, а не за клик. <b>Работает там, где спроса в поиске ещё нет</b> — и контекст упирается в потолок независимо от бюджета.',
+    lead: 'Контекст забирает тех, кто уже сформулировал запрос. Промостраницы разговаривают с человеком до запроса: объясняют продукт целиком, а дочитавших можно догонять ретаргетингом. Тексты пишу сам — здесь текст и есть рекламный носитель.',
+    ctas: `          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить задачу</a>
+          <a class="btn btn-ghost btn-lg" href="/kontekstnaya-reklama/">Про контекстную рекламу</a>`,
+    factList: [
+      ['за <span>дочитывание</span>', 'деньги списываются, когда дошли до конца'],
+      ['<span>3</span> из 5', 'стадий готовности, где контекст ещё не работает'],
+      ['2–3 <span>недели</span>', 'до понятной цены дочитывания'],
+    ],
+    visual: mockFeed({
+      url: 'dzen.ru / лента',
+      cards: [
+        { on: true, title: 'Почему станок за 3 млн окупается быстрее, чем за 1,8', meta: ['Промостраница', '6 мин', '68% дочитали'] },
+        { title: 'Как выбрать подрядчика на фасад и не переделывать через год', meta: ['Промостраница', '8 мин', '54% дочитали'] },
+      ],
+      cap: 'Метрика успеха здесь не CTR, а доля дочитавших и цена дочитывания: платите за того, кто прочёл аргументацию целиком.',
+    }),
+  })}
 
 <section class="section">
   <div class="wrap">
@@ -264,6 +276,8 @@ ${faqItems(FAQ)}
   </div>
 </section>
 
+${related('/promostranicy/', ['/kontekstnaya-reklama/', '/seo-optimizaciya/', '/targetirovannaya-reklama/'])}
+
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
@@ -300,5 +314,5 @@ ${faqItems(FAQ)}
     },
   ];
 
-  return { body, schema, extraHead: PR_CSS };
+  return { body, schema, extraHead: `<style>${SVC_CSS}</style>` + PR_CSS };
 }

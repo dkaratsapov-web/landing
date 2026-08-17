@@ -19,6 +19,7 @@
    человека, открывавшего кабинет.
 */
 import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
+import { SVC_CSS, hero, mockCabinet, related } from '../service-kit.mjs';
 
 export const meta = {
   path: '/audit-reklamy/',
@@ -244,23 +245,32 @@ ${f.gets.map((g) => `          <li>${g}</li>`).join('\n')}
           <p class="hns-d">${d}</p>
         </div>`).join('\n');
 
-  const body = `<header class="hero" data-screen-label="Аудит рекламы">
-  <div class="wrap">
-    ${crumbs.visible}
-    <div class="eyebrow reveal">Аудит</div>
-    <h1 class="reveal">Реклама идёт, <span class="accent">а заявок нет</span></h1>
-    <p class="lead reveal">Открываю кабинет и смотрю, куда уходит бюджет: структура кампаний, минус-слова, стратегии, объявления, цели в аналитике. На выходе — не список из шестидесяти замечаний, а три-четыре вещи, которые дадут результат первыми.</p>
-    <div class="btn-row reveal">
-      <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Записаться на разбор</a>
-      <a class="btn btn-ghost btn-lg" href="/keysy/">Посмотреть кейсы</a>
-    </div>
-    <div class="hero-stats reveal">
-      <div class="stat"><div class="num">5 зон</div><div class="lbl">от структуры кампаний до аналитики</div></div>
-      <div class="stat"><div class="num">2–3 дня</div><div class="lbl">на бесплатный экспресс-разбор</div></div>
-      <div class="stat"><div class="num">до <span class="accent">⅔</span></div><div class="lbl">бюджета уходит впустую без минус-слов</div></div>
-    </div>
-  </div>
-</header>
+  const body = `${hero({
+    label: 'Аудит рекламы',
+    crumbs: crumbs.visible,
+    eyebrow: 'Аудит рекламы · Директ, сайт, аналитика',
+    h1: 'Аудит рекламных кампаний <span class="accent">в Яндекс Директе</span>',
+    utp: 'Нахожу, куда уходит бюджет, и называю три-четыре правки, которые дадут результат первыми. <b>Экспресс-разбор — бесплатно</b>, без обязательств продолжать со мной.',
+    lead: 'Смотрю структуру кампаний, минус-слова, стратегии, объявления и цели в аналитике. На выходе не список из шестидесяти замечаний, а понятный порядок действий: что чинить сегодня, что через неделю, а что не трогать вовсе.',
+    ctas: `          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Записаться на разбор</a>
+          <a class="btn btn-ghost btn-lg" href="/keysy/">Посмотреть кейсы</a>`,
+    factList: [
+      ['<span>5</span> зон', 'от структуры кампаний до целей в аналитике'],
+      ['2–3 <span>дня</span>', 'на бесплатный экспресс-разбор'],
+      ['до <span>⅔</span>', 'бюджета уходит впустую без минус-слов'],
+    ],
+    visual: mockCabinet({
+      url: 'direct.yandex.ru / кампании',
+      tabs: ['Все', 'Поиск', 'РСЯ'],
+      rows: [
+        { name: 'Поиск · Общие запросы', value: '43 800 ₽', flag: 'нет минус-слов', bad: true, alert: true },
+        { name: 'РСЯ · Ретаргетинг', value: '11 200 ₽', flag: 'цель не настроена', bad: true, alert: true },
+        { name: 'Поиск · Бренд', value: '4 100 ₽', flag: 'в норме' },
+        { name: 'РСЯ · Интересы', value: '29 400 ₽', flag: 'площадки не чистились', bad: true, alert: true },
+      ],
+      cap: 'Так это обычно и выглядит: кампании работают, деньги списываются, а половина расхода уходит по запросам, которые никто не собирался оплачивать.',
+    }),
+  })}
 
 <section class="section">
   <div class="wrap">
@@ -312,6 +322,8 @@ ${faqItems(FAQ)}
   </div>
 </section>
 
+${related('/audit-reklamy/', ['/kontekstnaya-reklama/', '/skvoznaya-analitika/', '/razrabotka-sajtov/'])}
+
 <section class="section">
   <div class="wrap">
     <div class="cta-final reveal">
@@ -358,5 +370,5 @@ ${faqItems(FAQ)}
     },
   ];
 
-  return { body, schema, extraHead: AU_CSS };
+  return { body, schema, extraHead: `<style>${SVC_CSS}</style>` + AU_CSS };
 }
