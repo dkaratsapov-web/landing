@@ -12,7 +12,7 @@
    Метрика показывает клики, а деньги живут в CRM, и между ними пусто.
 */
 import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
-import { SVC_CSS, hero, mockReport, related } from '../service-kit.mjs';
+import { SVC_CSS, hero, mockReport, related, cases, CASE_SETS } from '../service-kit.mjs';
 
 export const meta = {
   path: '/skvoznaya-analitika/',
@@ -259,6 +259,8 @@ ${faqItems(FAQ)}
     </div>
   </div>
 </section>
+
+${cases(CASE_SETS.analytics)}
 
 ${related('/skvoznaya-analitika/', ['/kontekstnaya-reklama/', '/audit-reklamy/', '/kompleksnyj-marketing/'])}
 

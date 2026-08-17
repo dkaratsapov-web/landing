@@ -14,6 +14,7 @@ import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
 import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
+import { cases, CASE_SETS } from './service-kit.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
 import * as politikaPage from './pages/politika.mjs';
@@ -499,6 +500,16 @@ for (const p of SUBPAGES) {
         + '  <link rel="stylesheet" href="/nav.css">\n'
         + '  <script defer src="/section-fx.js"></script>\n</head>');
     }
+    /* Блок кейсов по маркеру <!--#cases:КЛЮЧ-->. Статические страницы не
+       проходят через шаблон и не могут вызвать функцию сами, но и держать в
+       себе копию данных по кейсам не должны — иначе цифры на странице услуги
+       и на витрине разъедутся, как уже было. Неизвестный ключ валит сборку:
+       молча вставленная пустота страшнее упавшего билда. */
+    page = page.replace(/<!--#cases:([a-z]+)-->/g, (_, key) => {
+      const set = CASE_SETS[key];
+      if (!set) throw new Error(`build: нет подборки кейсов «${key}» (страница ${p})`);
+      return cases(set);
+    });
     page = replaceNav(page, p);
     if (!page.includes('mob-dock')) page = page.replace('</body>', mobileDock() + '\n</body>');
     writeFileSync(join(outDir, p, 'index.html'), decorate(page), 'utf8');

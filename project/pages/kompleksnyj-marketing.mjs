@@ -15,7 +15,7 @@
    Цены сверены с project/pages/ceny.mjs и content.json. Меняются втроём.
 */
 import { SITE, breadcrumbs, faqItems } from '../layout.mjs';
-import { SVC_CSS, hero, related } from '../service-kit.mjs';
+import { SVC_CSS, hero, related, cases, CASE_SETS } from '../service-kit.mjs';
 
 export const meta = {
   path: '/kompleksnyj-marketing/',
@@ -404,6 +404,8 @@ ${faqItems(FAQ)}
     </div>
   </div>
 </section>
+
+${cases(CASE_SETS.kompleks)}
 
 ${related('/kompleksnyj-marketing/', ['/kontekstnaya-reklama/', '/razrabotka-sajtov/', '/skvoznaya-analitika/'])}
 

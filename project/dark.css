@@ -1115,3 +1115,77 @@ h3 { font-weight: 600; }
    область нажатия, не сдвигая строку. */
 .lead a, .prose p a, p a:not(.btn):not(.proj-case-link) { padding: 4px 0; }
 input[type="checkbox"], input[type="radio"] { width: 24px; height: 24px; }
+
+
+/* ── Кейсы на странице услуги ─────────────────────────────────────────────
+   Компактная тройка доказательств. Отличается от карточек на витрине
+   намеренно: там кейс — самостоятельная единица со снимком и раскрытием,
+   здесь он подпорка к тексту страницы, и всё лишнее из него убрано.
+   Фотографий нет по той же причине — а заодно потому, что у четырёх кейсов
+   их и не существует, и блок не должен разъезжаться в зависимости от того,
+   какую тройку в него подставили.
+
+   Стили лежат в dark.css, а не в pages.css: блок стоит и на генерируемых
+   страницах, и на статических, а pages.css подключён только к первым. */
+.pcase-grid { display: grid; gap: 16px; }
+@media (min-width: 760px)  { .pcase-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1060px) { .pcase-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.pcase {
+  display: flex; flex-direction: column;
+  padding: 26px 24px 22px;
+  border: 1px solid var(--line); border-radius: 18px;
+  background: var(--surface);
+}
+.pcase-field {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--lime-bright); margin-bottom: 8px;
+}
+.pcase-name { margin: 0 0 6px; font-size: 20px; line-height: 1.25; letter-spacing: -0.02em; }
+.pcase-geo { font-size: 13.5px; color: var(--muted); }
+
+/* Цифры прижаты к низу: у названий разная длина в две и три строки, и без
+   этого метрики в соседних карточках стояли бы на разных уровнях — глаз
+   читает такой ряд как перекос, хотя перекошены только заголовки. */
+.pcase-metrics {
+  margin-top: auto; padding-top: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.pcase-m { display: grid; grid-template-columns: minmax(88px, auto) minmax(0, 1fr); gap: 12px;
+  align-items: baseline; padding-top: 12px; border-top: 1px solid var(--line); }
+.pcase-mv { font-size: 19px; font-weight: 800; letter-spacing: -0.02em; color: var(--ink);
+  font-variant-numeric: tabular-nums; }
+.pcase-ml { font-size: 13.5px; line-height: 1.4; color: var(--muted); }
+
+/* align-content/-items: flex-start обязательны. Когда карточки выровнены по
+   subgrid, строка чипов у всех одной высоты — по самой длинной. Без этого
+   flex растягивает чипы по высоте строки, и там, где чипов на одну строку,
+   они превращались в высокие капсулы вдвое выше нормальных. */
+.pcase-chips { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px;
+  align-items: flex-start; align-content: flex-start; }
+.pcase-all { margin: 28px 0 0; text-align: center; }
+
+/* Выравнивание по строкам, а не по низу. margin-top: auto прижимает метрики
+   к нижнему краю, но под ними ещё чипы — а их у одного кейса три, у другого
+   шесть, то есть одна строка против двух. Из-за этого ряды цифр в соседних
+   карточках вставали на разной высоте, хотя карточки одной высоты.
+
+   subgrid решает это по-настоящему: шапка, метрики и чипы становятся общими
+   строками сетки и выравниваются между всеми карточками ряда. Там, где
+   subgrid не поддерживается, остаётся исходная раскладка на flex — она хуже,
+   но не сломана. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 760px) {
+    .pcase-grid { grid-template-rows: auto auto auto; }
+    .pcase { display: grid; grid-row: span 3; grid-template-rows: subgrid; }
+    .pcase-metrics { margin-top: 0; }
+  }
+}
+
+@media (max-width: 480px) {
+  .pcase { padding: 22px 18px 20px; }
+  /* На узком экране числовая колонка в 88px оставляла подписи вроде
+     «новых гостей из Яндекс Бизнес» полосу в полтора слова. Подпись уходит
+     под число. */
+  .pcase-m { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}

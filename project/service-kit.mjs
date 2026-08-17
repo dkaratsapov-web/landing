@@ -350,3 +350,79 @@ ${items}
   </div>
 </section>`;
 }
+
+/* ── Доказательства на странице услуги ────────────────────────────────────
+
+   Страницы услуг обещали результат и ничем его не подкрепляли: кейсы жили
+   только на витрине и на странице контекста, где стояли все двадцать два
+   разом. Здесь — короткая выжимка: три проекта, где эта услуга была
+   основной, с цифрами и без имён клиентов.
+
+   Три, а не шесть и не двадцать два. Блок стоит внутри страницы услуги, а не
+   вместо неё: его задача — снять недоверие к соседним абзацам, а не заменить
+   собой портфолио. За остальными есть ссылка.
+
+   Данные берутся из cases-data.mjs, то есть из того же источника, что и
+   витрина. Разметка тут не хранится: подберёшь другой кейс — поменяются и
+   цифры, и ниша, и услуги, без ручной правки в пяти файлах. */
+import { CASES } from './cases-data.mjs';
+
+function caseCard(id) {
+  const c = CASES.find((x) => x.id === id);
+  if (!c) throw new Error(`service-kit: нет кейса с id ${id}`);
+  /* Три метрики, а не все: у части кейсов их четыре, и четвёртая почти всегда
+     самая слабая — её ставили, чтобы добить сетку. */
+  const metrics = c.metrics.slice(0, 3).map(([v, l]) =>
+    `          <div class="pcase-m"><div class="pcase-mv">${v}</div><div class="pcase-ml">${l}</div></div>`).join('\n');
+  const chips = c.services.map((s) => `<span class="kase-chip">${s}</span>`).join('');
+  return `      <article class="pcase">
+        <div class="pcase-top">
+          <div class="pcase-field">${c.field}</div>
+          <h3 class="pcase-name">${c.label}</h3>
+          <div class="pcase-geo">${c.geo}</div>
+        </div>
+        <div class="pcase-metrics">
+${metrics}
+        </div>
+        <div class="kase-chips pcase-chips">${chips}</div>
+      </article>`;
+}
+
+export function cases({ eyebrow = 'Доказательства', h2, lead, picks }) {
+  if (picks.length !== 3) throw new Error('service-kit: в блок кейсов берём ровно три');
+  return `<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">${eyebrow}</div>
+      <h2>${h2}</h2>
+      <p class="lead">${lead}</p>
+    </div>
+    <div class="pcase-grid stagger">
+${picks.map(caseCard).join('\n')}
+    </div>
+    <p class="pcase-all reveal"><a class="btn btn-ghost" href="/keysy/">Все 22 кейса ${ARR}</a></p>
+  </div>
+</section>`;
+}
+
+/* Подборки под конкретные страницы. Лежат здесь, а не в самих страницах,
+   чтобы статические страницы (таргет, разработка, GEO) могли получить тот же
+   блок на сборке — у них нет доступа к модулям, только подстановка по
+   маркеру. Ключ маркера — ключ этого объекта. */
+export const CASE_SETS = {
+  geo: {
+    h2: 'Кейсы по картам и справочникам',
+    lead: 'Три проекта, где карточка в Яндекс Бизнесе стала отдельным каналом заявок. Названия убраны, цифры — из отчётов.',
+    picks: ['berezka', 'ipapa', 'bmclinic'],
+  },
+  analytics: {
+    h2: 'Что показала аналитика',
+    lead: 'Три проекта, где связка рекламы, звонков и заявок изменила решения по бюджету. Названия убраны, цифры — из отчётов.',
+    picks: ['stroypro', 'everest', 'zojefina'],
+  },
+  kompleks: {
+    h2: 'Проекты, которые вёл целиком',
+    lead: 'Три проекта, где на мне были сразу сайт, реклама, карты и аналитика. Названия убраны, цифры — из отчётов.',
+    picks: ['school', 'artlife', 'royalneva'],
+  },
+};
