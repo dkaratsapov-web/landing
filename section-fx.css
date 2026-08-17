@@ -183,8 +183,14 @@ section > .sec-fx ~ *, header > .sec-fx ~ * { position: relative; z-index: 1; }
    пустая пауза — прежние волны растворились, новые ещё не пошли. */
 .fx-rings::before, .fx-rings::after {
   content: ''; position: absolute; inset: -19%;
+  /* Волны размытые, без резкой линии в полтора пикселя. Жёсткое кольцо
+     где-нибудь да проходило вдоль колонки замера длинным участком — и в
+     части фаз анимации это читалось как ступенька тона; находки плавали от
+     прогона к прогону, потому что зависели от того, в каком кадре застали
+     кольца. У плавного перехода производная мала везде, поэтому ступеньки
+     не возникает ни при какой фазе. */
   background: repeating-radial-gradient(circle at -10% 44%,
-    transparent 0 54px, rgba(255,255,255,0.058) 54px 55.5px, transparent 55.5px 110px);
+    transparent 0, rgba(255,255,255,0.05) 55px, transparent 110px);
   transform-origin: -10% 44%;
   animation: fxRings 18s linear infinite;
 }

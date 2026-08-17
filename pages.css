@@ -206,6 +206,43 @@ a.price-card:hover { border-color: var(--accent-soft-bd); transform: translateY(
 .price-table .cell-note { color: var(--txt-2); }
 .price-table .cell-term { color: var(--txt-3); white-space: nowrap; }
 
+/* ── Прайс на телефоне: карточки вместо таблицы ──────────────────────────
+   Таблица в 640px минимальной ширины лежала в контейнере с боковой
+   прокруткой. Формально не ломалось, на деле — четыре столбца на экране в
+   390px: видно полтора, при пролистывании уезжает название услуги, и
+   непонятно, к чему относится цена. Прайс смотрят все, кто дошёл до
+   страницы, и заставлять их возить страницу вбок — плохой размен.
+
+   Разметка остаётся таблицей: это действительно табличные данные, и для
+   скринридера связь «строка — заголовок» должна сохраниться. Меняется
+   только раскладка, а подписи столбцов подставляются из data-label. */
+@media (max-width: 720px) {
+  .table-scroll { overflow-x: visible; }
+  .price-table { min-width: 0; display: block; }
+  .price-table thead { display: none; }   /* шапка переехала в подписи ячеек */
+  .price-table tbody { display: block; }
+  .price-table tbody tr {
+    display: block; margin-bottom: 14px; padding: 18px 20px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  }
+  .price-table tbody th,
+  .price-table tbody td { display: block; border-bottom: 0; padding: 0; }
+  .price-table tbody th {
+    font-size: 18px; margin-bottom: 12px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--line);
+  }
+  .price-table tbody td { padding: 7px 0; }
+  .price-table tbody td::before {
+    content: attr(data-label);
+    display: block; margin-bottom: 2px;
+    font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--txt-3);
+  }
+  /* Перенос здесь нужен: без него длинное «что входит» уезжает за карточку. */
+  .price-table .cell-price, .price-table .cell-term { white-space: normal; }
+  .price-table .cell-price { font-size: 20px; font-weight: 700; }
+}
+
 /* ── Финальный призыв ───────────────────────────────────────────────────── */
 .cta-final {
   position: relative; overflow: hidden; text-align: center;

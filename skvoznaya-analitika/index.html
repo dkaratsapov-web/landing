@@ -180,6 +180,41 @@
 .svc-rel-i:hover .arr { transform: translateX(4px); }
 .svc-rel-d { margin: 10px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--txt-3); }
 .svc-rel-p { margin-top: 12px; font-size: 13px; color: var(--accent-bright); font-variant-numeric: tabular-nums; }
+
+/* ── Телефон ─────────────────────────────────────────────────────────────
+   Макеты интерфейсов рассчитаны на колонку в 400–500px. На экране в 390px
+   те же четыре столбца отчёта сжимались до шестидесяти пикселей каждый, и
+   «+312 000 ₽» разрывалось на две строки посреди числа. Здесь макет
+   переразмечается под узкую колонку, а не масштабируется целиком:
+   уменьшенный до нечитаемости интерфейс — это уже картинка, а не пример. */
+@media (max-width: 620px) {
+  .mock { border-radius: 14px; }
+  .mock-cap { font-size: 12.5px; }
+
+  /* Отчёт: расход убираем совсем. Из четырёх столбцов на узком экране
+     осмысленны три — источник, сделки и прибыль; расход при этом остаётся
+     в подписи под макетом, если он важен для примера. */
+  .mk-rep { padding: 13px 13px 15px; }
+  .mk-rep-head, .mk-rep-row {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.6fr) minmax(0, 1fr);
+    gap: 7px;
+  }
+  .mk-rep-head span:nth-child(2), .mk-rep-row span:nth-child(2) { display: none; }
+  .mk-rep-row { font-size: 12px; padding: 10px 0; }
+  .mk-rep-n { white-space: nowrap; }
+  .mk-rep-src { white-space: normal; }
+
+  /* Кабинет: название кампании переносится, а не обрезается многоточием —
+     «Поиск · Общие запр…» не говорит ничего. */
+  .mk-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 6px; padding: 9px 11px; }
+  .mk-row-n { white-space: normal; overflow: visible; }
+  .mk-flag { grid-column: 1 / -1; justify-self: start; font-size: 11px; }
+  .mk-tab { font-size: 11.5px; }
+
+  /* Выдача: подпись позиции не наезжает на заголовок. */
+  .mk-item.on { padding: 9px 10px; margin: 0 -10px; }
+  .mk-pos { position: static; display: block; margin-bottom: 3px; }
+}
 </style><style>
 /* ── Путь заявки ─────────────────────────────────────────────────────────
    Четыре шага, у каждого — что видно и что теряется. Ключ композиции в
@@ -376,7 +411,7 @@
             </div>
           </div>
         </div>
-        <p class="mock-cap">В кабинете РСЯ выглядит нормально: клики дешевле поиска. Прибыль показывает обратное — и без такой таблицы это не видно.</p>
+        <p class="mock-cap">РСЯ приносит клики и почти не приносит сделок. В рекламном кабинете этой строки нет — там видно только расход и переходы, и канал выглядит нормальным.</p>
       </div>
     </div>
     <div class="svc-facts reveal">
@@ -551,7 +586,7 @@
       <a class="svc-rel-i" href="/kompleksnyj-marketing/">
         <span class="svc-rel-t">Маркетинг под ключ <span class="arr" aria-hidden="true">→</span></span>
         <p class="svc-rel-d">Трафик, посадочная и аналитика в одних руках, одна точка ответственности.</p>
-        <div class="svc-rel-p">от 90 000 ₽/мес</div>
+        <div class="svc-rel-p">от 65 000 ₽/мес</div>
       </a>
     </div>
   </div>
