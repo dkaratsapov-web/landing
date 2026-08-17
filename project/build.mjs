@@ -261,6 +261,17 @@ ${verifyTags}
        виден сразу, а не прозрачным — иначе пререндеренный текст считался бы
        скрытым. Скрипт стоит до стилей, чтобы не мигало. -->
   <script>document.documentElement.className+=" js"</script>
+  <!-- Шрифты подключены с font-display: optional: если файл не успел к первой
+       отрисовке, страница остаётся на системном шрифте до конца загрузки. Без
+       предзагрузки главная в это и упиралась — она тяжелее внутренних, и Nunito
+       к ней просто не успевал. Видно это было не сразу: шрифт объявлен, проверка
+       document.fonts.check возвращает true, computed style показывает Nunito, а
+       текст при этом нарисован системным и на 12% шире. Отсюда и разъезжались
+       кнопки в шапке между главной и остальными страницами.
+       Три начертания — те же, что предзагружает layout.mjs для внутренних. -->
+  <link rel="preload" href="/assets/fonts/nunito-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/nunito-cyrillic-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/nunito-cyrillic-700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="tokens.css" />
   <link rel="stylesheet" href="landing.css" />
   <link rel="stylesheet" href="section-fx.css" />

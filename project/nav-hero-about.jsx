@@ -64,9 +64,13 @@ function Nav({ onCta }) {
           {NAV_LINKS.map(([t, h, sub]) =>
             sub ? (
               <div key={h} className="nav-item-drop">
-                <span className="nav-drop-trigger">
+                {/* Ссылка, а не span: на остальных страницах «Услуги» ведут на
+                    страницу услуги, и здесь должно быть так же. Разные теги
+                    давали ещё и разную ширину пункта — 443px против 475px, —
+                    то есть меню в шапке заметно съезжало при переходе. */}
+                <a href={h} className="nav-drop-trigger">
                   {t}<svg className="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                </span>
+                </a>
                 <div className="nav-dropdown">
                   {sub.map(([group, items]) => (
                     <div key={group} className="nav-drop-col">

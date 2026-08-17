@@ -128,7 +128,7 @@ ${items.map(([href, label]) => `            <a href="${href}" class="nav-drop-li
     </a>
     <div class="nav-links">
       <div class="nav-item-drop">
-        <a href="/kontekstnaya-reklama/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <a href="/kompleksnyj-marketing/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="nav-dropdown">
 ${drops}
         </div>
@@ -149,13 +149,13 @@ ${drops}
       <a class="btn btn-ghost btn-sm nav-dzen" href="${DZEN_URL}" target="_blank" rel="noopener noreferrer">
         <svg class="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>Я на Дзен
       </a>
-      <a class="btn btn-lime btn-sm nav-cta" href="/contacts/" data-lead-modal>Обсудить задачу</a>
+      <a class="btn btn-fill btn-sm nav-cta" href="/contacts/" data-lead-modal>Обсудить задачу</a>
       <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 <div class="nav-mobile" id="navMobile">
-  <a href="/kontekstnaya-reklama/">Услуги</a>
+  <a href="/kompleksnyj-marketing/">Услуги</a>
 ${mobileDrops}
   <a href="/ceny/">Цены</a>
   <a href="/about/">О себе</a>
