@@ -640,6 +640,51 @@ for (const p of SUBPAGES) {
 
 // Страницы из общего шаблона (/about/, /ceny/, …). Ошибка рендера валит
 // сборку: пустая или битая страница в проде хуже несобранного деплоя.
+/* ── Переехавшие адреса ────────────────────────────────────────────────────
+   Кейс «Сфера» жил по адресу /razrabotka-sajtov/sfera/ — внутри раздела
+   услуги, а не в кейсах. Из витрины кейсов человек уходил в другой раздел и
+   терял контекст, да и для поисковика страница оказывалась не в том разделе.
+
+   Настоящий 301 отдаёт nginx (блок дописан в deploy/nginx-karatsapov.conf,
+   применяется на сервере руками). Пока конфиг не применён — по старому
+   адресу лежит страница с canonical на новый, мгновенным meta-refresh и
+   видимой ссылкой. Это слабее 301, но не оставляет посетителя перед 404, а
+   canonical не даёт двум адресам конкурировать в выдаче.
+
+   Файл безвреден и после применения конфига: nginx с точным location
+   перехватит адрес раньше, чем дойдёт до файла на диске. */
+const MOVED = [
+  ['/razrabotka-sajtov/sfera/', '/keysy/sfera/', 'Кейс переехал в раздел «Кейсы»'],
+];
+
+for (const [from, to, title] of MOVED) {
+  const dir = join(outDir, from.replace(/^\/|\/$/g, ''));
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, 'index.html'), `<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${title}</title>
+<link rel="canonical" href="${SITE}${to}">
+<meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url=${to}">
+<style>body{margin:0;min-height:100dvh;display:grid;place-items:center;background:#08080a;color:#f5f5f7;
+font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-align:center;padding:24px}
+a{color:#c4f53e}</style>
+</head>
+<body>
+  <div>
+    <p>${title}.</p>
+    <p><a href="${to}">Открыть страницу кейса</a></p>
+  </div>
+  <script>location.replace('${to}');</script>
+</body>
+</html>
+`, 'utf8');
+  console.log('Redirect', from, '→', to);
+}
+
 for (const page of GENERATED_PAGES) {
   const { meta, render } = page;
   /* extraHead — необязательный: страницы со своей вёрсткой (кейсы) отдают
@@ -810,7 +855,7 @@ const SITEMAP_PAGES = [
   { loc: '/promostranicy/', src: 'pages/promostranicy.mjs', priority: '0.7', changefreq: 'monthly' },
   { loc: '/seo-optimizaciya/', src: 'pages/seo-optimizaciya.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/keysy/', src: 'keysy/index.html', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/razrabotka-sajtov/sfera/', src: 'pages/keys-sfera.mjs', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/keysy/sfera/', src: 'pages/keys-sfera.mjs', priority: '0.7', changefreq: 'monthly' },
   { loc: '/keysy/diauto69/', src: 'pages/keys-diauto.mjs', priority: '0.7', changefreq: 'monthly' },
   /* Страницы кейсов: приоритет ниже посадочных под услуги — это
      доказательная база, а не точки входа по коммерческим запросам. Источник

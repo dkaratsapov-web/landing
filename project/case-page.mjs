@@ -26,7 +26,7 @@ import { CASES } from './cases-data.mjs';
    развёрнутая страница со скриншотами, снятая раньше этой генерации.
    Дубль по /keysy/ создал бы две страницы про один проект — для поисковика
    это конкуренция страниц между собой, а не удвоенный охват. */
-const OWN_URL = { sfera: '/razrabotka-sajtov/sfera/' };
+const OWN_URL = { sfera: '/keysy/sfera/' };
 
 export function caseUrl(slug) {
   return OWN_URL[slug] || `/keysy/${slug}/`;
