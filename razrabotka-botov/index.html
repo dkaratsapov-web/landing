@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>document.documentElement.className+=" js"</script><!-- .js включает reveal-анимации. Без JS (робот, упавший скрипт) контент виден сразу, а не прозрачным. -->
+<title>Разработка ботов для Telegram и MAX — под задачу бизнеса | Даниил Карацапов</title>
+<meta name="description" content="Делаю ботов для Telegram и MAX: приём заявок, запись, каталог, ответы на типовые вопросы, уведомления менеджерам и связка с CRM. Сначала считаем, окупится ли бот, потом пишем.">
+<link rel="canonical" href="https://karatsapov.ru/razrabotka-botov/">
+<meta name="yandex-verification" content="6a5ffd2adf8c0aba" />
+<meta name="zen-verification" content="I3rPZeN0qgClZuHbga3imIrXBrGBLRjoQTYt9kLdKO5qTji4bT7ltbUemasRuU6y" />
+<meta property="og:title" content="Разработка ботов для Telegram и MAX — под задачу бизнеса | Даниил Карацапов">
+<meta property="og:description" content="Делаю ботов для Telegram и MAX: приём заявок, запись, каталог, ответы на типовые вопросы, уведомления менеджерам и связка с CRM. Сначала считаем, окупится ли бот, потом пишем.">
+<meta property="og:url" content="https://karatsapov.ru/razrabotka-botov/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:image" content="https://karatsapov.ru/assets/og/uslugi.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Разработка ботов для Telegram и MAX — под задачу бизнеса | Даниил Карацапов">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Разработка ботов для Telegram и MAX — под задачу бизнеса | Даниил Карацапов">
+<meta name="twitter:description" content="Делаю ботов для Telegram и MAX: приём заявок, запись, каталог, ответы на типовые вопросы, уведомления менеджерам и связка с CRM. Сначала считаем, окупится ли бот, потом пишем.">
+<meta name="twitter:image" content="https://karatsapov.ru/assets/og/uslugi.jpg"><noscript></noscript>
+<link rel="preload" href="/assets/fonts/nunito-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/nunito-cyrillic-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/nunito-cyrillic-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/dark.css">
+<link rel="stylesheet" href="/pages.css">
+<link rel="stylesheet" href="/section-fx.css">
+<link rel="stylesheet" href="/nav.css">
+<link rel="stylesheet" href="/footer.css">
+<link rel="stylesheet" href="/motion.css">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="120x120" href="/favicon-120.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
+<script defer src="/section-fx.js"></script>
+<script defer src="/lead-config.js"></script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109681858', 'ym');
+    ym(109681858, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/109681858" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://karatsapov.ru/"},{"@type":"ListItem","position":2,"name":"Разработка ботов","item":"https://karatsapov.ru/razrabotka-botov/"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","name":"Разработка ботов для Telegram и MAX","serviceType":"Разработка чат-ботов","description":"Боты для приёма заявок, записи, ответов на типовые вопросы, каталога и мини-приложений с интеграцией в CRM.","url":"https://karatsapov.ru/razrabotka-botov/","areaServed":{"@type":"Country","name":"Россия"},"provider":{"@type":"Person","name":"Даниил Карацапов","url":"https://karatsapov.ru"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Сколько стоит разработать бота?","acceptedAnswer":{"@type":"Answer","text":"Зависит от сценария: бот приёма заявок и бот с каталогом, оплатой и мини-приложением — работы разного объёма. Называю сумму после разговора о задаче, когда понятно, что именно бот делает и с чем связывается. Прайс на остальные услуги — на странице цен."}},{"@type":"Question","name":"Сколько времени занимает разработка?","acceptedAnswer":{"@type":"Answer","text":"Простой бот приёма заявок — обычно несколько дней. Бот с каталогом, записью и связкой с CRM — недели. Точнее скажу после сценария: именно он определяет объём, а не платформа."}},{"@type":"Question","name":"Telegram или MAX — что выбрать?","acceptedAnswer":{"@type":"Answer","text":"По тому, где ваши клиенты. Telegram — привычная среда, там уже сидят и умеют пользоваться. MAX важен, когда для бизнеса принципиальна российская платформа или часть аудитории есть только там. Логика бота пишется один раз, поэтому вторая платформа обходится заметно дешевле первой."}},{"@type":"Question","name":"Можно ли связать бота с сайтом и CRM?","acceptedAnswer":{"@type":"Answer","text":"Да, и это обычно и есть смысл затеи. Заявка из бота попадает в ту же CRM, что и заявки с сайта, с меткой источника — иначе непонятно, что канал вообще приносит. С сквозной аналитикой видно и выручку по нему."}},{"@type":"Question","name":"Что такое мини-приложение?","acceptedAnswer":{"@type":"Answer","text":"Экран, который открывается прямо внутри мессенджера: каталог с фильтрами, карта, календарь записи, личный кабинет. Выглядит как обычное приложение, но ставить ничего не нужно. Так сделан каталог в кейсе с импортёром автомобилей."}},{"@type":"Question","name":"Кому принадлежит бот?","acceptedAnswer":{"@type":"Answer","text":"Вам. Бот регистрируется на ваш аккаунт, доступы и данные остаются под вашим контролем. Я работаю в ваших аккаунтах и ничего не закрываю от клиента."}},{"@type":"Question","name":"Нужна ли поддержка после запуска?","acceptedAnswer":{"@type":"Answer","text":"Первые недели — да, обязательно: люди ведут себя не так, как ожидает сценарий, и правки идут по факту. Дальше бот работает сам, а обращаться приходится, когда меняется услуга, цена или условия."}}]}</script>
+<style>
+/* ── Первый экран ────────────────────────────────────────────────────────
+   Две колонки: слева смысл, справа макет. На узком экране макет уходит
+   вниз, а не сжимается: интерфейс шириной в 320px нечитаем и превращается
+   в декоративное пятно. */
+.svc-hero { display: grid; gap: 44px; align-items: center; }
+@media (min-width: 1080px) {
+  .svc-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 44%); gap: 56px; }
+}
+.svc-hero .lead { max-width: 560px; }
+
+/* h1 держит поисковый запрос, поэтому набирается плотно и не разъезжается
+   на три строки: длинный заголовок в две строки читается как заголовок,
+   в четыре — как абзац. */
+.svc-hero h1 { font-size: clamp(32px, 4.4vw, 58px); line-height: 1.04; letter-spacing: -0.03em; margin: 0; }
+
+/* УТП — отдельная строка между заголовком и лидом. Не курсив и не серый:
+   это второе по важности предложение на странице после h1. */
+.svc-utp {
+  margin: 20px 0 0; max-width: 620px;
+  font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; font-weight: 600;
+  color: var(--txt); letter-spacing: -0.01em;
+}
+.svc-utp b { color: var(--accent-bright); font-weight: 600; }
+
+/* ── Цифры под первым экраном ────────────────────────────────────────────
+   Не карточки: рамка вокруг числа превращает факт в плашку. Разделены
+   тонкими линиями — так это читается как строка показателей. */
+.svc-facts { display: grid; gap: 1px; margin-top: 40px; background: var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+@media (min-width: 620px) { .svc-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.svc-fact { background: var(--pg, #08080a); padding: 20px 22px 20px 0; }
+@media (min-width: 620px) { .svc-fact { padding-left: 22px; } .svc-fact:first-child { padding-left: 0; } }
+.svc-fact-v {
+  font-family: var(--font-display, inherit);
+  font-size: clamp(24px, 2.6vw, 31px); font-weight: 700; letter-spacing: -0.02em;
+  color: var(--txt); line-height: 1.1; white-space: nowrap;
+}
+.svc-fact-v span { color: var(--accent-bright); }
+.svc-fact-l { margin-top: 7px; font-size: 13.5px; line-height: 1.4; color: var(--txt-3); max-width: 22ch; }
+
+/* ── Общая рамка макета ──────────────────────────────────────────────────
+   Все макеты живут в одной оболочке: шапка с адресом и светлое или тёмное
+   поле внутри. Без рамки чужой интерфейс на тёмной странице читается как
+   сбой вёрстки, а не как «вот так это выглядит». */
+.mock { border-radius: 16px; overflow: clip; border: 1px solid var(--line-strong, rgba(255,255,255,.14));
+  background: #111115; box-shadow: 0 30px 90px rgba(0,0,0,.65); }
+.mock-bar { display: flex; align-items: center; gap: 9px; padding: 10px 13px; background: #1a1a1e; border-bottom: 1px solid var(--line); }
+.mock-dots { display: flex; gap: 5px; flex: none; }
+.mock-dots i { width: 9px; height: 9px; border-radius: 50%; display: block; }
+.mock-dots i:nth-child(1) { background: #ff5f57; }
+.mock-dots i:nth-child(2) { background: #febc2e; }
+.mock-dots i:nth-child(3) { background: #28c840; }
+.mock-url {
+  flex: 1; min-width: 0; padding: 4px 11px; border-radius: 6px;
+  background: rgba(255,255,255,.06); font-size: 11.5px; color: var(--txt-3);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mock-cap { margin: 13px 2px 0; font-size: 13px; line-height: 1.5; color: var(--txt-3); }
+
+/* ── Макет: поисковая выдача ─────────────────────────────────────────── */
+.mk-serp { background: #f6f6f7; padding: 15px 16px 18px; }
+.mk-q { display: flex; align-items: center; gap: 9px; padding: 8px 13px; border-radius: 999px; background: #fff; border: 1px solid #dcdce0; }
+.mk-q-t { font-size: 13px; color: #21201f; }
+.mk-q-go { margin-left: auto; font-size: 11.5px; color: #6b6b70; }
+.mk-res { margin-top: 13px; display: flex; flex-direction: column; gap: 13px; }
+.mk-item { position: relative; padding-left: 0; }
+.mk-item-tag { display: inline-block; margin-bottom: 4px; padding: 1px 6px; border-radius: 4px; font-size: 9.5px; font-weight: 700; letter-spacing: .04em; background: #ffe4a0; color: #6b4a00; }
+.mk-item-t { font-size: 13.5px; line-height: 1.3; color: #2b47b3; font-weight: 500; }
+.mk-item-u { margin-top: 3px; font-size: 11px; color: #3a7d3a; }
+.mk-item-d { margin-top: 4px; font-size: 11.5px; line-height: 1.45; color: #4d4d52; }
+.mk-item.on { padding: 10px 12px; margin: 0 -12px; border-radius: 10px; background: #eaf6d8; box-shadow: inset 2px 0 0 #7cb518; }
+.mk-pos { position: absolute; right: 10px; top: 10px; font-size: 10px; font-weight: 700; color: #4a7a11; }
+
+/* ── Макет: кабинет рекламной системы ───────────────────────────────── */
+.mk-cab { padding: 14px 15px 17px; background: #16161a; }
+.mk-row { display: grid; grid-template-columns: minmax(0,1fr) auto auto; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 9px; background: rgba(255,255,255,.03); border: 1px solid var(--line); }
+.mk-row + .mk-row { margin-top: 7px; }
+.mk-row-n { font-size: 12.5px; color: var(--txt-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-row-v { font-size: 12.5px; font-variant-numeric: tabular-nums; color: var(--txt-3); white-space: nowrap; }
+.mk-flag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.mk-flag.bad { background: rgba(255,90,77,.14); color: #ff8a80; }
+.mk-flag.ok { background: var(--accent-soft, rgba(182,240,30,.13)); color: var(--accent-bright); }
+.mk-row.alert { border-color: rgba(255,90,77,.32); background: rgba(255,90,77,.05); }
+.mk-head { display: flex; gap: 8px; margin-bottom: 11px; }
+.mk-tab { font-size: 11px; padding: 4px 10px; border-radius: 999px; color: var(--txt-3); border: 1px solid var(--line); }
+.mk-tab.on { color: var(--accent-bright); border-color: var(--accent-soft-bd, rgba(182,240,30,.3)); }
+
+/* ── Макет: отчёт аналитики ─────────────────────────────────────────── */
+.mk-rep { padding: 15px 16px 18px; background: #16161a; }
+.mk-rep-head { display: grid; grid-template-columns: minmax(0,1.4fr) repeat(3, minmax(0,1fr)); gap: 8px;
+  padding-bottom: 9px; border-bottom: 1px solid var(--line); font-size: 10.5px; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--txt-3); }
+.mk-rep-row { display: grid; grid-template-columns: minmax(0,1.4fr) repeat(3, minmax(0,1fr)); gap: 8px;
+  padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; align-items: center; }
+.mk-rep-row:last-child { border-bottom: 0; }
+.mk-rep-src { color: var(--txt-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mk-rep-n { font-variant-numeric: tabular-nums; color: var(--txt-3); }
+.mk-rep-n.win { color: var(--accent-bright); font-weight: 700; }
+.mk-rep-n.lose { color: #ff8a80; }
+
+/* ── Макет: карточка в ленте ────────────────────────────────────────── */
+.mk-feed { padding: 14px; background: #16161a; display: flex; flex-direction: column; gap: 11px; }
+.mk-card { border-radius: 12px; overflow: clip; border: 1px solid var(--line); background: rgba(255,255,255,.03); }
+.mk-card-img { height: 84px; background: linear-gradient(120deg, rgba(182,240,30,.16), rgba(182,240,30,.03) 60%, transparent), #1d1d22; }
+.mk-card-b { padding: 11px 13px 13px; }
+.mk-card-t { font-size: 13px; font-weight: 700; line-height: 1.3; color: var(--txt); }
+.mk-card-m { margin-top: 7px; display: flex; gap: 10px; font-size: 10.5px; color: var(--txt-3); }
+.mk-card.on { border-color: var(--accent-soft-bd, rgba(182,240,30,.3)); }
+
+/* ── Смежные услуги ─────────────────────────────────────────────────────
+   Не «читайте также» списком внизу, а полноценный блок: он и навигация,
+   и перелинковка. Проверка ссылочного графа показала, что без него новые
+   страницы получали по одной входящей ссылке из текста. */
+.svc-rel { display: grid; gap: 1px; margin-top: 34px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 20px; overflow: clip; }
+@media (min-width: 760px) { .svc-rel { grid-template-columns: repeat(3, 1fr); } }
+.svc-rel-i {
+  display: block; padding: 26px 26px 24px; background: var(--surface);
+  color: inherit; text-decoration: none;
+  transition: background .4s cubic-bezier(.32,.72,0,1);
+}
+.svc-rel-i:hover { background: rgba(255,255,255,.035); }
+.svc-rel-t { display: flex; align-items: baseline; gap: 9px; font-size: 18px; font-weight: 700; color: var(--txt); }
+.svc-rel-t .arr { color: var(--accent-bright); transition: transform .4s cubic-bezier(.32,.72,0,1); }
+.svc-rel-i:hover .arr { transform: translateX(4px); }
+.svc-rel-d { margin: 10px 0 0; font-size: 14.5px; line-height: 1.55; color: var(--txt-3); }
+.svc-rel-p { margin-top: 12px; font-size: 13px; color: var(--accent-bright); font-variant-numeric: tabular-nums; }
+
+/* ── Телефон ─────────────────────────────────────────────────────────────
+   Макеты интерфейсов рассчитаны на колонку в 400–500px. На экране в 390px
+   те же четыре столбца отчёта сжимались до шестидесяти пикселей каждый, и
+   «+312 000 ₽» разрывалось на две строки посреди числа. Здесь макет
+   переразмечается под узкую колонку, а не масштабируется целиком:
+   уменьшенный до нечитаемости интерфейс — это уже картинка, а не пример. */
+@media (max-width: 620px) {
+  .mock { border-radius: 14px; }
+  .mock-cap { font-size: 12.5px; }
+
+  /* Отчёт: расход убираем совсем. Из четырёх столбцов на узком экране
+     осмысленны три — источник, сделки и прибыль; расход при этом остаётся
+     в подписи под макетом, если он важен для примера. */
+  .mk-rep { padding: 13px 13px 15px; }
+  .mk-rep-head, .mk-rep-row {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.6fr) minmax(0, 1fr);
+    gap: 7px;
+  }
+  .mk-rep-head span:nth-child(2), .mk-rep-row span:nth-child(2) { display: none; }
+  .mk-rep-row { font-size: 12px; padding: 10px 0; }
+  .mk-rep-n { white-space: nowrap; }
+  .mk-rep-src { white-space: normal; }
+
+  /* Кабинет: название кампании переносится, а не обрезается многоточием —
+     «Поиск · Общие запр…» не говорит ничего. */
+  .mk-row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 6px; padding: 9px 11px; }
+  .mk-row-n { white-space: normal; overflow: visible; }
+  .mk-flag { grid-column: 1 / -1; justify-self: start; font-size: 11px; }
+  .mk-tab { font-size: 11.5px; }
+
+  /* Выдача: подпись позиции не наезжает на заголовок. */
+  .mk-item.on { padding: 9px 10px; margin: 0 -10px; }
+  .mk-pos { position: static; display: block; margin-bottom: 3px; }
+}
+</style><style>
+/* ── Таблица операций ────────────────────────────────────────────────────
+   Не карточки, а строки с разделителями: это сравнение по столбцам, и
+   рамки вокруг каждой строки заставляли бы глаз читать их как отдельные
+   объекты вместо одной таблицы.
+
+   Первые три строки подсвечены слева полосой — там, где бот забирает
+   операцию целиком. Полоса, а не заливка: заливка на трёх строках из
+   пяти перекрашивает половину блока и перестаёт что-либо значить. */
+.ops { margin-top: 34px; border: 1px solid var(--line); border-radius: 18px; overflow: clip; }
+.ops-head, .ops-row {
+  display: grid; gap: 4px 20px; padding: 18px 22px;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 1000px) {
+  .ops-head, .ops-row { grid-template-columns: 1.1fr 0.7fr 1.6fr 1.4fr; gap: 20px; align-items: start; }
+}
+.ops-row:last-child { border-bottom: none; }
+.ops-head {
+  background: var(--surface-2); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--txt-3);
+}
+@media (max-width: 999px) { .ops-head { display: none; } }
+.ops-row { background: var(--surface); position: relative; }
+.ops-row.on::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent);
+}
+.ops-op { font-size: 16px; font-weight: 700; color: var(--txt); }
+.ops-freq { font-size: 13.5px; color: var(--accent-bright); font-weight: 600; }
+.ops-bot, .ops-human { font-size: 14.5px; line-height: 1.55; color: var(--txt-2); }
+.ops-human { color: var(--txt-3); }
+/* На узком экране столбцы схлопываются в строки, и без подписей понять,
+   что есть что, невозможно: шапка таблицы там скрыта. */
+@media (max-width: 999px) {
+  .ops-bot::before { content: 'Бот: '; color: var(--txt-3); }
+  .ops-human::before { content: 'Человек: '; color: var(--txt-3); }
+}
+.ops-note { margin-top: 18px; font-size: 14px; color: var(--txt-3);
+  display: flex; align-items: center; gap: 10px; }
+.ops-note::before { content: ''; width: 26px; height: 2px; background: var(--accent); flex: none; }
+
+/* ── Платформы ───────────────────────────────────────────────────────── */
+.plt { display: grid; gap: 16px; margin-top: 34px; }
+@media (min-width: 860px) { .plt { grid-template-columns: 1fr 1fr; } }
+.plt-i { padding: 28px 26px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); }
+.plt-h { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+.plt-n { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--txt); }
+.plt-tag { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--txt-3); }
+.plt-l { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.plt-l li { position: relative; padding-left: 22px; font-size: 15px; line-height: 1.55; color: var(--txt-2); }
+.plt-l li::before { content: ''; position: absolute; left: 0; top: 9px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+
+/* ── Кому не нужен ──────────────────────────────────────────────────── */
+.nofit { display: grid; gap: 1px; margin-top: 34px; background: var(--line);
+  border: 1px solid var(--line); border-radius: 18px; overflow: clip; }
+@media (min-width: 860px) { .nofit { grid-template-columns: 1fr 1fr; } }
+.nofit-i { background: var(--surface); padding: 24px 26px; font-size: 15px; line-height: 1.6; color: var(--txt-2); }
+.nofit-i strong { display: block; color: var(--txt); font-weight: 600; margin-bottom: 4px; }
+.nofit-i a { color: var(--accent-bright); }
+
+/* ── Макет переписки с ботом в первом экране ─────────────────────────────
+   Нарисован на CSS, а не снят скриншотом: чужие интерфейсы меняются, и
+   снимок через полгода начинает врать. Здесь показан не «красивый чат», а
+   ровно то, что продаёт услугу, — бот собирает вводные по шагам и отдаёт
+   готовую карточку. */
+.chat { border: 1px solid var(--line); border-radius: 18px; overflow: clip; background: var(--surface); }
+.chat-bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+  background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.chat-av { width: 26px; height: 26px; border-radius: 50%; background: var(--accent);
+  color: var(--lime-ink, #0c1402); display: grid; place-items: center;
+  font-size: 12px; font-weight: 800; flex: none; }
+.chat-nm { font-size: 13.5px; font-weight: 600; color: var(--txt); }
+.chat-st { font-size: 11.5px; color: var(--txt-3); margin-left: auto; }
+.chat-body { padding: 16px; display: flex; flex-direction: column; gap: 9px; }
+.msg { max-width: 82%; padding: 10px 13px; border-radius: 14px; font-size: 13.5px; line-height: 1.45; }
+.msg-bot { align-self: flex-start; background: var(--surface-2); color: var(--txt-2);
+  border-bottom-left-radius: 5px; }
+.msg-me { align-self: flex-end; background: var(--accent); color: var(--lime-ink, #0c1402);
+  border-bottom-right-radius: 5px; font-weight: 600; }
+.msg-btns { display: flex; flex-wrap: wrap; gap: 6px; align-self: flex-start; max-width: 82%; }
+.msg-btn { padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line-strong, rgba(255,255,255,.14));
+  font-size: 12.5px; color: var(--txt-2); }
+.chat-card { margin: 4px 16px 16px; padding: 13px 15px; border-radius: 13px;
+  border: 1px solid rgba(182,240,30,0.3); background: rgba(182,240,30,0.06); }
+.chat-card-h { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent-bright); margin-bottom: 7px; }
+.chat-card-r { display: flex; justify-content: space-between; gap: 14px;
+  font-size: 13px; line-height: 1.7; color: var(--txt-2); }
+.chat-card-r b { color: var(--txt); font-weight: 600; }
+</style>
+</head>
+<body class="mo-grain">
+
+<div class="bg-fx">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="grid"></div>
+</div>
+
+<div class="page">
+
+<nav class="nav" id="siteNav">
+  <div class="wrap">
+    <a class="brand" href="/">
+      <svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>
+      Даниил Карацапов
+    </a>
+    <div class="nav-links">
+      <div class="nav-item-drop">
+        <a href="/kompleksnyj-marketing/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="nav-dropdown">
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Маркетинг</div>
+            <a href="/kompleksnyj-marketing/" class="nav-drop-link">Маркетинг под ключ</a>
+            <a href="/kontekstnaya-reklama/" class="nav-drop-link">Контекстная реклама</a>
+            <a href="/targetirovannaya-reklama/" class="nav-drop-link">Таргетированная реклама</a>
+            <a href="/promostranicy/" class="nav-drop-link">Промостраницы Яндекса</a>
+            <a href="/geo-servisy/" class="nav-drop-link">GEO-сервисы</a>
+          </div>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Разработка</div>
+            <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a>
+            <a href="/razrabotka-botov/" class="nav-drop-link">Разработка ботов</a>
+            <a href="/seo-optimizaciya/" class="nav-drop-link">SEO-оптимизация</a>
+          </div>
+          <div class="nav-drop-col">
+            <div class="nav-drop-title">Аналитика</div>
+            <a href="/skvoznaya-analitika/" class="nav-drop-link">Сквозная аналитика</a>
+            <a href="/audit-reklamy/" class="nav-drop-link">Аудит рекламы</a>
+          </div>
+        </div>
+      </div>
+      <a href="/ceny/">Цены</a>
+      <a href="/about/">О себе</a>
+      <a href="/blog/">Блог</a>
+      <a href="/keysy/">Кейсы</a>
+      <a href="/contacts/">Контакты</a>
+    </div>
+    <div class="nav-actions">
+      <a class="nav-ic nav-ic-tg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+      </a>
+      <a class="nav-ic nav-ic-max" href="https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c" target="_blank" rel="noopener noreferrer" aria-label="MAX">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12.4 3.5C16.9 3.5 20.5 6.9 20.5 11C20.5 15.1 16.9 18.5 12.4 18.5C11.3 18.5 10.2 18.3 9.3 17.9L5.6 19.8C5.2 20 4.8 19.6 4.9 19.2L5.7 15.9C4.8 14.6 4.3 12.9 4.3 11C4.3 6.9 7.9 3.5 12.4 3.5ZM13 7.5A3.1 3.1 0 1 0 13 13.7A3.1 3.1 0 1 0 13 7.5Z"/></svg>
+      </a>
+      <a class="btn btn-ghost btn-sm nav-dzen" href="https://dzen.ru/karatsapov" target="_blank" rel="noopener noreferrer">
+        <svg class="i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5c0 5.8 4.7 10.5 10.5 10.5-5.8 0-10.5 4.7-10.5 10.5 0-5.8-4.7-10.5-10.5-10.5C7.3 12 12 7.3 12 1.5Z"/></svg>Я на Дзен
+      </a>
+      <a class="btn btn-fill btn-sm nav-cta" href="/contacts/" data-lead-modal>Обсудить задачу</a>
+      <button class="nav-burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="navMobile">
+  <a href="/kompleksnyj-marketing/">Услуги</a>
+  <span class="nav-mobile-group">Маркетинг</span>
+  <a href="/kompleksnyj-marketing/" class="nav-mobile-sub">Маркетинг под ключ</a>
+  <a href="/kontekstnaya-reklama/" class="nav-mobile-sub">Контекстная реклама</a>
+  <a href="/targetirovannaya-reklama/" class="nav-mobile-sub">Таргетированная реклама</a>
+  <a href="/promostranicy/" class="nav-mobile-sub">Промостраницы Яндекса</a>
+  <a href="/geo-servisy/" class="nav-mobile-sub">GEO-сервисы</a>
+  <span class="nav-mobile-group">Разработка</span>
+  <a href="/razrabotka-sajtov/" class="nav-mobile-sub">Разработка сайтов</a>
+  <a href="/razrabotka-botov/" class="nav-mobile-sub">Разработка ботов</a>
+  <a href="/seo-optimizaciya/" class="nav-mobile-sub">SEO-оптимизация</a>
+  <span class="nav-mobile-group">Аналитика</span>
+  <a href="/skvoznaya-analitika/" class="nav-mobile-sub">Сквозная аналитика</a>
+  <a href="/audit-reklamy/" class="nav-mobile-sub">Аудит рекламы</a>
+  <a href="/ceny/">Цены</a>
+  <a href="/about/">О себе</a>
+  <a href="/blog/">Блог</a>
+  <a href="/keysy/">Кейсы</a>
+  <a href="/contacts/">Контакты</a>
+</div>
+
+<!-- <main> обязателен: без него в дереве доступности нет области основного
+     содержимого, и краулер (как и скринридер) не может отделить контент от
+     шапки и подвала. Проверка агентного просмотра Яндекса помечала это как
+     «дерево доступности имеет неверный формат». -->
+<main id="main">
+
+<header class="hero" data-screen-label="Боты">
+  <div class="sec-fx fx-mesh" aria-hidden="true"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки"><a href="/">Главная</a><span style="margin:0 8px; opacity:.5;">/</span><span aria-current="page">Разработка ботов</span></nav>
+    <div class="svc-hero">
+      <div>
+        <div class="eyebrow reveal">Разработка ботов · Telegram и MAX</div>
+        <h1 class="reveal">Разработка ботов <span class="accent">для Telegram и MAX</span></h1>
+        <p class="svc-utp reveal">Бот окупается не «автоматизацией вообще», а конкретной операцией, которая повторяется десятки раз в день. <b>Сначала считаем, есть ли такая операция</b>, и только потом пишем.</p>
+        <p class="lead reveal">Приём заявок, запись на время, ответы на типовые вопросы, каталог и мини-приложение, уведомления менеджерам и связка с CRM. Бот регистрируется на вас, данные остаются у вас.</p>
+        <div class="btn-row reveal">
+          <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Обсудить задачу</a>
+          <a class="btn btn-ghost btn-lg" href="/keysy/diauto69/">Посмотреть кейс с ботом</a>
+        </div>
+      </div>
+      <div class="reveal" aria-hidden="true">
+        <div class="chat">
+          <div class="chat-bar">
+            <span class="chat-av">Б</span>
+            <span class="chat-nm">Бот компании</span>
+            <span class="chat-st">отвечает сразу</span>
+          </div>
+          <div class="chat-body">
+            <div class="msg msg-bot">Здравствуйте! Подскажу по услугам и приму заявку. С чего начнём?</div>
+            <div class="msg-btns">
+              <span class="msg-btn">Рассчитать стоимость</span>
+              <span class="msg-btn">Записаться</span>
+              <span class="msg-btn">Где вы находитесь</span>
+            </div>
+            <div class="msg msg-me">Рассчитать стоимость</div>
+            <div class="msg msg-bot">Какой объём работ? Можно примерно.</div>
+            <div class="msg msg-me">Около 200 м²</div>
+            <div class="msg msg-bot">Принял. Оставьте телефон — пришлю расчёт и передам менеджеру.</div>
+          </div>
+          <div class="chat-card">
+            <div class="chat-card-h">В CRM ушла карточка</div>
+            <div class="chat-card-r"><span>Объём</span><b>200 м²</b></div>
+            <div class="chat-card-r"><span>Источник</span><b>бот, Telegram</b></div>
+            <div class="chat-card-r"><span>Время на менеджера</span><b>0 минут</b></div>
+          </div>
+        </div>
+        <p class="mock-cap">Вводные бот собирает сам. Человек получает готовую карточку — и звонит по делу, а не выясняет, что нужно клиенту.</p>
+      </div>
+    </div>
+    <div class="svc-facts reveal">
+        <div class="svc-fact">
+          <div class="svc-fact-v"><span>2</span> платформы</div>
+          <div class="svc-fact-l">Telegram и MAX, логика пишется один раз</div>
+        </div>
+        <div class="svc-fact">
+          <div class="svc-fact-v">от <span>нескольких дней</span></div>
+          <div class="svc-fact-l">на бота приёма заявок</div>
+        </div>
+        <div class="svc-fact">
+          <div class="svc-fact-v"><span>0</span> минут</div>
+          <div class="svc-fact-l">времени менеджера на сбор вводных</div>
+        </div>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Главный вопрос</div>
+      <h2>Не «что умеет бот», а какую операцию он забирает</h2>
+      <p class="lead">Ботов продают словом «автоматизация», и покупателю оно ничего не говорит. Полезный критерий другой: действие повторяется много раз в день и каждый раз отнимает время живого человека. Ниже — где это так, а где нет.</p>
+    </div>
+    <div class="ops reveal">
+      <div class="ops-head">
+        <div>Операция</div>
+        <div>Как часто</div>
+        <div>Что делает бот</div>
+        <div>Что остаётся человеку</div>
+      </div>
+        <div class="ops-row on">
+          <div class="ops-op">Приём заявки</div>
+          <div class="ops-freq">десятки в день</div>
+          <div class="ops-bot">Собирает контакт, задачу и бюджет по шагам, проверяет телефон на опечатку и кладёт заявку в CRM.</div>
+          <div class="ops-human">Получает готовую карточку и звонит по делу, а не выясняет вводные.</div>
+        </div>
+        <div class="ops-row on">
+          <div class="ops-op">Запись на время</div>
+          <div class="ops-freq">десятки в день</div>
+          <div class="ops-bot">Показывает свободные окна, записывает, шлёт напоминание накануне и принимает перенос.</div>
+          <div class="ops-human">Ведёт приём. В переписку не заходит вовсе.</div>
+        </div>
+        <div class="ops-row on">
+          <div class="ops-op">Типовые вопросы</div>
+          <div class="ops-freq">сотни в день</div>
+          <div class="ops-bot">Отвечает на «сколько стоит», «где вы находитесь», «когда привезёте» — по вашим же формулировкам.</div>
+          <div class="ops-human">Разбирает только то, что бот не узнал.</div>
+        </div>
+        <div class="ops-row">
+          <div class="ops-op">Подбор и сравнение</div>
+          <div class="ops-freq">единицы в день</div>
+          <div class="ops-bot">Показывает каталог с фильтрами и отправляет выбранное менеджеру вместе с историей выбора.</div>
+          <div class="ops-human">Досогласовывает детали — здесь без человека не выйдет.</div>
+        </div>
+        <div class="ops-row">
+          <div class="ops-op">Сложный спор или рекламация</div>
+          <div class="ops-freq">редко</div>
+          <div class="ops-bot">Только фиксирует обращение и зовёт человека.</div>
+          <div class="ops-human">Решает. Пытаться закрыть это ботом — верный способ потерять клиента.</div>
+        </div>
+    </div>
+    <p class="ops-note">Отмечено то, что бот забирает целиком. Ниже отметки он работает диспетчером: фиксирует обращение и зовёт человека.</p>
+  </div>
+</section>
+<div class="sec-edge edge-dashes" aria-hidden="true"><span class="rule"></span></div>
+
+<section class="section">
+  <div class="sec-fx fx-strings" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Две платформы</div>
+      <h2>Telegram, MAX или обе сразу</h2>
+      <p class="lead">Выбор решается не тем, где «больше аудитории вообще», а тем, где сидят ваши клиенты. Сценарий и логика пишутся один раз, поэтому вторая платформа обходится заметно дешевле первой.</p>
+    </div>
+    <div class="plt">
+        <div class="plt-i reveal">
+          <div class="plt-h"><span class="plt-n">Telegram</span><span class="plt-tag">привычная среда</span></div>
+          <ul class="plt-l">
+            <li>Клиенты уже там и умеют пользоваться — обучать не нужно.</li>
+            <li>Мини-приложения: внутри бота открывается полноценный экран с каталогом, картой или календарём.</li>
+            <li>Платежи, оплата прямо в переписке.</li>
+            <li>Каналы и боты работают в связке: пост в канале — кнопка — бот.</li>
+          </ul>
+        </div>
+        <div class="plt-i reveal">
+          <div class="plt-h"><span class="plt-n">MAX</span><span class="plt-tag">российская платформа</span></div>
+          <ul class="plt-l">
+            <li>Отечественный мессенджер со своим бот-API и мини-приложениями.</li>
+            <li>Важен там, где для бизнеса принципиальна российская площадка.</li>
+            <li>Аудитория пересекается с Telegram не полностью: часть клиентов будет только здесь.</li>
+            <li>Логику бота пишу один раз, платформы подключаю обе — переписывать с нуля не нужно.</li>
+          </ul>
+        </div>
+    </div>
+  </div>
+</section>
+<div class="sec-edge edge-node" aria-hidden="true"><span class="rule"></span><span class="node"></span></div>
+
+<section class="section">
+  <div class="wrap wrap-narrow">
+    <div class="section-head reveal">
+      <div class="eyebrow">Что я делаю</div>
+      <h2>Порядок работ</h2>
+    </div>
+    <div class="tl">
+        <div class="tl-item reveal">
+          <div class="tl-num">1</div>
+          <div class="tl-body">
+            <div class="tl-title">Считаем, окупится ли</div>
+            <p class="tl-text">Первый разговор — не про кнопки, а про операции: что повторяется каждый день, сколько времени отнимает и сколько таких обращений. Если выходит, что бот сэкономит час в неделю, я так и скажу — такой бот не стоит своей разработки и поддержки.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-num">2</div>
+          <div class="tl-body">
+            <div class="tl-title">Сценарий</div>
+            <p class="tl-text">Рисую путь клиента по шагам: что бот спрашивает, в каком порядке, что делает при странном ответе и где передаёт человеку. Здесь же — тексты сообщений. Большая часть провальных ботов провалилась именно на этом шаге, а не в коде.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-num">3</div>
+          <div class="tl-body">
+            <div class="tl-title">Разработка</div>
+            <p class="tl-text">Пишу бота и подключаю то, что нужно: базу товаров или услуг, календарь записи, оплату, мини-приложение. Данные живут на вашей стороне, доступы оформляются на вас.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-num">4</div>
+          <div class="tl-body">
+            <div class="tl-title">Связка с CRM и уведомлениями</div>
+            <p class="tl-text">Заявка из бота попадает туда же, куда заявки с сайта, — с меткой источника. Иначе бот выглядит бесплатным каналом, а его вклад в продажи никто не видит.</p>
+          </div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-num">5</div>
+          <div class="tl-body">
+            <div class="tl-title">Запуск и наблюдение</div>
+            <p class="tl-text">Смотрю, где люди отваливаются в сценарии и что пишут вместо кнопок. Первые две недели правки идут почти каждый день — это нормально и заложено в работу.</p>
+          </div>
+        </div>
+    </div>
+  </div>
+</section>
+<div class="sec-edge edge-hairline" aria-hidden="true"><span class="rule"></span><span class="glint"></span></div>
+
+<section class="section">
+  <div class="sec-fx fx-weave" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Честно о границах</div>
+      <h2>Когда бот не нужен</h2>
+      <p class="lead">В четырёх случаях ниже бот либо не окупится, либо навредит. Если ваша задача из этого списка, я так и скажу на первом же разговоре.</p>
+    </div>
+    <div class="nofit reveal">
+        <div class="nofit-i"><strong>Редкие обращения.</strong>Три заявки в неделю разберёт человек. Бот здесь — лишнее звено, которое ещё и нужно поддерживать.</div>
+        <div class="nofit-i"><strong>Каждый запрос уникален.</strong>Если ответ всякий раз собирается заново, сценарий превратится в дерево из сотни веток и всё равно упрётся в живого специалиста.</div>
+        <div class="nofit-i"><strong>Бот вместо сайта.</strong>В мессенджере человек не сравнивает предложения и не читает длинное описание — он выполняет действие. Продавать сложное лучше на странице, а боту отдать заявку и запись. Если сайта нет, начинать разумнее с <a href="/razrabotka-sajtov/">него</a>.</div>
+        <div class="nofit-i"><strong>Никто не будет отвечать.</strong>Бот доводит человека до вопроса, на который нужен ответ живого сотрудника. Если отвечать некому, разговор оборвётся ровно на самом горячем месте.</div>
+    </div>
+  </div>
+</section>
+<div class="sec-edge edge-chevron" aria-hidden="true"><svg viewBox="0 0 1200 84" preserveAspectRatio="none"><defs><linearGradient id="edg91" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="var(--accent-bright)" stop-opacity="0"/><stop offset="50%" stop-color="var(--accent-bright)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--accent-bright)" stop-opacity="0"/></linearGradient></defs><path d="M0 30 L600 58 L1200 30" stroke="url(#edg91)"/></svg></div>
+
+<section class="section">
+  <div class="wrap wrap-narrow">
+    <div class="section-head reveal">
+      <div class="eyebrow">Вопросы</div>
+      <h2>Что обычно спрашивают</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details class="faq-item"><summary>Сколько стоит разработать бота?<span class="sign"></span></summary><div class="answer">Зависит от сценария: бот приёма заявок и бот с каталогом, оплатой и мини-приложением — работы разного объёма. Называю сумму после разговора о задаче, когда понятно, что именно бот делает и с чем связывается. Прайс на остальные услуги — <a href="/ceny/">на странице цен</a>.</div></details>
+      <details class="faq-item"><summary>Сколько времени занимает разработка?<span class="sign"></span></summary><div class="answer">Простой бот приёма заявок — обычно несколько дней. Бот с каталогом, записью и связкой с CRM — недели. Точнее скажу после сценария: именно он определяет объём, а не платформа.</div></details>
+      <details class="faq-item"><summary>Telegram или MAX — что выбрать?<span class="sign"></span></summary><div class="answer">По тому, где ваши клиенты. Telegram — привычная среда, там уже сидят и умеют пользоваться. MAX важен, когда для бизнеса принципиальна российская платформа или часть аудитории есть только там. Логика бота пишется один раз, поэтому вторая платформа обходится заметно дешевле первой.</div></details>
+      <details class="faq-item"><summary>Можно ли связать бота с сайтом и CRM?<span class="sign"></span></summary><div class="answer">Да, и это обычно и есть смысл затеи. Заявка из бота попадает в ту же CRM, что и заявки с сайта, с меткой источника — иначе непонятно, что канал вообще приносит. С <a href="/skvoznaya-analitika/">сквозной аналитикой</a> видно и выручку по нему.</div></details>
+      <details class="faq-item"><summary>Что такое мини-приложение?<span class="sign"></span></summary><div class="answer">Экран, который открывается прямо внутри мессенджера: каталог с фильтрами, карта, календарь записи, личный кабинет. Выглядит как обычное приложение, но ставить ничего не нужно. Так сделан каталог в <a href="/keysy/diauto69/">кейсе с импортёром автомобилей</a>.</div></details>
+      <details class="faq-item"><summary>Кому принадлежит бот?<span class="sign"></span></summary><div class="answer">Вам. Бот регистрируется на ваш аккаунт, доступы и данные остаются под вашим контролем. Я работаю в ваших аккаунтах и ничего не закрываю от клиента.</div></details>
+      <details class="faq-item"><summary>Нужна ли поддержка после запуска?<span class="sign"></span></summary><div class="answer">Первые недели — да, обязательно: люди ведут себя не так, как ожидает сценарий, и правки идут по факту. Дальше бот работает сам, а обращаться приходится, когда меняется услуга, цена или условия.</div></details>
+    </div>
+  </div>
+</section>
+<div class="sec-edge edge-dashes" aria-hidden="true"><span class="rule"></span></div>
+
+<section class="section">
+  <div class="sec-fx fx-rings" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Смежные услуги</div>
+      <h2>Что ещё закрываю сам</h2>
+      <p class="lead">Работаю не по одному каналу, поэтому связка собирается целиком — без второго подрядчика и без стыков, на которых теряется результат.</p>
+    </div>
+    <div class="svc-rel reveal">
+      <a class="svc-rel-i" href="/razrabotka-sajtov/">
+        <span class="svc-rel-t">Разработка сайтов <span class="arr" aria-hidden="true">→</span></span>
+        <p class="svc-rel-d">Посадочная под рекламный запрос, а не «чтобы было красиво».</p>
+        <div class="svc-rel-p">от 60 000 ₽</div>
+      </a>
+      <a class="svc-rel-i" href="/skvoznaya-analitika/">
+        <span class="svc-rel-t">Сквозная аналитика <span class="arr" aria-hidden="true">→</span></span>
+        <p class="svc-rel-d">Связка рекламы, звонков и CRM: видно деньги, а не клики.</p>
+        <div class="svc-rel-p">от 12 000 ₽/мес</div>
+      </a>
+      <a class="svc-rel-i" href="/kontekstnaya-reklama/">
+        <span class="svc-rel-t">Контекстная реклама <span class="arr" aria-hidden="true">→</span></span>
+        <p class="svc-rel-d">Яндекс Директ: поиск, РСЯ, ретаргетинг. Забирает спрос, который уже есть.</p>
+        <div class="svc-rel-p">от 30 000 ₽/мес</div>
+      </a>
+    </div>
+  </div>
+</section>
+<div class="sec-edge edge-node" aria-hidden="true"><span class="rule"></span><span class="node"></span></div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cta-final reveal">
+      <h2>Расскажите, что повторяется каждый день</h2>
+      <p class="lead">По описанию операции обычно сразу видно, окупится бот или нет. Если не окупится — скажу прямо и предложу то, что решит задачу дешевле.</p>
+      <div class="btn-row">
+        <a class="btn btn-fill btn-lg" href="/contacts/" data-lead-modal>Написать мне</a>
+        <a class="btn btn-ghost btn-lg" href="/razrabotka-sajtov/">Разработка сайтов</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap foot">
+    <div class="foot-top">
+      <div>
+        <a class="brand" href="/" style="font-size: 20px;"><svg class="brand-plane" width="30" height="30" viewBox="0 0 50 50" fill="none" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z" fill="#D6FF41"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z" fill="#D6FF41"/></svg>Даниил Карацапов</a>
+        <p class="foot-about">Частный интернет-маркетолог. Контекст, таргет, сайты и аналитика — лично, от аудита до заявок.</p>
+      </div>
+      <div class="foot-contacts">
+        <a href="tel:+79963470065">+7 (996) 347-00-65</a>
+        <a href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer">Telegram @Daniil_065</a>
+        <a class="foot-mail" href="mailto:d.karatsapov@gmail.com">d.karatsapov@gmail.com</a>
+      </div>
+    </div>
+    <nav class="foot-nav" aria-label="Разделы сайта">
+      <a href="/">Главная</a>
+      <a href="/ceny/">Цены</a>
+      <a href="/keysy/">Кейсы</a>
+      <a href="/blog/">Блог</a>
+      <a href="/about/">О себе</a>
+      <a href="/contacts/">Контакты</a>
+    </nav>
+    <div class="foot-legal">
+      <span>© 2026 Карацапов Даниил. Интернет-маркетинг.</span>
+      <a href="/politika/">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<a class="quiz-fab" href="/?quiz=1">
+  <span class="quiz-fab-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></span>
+  Рассчитать проект
+</a>
+<div class="mob-dock">
+  <a class="mob-dock-btn mob-dock-tg" href="https://t.me/Daniil_065" target="_blank" rel="noopener noreferrer" aria-label="Написать в Telegram">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.94 4.6 18.6 20.3c-.25 1.1-.9 1.37-1.83.85l-5.05-3.72-2.44 2.35c-.27.27-.5.5-1 .5l.36-5.1L17.9 6.1c.4-.36-.09-.56-.62-.2L5.8 13.06l-4.98-1.56c-1.08-.34-1.1-1.08.23-1.6L20.5 2.55c.9-.33 1.7.22 1.44 2.05Z"/></svg>
+  </a>
+  <a class="mob-dock-btn mob-dock-call" href="tel:+79963470065" aria-label="Позвонить +7 (996) 347-00-65">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+  </a>
+</div>
+
+<script>
+(function () {
+  const nav = document.getElementById('siteNav');
+  const burger = document.getElementById('navBurger');
+  const mobile = document.getElementById('navMobile');
+  const onScroll = () => { if (nav) nav.classList.toggle('scrolled', window.scrollY > 24); };
+  onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+  if (burger && mobile) {
+    const toggle = (open) => {
+      const o = open ?? !mobile.classList.contains('open');
+      mobile.classList.toggle('open', o);
+      burger.classList.toggle('open', o);
+    };
+    burger.addEventListener('click', () => toggle());
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+  }
+})();
+
+// reveal on scroll
+(function () {
+  const targets = document.querySelectorAll('.reveal');
+  const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.06 }) : null;
+  if (io) targets.forEach(t => io.observe(t)); else targets.forEach(t => t.classList.add('in'));
+  setTimeout(() => targets.forEach(t => t.classList.add('in')), 1500);
+})();
+
+// FAQ: раскрытие обеспечивает нативный <details>, скрипт нужен только чтобы
+// открытым оставался один пункт — как на остальных страницах сайта.
+(function () {
+  const items = document.querySelectorAll('details.faq-item');
+  items.forEach(d => d.addEventListener('toggle', () => {
+    if (!d.open) return;
+    items.forEach(o => { if (o !== d) o.open = false; });
+  }));
+})();
+
+// nav dropdown
+(function () {
+  document.querySelectorAll('.nav-item-drop').forEach(drop => {
+    const trigger = drop.querySelector('.nav-drop-trigger');
+    if (!trigger) return;
+    drop.addEventListener('mouseenter', () => drop.classList.add('open'));
+    drop.addEventListener('mouseleave', () => drop.classList.remove('open'));
+    trigger.addEventListener('click', e => { e.preventDefault(); drop.classList.toggle('open'); });
+  });
+})();
+</script>
+<script defer src="/lead-modal.js"></script>
+<script defer src="/motion.js"></script>
+</body>
+</html>

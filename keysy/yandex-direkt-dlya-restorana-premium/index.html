@@ -65,11 +65,17 @@
 .kp-hero { padding: 104px 0 0; }
 @media (max-width: 900px) { .kp-hero { padding-top: 88px; } }
 
-.kp-top { display: grid; gap: 26px; align-items: center; margin-top: 18px; }
+/* Верх колонок выровнен по верхней границе снимка, низ — по нижней: цифры
+   прижаты к низу текстовой колонки, снимок растянут на её высоту. При
+   выравнивании по центру заголовок висел ниже верха картинки, а лента цифр
+   уезжала под неё — оба края расходились, и первый экран выглядел
+   несобранным. */
+.kp-top { display: grid; gap: 26px; align-items: stretch; margin-top: 18px; }
 @media (min-width: 900px) {
   /* Снимок уже текста: он иллюстрация, а не главное на экране. */
   .kp-top { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 44px; }
 }
+.kp-intro { display: flex; flex-direction: column; min-width: 0; }
 /* Без снимка колонка одна, и самого блока со снимком нет: пустая плашка
    в первом экране читается как незагрузившаяся картинка, а не как «снимка
    не было». В карточке витрины плашка нужна — там она держит высоту ряда. */
@@ -89,9 +95,12 @@
 
 /* Снимок 4:3 и без внешних полей: в первом экране он работает как обложка
    кейса, поэтому занимает свою колонку целиком. */
-.kp-shot { margin: 0; }
+.kp-shot { margin: 0; display: flex; }
 .kp-img { position: relative; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden;
-  border: 1px solid var(--line); }
+  border: 1px solid var(--line); width: 100%; }
+/* На широком экране снимок тянется по высоте текстовой колонки, а не задаёт
+   её сам: иначе при длинном заголовке текст вылезал бы за нижний край. */
+@media (min-width: 900px) { .kp-img { aspect-ratio: auto; min-height: 340px; } }
 .kp-img img { position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; display: block; }
 @media (max-width: 900px) { .kp-img { aspect-ratio: 16 / 10; } }
@@ -112,8 +121,10 @@
 .kp-nums { display: grid; gap: 1px; margin-top: 30px;
   border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
   background: var(--line); }
+/* margin-top: auto прижимает ленту к низу колонки — к той же линии, где
+   заканчивается снимок. */
+@media (min-width: 900px) { .kp-nums { margin-top: auto; } }
 @media (min-width: 560px)  { .kp-nums { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) { .kp-nums { grid-template-columns: repeat(4, 1fr); } }
 .kp-num { padding: 18px 20px; background: var(--surface); }
 .kp-num-v { font-size: clamp(22px, 2.2vw, 27px); font-weight: 800; letter-spacing: -0.03em;
   color: var(--lime-bright); font-variant-numeric: tabular-nums; }
@@ -147,6 +158,46 @@
 .kp-steps li:not(:last-child)::after { content: ''; position: absolute;
   left: 13px; top: 30px; bottom: 4px; width: 1px; background: var(--line-2); }
 .kp-steps li:last-child { padding-bottom: 0; }
+
+/* ── Списки «с чем пришли» и «что предложил» ────────────────────────────
+   Маркеры разного смысла: минус там, где перечислены симптомы, галочка —
+   где решения. Цвет несёт ту же информацию, что и знак, поэтому в
+   чёрно-белой печати и при дальтонизме список остаётся читаемым. */
+.kp-list-b { margin-top: 22px; }
+/* Первый блок в колонке отступа сверху не требует — он и так первый. */
+.kp-first { margin-top: 0; }
+.kp-h-after { margin-top: 26px; }
+.kp-sub { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted); }
+.kp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.kp-list li { position: relative; padding-left: 24px; font-size: 15px; line-height: 1.55;
+  color: var(--muted); }
+.kp-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+.kp-neg .kp-list li::before { content: '—'; color: #ff8a80; }
+.kp-pos .kp-list li::before { content: '✓'; color: var(--lime-bright); }
+
+/* ── Состав работ ────────────────────────────────────────────────────────
+   Направления в колонки, внутри каждого — перечень. У кейсов от двух до
+   пяти направлений, поэтому auto-fit: при двух они займут половину ширины
+   каждое, при пяти сложатся в две строки, и подпирать раскладку числом
+   колонок под каждый кейс не нужно. */
+.kp-works { margin-top: 44px; }
+.kp-works-grid { display: grid; gap: 22px 34px; margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.kp-work { min-width: 0; padding-top: 16px; border-top: 2px solid var(--line-2); }
+.kp-work-n { font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--lime-bright);
+  font-variant-numeric: tabular-nums; margin-bottom: 6px; }
+.kp-work-t { margin: 0 0 10px; font-size: 17px; letter-spacing: -0.01em; }
+.kp-work-l { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.kp-work-l li { position: relative; padding-left: 16px; font-size: 14.5px; line-height: 1.5;
+  color: var(--muted); }
+.kp-work-l li::before { content: ''; position: absolute; left: 0; top: 9px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--line-2); }
+
+/* Итог и выводы рядом: это две половины одного ответа на вопрос «и что». */
+.kp-res { display: grid; gap: 24px; align-items: start; }
+@media (min-width: 900px) { .kp-res { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; } }
+.kp-res .kp-list-b { margin-top: 34px; }
 
 .kp-out { margin-top: 34px; padding: 22px 24px; border-radius: 18px;
   border: 1px solid rgba(182,240,30,0.28);
@@ -210,6 +261,7 @@
           <div class="nav-drop-col">
             <div class="nav-drop-title">Разработка</div>
             <a href="/razrabotka-sajtov/" class="nav-drop-link">Разработка сайтов</a>
+            <a href="/razrabotka-botov/" class="nav-drop-link">Разработка ботов</a>
             <a href="/seo-optimizaciya/" class="nav-drop-link">SEO-оптимизация</a>
           </div>
           <div class="nav-drop-col">
@@ -250,6 +302,7 @@
   <a href="/geo-servisy/" class="nav-mobile-sub">GEO-сервисы</a>
   <span class="nav-mobile-group">Разработка</span>
   <a href="/razrabotka-sajtov/" class="nav-mobile-sub">Разработка сайтов</a>
+  <a href="/razrabotka-botov/" class="nav-mobile-sub">Разработка ботов</a>
   <a href="/seo-optimizaciya/" class="nav-mobile-sub">SEO-оптимизация</a>
   <span class="nav-mobile-group">Аналитика</span>
   <a href="/skvoznaya-analitika/" class="nav-mobile-sub">Сквозная аналитика</a>
@@ -280,10 +333,7 @@
           <span class="kp-meta-i">Москва, Садовое кольцо</span>
           <div class="kase-chips"><span class="kase-chip">Яндекс Директ</span><span class="kase-chip">Яндекс Бизнес</span><span class="kase-chip">Сквозная аналитика</span></div>
         </div>
-      </div>
-      <figure class="kp-shot"><div class="kp-img kp-img-ph"><span>Ресторан премиум-класса</span><img src="/assets/cases/everest-siberia.jpg" alt="Ресторан премиум-класса, Москва, Садовое кольцо" loading="lazy" decoding="async" onerror="this.remove()"></div></figure>
-    </div>
-    <div class="kp-nums">
+        <div class="kp-nums">
       <div class="kp-num">
         <div class="kp-num-v">+64%</div>
         <div class="kp-num-l">броней за первые 3 месяца</div>
@@ -300,6 +350,9 @@
         <div class="kp-num-v">+19%</div>
         <div class="kp-num-l">средний чек за счёт премиум-аудитории</div>
       </div>
+        </div>
+      </div>
+      <figure class="kp-shot"><div class="kp-img kp-img-ph"><span>Ресторан премиум-класса</span><img src="/assets/cases/everest-siberia.jpg" alt="Ресторан премиум-класса, Москва, Садовое кольцо" loading="lazy" decoding="async" onerror="this.remove()"></div></figure>
     </div>
   </div>
 </header>
@@ -309,9 +362,26 @@
     <div class="kp-col">
       <h2 class="kp-h">Задача</h2>
       <p class="kp-p">Ресторан находится в районе, где на одной улице десяток заведений того же класса. Гость выбирает не «где поесть», а «куда пойти сегодня вечером», и решение принимает за минуты — по фотографиям, отзывам и позиции карточки на карте. Нужно было попасть в этот момент выбора и при этом не привести дешёвую аудиторию, которая приходит на бизнес-ланч и больше не возвращается.</p>
+      <div class="kp-list-b kp-neg">
+        <h3 class="kp-sub">С чем пришли</h3>
+        <ul class="kp-list">
+          <li>Высокая конкуренция в премиум-сегменте центра Москвы</li>
+          <li>Нестабильный поток броней, особенно в будние дни</li>
+          <li>Высокая стоимость привлечения гостя без понимания окупаемости каналов</li>
+          <li>Отсутствие аналитики — невозможно оценить, какая реклама реально приносит выручку</li>
+        </ul>
+      </div>
     </div>
     <div class="kp-col">
-      <h2 class="kp-h">Что я сделал</h2>
+      <div class="kp-list-b kp-pos kp-first">
+        <h3 class="kp-sub">Что предложил</h3>
+        <ul class="kp-list">
+          <li>Контекстная реклама в Яндекс.Директ с фокусом на деловые ужины, банкеты, особые поводы</li>
+          <li>Карточка в Яндекс.Бизнес с геопривязкой и системной работой с репутацией</li>
+          <li>Сквозная аналитика для контроля окупаемости каждого канала</li>
+        </ul>
+      </div>
+      <h2 class="kp-h kp-h-after">Что я сделал</h2>
       <ol class="kp-steps">
       <li>Разделил кампании по намерению: отдельно «ресторан рядом», отдельно «забронировать стол», отдельно поводы — день рождения, деловой ужин, свидание.</li>
       <li>Отсёк дешёвый трафик минус-словами: «недорого», «дешёвые», «бизнес-ланч», «доставка» — они дают клики, но не тот чек.</li>
@@ -323,9 +393,54 @@
   </div>
 
   <div class="wrap">
-    <div class="kp-out">
-      <b>Что это дало</b>
-      Реклама вышла на окупаемость втрое и перестала быть статьёй расходов «на всякий случай»: по каждой кампании видно, сколько броней она принесла и с каким чеком.
+    <div class="kp-works">
+      <h2 class="kp-h">Состав работ</h2>
+      <div class="kp-works-grid">
+        <div class="kp-work">
+          <div class="kp-work-n">01</div>
+          <h3 class="kp-work-t">Реклама Яндекс.Директ</h3>
+          <ul class="kp-work-l">
+            <li>Таргет по запросам: премиальные рестораны центра Москвы, рестораны у Патриарших, банкеты, деловые ужины, романтические вечера</li>
+            <li>Геотаргетинг на Садовое кольцо и Патриаршие пруды с расширением на платёжеспособную аудиторию города</li>
+            <li>РСЯ-реклама для расширения охвата и формирования спроса</li>
+            <li>А/В-тестирование объявлений и оперативная оптимизация ставок под целевые заявки</li>
+          </ul>
+        </div>
+        <div class="kp-work">
+          <div class="kp-work-n">02</div>
+          <h3 class="kp-work-t">Реклама Яндекс.Бизнес</h3>
+          <ul class="kp-work-l">
+            <li>Заполнил карточку, добавил профессиональные фото блюд и интерьера, оформил рекламную подписку</li>
+            <li>Поддерживал актуальность карточки: меню, акции, спецпредложения</li>
+            <li>Работал с репутацией: отрабатывал негатив, отвечал на отзывы, поднимал рейтинг</li>
+          </ul>
+        </div>
+        <div class="kp-work">
+          <div class="kp-work-n">03</div>
+          <h3 class="kp-work-t">Сквозная аналитика</h3>
+          <ul class="kp-work-l">
+            <li>Настроил аналитику по всем рекламным каналам</li>
+            <li>Контролировал ROI и эффективность кампаний в реальном времени</li>
+            <li>Настроил автоматический учёт заявок, звонков и онлайн-броней</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="kp-res">
+      <div class="kp-out">
+        <b>Что это дало</b>
+        Реклама вышла на окупаемость втрое и перестала быть статьёй расходов «на всякий случай»: по каждой кампании видно, сколько броней она принесла и с каким чеком.
+      </div>
+      <div class="kp-list-b kp-pos">
+        <h3 class="kp-sub">Выводы</h3>
+        <ul class="kp-list">
+          <li>Уже в первый месяц ресторан получил стабильный поток броней, в том числе в традиционно «пустые» будние дни</li>
+          <li>Сквозная аналитика позволила перераспределить бюджет в пользу самых окупаемых каналов</li>
+          <li>Системная работа с отзывами подняла рейтинг карточки и повысила доверие новой аудитории</li>
+        </ul>
+      </div>
     </div>
 
     <div class="kp-foot">
