@@ -19,6 +19,7 @@ import { cases, CASE_SETS } from './service-kit.mjs';
 import { CASE_PAGES, caseGrid, CASE_GRID_CSS } from './case-page.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
+import * as botyPage from './pages/razrabotka-botov.mjs';
 import * as politikaPage from './pages/politika.mjs';
 import * as keysSferaPage from './pages/keys-sfera.mjs';
 import * as keysDiautoPage from './pages/keys-diauto.mjs';
@@ -33,7 +34,7 @@ const SITE = 'https://karatsapov.ru';
 /* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
    которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
 const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage, keysSferaPage, keysDiautoPage,
-  kompleksPage, analitikaPage, auditPage, promoPage, seoPage,
+  kompleksPage, analitikaPage, auditPage, promoPage, seoPage, botyPage,
   /* Двадцать одна страница кейса собирается из cases-data.mjs. Руками их не
      пишем: у кейса одна и та же структура — задача, действия, цифры, — и
      двадцать одна копия этой структуры разъедется на второй же правке. */
@@ -802,6 +803,7 @@ const SITEMAP_PAGES = [
   { loc: '/targetirovannaya-reklama/', src: 'targetirovannaya-reklama/index.html', priority: '0.9', changefreq: 'monthly' },
   { loc: '/geo-servisy/', src: 'geo-servisy/index.html', priority: '0.9', changefreq: 'monthly' },
   { loc: '/razrabotka-sajtov/', src: 'razrabotka-sajtov/index.html', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/razrabotka-botov/', src: 'pages/razrabotka-botov.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/kompleksnyj-marketing/', src: 'pages/kompleksnyj-marketing.mjs', priority: '0.9', changefreq: 'monthly' },
   { loc: '/skvoznaya-analitika/', src: 'pages/skvoznaya-analitika.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/audit-reklamy/', src: 'pages/audit-reklamy.mjs', priority: '0.8', changefreq: 'monthly' },

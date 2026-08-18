@@ -99,6 +99,7 @@ export const SERVICE_GROUPS = [
   ]],
   ['Разработка', [
     ['/razrabotka-sajtov/', 'Разработка сайтов'],
+    ['/razrabotka-botov/', 'Разработка ботов'],
     ['/seo-optimizaciya/', 'SEO-оптимизация'],
   ]],
   ['Аналитика', [

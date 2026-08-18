@@ -48,11 +48,17 @@ const CASE_PAGE_CSS = `
 .kp-hero { padding: 104px 0 0; }
 @media (max-width: 900px) { .kp-hero { padding-top: 88px; } }
 
-.kp-top { display: grid; gap: 26px; align-items: center; margin-top: 18px; }
+/* Верх колонок выровнен по верхней границе снимка, низ — по нижней: цифры
+   прижаты к низу текстовой колонки, снимок растянут на её высоту. При
+   выравнивании по центру заголовок висел ниже верха картинки, а лента цифр
+   уезжала под неё — оба края расходились, и первый экран выглядел
+   несобранным. */
+.kp-top { display: grid; gap: 26px; align-items: stretch; margin-top: 18px; }
 @media (min-width: 900px) {
   /* Снимок уже текста: он иллюстрация, а не главное на экране. */
   .kp-top { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 44px; }
 }
+.kp-intro { display: flex; flex-direction: column; min-width: 0; }
 /* Без снимка колонка одна, и самого блока со снимком нет: пустая плашка
    в первом экране читается как незагрузившаяся картинка, а не как «снимка
    не было». В карточке витрины плашка нужна — там она держит высоту ряда. */
@@ -72,9 +78,12 @@ const CASE_PAGE_CSS = `
 
 /* Снимок 4:3 и без внешних полей: в первом экране он работает как обложка
    кейса, поэтому занимает свою колонку целиком. */
-.kp-shot { margin: 0; }
+.kp-shot { margin: 0; display: flex; }
 .kp-img { position: relative; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden;
-  border: 1px solid var(--line); }
+  border: 1px solid var(--line); width: 100%; }
+/* На широком экране снимок тянется по высоте текстовой колонки, а не задаёт
+   её сам: иначе при длинном заголовке текст вылезал бы за нижний край. */
+@media (min-width: 900px) { .kp-img { aspect-ratio: auto; min-height: 340px; } }
 .kp-img img { position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; display: block; }
 @media (max-width: 900px) { .kp-img { aspect-ratio: 16 / 10; } }
@@ -95,8 +104,10 @@ const CASE_PAGE_CSS = `
 .kp-nums { display: grid; gap: 1px; margin-top: 30px;
   border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
   background: var(--line); }
+/* margin-top: auto прижимает ленту к низу колонки — к той же линии, где
+   заканчивается снимок. */
+@media (min-width: 900px) { .kp-nums { margin-top: auto; } }
 @media (min-width: 560px)  { .kp-nums { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) { .kp-nums { grid-template-columns: repeat(4, 1fr); } }
 .kp-num { padding: 18px 20px; background: var(--surface); }
 .kp-num-v { font-size: clamp(22px, 2.2vw, 27px); font-weight: 800; letter-spacing: -0.03em;
   color: var(--lime-bright); font-variant-numeric: tabular-nums; }
@@ -130,6 +141,46 @@ const CASE_PAGE_CSS = `
 .kp-steps li:not(:last-child)::after { content: ''; position: absolute;
   left: 13px; top: 30px; bottom: 4px; width: 1px; background: var(--line-2); }
 .kp-steps li:last-child { padding-bottom: 0; }
+
+/* ── Списки «с чем пришли» и «что предложил» ────────────────────────────
+   Маркеры разного смысла: минус там, где перечислены симптомы, галочка —
+   где решения. Цвет несёт ту же информацию, что и знак, поэтому в
+   чёрно-белой печати и при дальтонизме список остаётся читаемым. */
+.kp-list-b { margin-top: 22px; }
+/* Первый блок в колонке отступа сверху не требует — он и так первый. */
+.kp-first { margin-top: 0; }
+.kp-h-after { margin-top: 26px; }
+.kp-sub { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted); }
+.kp-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.kp-list li { position: relative; padding-left: 24px; font-size: 15px; line-height: 1.55;
+  color: var(--muted); }
+.kp-list li::before { position: absolute; left: 0; top: 0; font-weight: 700; }
+.kp-neg .kp-list li::before { content: '—'; color: #ff8a80; }
+.kp-pos .kp-list li::before { content: '✓'; color: var(--lime-bright); }
+
+/* ── Состав работ ────────────────────────────────────────────────────────
+   Направления в колонки, внутри каждого — перечень. У кейсов от двух до
+   пяти направлений, поэтому auto-fit: при двух они займут половину ширины
+   каждое, при пяти сложатся в две строки, и подпирать раскладку числом
+   колонок под каждый кейс не нужно. */
+.kp-works { margin-top: 44px; }
+.kp-works-grid { display: grid; gap: 22px 34px; margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.kp-work { min-width: 0; padding-top: 16px; border-top: 2px solid var(--line-2); }
+.kp-work-n { font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--lime-bright);
+  font-variant-numeric: tabular-nums; margin-bottom: 6px; }
+.kp-work-t { margin: 0 0 10px; font-size: 17px; letter-spacing: -0.01em; }
+.kp-work-l { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.kp-work-l li { position: relative; padding-left: 16px; font-size: 14.5px; line-height: 1.5;
+  color: var(--muted); }
+.kp-work-l li::before { content: ''; position: absolute; left: 0; top: 9px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--line-2); }
+
+/* Итог и выводы рядом: это две половины одного ответа на вопрос «и что». */
+.kp-res { display: grid; gap: 24px; align-items: start; }
+@media (min-width: 900px) { .kp-res { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; } }
+.kp-res .kp-list-b { margin-top: 34px; }
 
 .kp-out { margin-top: 34px; padding: 22px 24px; border-radius: 18px;
   border: 1px solid rgba(182,240,30,0.28);
@@ -213,6 +264,44 @@ export function casePage(c) {
 
     const steps = c.steps.map((s) => `      <li>${s}</li>`).join('\n');
 
+    /* Боли, решение, состав работ и выводы — то, что раньше лежало в карточке
+       витрины под раскрытием. При переезде на отдельные страницы я оставил
+       только выжимку, и содержание кейса обеднело: пропали и симптомы, с
+       которыми пришёл клиент, и перечень работ по каждому направлению.
+       Теперь на странице всё, что было в карточке. */
+    const list = (title, items, mod = '') => (items && items.length
+      ? `      <div class="kp-list-b${mod}">
+        <h3 class="kp-sub">${title}</h3>
+        <ul class="kp-list">
+${items.map((i) => `          <li>${i}</li>`).join('\n')}
+        </ul>
+      </div>`
+      : '');
+
+    const pains = list('С чем пришли', c.pains, ' kp-neg');
+    /* «Что предложил» идёт перед шагами: сначала решение в трёх строках,
+       потом как оно выполнялось. В обратном порядке читатель дважды узнаёт
+       одно и то же, только второй раз короче. */
+    const solution = list('Что предложил', c.solution, ' kp-pos kp-first');
+    const conclusions = list('Выводы', c.conclusions, ' kp-pos');
+
+    /* Состав работ — по направлениям, с подпунктами. Это самая длинная часть
+       кейса, поэтому она идёт после короткого «что я сделал»: сначала суть в
+       пять строк, потом подробности для тех, кому нужно. */
+    const works = (c.works && c.works.length) ? `    <div class="kp-works">
+      <h2 class="kp-h">Состав работ</h2>
+      <div class="kp-works-grid">
+${c.works.map((w, i) => `        <div class="kp-work">
+          <div class="kp-work-n">${String(i + 1).padStart(2, '0')}</div>
+          <h3 class="kp-work-t">${w.t}</h3>
+          <ul class="kp-work-l">
+${w.items.map((it) => `            <li>${it}</li>`).join('\n')}
+          </ul>
+        </div>`).join('\n')}
+      </div>
+    </div>
+` : '';
+
     const body = `<header class="kp-hero">
   <div class="wrap">
     ${crumbs}
@@ -225,11 +314,11 @@ export function casePage(c) {
           <span class="kp-meta-i">${c.geo}</span>
           ${chips(c.services)}
         </div>
+        <div class="kp-nums">
+${nums}
+        </div>
       </div>
       ${c.img ? `<figure class="kp-shot">${shot(c, 'kp-img')}</figure>` : ''}
-    </div>
-    <div class="kp-nums">
-${nums}
     </div>
   </div>
 </header>
@@ -239,9 +328,11 @@ ${nums}
     <div class="kp-col">
       <h2 class="kp-h">Задача</h2>
       <p class="kp-p">${c.task}</p>
+${pains}
     </div>
     <div class="kp-col">
-      <h2 class="kp-h">Что я сделал</h2>
+${solution}
+      <h2 class="kp-h kp-h-after">Что я сделал</h2>
       <ol class="kp-steps">
 ${steps}
       </ol>
@@ -249,9 +340,14 @@ ${steps}
   </div>
 
   <div class="wrap">
-    <div class="kp-out">
-      <b>Что это дало</b>
-      ${c.outcome}
+${works}
+
+    <div class="kp-res">
+      <div class="kp-out">
+        <b>Что это дало</b>
+        ${c.outcome}
+      </div>
+${conclusions}
     </div>
 
     <div class="kp-foot">

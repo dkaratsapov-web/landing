@@ -14,6 +14,7 @@ const SERVICE_GROUPS = [
   ]],
   ['Разработка', [
     ['Разработка сайтов', '/razrabotka-sajtov/'],
+    ['Разработка ботов', '/razrabotka-botov/'],
     ['SEO-оптимизация', '/seo-optimizaciya/'],
   ]],
   ['Аналитика', [
