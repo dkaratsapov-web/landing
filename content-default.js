@@ -122,6 +122,7 @@ window.CONTENT = {
     {
       "icon": "IconChart",
       "name": "Сквозная аналитика",
+      "url": "/skvoznaya-analitika/",
       "tag": "Настройка и контроль",
       "result": "Настраиваю так, чтобы было видно, откуда приходит каждая заявка.",
       "works": [
@@ -137,6 +138,7 @@ window.CONTENT = {
     {
       "icon": "IconLayers",
       "name": "Комплексный маркетинг",
+      "url": "/kompleksnyj-marketing/",
       "tag": "Проект целиком",
       "result": "Беру проект целиком и веду от А до Я — одна точка ответственности.",
       "works": [
