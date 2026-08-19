@@ -33,6 +33,11 @@ const SITE = 'https://karatsapov.ru';
 
 /* Страницы, собираемые из общего шаблона (в отличие от шести исторических,
    которые лежат готовым HTML). Каждый модуль отдаёт meta + render(). */
+/* Страницы со своей вёрсткой: их HTML лежит в репозитории целиком, сборка
+   только подставляет в него общие части — меню, подвал, декор. */
+const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
+  'geo-servisy', 'razrabotka-sajtov', 'contacts'];
+
 const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage, keysSferaPage, keysDiautoPage,
   kompleksPage, analitikaPage, auditPage, promoPage, seoPage, botyPage,
   /* Двадцать одна страница кейса собирается из cases-data.mjs. Руками их не
@@ -537,6 +542,35 @@ function replaceNav(html, pageName) {
    источника у них нет. Сверяем списки ссылок: разойдясь, они снова дадут два
    разных подвала, а заметно это станет только при переходе со страницы на
    страницу, то есть не сразу. */
+/* У каждой услуги на главной должна быть ссылка на её посадочную. Кнопка
+   «Подробнее» выводится по наличию поля url, и без него она просто не
+   рисуется — молча, без ошибки. Так на главной оказались две услуги без
+   выхода на страницу: сквозная аналитика и комплексный маркетинг. Владелец
+   заметил это раньше меня.
+
+   Заодно сверяем, что адрес ведёт на существующую страницу: опечатка в нём
+   даёт 404 с самой авторитетной страницы сайта. */
+function checkServiceLinks() {
+  const content = JSON.parse(readFileSync(join(srcDir, 'content.json'), 'utf8'));
+  /* Список известных адресов собираем из источников самой сборки, а не из
+     карты сайта: она объявлена ниже по файлу, и обращение к ней отсюда
+     упало бы на инициализации. Заодно так проверка ловит и адреса, до
+     карты сайта ещё не доехавшие. */
+  const known = new Set([
+    ...GENERATED_PAGES.map((p) => p.meta.path),
+    ...SUBPAGES.map((p) => `/${p}/`),
+    ...SERVICE_GROUPS.flatMap(([, items]) => items.map(([href]) => href)),
+  ]);
+  const bad = [];
+  for (const s of content.services || []) {
+    if (!s.url) bad.push(`${s.name}: нет поля url — кнопка «Подробнее» не выводится`);
+    else if (!known.has(s.url)) bad.push(`${s.name}: адрес ${s.url} не найден среди страниц сайта`);
+  }
+  if (bad.length) {
+    throw new Error('build: услуги на главной без ссылки на посадочную.\n  ' + bad.join('\n  '));
+  }
+}
+
 function checkFooterInSync() {
   const jsx = readFileSync(join(srcDir, 'audit-contacts-quiz.jsx'), 'utf8');
   const start = jsx.indexOf('const FOOTER_LINKS');
@@ -581,10 +615,12 @@ function checkNavInSync() {
 checkNavInSync();
 checkFooterInSync();
 
-// Static subpages — copy each folder's index.html verbatim so the deploy is
-// complete (CI builds dist from scratch; without this the subpages vanish).
-const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
-  'geo-servisy', 'razrabotka-sajtov', 'contacts'];
+/* Проверка ссылок услуг стоит здесь, а не рядом с остальными: ей нужен
+   список SUBPAGES, объявленный ниже по файлу. */
+checkServiceLinks();
+
+// Static subpages — копирование ниже; сам список поднят к остальным
+// перечням страниц, потому что на него смотрит проверка ссылок услуг.
 for (const p of SUBPAGES) {
   const srcPage = join(srcDir, p, 'index.html');
   if (existsSync(srcPage)) {
