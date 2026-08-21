@@ -251,7 +251,7 @@ window.CONTENT = {
       "client": "Эверест Сибирия",
       "field": "Ресторан премиум-класса",
       "geo": "Москва",
-      "img": "assets/cases/everest-siberia.jpg",
+      "img": "assets/cases/everest-siberia.webp",
       "tags": [
         "context",
         "geo",
@@ -288,7 +288,7 @@ window.CONTENT = {
       "client": "Nebo Lounge",
       "field": "Lounge Bar",
       "geo": "Москва",
-      "img": "assets/cases/nebo.jpg",
+      "img": "assets/cases/nebo.webp",
       "tags": [
         "context",
         "geo",
@@ -325,7 +325,7 @@ window.CONTENT = {
       "client": "Школа «Дмитровский»",
       "field": "Частная школа",
       "geo": "Москва",
-      "img": "assets/cases/school.jpg",
+      "img": "assets/cases/school.webp",
       "tags": [
         "site",
         "context",
@@ -365,7 +365,7 @@ window.CONTENT = {
       "client": "To Sun Travel",
       "field": "Сервис трансферов",
       "geo": "Анталия, Турция",
-      "img": "assets/cases/tosun.jpg",
+      "img": "assets/cases/tosun.webp",
       "tags": [
         "site",
         "context"
@@ -399,7 +399,7 @@ window.CONTENT = {
       "client": "Русское Ремесло",
       "field": "Производство мебели из массива",
       "geo": "Москва",
-      "img": "assets/cases/massiv-mebel.jpg",
+      "img": "assets/cases/massiv-mebel.webp",
       "tags": [
         "context",
         "proizvod",
@@ -434,7 +434,7 @@ window.CONTENT = {
       "client": "Профиль Дорс",
       "field": "Сеть салонов межкомнатных дверей",
       "geo": "Москва",
-      "img": "assets/cases/profildoors.jpg",
+      "img": "assets/cases/profildoors.webp",
       "tags": [
         "context",
         "geo",
@@ -472,7 +472,7 @@ window.CONTENT = {
       "client": "iPapa",
       "field": "Магазин техники Apple",
       "geo": "Тверь",
-      "img": "assets/cases/ipapa.jpg",
+      "img": "assets/cases/ipapa.webp",
       "tags": [
         "context",
         "geo",
@@ -508,7 +508,7 @@ window.CONTENT = {
       "client": "Royal Neva",
       "field": "Караоке-клуб",
       "geo": "Санкт-Петербург",
-      "img": "assets/cases/royalneva.jpg",
+      "img": "assets/cases/royalneva.webp",
       "tags": [
         "site",
         "context",
@@ -548,7 +548,7 @@ window.CONTENT = {
       "client": "BM Clinic",
       "field": "Многопрофильная клиника",
       "geo": "Москва",
-      "img": "assets/cases/bmclinic.jpg",
+      "img": "assets/cases/bmclinic.webp",
       "imgPos": "center top",
       "tags": [
         "context",
@@ -591,55 +591,55 @@ window.CONTENT = {
     {
       "title": "Официальный партнёр Roistat",
       "issuer": "Roistat · сквозная аналитика",
-      "img": "assets/certs/roistat.jpg",
+      "img": "assets/certs/roistat.webp",
       "file": "assets/certs/roistat.pdf"
     },
     {
       "title": "Яндекс Директ — Продвинутый",
       "issuer": "Яндекс · сертификат специалиста",
-      "img": "assets/certs/direct-pro.jpg",
+      "img": "assets/certs/direct-pro.webp",
       "file": "assets/certs/direct-pro.pdf"
     },
     {
       "title": "Яндекс Директ — Базовый",
       "issuer": "Яндекс · сертификат специалиста",
-      "img": "assets/certs/direct-base.jpg",
+      "img": "assets/certs/direct-base.webp",
       "file": "assets/certs/direct-base.pdf"
     },
     {
       "title": "Яндекс Метрика",
       "issuer": "Яндекс · сертификат специалиста",
-      "img": "assets/certs/metrika.jpg",
+      "img": "assets/certs/metrika.webp",
       "file": "assets/certs/metrika.pdf"
     },
     {
       "title": "Медийная реклама",
       "issuer": "Яндекс · сертификат специалиста",
-      "img": "assets/certs/media.jpg",
+      "img": "assets/certs/media.webp",
       "file": "assets/certs/media.pdf"
     },
     {
       "title": "Реклама мобильных приложений",
       "issuer": "Яндекс · сертификация специалиста",
-      "img": "assets/certs/mobile.jpg",
+      "img": "assets/certs/mobile.webp",
       "file": "assets/certs/mobile.pdf"
     },
     {
       "title": "Геоперформанс и Яндекс Бизнес",
       "issuer": "Яндекс · сертификация специалиста",
-      "img": "assets/certs/yandex-geo.jpg",
+      "img": "assets/certs/yandex-geo.webp",
       "file": "assets/certs/yandex-geo.pdf"
     },
     {
       "title": "Google Реклама — Поиск",
       "issuer": "Google Ads · поисковые кампании",
-      "img": "assets/certs/google-search.jpg",
+      "img": "assets/certs/google-search.webp",
       "file": "assets/certs/google-search.pdf"
     },
     {
       "title": "Google Реклама — КМС",
       "issuer": "Google Ads · контекстно-медийная сеть",
-      "img": "assets/certs/google-display.jpg",
+      "img": "assets/certs/google-display.webp",
       "file": "assets/certs/google-display.pdf"
     }
   ],

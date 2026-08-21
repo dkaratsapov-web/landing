@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>document.documentElement.className+=" js"</script><!-- .js включает reveal-анимации. Без JS (робот, упавший скрипт) контент виден сразу, а не прозрачным. -->
-<title>Сквозная аналитика — что это и нужна ли она малому бизнесу — блог Даниила Карацапова</title>
+<title>Сквозная аналитика — что это и нужна ли она малому бизнесу</title>
 <meta name="description" content="Разбираю, что такое сквозная аналитика, чем она отличается от Метрики, откуда берётся разрыв между заявками в отчёте и сделками в CRM. Когда её стоит внедрять, а когда деньги уйдут впустую.">
 <link rel="canonical" href="https://karatsapov.ru/blog/skvoznaya-analitika-chto-eto/">
 <meta name="yandex-verification" content="6a5ffd2adf8c0aba" />
 <meta name="zen-verification" content="I3rPZeN0qgClZuHbga3imIrXBrGBLRjoQTYt9kLdKO5qTji4bT7ltbUemasRuU6y" />
-<meta property="og:title" content="Сквозная аналитика — что это и нужна ли она малому бизнесу — блог Даниила Карацапова">
+<meta property="og:title" content="Сквозная аналитика — что это и нужна ли она малому бизнесу">
 <meta property="og:description" content="Разбираю, что такое сквозная аналитика, чем она отличается от Метрики, откуда берётся разрыв между заявками в отчёте и сделками в CRM. Когда её стоит внедрять, а когда деньги уйдут впустую.">
 <meta property="og:url" content="https://karatsapov.ru/blog/skvoznaya-analitika-chto-eto/">
 <meta property="og:type" content="article">
@@ -17,9 +17,9 @@
 <meta property="og:image" content="https://karatsapov.ru/assets/blog/skvoznaya-analitika-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Сквозная аналитика — что это и нужна ли она малому бизнесу — блог Даниила Карацапова">
+<meta property="og:image:alt" content="Сквозная аналитика — что это и нужна ли она малому бизнесу — karatsapov.ru">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Сквозная аналитика — что это и нужна ли она малому бизнесу — блог Даниила Карацапова">
+<meta name="twitter:title" content="Сквозная аналитика — что это и нужна ли она малому бизнесу">
 <meta name="twitter:description" content="Разбираю, что такое сквозная аналитика, чем она отличается от Метрики, откуда берётся разрыв между заявками в отчёте и сделками в CRM. Когда её стоит внедрять, а когда деньги уйдут впустую.">
 <meta name="twitter:image" content="https://karatsapov.ru/assets/blog/skvoznaya-analitika-cover.jpg"><noscript></noscript>
 <link rel="preload" href="/assets/fonts/nunito-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -184,7 +184,7 @@
 <p><strong>Формы и коллтрекинг</strong> знают, что обращение было и откуда пришёл человек. Но обращение — ещё не деньги: половина заявок в некоторых нишах отваливается на первом разговоре.</p>
 <p><strong>CRM</strong> знает деньги. И по умолчанию не знает, из какой кампании пришёл клиент.</p>
 <p>Сквозная аналитика — это не отдельная программа с красивыми графиками. Это связка, в которой источник перехода едет вместе с человеком до самой сделки и возвращается обратно в отчёт по кампаниям.</p>
-<p><img src="/assets/blog/skvoznaya-analitika-razryv.jpg" alt="Что видит каждый инструмент по отдельности: кабинет, Метрика, коллтрекинг и CRM" loading="lazy" decoding="async"></p>
+<p><img src="/assets/blog/skvoznaya-analitika-razryv.jpg" alt="Что видит каждый инструмент по отдельности: кабинет, Метрика, коллтрекинг и CRM" loading="lazy" decoding="async" width="1200" height="750"></p>
 <h2 id="otkuda-beretsya-razryv-mezhdu-zayavkami-i-sdelkami">Откуда берётся разрыв между заявками и сделками</h2>
 <p>Самая частая картина, которую я вижу: в рекламном отчёте сорок заявок, в CRM за тот же период — двенадцать сделок. Владелец делает вывод «реклама плохая» и режет бюджет.</p>
 <p>На деле там обычно смешано три разные вещи.</p>
@@ -208,7 +208,7 @@
 <p><strong>Сделки в CRM заводятся не всегда.</strong> Менеджер поговорил по телефону, договорился, оформил — и не создал карточку, потому что клиент «и так свой». В отчёте канал, который привёл этого клиента, остаётся без выручки. Через месяц такой канал отключают.</p>
 <p><strong>Цель считает не то, что кажется.</strong> Классика — цель на клик по кнопке «Отправить». Она срабатывает и когда форма не прошла проверку, и когда человек кликнул дважды. Разница с реальными отправками бывает в полтора раза, и все расчёты окупаемости после этого можно выбрасывать.</p>
 <p>Общее у всех трёх одно: система при этом продолжает работать и рисовать отчёты. Она не сообщает, что данные неполные, — просто показывает цифры, которым нельзя верить. Поэтому первые пару недель после внедрения я сверяю выгрузку с тем, что помнит сам клиент: сходится ли число обращений с ощущением «сколько было звонков».</p>
-<p><img src="/assets/blog/skvoznaya-analitika-oshibki.jpg" alt="Четыре причины, по которым сквозная аналитика показывает неверные данные" loading="lazy" decoding="async"></p>
+<p><img src="/assets/blog/skvoznaya-analitika-oshibki.jpg" alt="Четыре причины, по которым сквозная аналитика показывает неверные данные" loading="lazy" decoding="async" width="1200" height="750"></p>
 <h2 id="komu-eto-ne-nuzhno">Кому это не нужно</h2>
 <p>Здесь честно, потому что вопрос денежный: сопровождение сквозной аналитики у меня стоит <a href="/ceny/">от 12 000 ₽ в месяц</a>, и в трёх случаях эти деньги лучше потратить на что-то другое.</p>
 <p><strong>Мало обращений.</strong> Если в месяц приходит десять заявок, вы и так помните каждую по имени. Статистика на таких числах не набирается: разница между «5 сделок» и «7 сделок» — это шум, а не сигнал.</p>
@@ -223,7 +223,7 @@
 
     </div>
     <aside class="post-author">
-  <img src="/assets/portrait.jpg" alt="Даниил Карацапов" width="72" height="72" loading="lazy">
+  <img src="/assets/portrait.webp" alt="Даниил Карацапов" width="72" height="72" loading="lazy">
   <div>
     <div class="post-author-name">Даниил Карацапов</div>
     <p class="post-author-bio">Частный интернет-маркетолог. В digital с 2019 года, прошёл путь от младшего специалиста до тимлида команды контекстологов, с 2025 года веду проекты самостоятельно. <a href="/about/">Подробнее обо мне</a></p>
@@ -269,27 +269,27 @@
   <div class="wrap">
     <h2 class="reveal">Читайте также</h2>
     <div class="post-grid reveal">
-      <a class="post-card mo-spot" href="/blog/audit-reklamnyh-kampanij/" data-tags="яндекс директ|аудит|бюджет">
-        <img class="post-card-cover" src="/assets/blog/audit-reklamy-cover.jpg" alt="" width="600" height="315" loading="lazy">
+      <a class="post-card mo-spot" href="/blog/skolko-stoit-lending/" data-tags="сайты|деньги|для новичков">
+        <img class="post-card-cover" src="/assets/blog/skolko-stoit-lending-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
-          <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><span class="post-card-read">5 минут чтения</span></div>
+          <div class="post-card-meta"><span class="post-card-tag">Сайты</span><span class="post-card-read">5 минут чтения</span></div>
           <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
                создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
                документа — на это ругается проверка агентного просмотра. -->
-          <h2 class="post-card-title">Аудит рекламных кампаний — что смотреть в кабинете Яндекс Директа</h2>
-          <p class="post-card-desc">Порядок проверки чужих кампаний: где чаще всего утекает бюджет, какие пять зон смотреть и в каком порядке. Чек-лист, по которому можно пройти свой кабинет самостоятельно за час.</p>
+          <h2 class="post-card-title">Сколько стоит лендинг и от чего зависит цена</h2>
+          <p class="post-card-desc">Разбираю, из чего складывается стоимость посадочной страницы, почему вилка на рынке от пяти тысяч до полумиллиона и что именно вы получаете за разные деньги. Когда лендинг нужен, а когда хватит существующего сайта.</p>
           <span class="post-card-more">Читать →</span>
         </div>
       </a>
-      <a class="post-card mo-spot" href="/blog/chat-bot-dlya-biznesa/" data-tags="боты|автоматизация|для новичков">
-        <img class="post-card-cover" src="/assets/blog/chat-bot-cover.jpg" alt="" width="600" height="315" loading="lazy">
+      <a class="post-card mo-spot" href="/blog/kak-schitat-okupaemost-reklamy/" data-tags="аналитика|бюджет|для новичков">
+        <img class="post-card-cover" src="/assets/blog/okupaemost-cover.jpg" alt="" width="600" height="315" loading="lazy">
         <div class="post-card-body">
-          <div class="post-card-meta"><span class="post-card-tag">Боты</span><span class="post-card-read">5 минут чтения</span></div>
+          <div class="post-card-meta"><span class="post-card-tag">Аналитика</span><span class="post-card-read">4 минуты чтения</span></div>
           <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
                создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
                документа — на это ругается проверка агентного просмотра. -->
-          <h2 class="post-card-title">Чат-бот для бизнеса — когда он окупается, а когда мешает</h2>
-          <p class="post-card-desc">Как понять, нужен ли вашему бизнесу бот в Telegram или MAX. Какие операции он забирает у менеджера, где он бесполезен, сколько занимает разработка и почему половина ботов проваливается на сценарии, а не в коде.</p>
+          <h2 class="post-card-title">Как считать окупаемость рекламы — ROI, ROAS и ДРР без путаницы</h2>
+          <p class="post-card-desc">Три показателя, которыми меряют эффективность рекламы, и чем они отличаются. Формулы, примеры расчёта на цифрах и разбор, какой показатель когда применять, чтобы не принять убыточную кампанию за прибыльную.</p>
           <span class="post-card-more">Читать →</span>
         </div>
       </a>
@@ -302,6 +302,18 @@
                документа — на это ругается проверка агентного просмотра. -->
           <h2 class="post-card-title">Реклама во ВКонтакте — кому подходит VK Ads и сколько стоит</h2>
           <p class="post-card-desc">Чем таргет во ВКонтакте отличается от поисковой рекламы, каким нишам он подходит, а каким нет. Как устроены аудитории в VK Ads, сколько нужно бюджета на тест и почему первые две недели заявки дороже.</p>
+          <span class="post-card-more">Читать →</span>
+        </div>
+      </a>
+      <a class="post-card mo-spot" href="/blog/avtostrategii-direkta/" data-tags="яндекс директ|автоматизация|разбор">
+        <img class="post-card-cover" src="/assets/blog/avtostrategii-cover.jpg" alt="" width="600" height="315" loading="lazy">
+        <div class="post-card-body">
+          <div class="post-card-meta"><span class="post-card-tag">Яндекс Директ</span><span class="post-card-read">4 минуты чтения</span></div>
+          <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
+               создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
+               документа — на это ругается проверка агентного просмотра. -->
+          <h2 class="post-card-title">Автостратегии Яндекс Директа — какую выбрать под задачу</h2>
+          <p class="post-card-desc">Разбор автоматических стратегий Директа: максимум кликов, максимум конверсий, оплата за конверсии. Когда автоматика выигрывает у ручного управления, сколько данных ей нужно и почему нельзя менять стратегию каждую неделю.</p>
           <span class="post-card-more">Читать →</span>
         </div>
       </a>
