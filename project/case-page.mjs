@@ -356,7 +356,7 @@ ${conclusions}
         <div class="kp-rel">
 ${c.related.map(relCard).join('\n')}
         </div>
-        <p class="kp-all"><a href="/keysy/">Все 22 кейса <span class="arr" aria-hidden="true">→</span></a></p>
+        <p class="kp-all"><a href="/keysy/">Все {{CASES_N}} <span class="arr" aria-hidden="true">→</span></a></p>
       </div>
       <aside class="kp-cta">
         <h2 class="kp-h">Похожая задача?</h2>

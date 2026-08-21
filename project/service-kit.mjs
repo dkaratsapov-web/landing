@@ -401,7 +401,7 @@ export function cases({ eyebrow = 'Доказательства', h2, lead, pick
     <div class="pcase-grid stagger">
 ${picks.map(caseCard).join('\n')}
     </div>
-    <p class="pcase-all reveal"><a class="btn btn-ghost" href="/keysy/">Все 22 кейса ${ARR}</a></p>
+    <p class="pcase-all reveal"><a class="btn btn-ghost" href="/keysy/">Все {{CASES_N}} ${ARR}</a></p>
   </div>
 </section>`;
 }

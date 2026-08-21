@@ -503,21 +503,21 @@
           </div>
         </div>
         <div class="proj-case-info">
-          <p class="proj-case-eyebrow">Лендинг · личный бренд</p>
-          <h3 class="proj-case-title">Сайт-портфолио маркетолога</h3>
-          <p class="proj-case-lead">Личный сайт-лендинг интернет-маркетолога с полным портфолио кейсов, квиз-воронкой для квалификации лидов, калькулятором бюджета и автоматической отправкой заявок в Telegram.</p>
+          <p class="proj-case-eyebrow">Этот сайт · генератор статики</p>
+          <h3 class="proj-case-title">Сайт маркетолога: 63 страницы, которые собираются сами</h3>
+          <p class="proj-case-lead">Единственный проект, который можно проверить, не веря на слово: вы уже на нём. Без CMS и админки — страницы собираются из файлов с данными скриптом на Node, а сборка не выпускает наружу страницу, не прошедшую проверки.</p>
           <div class="proj-case-metrics">
             <div class="proj-case-metric">
-              <div class="proj-case-metric-v">React</div>
-              <div class="proj-case-metric-l">SPA на JSX/Babel</div>
+              <div class="proj-case-metric-v">63</div>
+              <div class="proj-case-metric-l">страницы в сборке</div>
             </div>
             <div class="proj-case-metric">
-              <div class="proj-case-metric-v">22</div>
-              <div class="proj-case-metric-l">кейса в портфолио</div>
+              <div class="proj-case-metric-v">24</div>
+              <div class="proj-case-metric-l">страницы кейсов</div>
             </div>
             <div class="proj-case-metric">
-              <div class="proj-case-metric-v">100</div>
-              <div class="proj-case-metric-l">PageSpeed Score</div>
+              <div class="proj-case-metric-v">18</div>
+              <div class="proj-case-metric-l">статей в блоге</div>
             </div>
           </div>
           <div class="tech-chips">
@@ -527,8 +527,8 @@
             <span class="tech-chip">Telegram Bot API</span>
             <span class="tech-chip">Яндекс Метрика</span>
           </div>
-          <a class="proj-case-link" href="https://karatsapov.ru/" target="_blank" rel="noopener noreferrer" style="margin-top: 20px;">
-            Открыть сайт
+          <a class="proj-case-link" href="/keysy/sajt-marketologa/" style="margin-top: 20px;">
+            Смотреть разбор
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </a>
         </div>
@@ -537,24 +537,23 @@
         <div>
           <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Задача и реализация</h4>
           <ul class="check-list">
-            <li>Разработка SPA-лендинга на React JSX с компиляцией через Babel и Terser — без тяжёлых сборщиков</li>
-            <li>Система вариантов отображения секций через TweaksPanel (3 варианта Hero, 3 варианта Services)</li>
-            <li>Квиз-воронка для квалификации лидов с многошаговой формой и отправкой в Telegram Bot API</li>
-            <li>Анимированный прелоадер с разлётом частиц, typewriter-эффект для цитат</li>
-            <li>22 развёртываемых кейса с фильтрацией по нишам и услугам</li>
-            <li>Адаптивная вёрстка, SVG-волны между секциями, CSS-переменные для тем оформления</li>
-            <li>6 подстраниц-сервисов, страница контактов с картой Тверь–Москва</li>
+            <li>63 страницы в одной сборке: главная, 10 услуг, 4 отраслевых решения, 24 кейса, 18 статей блога</li>
+            <li>Кейсы и услуги описаны данными, а не вёрсткой: новый кейс — это запись в файле, а не копия страницы</li>
+            <li>Отдельная посадочная под каждый спрос вместо одного лендинга «обо всём сразу»</li>
+            <li>Квиз-воронка для квалификации заявки: несколько шагов вместо формы «имя и телефон»</li>
+            <li>Главная собрана на React JSX и отрисована заранее — поисковик получает готовый HTML, а не пустой div</li>
+            <li>Разметка Service, Article, FAQPage и BreadcrumbList на всех типах страниц</li>
           </ul>
         </div>
         <div>
           <h4 style="font-size:16px; font-weight:600; margin:0 0 14px; color:var(--txt);">Технические детали</h4>
           <ul class="check-list">
-            <li>Сборка через кастомный build.mjs — JSX → минифицированный JS без webpack/vite</li>
-            <li>Content.json для редактирования контента без пересборки</li>
-            <li>Telegram Bot API вместо серверной части — нулевые расходы на бэкенд</li>
-            <li>IntersectionObserver для reveal-анимаций и ленивой загрузки</li>
-            <li>CSS-архитектура на custom properties — смена акцентной темы без JS</li>
-            <li>Яндекс Метрика с веб-виизором и коллбэком событий форм</li>
+            <li>Свой генератор на Node вместо CMS: ни базы, ни админки, ни плагинов, которые нужно обновлять</li>
+            <li>Проверки прямо в сборке: рассинхрон меню, битая ссылка на услугу или слишком длинный title роняют сборку</li>
+            <li>Размеры картинок читаются из файлов и проставляются в HTML — макет не прыгает при загрузке</li>
+            <li>Неиспользуемые изображения не попадают в сборку: минус 4,3 МБ мусора</li>
+            <li>Sitemap и редиректы генерируются из тех же данных, что и страницы — расходиться нечему</li>
+            <li>Деплой — статика на nginx: нечего ломать и незачем платить за бэкенд</li>
           </ul>
         </div>
       </div>

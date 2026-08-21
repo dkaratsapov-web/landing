@@ -20,6 +20,18 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 
 export const SITE = 'https://karatsapov.ru';
 
+/* Русское склонение при числе. Нужно везде, где число подставляется в текст
+   на сборке: «21 страниц» на сайте, который продаёт внимание к деталям,
+   выглядит хуже, чем неверная цифра. */
+export function plural(n, [one, few, many]) {
+  const a = Math.abs(n) % 100, b = a % 10;
+  if (a > 10 && a < 20) return many;
+  if (b > 1 && b < 5) return few;
+  return b === 1 ? one : many;
+}
+export const nOf = (n, forms) => `${n} ${plural(n, forms)}`;
+export const CASE_WORD = ['кейс', 'кейса', 'кейсов'];
+
 /* Коды подтверждения прав в панелях вебмастеров. Лежат в seo.config.json,
    потому что их выдают в личном кабинете и меняют они руками, а не кодом.
    Пустое значение — тег просто не выводится: пустой meta хуже отсутствующего,

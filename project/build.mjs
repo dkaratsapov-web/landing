@@ -13,7 +13,7 @@ import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
 import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS,
-  siteFooter, FOOTER_LINKS, quizFab, NICHE_LINKS } from './layout.mjs';
+  siteFooter, FOOTER_LINKS, quizFab, NICHE_LINKS, nOf, CASE_WORD } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import { cases, CASE_SETS } from './service-kit.mjs';
 import { CASE_PAGES, caseGrid, CASE_GRID_CSS } from './case-page.mjs';
@@ -27,6 +27,8 @@ import * as nishaHoreca from './pages/nisha-horeca.mjs';
 import * as nishaB2b from './pages/nisha-b2b.mjs';
 import * as nishaEcom from './pages/nisha-ecom.mjs';
 import * as nishaMed from './pages/nisha-med.mjs';
+import * as keysSajtPage from './pages/keys-sajt.mjs';
+import { execSync } from 'node:child_process';
 import * as politikaPage from './pages/politika.mjs';
 import * as keysSferaPage from './pages/keys-sfera.mjs';
 import * as keysDiautoPage from './pages/keys-diauto.mjs';
@@ -47,11 +49,18 @@ const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
 
 const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage, keysSferaPage, keysDiautoPage,
   kompleksPage, analitikaPage, auditPage, promoPage, seoPage, botyPage,
-  nishaHoreca, nishaB2b, nishaEcom, nishaMed,
+  nishaHoreca, nishaB2b, nishaEcom, nishaMed, keysSajtPage,
   /* Двадцать одна страница кейса собирается из cases-data.mjs. Руками их не
      пишем: у кейса одна и та же структура — задача, действия, цифры, — и
      двадцать одна копия этой структуры разъедется на второй же правке. */
   ...CASE_PAGES];
+
+/* Сколько всего кейсов на витрине. Число попадает в тексты («Все 24 кейса»),
+   в мета-описания и в llms.txt — то есть в места, которые правятся руками и
+   потому первыми устаревают. Считаем его один раз здесь, а в разметке пишем
+   токен {{CASES_N}}: он раскрывается на сборке вместе со склонением. */
+const DEEP_CASE_PAGES = [keysSferaPage, keysDiautoPage, keysSajtPage];
+const CASES_N = nOf(CASE_PAGES.length + DEEP_CASE_PAGES.length, CASE_WORD);
 
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
@@ -867,7 +876,7 @@ ${svcList}
 
 ## Ключевые страницы
 - [Цены на все услуги](${SITE}/ceny/): прайс одной таблицей и ответы о том, из чего складывается стоимость
-- [Кейсы](${SITE}/keysy/): 22 проекта с цифрами по заявкам, ROI и стоимости лида
+- [Кейсы](${SITE}/keysy/): ${CASES_N} с цифрами по заявкам, ROI и стоимости лида
 - [Об авторе](${SITE}/about/): опыт, принципы работы, сертификаты
 - [Контакты](${SITE}/contacts/): телефон, Telegram, форма связи
 
@@ -920,6 +929,7 @@ const SITEMAP_PAGES = [
   { loc: '/keysy/', src: 'keysy/index.html', priority: '0.8', changefreq: 'monthly' },
   { loc: '/keysy/sfera/', src: 'pages/keys-sfera.mjs', priority: '0.7', changefreq: 'monthly' },
   { loc: '/keysy/diauto69/', src: 'pages/keys-diauto.mjs', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/keysy/sajt-marketologa/', src: 'pages/keys-sajt.mjs', priority: '0.7', changefreq: 'monthly' },
   /* Страницы кейсов: приоритет ниже посадочных под услуги — это
      доказательная база, а не точки входа по коммерческим запросам. Источник
      для lastmod один на всех, cases-data.mjs: правка данных кейса и есть
@@ -947,6 +957,50 @@ const SITEMAP_ALL = [
     lastmod: p.updated || p.date,
   })),
 ];
+
+/* Кейс про этот же сайт держит цифры («столько-то страниц», «столько-то
+   статей») прямо в тексте. Их легко забыть обновить — а страница, которая
+   хвалится тем, что данные и вёрстка не расходятся, соврать не имеет права.
+   Поэтому цифры сверяются с тем, что реально собралось. */
+function checkSelfCaseNumbers() {
+  const codeLines = execSync(
+    "find project -type f \\( -name '*.mjs' -o -name '*.jsx' -o -name '*.js' -o -name '*.css' \\)"
+    + " -not -path '*/node_modules/*' -print0 | xargs -0 cat | wc -l",
+    { encoding: 'utf8' },
+  ).trim();
+  const commits = execSync('git rev-list --count HEAD', { encoding: 'utf8' }).trim();
+  const casePaths = SITEMAP_PAGES.filter((p) => /^\/keysy\/.+/.test(p.loc));
+
+  const actual = {
+    pages: SITEMAP_ALL.length, // включая ленту блога и статьи
+    posts: posts.length,
+    casePages: casePaths.length,
+    fromData: CASE_PAGES.length,
+    niches: NICHE_LINKS.length,
+    codeLines: Number(codeLines),
+    commits: Number(commits),
+  };
+
+  /* Строки и коммиты растут каждый день — сверять их точно значило бы ронять
+     сборку на каждом втором пуше. Держим допуск, но не даём числу устареть
+     настолько, чтобы оно стало неправдой. */
+  const LOOSE = { codeLines: 0.08, commits: 0.15 };
+  const bad = [];
+  for (const [k, want] of Object.entries(keysSajtPage.N)) {
+    const got = actual[k];
+    if (got === undefined) { bad.push(`${k}: нечем проверить`); continue; }
+    const slack = LOOSE[k] ? Math.ceil(got * LOOSE[k]) : 0;
+    if (Math.abs(got - want) > slack) {
+      bad.push(`${k}: в кейсе ${want}, на самом деле ${got}${slack ? ` (допуск ±${slack})` : ''}`);
+    }
+  }
+  if (bad.length) {
+    throw new Error('build: цифры в кейсе про этот сайт разошлись с реальностью.\n'
+      + bad.map((l) => '  ' + l).join('\n')
+      + '\n  Поправьте N в project/pages/keys-sajt.mjs');
+  }
+}
+checkSelfCaseNumbers();
 
 const urls = SITEMAP_ALL.map(({ loc, src, priority, changefreq, lastmod: fixed }) => {
   const lastmod = fixed || gitLastMod(src);
@@ -1074,6 +1128,32 @@ function dropUnusedImages(dir) {
   sweep(join(dir, 'assets'));
   return { removed, mb: (bytes / 1024 / 1024).toFixed(1) };
 }
+/* Раскрытие текстовых токенов — общим проходом по готовой сборке, а не в
+   каждом месте отдельно: страницы приезжают из трёх источников (готовый
+   HTML, модули, Markdown), и держать подстановку в каждом значило бы, что
+   про один из них однажды забудут. Незакрытый токен валит сборку: «Все
+   {{CASES_N}}» на живой странице хуже, чем упавший билд. */
+function expandTokens(dir) {
+  const TOKENS = { CASES_N };
+  let done = 0;
+  const walk = (d) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const full = join(d, e.name);
+      if (e.isDirectory()) { walk(full); continue; }
+      if (!/\.(html|txt|md|xml)$/.test(e.name)) continue;
+      const before = readFileSync(full, 'utf8');
+      const after = before.replace(/\{\{([A-Z_]+)\}\}/g, (m, k) => {
+        if (!(k in TOKENS)) throw new Error(`build: неизвестный токен ${m} в ${full}`);
+        return TOKENS[k];
+      });
+      if (after !== before) { writeFileSync(full, after, 'utf8'); done++; }
+    }
+  };
+  walk(dir);
+  return done;
+}
+console.log('Токенов раскрыто в файлах:', expandTokens(outDir));
+
 const unused = dropUnusedImages(outDir);
 console.log('Убрано неиспользуемых картинок из сборки:', unused.removed, `(${unused.mb} МБ)`);
 
