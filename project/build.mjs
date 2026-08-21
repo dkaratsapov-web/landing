@@ -6,7 +6,7 @@
    runtime. Run with the deps installed in /tmp:
      NODE_PATH=/tmp/node_modules node project/build.mjs <srcDir> <outDir>
 */
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, cpSync, rmSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, cpSync, rmSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import babel from '@babel/core';
@@ -17,6 +17,7 @@ import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS,
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import { cases, CASE_SETS } from './service-kit.mjs';
 import { CASE_PAGES, caseGrid, CASE_GRID_CSS } from './case-page.mjs';
+import { imageSize } from './img-size.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
 import * as botyPage from './pages/razrabotka-botov.mjs';
@@ -298,7 +299,7 @@ ${verifyTags}
   <link rel="icon" type="image/png" sizes="120x120" href="favicon-120.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="alternate" type="application/rss+xml" title="Блог Даниила Карацапова" href="/rss.xml">
-  <link rel="preload" as="image" href="assets/portrait.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/portrait.webp" fetchpriority="high" />
 
   <script defer src="${REACT}" crossorigin="anonymous"></script>
   <script defer src="${REACTDOM}" crossorigin="anonymous"></script>
@@ -320,7 +321,7 @@ ${verifyTags}
         jobTitle: 'Частный интернет-маркетолог',
         description: 'Частный интернет-маркетолог. Настройка и ведение контекстной рекламы в Яндекс Директ, таргетированной рекламы VK Ads, продвижение в Яндекс Картах и 2ГИС, разработка сайтов.',
         url: SITE + '/',
-        image: SITE + '/assets/portrait.jpg',
+        image: SITE + '/assets/portrait.webp',
         telephone: '+7 996 347-00-65',
         knowsAbout: ['Контекстная реклама', 'Яндекс Директ', 'Таргетированная реклама',
           'VK Ads', 'Яндекс Бизнес', 'Локальное продвижение', 'Веб-аналитика', 'Разработка сайтов'],
@@ -971,6 +972,88 @@ function stripSources(dir) {
   }
   return removed;
 }
+/* ── Размеры картинок ─────────────────────────────────────────────────────
+   Проставляем width и height каждому <img>, у которого их нет, читая размеры
+   из самого файла. Без атрибутов браузер отводит под картинку нулевую высоту
+   и раздвигает текст, когда она приезжает: это Cumulative Layout Shift,
+   метрика Core Web Vitals.
+
+   Постобработкой, а не в шаблонах: изображения выводятся из семи разных
+   мест, и держать числа руками в каждом — способ разъехаться при первой же
+   замене файла. Внешние адреса отсеиваются сами: у них нет локального файла,
+   так же пропускается пиксель Метрики. */
+function setImageDimensions(dir) {
+  let done = 0, skipped = 0;
+  const walk = (d) => {
+    for (const entry of readdirSync(d, { withFileTypes: true })) {
+      const full = join(d, entry.name);
+      if (entry.isDirectory()) { walk(full); continue; }
+      if (entry.name !== 'index.html') continue;
+      let html = readFileSync(full, 'utf8');
+      html = html.replace(/<img\b[^>]*>/g, (tag) => {
+        if (/\swidth=/.test(tag) || /\sheight=/.test(tag)) return tag;
+        const m = tag.match(/\ssrc="([^"]+)"/);
+        if (!m || /^(https?:)?\/\//.test(m[1]) || m[1].startsWith('data:')) { skipped++; return tag; }
+        /* Пути бывают абсолютные от корня и относительные от страницы: у
+           страниц, которые лежат в репозитории готовым HTML, встречается
+           ../assets/… — разрешаем оба вида. */
+        const size = imageSize(m[1].startsWith('/') ? join(outDir, m[1].slice(1)) : join(d, m[1]));
+        if (!size) { skipped++; return tag; }
+        done++;
+        return tag.replace(/(\s*\/?>)$/, ` width="${size.w}" height="${size.h}"$1`);
+      });
+      writeFileSync(full, html, 'utf8');
+    }
+  };
+  walk(dir);
+  return { done, skipped };
+}
+/* ── Неиспользуемые картинки ──────────────────────────────────────────────
+   После перевода снимков в WebP оригиналы JPEG остались в репозитории: они
+   нужны как исходники и для повторной конвертации. Но в собранный сайт им
+   ехать незачем — это пять мегабайт, которые деплой возит на сервер и
+   которые никто не запрашивает.
+
+   Удаляем то, на что в собранном сайте нет ни одной ссылки, — считаем по
+   факту, а не по списку исключений. Так под нож не попадёт картинка,
+   которую забыли перевести, зато уедет любая, которую перестали
+   использовать. */
+function dropUnusedImages(dir) {
+  const used = new Set();
+  const scan = (d) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const full = join(d, e.name);
+      if (e.isDirectory()) { scan(full); continue; }
+      if (!/\.(html|css|js|json|xml|txt)$/.test(e.name)) continue;
+      const t = readFileSync(full, 'utf8');
+      for (const m of t.matchAll(/assets\/[\w./-]+\.(?:jpe?g|png|webp|svg|ico)/g)) {
+        used.add(m[0].slice('assets/'.length));
+      }
+    }
+  };
+  scan(dir);
+
+  let removed = 0, bytes = 0;
+  const sweep = (d, rel = '') => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const full = join(d, e.name);
+      const key = rel ? `${rel}/${e.name}` : e.name;
+      if (e.isDirectory()) { sweep(full, key); continue; }
+      if (!/\.(jpe?g|png|webp)$/.test(e.name) || used.has(key)) continue;
+      bytes += statSync(full).size;
+      rmSync(full);
+      removed++;
+    }
+  };
+  sweep(join(dir, 'assets'));
+  return { removed, mb: (bytes / 1024 / 1024).toFixed(1) };
+}
+const unused = dropUnusedImages(outDir);
+console.log('Убрано неиспользуемых картинок из сборки:', unused.removed, `(${unused.mb} МБ)`);
+
+const dims = setImageDimensions(outDir);
+console.log('Размеры картинок проставлены:', dims.done, '| пропущено (внешние):', dims.skipped);
+
 console.log('Вычищено исходников из сборки:', stripSources(outDir));
 
 const totalRaw = results.reduce((a, r) => a + r.raw, 0);

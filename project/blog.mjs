@@ -173,7 +173,7 @@ export function loadPosts(srcDir) {
    сигнал авторства для поисковика: текст написан конкретным человеком,
    чья квалификация подтверждена на отдельной странице. */
 const authorCard = `<aside class="post-author">
-  <img src="/assets/portrait.jpg" alt="${AUTHOR}" width="72" height="72" loading="lazy">
+  <img src="/assets/portrait.webp" alt="${AUTHOR}" width="72" height="72" loading="lazy">
   <div>
     <div class="post-author-name">${AUTHOR}</div>
     <p class="post-author-bio">Частный интернет-маркетолог. В digital с 2019 года, прошёл путь от младшего специалиста до тимлида команды контекстологов, с 2025 года веду проекты самостоятельно. <a href="/about/">Подробнее обо мне</a></p>
@@ -229,7 +229,36 @@ ${post.headings.map((h) => `        <li><a href="#${h.id}">${h.text}</a></li>`).
     ? `<div class="post-tags">${post.tags.map((t) => `<span class="post-tag">${esc(t)}</span>`).join('')}</div>`
     : '';
 
-  const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  /* Подбор по близости темы, а не по порядку в ленте. Раньше здесь стояло
+     .slice(0, 3) — то есть каждая статья ссылалась на три самые свежие. В
+     результате у трёх новых материалов набралось по восемнадцать входящих
+     ссылок, а у всех остальных — ровно по одной, и тематические кластеры не
+     складывались: поисковик не видел, что «минус-слова», «РСЯ» и
+     «автостратегии» — части одной темы.
+
+     Вес считаем так: общий тег — два очка, общая услуга — одно. При равенстве
+     побеждает более свежая статья, чтобы подборка не застывала намертво. */
+  const affinity = (p) => {
+    const shared = p.tags.filter((t) => post.tags.includes(t)).length;
+    return shared * 2 + (p.service && p.service === post.service ? 1 : 0);
+  };
+  const others = allPosts.filter((p) => p.slug !== post.slug);
+  const related = others
+    .sort((a, b) => affinity(b) - affinity(a) || (a.date < b.date ? 1 : -1))
+    .slice(0, 3);
+
+  /* Четвёртая карточка — по кругу: следующая статья в общем списке. Подбор
+     по близости хорошо работает для больших тем и оставляет без внимания
+     одиночек: статья с уникальным набором тегов не попадает ни в чью
+     подборку и остаётся с единственной входящей ссылкой из ленты. Кольцо
+     даёт каждой хотя бы одну тематически «чужую», зато честную ссылку — и
+     распределяет их равномерно, без случайности, которая ломала бы
+     воспроизводимость сборки. */
+  const idx = allPosts.findIndex((p) => p.slug === post.slug);
+  const ring = allPosts[(idx + 1) % allPosts.length];
+  if (ring && ring.slug !== post.slug && !related.some((p) => p.slug === ring.slug)) {
+    related.push(ring);
+  }
   const relatedBlock = related.length ? `<section class="section">
   <div class="wrap">
     <h2 class="reveal">Читайте также</h2>
@@ -294,7 +323,11 @@ ${relatedBlock}`;
 
   return renderPage({
     path: post.path,
-    title: `${post.title} — блог Даниила Карацапова`,
+    /* Хвост укорочен до домена. Было «— блог Даниила Карацапова»: двадцать
+       пять символов, из-за которых половина заголовков переваливала за
+       семьдесят и обрезалась в выдаче многоточием — до читателя не доезжала
+       сама суть статьи. */
+    title: `${post.title} — karatsapov.ru`,
     description: post.description,
     ogImage: post.cover || '/assets/og/blog.jpg',
     ogType: 'article',

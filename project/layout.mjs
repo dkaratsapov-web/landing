@@ -418,6 +418,32 @@ export function decorate(body) {
   return out;
 }
 
+/* ── Длина <title> ────────────────────────────────────────────────────────
+   Яндекс показывает в выдаче примерно 55–65 символов, дальше многоточие.
+   Замер по собранному сайту: тридцать заголовков из пятидесяти девяти были
+   длиннее семидесяти, рекордсмены доходили до девяноста одного.
+
+   Хвост с именем или доменом полезен для узнавания, но он же первым съедает
+   место. Поэтому хвост условный: остаётся, пока помещается, и отбрасывается,
+   когда мешает. Сам заголовок автоматически не режем: обрубленная на
+   полуслове фраза хуже длинной. */
+const TITLE_MAX = 65;
+const TITLE_TAILS = [' | Даниил Карацапов', ' — karatsapov.ru', ' — Даниил Карацапов'];
+
+export function trimTitle(title) {
+  if (title.length <= TITLE_MAX) return title;
+  for (const tail of TITLE_TAILS) {
+    if (title.endsWith(tail)) {
+      const base = title.slice(0, -tail.length);
+      /* Только если без хвоста заголовок действительно влезает. Если и база
+         длиннее нормы — хвост не виноват, это повод переписать заголовок
+         руками, а не прятать проблему. */
+      if (base.length <= TITLE_MAX) return base;
+    }
+  }
+  return title;
+}
+
 export function renderPage({
   title, description, path, body,
   ogImage = '/assets/og-cover.jpg', ogType = 'website',
@@ -426,6 +452,7 @@ export function renderPage({
   if (!path.startsWith('/') || !path.endsWith('/')) {
     throw new Error(`layout: path должен быть вида "/about/", получено "${path}"`);
   }
+  const pageTitle = trimTitle(title);
   const canonical = SITE + path;
   const ogAbs = SITE + ogImage;
 
@@ -453,11 +480,11 @@ export function renderPage({
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>document.documentElement.className+=" js"</script><!-- .js включает reveal-анимации. Без JS (робот, упавший скрипт) контент виден сразу, а не прозрачным. -->
-<title>${esc(title)}</title>
+<title>${esc(pageTitle)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">
 ${verify}
-<meta property="og:title" content="${esc(title)}">
+<meta property="og:title" content="${esc(pageTitle)}">
 <meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${canonical}">
 <meta property="og:type" content="${ogType}">
@@ -467,7 +494,7 @@ ${verify}
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${esc(title)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:title" content="${esc(pageTitle)}">
 <meta name="twitter:description" content="${esc(description)}">
 <meta name="twitter:image" content="${ogAbs}"><noscript></noscript>
 <link rel="preload" href="/assets/fonts/nunito-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>

@@ -407,7 +407,7 @@ ${faqItems(FAQ)}
 
 ${cases(CASE_SETS.kompleks)}
 
-${related('/kompleksnyj-marketing/', ['/kontekstnaya-reklama/', '/razrabotka-sajtov/', '/skvoznaya-analitika/'])}
+${related('/kompleksnyj-marketing/', ['/kontekstnaya-reklama/', '/razrabotka-sajtov/', '/razrabotka-botov/'])}
 
 <section class="section">
   <div class="wrap">

@@ -316,7 +316,7 @@ ${stats}
         </div>
       </div>
       <div>
-        <img src="/assets/portrait.jpg" alt="Даниил Карацапов, частный интернет-маркетолог" width="520" height="640" style="width:100%; height:auto; border-radius:18px; display:block;">
+        <img src="/assets/portrait.webp" alt="Даниил Карацапов, частный интернет-маркетолог" width="520" height="640" style="width:100%; height:auto; border-radius:18px; display:block;">
       </div>
     </div>
   </div>
@@ -500,7 +500,7 @@ ${faq}
         jobTitle: 'Частный интернет-маркетолог',
         description: 'Частный интернет-маркетолог. В digital с 2019 года, прошёл путь от младшего специалиста до тимлида команды контекстологов в агентствах, с 2025 года ведёт проекты самостоятельно. Яндекс Директ, VK Ads, Telegram Ads, Промостраницы, SEO, сквозная аналитика, разработка сайтов и приложений.',
         url: SITE + meta.path,
-        image: SITE + '/assets/portrait.jpg',
+        image: SITE + '/assets/portrait.webp',
         telephone: '+7 996 347-00-65',
         email: 'd.karatsapov@gmail.com',
         knowsLanguage: 'ru',

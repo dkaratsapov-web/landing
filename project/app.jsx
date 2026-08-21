@@ -131,7 +131,7 @@ function App() {
           героем и перед контактами: восемь одинаковых волн подряд читались
           как приём, который забыли выключить. Декор самих секций задаётся
           внутри них через <SectionFx>. */}
-      <Hero variant={t.heroVariant} portrait="assets/portrait.jpg" onCta={openLead} />
+      <Hero variant={t.heroVariant} portrait="assets/portrait.webp" onCta={openLead} />
       <SectionWave from="#08080a" to="#08080a" speed={16} />
       <About />
       <SectionEdge variant="dashes" />
