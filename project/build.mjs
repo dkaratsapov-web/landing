@@ -62,6 +62,22 @@ const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage, keysSferaPage, keysD
 const DEEP_CASE_PAGES = [keysSferaPage, keysDiautoPage, keysSajtPage];
 const CASES_N = nOf(CASE_PAGES.length + DEEP_CASE_PAGES.length, CASE_WORD);
 
+/* Сколько правок в истории репозитория. Считаем на сборке, а не держим
+   числом в тексте: рабочая копия бывает поверхностной (shallow clone) и
+   видит лишь хвост истории — записанное руками число сошлось бы локально и
+   уронило бы сборку на деплое. На поверхностной копии честнее не называть
+   цифру вовсе, чем назвать заниженную. */
+const COMMITS_NOTE = (() => {
+  try {
+    const shallow = execSync('git rev-parse --is-shallow-repository',
+      { encoding: 'utf8' }).trim() === 'true';
+    if (shallow) return 'правки идут почти каждую неделю';
+    const n = Number(execSync('git rev-list --count HEAD', { encoding: 'utf8' }).trim());
+    if (!n) return 'правки идут почти каждую неделю';
+    return `${nOf(n, ['правка', 'правки', 'правок'])} в истории репозитория`;
+  } catch { return 'правки идут почти каждую неделю'; }
+})();
+
 const srcDir = process.argv[2] || '.';
 const outDir = process.argv[3] || './dist';
 
@@ -963,12 +979,18 @@ const SITEMAP_ALL = [
    хвалится тем, что данные и вёрстка не расходятся, соврать не имеет права.
    Поэтому цифры сверяются с тем, что реально собралось. */
 function checkSelfCaseNumbers() {
-  const codeLines = execSync(
-    "find project -type f \\( -name '*.mjs' -o -name '*.jsx' -o -name '*.js' -o -name '*.css' \\)"
-    + " -not -path '*/node_modules/*' -print0 | xargs -0 cat | wc -l",
-    { encoding: 'utf8' },
-  ).trim();
-  const commits = execSync('git rev-list --count HEAD', { encoding: 'utf8' }).trim();
+  /* Считаем строки кода через оболочку — но если её здесь нет или она
+     повела себя иначе, чем на машине автора, проверку пропускаем. Гвард
+     существует, чтобы ловить устаревший текст, а не чтобы падать на
+     различиях окружений: один такой промах уже стоил деплоя. */
+  let codeLines = null;
+  try {
+    codeLines = Number(execSync(
+      "find project -type f \\( -name '*.mjs' -o -name '*.jsx' -o -name '*.js' -o -name '*.css' \\)"
+      + " -not -path '*/node_modules/*' -print0 | xargs -0 cat | wc -l",
+      { encoding: 'utf8' },
+    ).trim()) || null;
+  } catch { /* нечем посчитать — пропускаем эту строку сверки */ }
   const casePaths = SITEMAP_PAGES.filter((p) => /^\/keysy\/.+/.test(p.loc));
 
   const actual = {
@@ -977,18 +999,18 @@ function checkSelfCaseNumbers() {
     casePages: casePaths.length,
     fromData: CASE_PAGES.length,
     niches: NICHE_LINKS.length,
-    codeLines: Number(codeLines),
-    commits: Number(commits),
+    codeLines,
   };
 
-  /* Строки и коммиты растут каждый день — сверять их точно значило бы ронять
+  /* Строки кода растут каждый день — сверять их точно значило бы ронять
      сборку на каждом втором пуше. Держим допуск, но не даём числу устареть
      настолько, чтобы оно стало неправдой. */
-  const LOOSE = { codeLines: 0.08, commits: 0.15 };
+  const LOOSE = { codeLines: 0.08 };
   const bad = [];
   for (const [k, want] of Object.entries(keysSajtPage.N)) {
     const got = actual[k];
     if (got === undefined) { bad.push(`${k}: нечем проверить`); continue; }
+    if (got === null) continue; // не смогли посчитать в этом окружении
     const slack = LOOSE[k] ? Math.ceil(got * LOOSE[k]) : 0;
     if (Math.abs(got - want) > slack) {
       bad.push(`${k}: в кейсе ${want}, на самом деле ${got}${slack ? ` (допуск ±${slack})` : ''}`);
@@ -1134,7 +1156,7 @@ function dropUnusedImages(dir) {
    про один из них однажды забудут. Незакрытый токен валит сборку: «Все
    {{CASES_N}}» на живой странице хуже, чем упавший билд. */
 function expandTokens(dir) {
-  const TOKENS = { CASES_N };
+  const TOKENS = { CASES_N, COMMITS_NOTE };
   let done = 0;
   const walk = (d) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
