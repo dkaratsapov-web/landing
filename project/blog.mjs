@@ -63,14 +63,12 @@ function parseFrontmatter(raw, file) {
 }
 
 /* ── Дата ────────────────────────────────────────────────────────────────
-   Intl вместо ручного массива месяцев: он же корректно склоняет «15 августа». */
-const MONTH_FMT = new Intl.DateTimeFormat('ru-RU', {
-  day: 'numeric', month: 'long', year: 'numeric',
-});
-function humanDate(iso) {
+   Форматирования даты для страницы больше нет — видимых дат в блоге нет, —
+   но проверка осталась: дата уходит в микроразметку, в RSS и в lastmod карты
+   сайта, и битое значение сломало бы всё это молча. */
+function assertDate(iso, file) {
   const d = new Date(iso + 'T00:00:00Z');
-  if (Number.isNaN(d.getTime())) throw new Error(`blog: некорректная дата «${iso}»`);
-  return MONTH_FMT.format(d);
+  if (Number.isNaN(d.getTime())) throw new Error(`blog: в ${file} некорректная дата «${iso}»`);
 }
 
 function readingTime(markdown) {
@@ -142,6 +140,8 @@ export function loadPosts(srcDir) {
     for (const req of ['title', 'description', 'date']) {
       if (!data[req]) throw new Error(`blog: в ${file} не заполнено обязательное поле «${req}»`);
     }
+    assertDate(data.date, file);
+    if (data.updated) assertDate(data.updated, file);
     const slug = file.replace(/\.md$/, '');
     const { html, headings } = renderMarkdown(content);
 
@@ -244,11 +244,17 @@ ${related.map(postCard).join('\n')}
     ${crumbs.visible}
     ${tags}
     <h1>${esc(post.title)}</h1>
+    <!-- Даты публикации на странице нет намеренно. Материалы блога
+         справочные: «как собрать минус-слова» одинаково верно и через год,
+         но проставленный год заставляет читателя решать, не устарело ли, —
+         и в половине случаев он решает, что устарело, не читая.
+
+         Из микроразметки и RSS дата никуда не делась: там datePublished и
+         dateModified нужны поисковику, чтобы отличать свежую правку от
+         старой, и на вид страницы не влияют. Из фронтматтера тоже — по ней
+         сортируется лента и берётся lastmod для карты сайта. -->
     <div class="post-meta">
-      <time datetime="${post.date}">${humanDate(post.date)}</time>
-      <span class="post-meta-sep">·</span>
       <span>${post.reading.label}</span>
-      ${post.updated ? `<span class="post-meta-sep">·</span><span>обновлено ${humanDate(post.updated)}</span>` : ''}
     </div>
     ${post.cover ? `<img class="post-cover" src="${post.cover}" alt="${esc(post.title)}" width="1200" height="630">` : ''}
     ${toc}
@@ -306,7 +312,7 @@ function postCard(post) {
   return `      <a class="post-card mo-spot" href="${post.path}" data-tags="${esc(tags)}">
         ${post.cover ? `<img class="post-card-cover" src="${post.cover}" alt="" width="600" height="315" loading="lazy">` : ''}
         <div class="post-card-body">
-          <div class="post-card-meta">${badge ? `<span class="post-card-tag">${esc(badge)}</span>` : ''}<time datetime="${post.date}">${humanDate(post.date)}</time><span class="post-card-read">${post.reading.label}</span></div>
+          <div class="post-card-meta">${badge ? `<span class="post-card-tag">${esc(badge)}</span>` : ''}<span class="post-card-read">${post.reading.label}</span></div>
           <!-- h2, а не h3: карточки идут прямо под h1 ленты, и уровень h3
                создавал разрыв h1 → h3. Пропуск уровня ломает оглавление
                документа — на это ругается проверка агентного просмотра. -->
