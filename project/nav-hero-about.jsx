@@ -21,6 +21,12 @@ const SERVICE_GROUPS = [
     ['Сквозная аналитика', '/skvoznaya-analitika/'],
     ['Аудит рекламы', '/audit-reklamy/'],
   ]],
+  ['По нишам', [
+    ['Рестораны и бары', '/reklama-dlya-restoranov/'],
+    ['Производство и B2B', '/reklama-dlya-proizvodstva/'],
+    ['Интернет-магазины', '/reklama-dlya-internet-magazina/'],
+    ['Клиники и салоны', '/reklama-dlya-kliniki/'],
+  ]],
 ];
 
 const NAV_LINKS = [

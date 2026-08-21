@@ -21,6 +21,12 @@ import { imageSize } from './img-size.mjs';
 import * as aboutPage from './pages/about.mjs';
 import * as cenyPage from './pages/ceny.mjs';
 import * as botyPage from './pages/razrabotka-botov.mjs';
+/* Страницы под ниши: одна услуга, но разговор на языке конкретного бизнеса.
+   Собираются из общего каркаса niche-kit.mjs. */
+import * as nishaHoreca from './pages/nisha-horeca.mjs';
+import * as nishaB2b from './pages/nisha-b2b.mjs';
+import * as nishaEcom from './pages/nisha-ecom.mjs';
+import * as nishaMed from './pages/nisha-med.mjs';
 import * as politikaPage from './pages/politika.mjs';
 import * as keysSferaPage from './pages/keys-sfera.mjs';
 import * as keysDiautoPage from './pages/keys-diauto.mjs';
@@ -41,6 +47,7 @@ const SUBPAGES = ['keysy', 'kontekstnaya-reklama', 'targetirovannaya-reklama',
 
 const GENERATED_PAGES = [aboutPage, cenyPage, politikaPage, keysSferaPage, keysDiautoPage,
   kompleksPage, analitikaPage, auditPage, promoPage, seoPage, botyPage,
+  nishaHoreca, nishaB2b, nishaEcom, nishaMed,
   /* Двадцать одна страница кейса собирается из cases-data.mjs. Руками их не
      пишем: у кейса одна и та же структура — задача, действия, цифры, — и
      двадцать одна копия этой структуры разъедется на второй же правке. */
@@ -886,6 +893,12 @@ const SITEMAP_PAGES = [
   { loc: '/geo-servisy/', src: 'geo-servisy/index.html', priority: '0.9', changefreq: 'monthly' },
   { loc: '/razrabotka-sajtov/', src: 'razrabotka-sajtov/index.html', priority: '0.8', changefreq: 'monthly' },
   { loc: '/razrabotka-botov/', src: 'pages/razrabotka-botov.mjs', priority: '0.8', changefreq: 'monthly' },
+  /* Нишевые страницы: приоритет как у услуг — это точки входа по
+     коммерческим запросам, а не вспомогательные материалы. */
+  { loc: '/reklama-dlya-restoranov/', src: 'pages/nisha-horeca.mjs', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/reklama-dlya-proizvodstva/', src: 'pages/nisha-b2b.mjs', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/reklama-dlya-internet-magazina/', src: 'pages/nisha-ecom.mjs', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/reklama-dlya-kliniki/', src: 'pages/nisha-med.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/kompleksnyj-marketing/', src: 'pages/kompleksnyj-marketing.mjs', priority: '0.9', changefreq: 'monthly' },
   { loc: '/skvoznaya-analitika/', src: 'pages/skvoznaya-analitika.mjs', priority: '0.8', changefreq: 'monthly' },
   { loc: '/audit-reklamy/', src: 'pages/audit-reklamy.mjs', priority: '0.8', changefreq: 'monthly' },
