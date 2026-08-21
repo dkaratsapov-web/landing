@@ -1353,3 +1353,14 @@ main, .footer { position: relative; z-index: 1; }
    её и сломал, когда выносил атмосферу на уровень страницы. */
 .nav-mobile { z-index: 30; }
 @media (prefers-reduced-motion: reduce) { .page-atmos .glow { animation: none !important; } }
+
+/* Ссылка на полный кейс в карточке на главной. Отделена линией: это выход со
+   страницы, а не ещё одна строка описания. */
+.kase-go {
+  display: inline-block; margin-top: 16px; padding-top: 14px;
+  border-top: 1px solid var(--line); width: 100%;
+  font-size: 14px; font-weight: 600; text-decoration: none;
+  color: var(--accent-bright, #c4f53e);
+}
+.kase-go .arr { transition: transform .18s cubic-bezier(.32,.72,0,1); display: inline-block; }
+.kase:hover .kase-go .arr { transform: translateX(3px); }

@@ -277,14 +277,18 @@ function CaseCard({ c, idx }) {
     <article className="kase card mo-spot" style={{ '--d': idx }}>
       <div className="kase-photo">
         {c.imgPos
-          ? <img className="kase-img" src={c.img} alt={c.client} loading="lazy" style={{ objectPosition: c.imgPos }} />
+          ? <img className="kase-img" src={c.img} alt={c.field + ', ' + c.geo} loading="lazy" style={{ objectPosition: c.imgPos }} />
           : <image-slot id={'kase-' + c.id} src={c.img} placeholder="Фото проекта" shape="rounded" radius="0"></image-slot>}
         {c.badge && <span className="kase-badge">{c.badge}</span>}
         <span className="kase-geo"><IconMap size={13} />{c.geo}</span>
       </div>
       <div className="kase-content">
         <div className="kase-field">{c.field}</div>
-        <h3 className="kase-name"><span data-nosnippet>{c.client}</span></h3>
+        {/* Имя клиента заменено на обезличенный заголовок — тот же, что на
+            странице кейса, чтобы главная и витрина не расходились. Вместе с
+            брендом ушла и нужда в data-nosnippet: он стоял здесь ровно
+            затем, чтобы название чужой компании не попадало в сниппет. */}
+        <h3 className="kase-name">{c.client}</h3>
         <p className="kase-summary">{c.summary}</p>
         <div className="kase-metrics">
           {c.metrics.map(([v, l], k) =>
@@ -297,6 +301,10 @@ function CaseCard({ c, idx }) {
         <div className="kase-chips">
           {c.services.map((s, k) => <span className="kase-chip" key={k}>{s}</span>)}
         </div>
+        {/* Карточки на главной раньше никуда не вели: девять доказательств
+            на самой авторитетной странице сайта не отдавали веса страницам
+            кейсов и не давали читателю продолжения. */}
+        {c.url && <a className="kase-go" href={c.url}>Смотреть кейс <span className="arr" aria-hidden="true">→</span></a>}
       </div>
     </article>);
 
