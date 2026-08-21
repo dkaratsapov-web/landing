@@ -248,7 +248,8 @@ window.CONTENT = {
   "cases": [
     {
       "id": "everest",
-      "client": "Эверест Сибирия",
+      "client": "Яндекс Директ для ресторана премиум-класса",
+      "url": "/keysy/yandex-direkt-dlya-restorana-premium/",
       "field": "Ресторан премиум-класса",
       "geo": "Москва",
       "img": "assets/cases/everest-siberia.webp",
@@ -285,7 +286,8 @@ window.CONTENT = {
     },
     {
       "id": "nebo",
-      "client": "Nebo Lounge",
+      "client": "Яндекс Директ для lounge-бара",
+      "url": "/keysy/yandex-direkt-dlya-lounge-bara/",
       "field": "Lounge Bar",
       "geo": "Москва",
       "img": "assets/cases/nebo.webp",
@@ -300,7 +302,7 @@ window.CONTENT = {
         "Яндекс Бизнес",
         "Сквозная аналитика"
       ],
-      "summary": "Комплексная стратегия привлечения гостей для премиального Lounge Bar.",
+      "summary": "Комплексная стратегия привлечения гостей для премиального лаунж-бара.",
       "metrics": [
         [
           "+90%",
@@ -322,7 +324,8 @@ window.CONTENT = {
     },
     {
       "id": "school",
-      "client": "Школа «Дмитровский»",
+      "client": "Комплексное продвижение частной школы",
+      "url": "/keysy/prodvizhenie-chastnoj-shkoly/",
       "field": "Частная школа",
       "geo": "Москва",
       "img": "assets/cases/school.webp",
@@ -362,7 +365,8 @@ window.CONTENT = {
     },
     {
       "id": "tosun",
-      "client": "To Sun Travel",
+      "client": "Сайт и реклама для сервиса трансферов",
+      "url": "/keysy/prodvizhenie-servisa-transferov/",
       "field": "Сервис трансферов",
       "geo": "Анталия, Турция",
       "img": "assets/cases/tosun.webp",
@@ -396,7 +400,8 @@ window.CONTENT = {
     },
     {
       "id": "massiv",
-      "client": "Русское Ремесло",
+      "client": "Яндекс Директ для производства мебели",
+      "url": "/keysy/yandex-direkt-dlya-proizvodstva-mebeli/",
       "field": "Производство мебели из массива",
       "geo": "Москва",
       "img": "assets/cases/massiv-mebel.webp",
@@ -431,7 +436,8 @@ window.CONTENT = {
     },
     {
       "id": "profildoors",
-      "client": "Профиль Дорс",
+      "client": "Реклама для сети салонов межкомнатных дверей",
+      "url": "/keysy/reklama-dlya-salonov-dverej/",
       "field": "Сеть салонов межкомнатных дверей",
       "geo": "Москва",
       "img": "assets/cases/profildoors.webp",
@@ -469,7 +475,8 @@ window.CONTENT = {
     },
     {
       "id": "ipapa",
-      "client": "iPapa",
+      "client": "Яндекс Директ для магазина техники",
+      "url": "/keysy/yandex-direkt-dlya-magazina-tehniki/",
       "field": "Магазин техники Apple",
       "geo": "Тверь",
       "img": "assets/cases/ipapa.webp",
@@ -483,7 +490,7 @@ window.CONTENT = {
         "Яндекс Бизнес",
         "Сквозная аналитика"
       ],
-      "summary": "Комплексная стратегия продвижения для официального реселлера Apple в Твери.",
+      "summary": "Комплексная стратегия продвижения для магазина техники Apple в Твери.",
       "metrics": [
         [
           "+53%",
@@ -505,7 +512,8 @@ window.CONTENT = {
     },
     {
       "id": "royalneva",
-      "client": "Royal Neva",
+      "client": "Комплексное продвижение караоке-клуба",
+      "url": "/keysy/prodvizhenie-karaoke-kluba/",
       "field": "Караоке-клуб",
       "geo": "Санкт-Петербург",
       "img": "assets/cases/royalneva.webp",
@@ -545,7 +553,8 @@ window.CONTENT = {
     },
     {
       "id": "bmclinic",
-      "client": "BM Clinic",
+      "client": "Яндекс Директ для медицинской клиники",
+      "url": "/keysy/yandex-direkt-dlya-mediczinskoj-kliniki/",
       "field": "Многопрофильная клиника",
       "geo": "Москва",
       "img": "assets/cases/bmclinic.webp",
