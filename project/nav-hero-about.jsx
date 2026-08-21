@@ -21,12 +21,17 @@ const SERVICE_GROUPS = [
     ['Сквозная аналитика', '/skvoznaya-analitika/'],
     ['Аудит рекламы', '/audit-reklamy/'],
   ]],
-  ['По нишам', [
-    ['Рестораны и бары', '/reklama-dlya-restoranov/'],
-    ['Производство и B2B', '/reklama-dlya-proizvodstva/'],
-    ['Интернет-магазины', '/reklama-dlya-internet-magazina/'],
-    ['Клиники и салоны', '/reklama-dlya-kliniki/'],
-  ]],
+];
+
+/* Ниши — отдельный пункт меню, а не группа внутри «Услуг»: это не выбор из
+   услуг, а другой вход к тем же услугам. Список продублирован из layout.mjs
+   сознательно — главная собирается отдельно, общего источника у них нет, —
+   поэтому сборка сверяет оба и падает при расхождении. */
+const NICHE_LINKS = [
+  ['Рестораны, бары, кальянные', '/reklama-dlya-restoranov/'],
+  ['Производство и B2B', '/reklama-dlya-proizvodstva/'],
+  ['Интернет-магазины и розница', '/reklama-dlya-internet-magazina/'],
+  ['Клиники и салоны красоты', '/reklama-dlya-kliniki/'],
 ];
 
 const NAV_LINKS = [
@@ -91,6 +96,14 @@ function Nav({ onCta }) {
                       )}
                     </div>
                   ))}
+                  {/* Отраслевые решения — полоса под колонками услуг: тот же
+                      набор услуг, но вход через свою отрасль. */}
+                  <div className="nav-drop-niche">
+                    <div className="nav-drop-title">Отраслевые решения</div>
+                    <div className="nav-drop-niche-list">
+                      {NICHE_LINKS.map(([st, sh]) => <a key={sh} href={sh} className="nav-drop-link">{st}</a>)}
+                    </div>
+                  </div>
                 </div>
               </div>
             ) : h.startsWith('/') ? (

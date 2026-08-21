@@ -182,7 +182,11 @@
    отсюда перебивал то правило: пункты меню вылезали поверх шапки на телефоне,
    да ещё и с зоной касания 18px при норме в 24. Задаём только то, что
    действительно расходилось между страницами. */
-.nav-links { align-items: center; gap: 30px; }
+/* Интервал 26px вместо прежних 30: небольшой запас на случай, когда в меню
+   добавится пункт. На узких ноутбуках поджимается ещё — иначе строка меню
+   перестаёт помещаться и пункты ломаются на две строки. */
+.nav-links { align-items: center; gap: 26px; }
+@media (max-width: 1200px) { .nav-links { gap: 18px; } }
 .nav-links > a, .nav-links .nav-drop-trigger {
   font-size: 15px; font-weight: 500; line-height: 1.2; letter-spacing: -0.01em;
 }
@@ -228,3 +232,21 @@
 .quiz-fab-ic svg { display: block; }
 @keyframes quizFabIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 900px) { .quiz-fab { display: none; } }
+
+/* ── Отраслевые решения в дропдауне услуг ────────────────────────────────
+   Отдельной колонкой они не встают: колонок уже три, четвёртая ломает сетку
+   и растягивает меню за край экрана, а внизу первой колонки ветка читается
+   как продолжение маркетинга — так и вышло в первой версии.
+
+   Поэтому полоса на всю ширину под колонками: сверху услуги, снизу вход в
+   те же услуги через свою отрасль. Разделительная линия показывает, что это
+   другой уровень, а не четвёртая группа. */
+.nav-drop-niche {
+  grid-column: 1 / -1;
+  margin-top: 10px; padding-top: 12px;
+  border-top: 1px solid var(--line, rgba(255,255,255,.08));
+}
+.nav-drop-niche .nav-drop-title { border-bottom: none; padding-bottom: 4px; margin-bottom: 2px; }
+/* Ссылки в две колонки: в один столбец полоса вытягивала меню вниз почти
+   вдвое, в четыре — названия ниш переносились по слогам. */
+.nav-drop-niche-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px 8px; }

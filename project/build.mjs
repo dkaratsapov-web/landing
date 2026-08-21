@@ -13,7 +13,7 @@ import babel from '@babel/core';
 import { minify } from 'terser';
 import { prerenderApp } from './prerender.mjs';
 import { renderPage, seoConfig, decorate, nav, mobileDock, SERVICE_GROUPS,
-  siteFooter, FOOTER_LINKS, quizFab } from './layout.mjs';
+  siteFooter, FOOTER_LINKS, quizFab, NICHE_LINKS } from './layout.mjs';
 import { loadPosts, renderPost, renderIndex, renderRss } from './blog.mjs';
 import { cases, CASE_SETS } from './service-kit.mjs';
 import { CASE_PAGES, caseGrid, CASE_GRID_CSS } from './case-page.mjs';
@@ -610,6 +610,19 @@ function checkNavInSync() {
     throw new Error('build: меню главной и меню остальных страниц разошлись.\n'
       + `  nav-hero-about.jsx: ${a || '(пусто)'}\n`
       + `  layout.mjs:         ${b}`);
+  }
+
+  /* Список ниш живёт отдельным пунктом меню и тоже продублирован в JSX.
+     Сверяем и его: расхождение здесь означало бы, что на главной и на
+     остальных страницах в шапке разные ниши. */
+  const nicheJsx = jsx.slice(jsx.indexOf('const NICHE_LINKS'), jsx.indexOf('];', jsx.indexOf('const NICHE_LINKS')));
+  const fromJsxNiche = [...nicheJsx.matchAll(/\['([^']+)',\s*'(\/[^']*)'\]/g)]
+    .map((m) => `${m[2]} ${m[1]}`).join(' → ');
+  const fromLayoutNiche = NICHE_LINKS.map(([h, t]) => `${h} ${t}`).join(' → ');
+  if (fromJsxNiche !== fromLayoutNiche) {
+    throw new Error('build: список ниш в шапке разошёлся.\n'
+      + `  nav-hero-about.jsx: ${fromJsxNiche || '(пусто)'}\n`
+      + `  layout.mjs:         ${fromLayoutNiche}`);
   }
 
   const groupsJsx = [...block.matchAll(/\['([^']+)',\s*\[/g)].map((m) => m[1]);

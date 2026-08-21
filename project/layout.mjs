@@ -106,16 +106,18 @@ export const SERVICE_GROUPS = [
     ['/skvoznaya-analitika/', 'Сквозная аналитика'],
     ['/audit-reklamy/', 'Аудит рекламы'],
   ]],
-  /* Четвёртая группа — не услуги, а ниши: та же работа, но разговор на языке
-     конкретного бизнеса. В меню они стоят отдельно намеренно: смешать их с
-     услугами значит предложить человеку выбирать между «контекстной
-     рекламой» и «рекламой для ресторана», хотя это одно и то же. */
-  ['По нишам', [
-    ['/reklama-dlya-restoranov/', 'Рестораны и бары'],
-    ['/reklama-dlya-proizvodstva/', 'Производство и B2B'],
-    ['/reklama-dlya-internet-magazina/', 'Интернет-магазины'],
-    ['/reklama-dlya-kliniki/', 'Клиники и салоны'],
-  ]],
+];
+
+/* Ниши — отдельный пункт меню со своим списком, а не группа внутри «Услуг».
+   Причина простая: это не выбор из услуг, а другой вход к тем же услугам.
+   Человек, который ищет «рекламу для ресторана», не выбирает между ней и
+   контекстной рекламой — он ищет того, кто знает его дело. Внутри дропдауна
+   «Услуги» такой пункт читался бы как одиннадцатая услуга. */
+export const NICHE_LINKS = [
+  ['/reklama-dlya-restoranov/', 'Рестораны, бары, кальянные'],
+  ['/reklama-dlya-proizvodstva/', 'Производство и B2B'],
+  ['/reklama-dlya-internet-magazina/', 'Интернет-магазины и розница'],
+  ['/reklama-dlya-kliniki/', 'Клиники и салоны красоты'],
 ];
 
 export function nav() {
@@ -125,6 +127,20 @@ ${items.map(([href, label]) => `            <a href="${href}" class="nav-drop-li
           </div>`).join('\n');
   /* В мобильном меню группы тоже подписаны, но без колонок: там всё в один
      столбец, и подпись — единственное, что отделяет одну группу от другой. */
+  /* Дропдаун ниш — один столбец: их четыре, и колонки только растянули бы
+     меню вширь. Отдельный класс нужен, чтобы перебить сетку .nav-dropdown,
+     рассчитанную на три группы услуг. */
+  /* Отраслевые решения — не колонка наравне с услугами, а полоса под ними:
+     это другой способ выбрать ту же услугу, и вставать в общий ряд групп ей
+     некуда — четвёртая колонка ломала сетку, а внизу первой она читалась
+     как продолжение маркетинга. */
+  const nicheDrop = `          <div class="nav-drop-niche">
+            <div class="nav-drop-title">Отраслевые решения</div>
+            <div class="nav-drop-niche-list">
+${NICHE_LINKS.map(([href, label]) => `              <a href="${href}" class="nav-drop-link">${label}</a>`).join('\n')}
+            </div>
+          </div>`;
+
   const mobileDrops = SERVICE_GROUPS.map(([title, items]) =>
     `  <span class="nav-mobile-group">${title}</span>\n`
     + items.map(([href, label]) =>
@@ -142,6 +158,7 @@ ${items.map(([href, label]) => `            <a href="${href}" class="nav-drop-li
         <a href="/kompleksnyj-marketing/" class="nav-drop-trigger">Услуги<svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         <div class="nav-dropdown">
 ${drops}
+${nicheDrop}
         </div>
       </div>
       <a href="/ceny/">Цены</a>
@@ -168,6 +185,8 @@ ${drops}
 <div class="nav-mobile" id="navMobile">
   <a href="/kompleksnyj-marketing/">Услуги</a>
 ${mobileDrops}
+  <span class="nav-mobile-group">Отраслевые решения</span>
+${NICHE_LINKS.map(([href, label]) => `  <a href="${href}" class="nav-mobile-sub">${label}</a>`).join('\n')}
   <a href="/ceny/">Цены</a>
   <a href="/about/">О себе</a>
   <a href="/blog/">Блог</a>
