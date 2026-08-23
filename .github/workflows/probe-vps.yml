@@ -1,0 +1,49 @@
+# Пробник сервера. Нужен потому, что из среды разработки наружу хода нет:
+# когда сайт лёг, проверить его было нечем и приходилось гадать, что именно
+# упало — вся машина или только SSH. Раннер GitHub сидит в открытом
+# интернете, поэтому проверяем оттуда.
+#
+# Запускается руками (workflow_dispatch), в обычные деплои не вмешивается.
+name: Probe VPS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Что отвечает сервер
+        # continue-on-error не нужен: шаг сам не падает, он собирает отчёт.
+        # Падение здесь скрыло бы часть проверок — а нужны все сразу.
+        run: |
+          HOST="${{ secrets.VPS_HOST }}"
+          echo "=== DNS ==="
+          getent hosts karatsapov.ru || echo "karatsapov.ru не резолвится"
+          getent hosts www.karatsapov.ru || echo "www не резолвится"
+
+          echo
+          echo "=== Порты (таймаут 8 с) ==="
+          for port in 22 80 443; do
+            if timeout 8 bash -c "</dev/tcp/$HOST/$port" 2>/dev/null; then
+              echo "порт $port: открыт"
+            else
+              echo "порт $port: НЕ отвечает"
+            fi
+          done
+
+          echo
+          echo "=== HTTP ==="
+          # --max-time держит шаг коротким: лежачий сервер иначе тянет минуты.
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 https://karatsapov.ru/ || echo "нет ответа")
+          echo "https://karatsapov.ru/ → $code"
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 http://karatsapov.ru/ || echo "нет ответа")
+          echo "http://karatsapov.ru/  → $code"
+
+          echo
+          echo "=== ICMP ==="
+          ping -c 3 -W 3 "$HOST" 2>&1 | tail -4 || echo "ping не прошёл"
+
+          echo
+          echo "=== Трассировка до 22 порта ==="
+          timeout 25 traceroute -T -p 22 -m 12 -w 2 "$HOST" 2>&1 | tail -14 || echo "traceroute недоступен"
