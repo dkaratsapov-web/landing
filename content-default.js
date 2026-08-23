@@ -661,6 +661,8 @@ window.CONTENT = {
     "telegram": "@Daniil_065",
     "telegramUrl": "https://t.me/Daniil_065",
     "maxUrl": "https://max.ru/u/f9LHodD0cOKhyIzKq01tP4W7NPCgguZmr-6XQ2vXMOaCb3gg1L1a1m4PP0c",
+    "email": "d.karatsapov@gmail.com",
+    "dzenUrl": "https://dzen.ru/karatsapov",
     "formTitle": "Заказать звонок"
   },
   "quiz": [

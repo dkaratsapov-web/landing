@@ -666,13 +666,117 @@ h2.section-title {
    тона: тот же приём, что и между секциями. */
 .footer { background: var(--pg, #08080a); border-top: 1px solid var(--line); }
 
-/* ---------- Contact rows ---------- */
-.contact-row {
-  display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--txt);
-  padding: 16px 18px; border: 1px solid var(--line); border-radius: var(--r-md);
-  background: var(--tile-card); transition: border-color .2s ease;
+/* ---------- Contact deck ---------- */
+/* Раскладка неравными долями: один канал крупный, остальные парами. Три
+   одинаковые строки, что были здесь раньше, честно перечисляли способы
+   связи — и ровно поэтому не подсказывали ни одного. */
+.cdeck { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; }
+.cd-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.cd {
+  position: relative; display: flex; align-items: center; gap: 14px;
+  padding: 15px 17px; border: 1px solid var(--line); border-radius: var(--r-md);
+  background: var(--tile-card); color: var(--txt); text-decoration: none;
+  min-width: 0; transition: border-color .3s cubic-bezier(.32,.72,0,1),
+    transform .3s cubic-bezier(.32,.72,0,1), background .3s ease;
 }
-.contact-row:hover { border-color: var(--line-strong); }
+a.cd:hover { border-color: var(--line-strong); transform: translateY(-2px); }
+a.cd:active { transform: translateY(0) scale(.995); }
+
+.cd-ic {
+  width: 42px; height: 42px; border-radius: 12px; flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--tile-b); border: 1px solid var(--line);
+  color: var(--txt-2); transition: color .3s ease, border-color .3s ease;
+}
+a.cd:hover .cd-ic { color: var(--accent-bright); border-color: var(--accent-soft-bd); }
+.cd-txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cd-l { font-size: 12.5px; color: var(--txt-3); letter-spacing: .01em; }
+.cd-v {
+  font-size: 17px; font-weight: 600; line-height: 1.25;
+  /* Цифры номера и адрес — моноширинными знаками: так номер не «пляшет»
+     и читается как номер, а не как обычный текст. */
+  font-variant-numeric: tabular-nums;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cd-v-a { color: inherit; text-decoration: none; }
+.cd-v-a:hover { color: var(--accent-bright); }
+.cd-mail { font-size: 14.5px; }
+
+/* Главный канал: крупнее, в акцентной подложке, со стрелкой. */
+.cd-lead {
+  padding: 20px 22px; gap: 18px;
+  background: var(--accent-soft); border-color: var(--accent-soft-bd);
+}
+.cd-lead .cd-ic {
+  width: 54px; height: 54px; border-radius: 15px;
+  background: var(--accent); border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.cd-lead:hover .cd-ic { color: var(--accent-ink); border-color: var(--accent); }
+.cd-lead .cd-l { color: var(--accent-bright); font-weight: 600;
+  font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; }
+.cd-lead .cd-v { font-size: 23px; font-weight: 700; letter-spacing: -.01em; }
+.cd-go { margin-left: auto; color: var(--accent-bright); display: inline-flex;
+  transition: transform .4s cubic-bezier(.32,.72,0,1); }
+.cd-lead:hover .cd-go { transform: translateX(5px); }
+
+/* Кнопка копирования. Держим её видимой всегда, а не по наведению: на
+   телефоне наведения нет, а копировать номер там нужнее всего. */
+.cd-copy { padding-right: 52px; }
+.cd-copy-b {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  width: 32px; height: 32px; border-radius: 9px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--line); color: var(--txt-3);
+  transition: color .25s ease, border-color .25s ease, background .25s ease;
+}
+.cd-copy-b:hover { color: var(--accent-bright); border-color: var(--accent-soft-bd);
+  background: var(--accent-soft); }
+.cd-copy-b:active { transform: translateY(-50%) scale(.92); }
+
+/* Дзен — полосой, не карточкой: это чтение, а не способ написать. */
+.cd-zen {
+  display: flex; align-items: center; gap: 11px; margin-top: 4px;
+  padding: 13px 17px; border-radius: var(--r-md); text-decoration: none;
+  border: 1px dashed var(--line-strong); color: var(--txt-2);
+  transition: border-color .3s ease, color .3s ease, background .3s ease;
+}
+.cd-zen:hover { border-color: var(--accent-soft-bd); color: var(--txt);
+  background: var(--accent-soft); }
+.cd-zen-ic { color: var(--accent-bright); display: inline-flex; flex: 0 0 auto; }
+.cd-zen-t { font-size: 14.5px; }
+.cd-zen-go { margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600; color: var(--accent-bright); white-space: nowrap; }
+.cd-zen-go .i { transition: transform .4s cubic-bezier(.32,.72,0,1); }
+.cd-zen:hover .cd-zen-go .i { transform: translateX(4px); }
+
+/* В паре ширины вдвое меньше, и номер телефона с адресом почты упирались в
+   многоточие. Номер, обрезанный многоточием, — это не «компактно», это
+   нерабочий контакт, поэтому в парах всё чуть мельче: плитка, текст и
+   кнопка копирования. */
+.cd-pair .cd { padding: 13px 15px; gap: 12px; }
+.cd-pair .cd-ic { width: 38px; height: 38px; border-radius: 11px; }
+.cd-pair .cd-v { font-size: 15.5px; }
+.cd-pair .cd-mail { font-size: 13.5px; letter-spacing: -.005em; }
+.cd-pair .cd-l { font-size: 12px; }
+.cd-pair .cd-copy { padding-right: 42px; }
+.cd-pair .cd-copy-b { width: 28px; height: 28px; right: 8px; border-radius: 8px; }
+
+@media (max-width: 620px) {
+  /* На узком экране пары в две колонки не остаётся — разворачиваем в столбец
+     и возвращаем крупный кегль: места хватает. */
+  .cd-pair { grid-template-columns: 1fr; }
+  .cd-pair .cd-v { font-size: 17px; }
+  .cd-pair .cd-mail { font-size: 15px; }
+  .cd-lead { padding: 17px 18px; gap: 14px; }
+  .cd-lead .cd-ic { width: 48px; height: 48px; }
+  .cd-lead .cd-v { font-size: 20px; }
+  /* Подпись «TELEGRAM · ОСНОВНОЙ КАНАЛ» на узком экране переносилась на две
+     строки и разъезжалась с крупным логотипом рядом. Ужимаем разрядку, а не
+     выкидываем слова: без «Telegram» подпись читается как название плитки. */
+  .cd-lead .cd-l { font-size: 10.5px; letter-spacing: .05em; }
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1040px) {
