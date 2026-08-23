@@ -658,8 +658,32 @@ function checkNavInSync() {
       + `  layout.mjs:         ${groupsLayout.join(' → ')}`);
   }
 }
+/* Брендовые знаки живут в двух местах: icons.jsx (главная) и готовым SVG в
+   contacts/index.html (у страницы своя вёрстка, JSX она не видит). Сверяем
+   сами пути: два самолётика разной формы на соседних страницах бросаются в
+   глаза быстрее любой другой мелочи, а заметить это глазами почти нельзя —
+   страницы никто не открывает рядом. */
+function checkBrandIcons() {
+  const jsx = readFileSync(join(srcDir, 'icons.jsx'), 'utf8');
+  const html = readFileSync(join(srcDir, 'contacts', 'index.html'), 'utf8');
+  const inHtml = new Set([...html.matchAll(/\sd="([^"]{60,})"/g)].map((m) => m[1]));
+
+  const bad = [];
+  for (const key of ['telegram', 'whatsapp', 'max']) {
+    const m = jsx.match(new RegExp(`${key}: '([^']+)'`));
+    if (!m) { bad.push(`${key}: нет пути в icons.jsx`); continue; }
+    if (!inHtml.has(m[1])) bad.push(`${key}: путь из icons.jsx не найден в contacts/index.html`);
+  }
+  if (bad.length) {
+    throw new Error('build: брендовые иконки на главной и на /contacts/ разошлись.\n'
+      + bad.map((l) => '  ' + l).join('\n')
+      + '\n  Путь правится в icons.jsx (BRAND) и переносится в contacts/index.html.');
+  }
+}
+
 checkNavInSync();
 checkFooterInSync();
+checkBrandIcons();
 
 /* Проверка ссылок услуг стоит здесь, а не рядом с остальными: ей нужен
    список SUBPAGES, объявленный ниже по файлу. */

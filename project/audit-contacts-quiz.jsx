@@ -207,35 +207,98 @@ function Contacts() {
           <span className="eyebrow">{K.eyebrow}</span>
           <h2 className="section-title"><Lines text={K.heading} /></h2>
           <p className="lead" style={{ marginTop: 22 }}>{K.lead}</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginTop: 32 }}>
-            <a className="contact-row" href={'tel:' + (K.phoneTel || '')}
-            onClick={() => toast('Звонок: ' + (K.phone || ''))}>
-              <span className="icon-tile" style={{ width: 50, height: 50 }}><IconPhone size={22} /></span>
-              <div>
-                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Телефон</div>
-                <div style={{ fontSize: 19, fontWeight: 600 }}>{K.phone}</div>
-              </div>
-            </a>
-            <a className="contact-row" href={K.telegramUrl} target="_blank" rel="noopener noreferrer">
-              <span className="icon-tile" style={{ width: 50, height: 50 }}><IconSend size={22} /></span>
-              <div>
-                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>Telegram</div>
-                <div style={{ fontSize: 19, fontWeight: 600 }}>{K.telegram}</div>
-              </div>
-            </a>
-            <a className="contact-row" href={K.maxUrl} target="_blank" rel="noopener noreferrer">
-              <span className="icon-tile" style={{ width: 50, height: 50, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20 }}>M</span>
-              <div>
-                <div style={{ color: 'var(--txt-3)', fontSize: 13 }}>MAX</div>
-                <div style={{ fontSize: 19, fontWeight: 600 }}>Написать в MAX</div>
-              </div>
-            </a>
-          </div>
+          <ContactDeck K={K} toast={toast} />
         </div>
         <MeetInPerson />
       </div>
     </section>);
 
+}
+
+/* ---------------- CONTACT DECK ---------------- */
+/* Раньше здесь лежали три одинаковые серые строки: телефон, Telegram, MAX.
+   Все три — одного веса, хотя текст рядом прямо просит писать в Telegram.
+   Читалось это как список, а не как приглашение, и половина канала связи
+   (почта, WhatsApp) вообще не доезжала до главной, хотя на /contacts/ была.
+
+   Теперь: один крупный канал сверху и пары под ним. Разный размер делает
+   выбор за читателя — ровно тот выбор, который автор уже назвал словами. */
+function ContactDeck({ K, toast }) {
+  const copy = (text, what) => {
+    const done = () => toast(what + ' скопирован');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, () => {});
+      return;
+    }
+    /* Запасной путь для http и старых браузеров: без него кнопка молчала бы,
+       а молчащая кнопка хуже её отсутствия. */
+    const el = document.createElement('textarea');
+    el.value = text; el.style.position = 'fixed'; el.style.opacity = '0';
+    document.body.appendChild(el); el.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* нечем скопировать */ }
+    document.body.removeChild(el);
+  };
+
+  return (
+    <div className="cdeck">
+      <a className="cd cd-lead" href={K.telegramUrl} target="_blank" rel="noopener noreferrer">
+        <span className="cd-ic"><IconTelegram size={26} /></span>
+        <span className="cd-txt">
+          <span className="cd-l">Telegram · основной канал</span>
+          <span className="cd-v">{K.telegram}</span>
+        </span>
+        <span className="cd-go" aria-hidden="true"><IconArrowRight size={17} /></span>
+      </a>
+
+      <div className="cd-pair">
+        <div className="cd cd-copy">
+          <span className="cd-ic"><IconPhone size={20} /></span>
+          <span className="cd-txt">
+            <span className="cd-l">Телефон</span>
+            <a className="cd-v cd-v-a" href={'tel:' + (K.phoneTel || '')}>{K.phone}</a>
+          </span>
+          <button type="button" className="cd-copy-b" aria-label="Скопировать номер"
+            onClick={() => copy(K.phone || '', 'Номер')}><IconCopy size={15} /></button>
+        </div>
+
+        <a className="cd" href={'https://wa.me/' + String(K.phoneTel || '').replace(/\D/g, '')}
+          target="_blank" rel="noopener noreferrer">
+          <span className="cd-ic"><IconWhatsApp size={20} /></span>
+          <span className="cd-txt">
+            <span className="cd-l">WhatsApp</span>
+            <span className="cd-v">Написать</span>
+          </span>
+        </a>
+      </div>
+
+      <div className="cd-pair">
+        <a className="cd" href={K.maxUrl} target="_blank" rel="noopener noreferrer">
+          <span className="cd-ic"><IconMax size={20} /></span>
+          <span className="cd-txt">
+            <span className="cd-l">MAX</span>
+            <span className="cd-v">Написать</span>
+          </span>
+        </a>
+
+        <div className="cd cd-copy">
+          <span className="cd-ic"><IconMail size={20} /></span>
+          <span className="cd-txt">
+            <span className="cd-l">Почта</span>
+            <a className="cd-v cd-v-a cd-mail" href={'mailto:' + (K.email || '')}>{K.email}</a>
+          </span>
+          <button type="button" className="cd-copy-b" aria-label="Скопировать адрес"
+            onClick={() => copy(K.email || '', 'Адрес')}><IconCopy size={15} /></button>
+        </div>
+      </div>
+
+      {/* Дзен — не канал связи, а чтение. Поэтому он не в общем ряду, а
+          полосой под ним: иначе читатель ищет там способ написать. */}
+      <a className="cd-zen" href={K.dzenUrl} target="_blank" rel="noopener noreferrer">
+        <span className="cd-zen-ic"><IconDzen size={16} /></span>
+        <span className="cd-zen-t">Разбираю рекламу в Дзене</span>
+        <span className="cd-zen-go">Читать<IconArrowRight size={15} /></span>
+      </a>
+    </div>);
 }
 
 /* ---------------- MEET IN PERSON (map) ---------------- */
