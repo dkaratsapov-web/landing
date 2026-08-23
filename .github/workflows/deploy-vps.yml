@@ -36,7 +36,25 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+          # ssh-keyscan лишь наполняет known_hosts — проверку ключа всё равно
+          # снимает StrictHostKeyChecking=no. Раньше его stderr уходил в
+          # /dev/null, а bash -e ронял весь шаг на ненулевом коде: в логе не
+          # оставалось ни строки о причине, только «exit code 1». Ошибку
+          # больше не глушим и шаг на ней не роняем.
+          ssh-keyscan -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts \
+            || echo "ssh-keyscan не опросил хост — иду дальше, связь проверяется ниже"
+
+          # Явная проба связи до rsync. Нужна ради лога: если сервер лежит,
+          # в отчёте должно быть написано «сервер не отвечает», а не пустой
+          # шаг с кодом 1, по которому непонятно, код это или инфраструктура.
+          echo "Проверяю доступность сервера по SSH…"
+          if ! ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no \
+                   -o ConnectTimeout=15 -o BatchMode=yes \
+                   "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" 'echo сервер отвечает'; then
+            echo "::error::Сервер не отвечает по SSH. Сборка прошла, выкладка не состоялась — сайт остался на прошлой версии."
+            exit 1
+          fi
+
           rsync -avz --delete \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o ConnectTimeout=15" \
             dist/ "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/landing/"

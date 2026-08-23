@@ -670,7 +670,16 @@ h2.section-title {
 /* Раскладка неравными долями: один канал крупный, остальные парами. Три
    одинаковые строки, что были здесь раньше, честно перечисляли способы
    связи — и ровно поэтому не подсказывали ни одного. */
-.cdeck { display: flex; flex-direction: column; gap: 12px; margin-top: 30px; }
+.cdeck { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; }
+
+/* Время ответа и часы приёма. Не карточка и не плашка: это условие, при
+   котором работают все каналы ниже, а не ещё один канал. Поэтому строкой,
+   мельче и без рамки — иначе спорит за внимание с самим Telegram. */
+.cd-when { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 16px; }
+.cd-when-i { display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13.5px; color: var(--txt-2); }
+.cd-when-i .i { color: var(--accent-bright); flex: 0 0 auto; }
+.cd-when-h { color: var(--txt-3); font-variant-numeric: tabular-nums; }
 .cd-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
 .cd {

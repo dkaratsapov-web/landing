@@ -241,6 +241,14 @@ function ContactDeck({ K, toast }) {
 
   return (
     <div className="cdeck">
+      {/* Время ответа и часы приёма — первое, что снимает страх «напишу и
+          повиснет». Стоят над каналами, а не под ними: читаются раньше, чем
+          человек выберет, куда писать. */}
+      <div className="cd-when">
+        <span className="cd-when-i"><IconBolt size={15} />{K.reply}</span>
+        <span className="cd-when-i cd-when-h"><IconClock size={15} />{K.hours}</span>
+      </div>
+
       <a className="cd cd-lead" href={K.telegramUrl} target="_blank" rel="noopener noreferrer">
         <span className="cd-ic"><IconTelegram size={26} /></span>
         <span className="cd-txt">
