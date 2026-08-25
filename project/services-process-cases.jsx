@@ -239,36 +239,52 @@ function Certificates() {
 }
 
 /* ---------------- PROCESS ---------------- */
+/* ---------------- PROCESS (вертикальная лента) ---------------- */
+/* Раньше шаги стояли в пять колонок по горизонтали. На широком экране это
+   работало, а дальше начинались уступки: на планшете лента ломалась на два
+   ряда, где стрелка между четвёртым и пятым шагом вела назад и вверх, на
+   телефоне превращалась в горизонтальную прокрутку с подсказкой «листайте».
+   Порядок действий — вещь линейная, и читается он сверху вниз: так его и
+   листают на телефоне, и так он не требует ни подсказок, ни прокрутки вбок.
+
+   Шаги идут по сторонам от оси. Это не украшение: пять одинаковых блоков в
+   столбик читаются как список, а не как путь, и взгляд по ним соскальзывает.
+   Чередование заставляет глаз возвращаться к оси на каждом шаге — там же, где
+   стоит номер, — и путь читается путём.
+
+   Заливка оси привязана к прокрутке: пройденное горит акцентом, впереди —
+   серое. Смысл тот же, что у самого блока: видно, на каком ты этапе. */
 function Process() {
+  const head = window.CONTENT.processHead || {};
   return (
-    <section id="process" className="sec bg-pg">
+    <section id="process" className="sec bg-pg" style={{ overflow: 'clip' }}>
       <SectionFx variant="rings" />
       <div className="wrap">
         <div className="reveal" style={{ maxWidth: 680, marginBottom: 56 }}>
-          <span className="eyebrow">{(window.CONTENT.processHead || {}).eyebrow}</span>
-          <h2 className="section-title"><Lines text={(window.CONTENT.processHead || {}).heading} /></h2>
-          <p className="lead" style={{ marginTop: 22 }}>{(window.CONTENT.processHead || {}).lead}</p>
+          <span className="eyebrow">{head.eyebrow}</span>
+          <h2 className="section-title"><Lines text={head.heading} /></h2>
+          <p className="lead" style={{ marginTop: 22 }}>{head.lead}</p>
         </div>
-        <SwipeHint />
-        <div className="proc-grid proc-chain" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 0 }}>
+
+        <div className="ptl">
+          <span className="ptl-axis" aria-hidden="true" />
           {PROCESS.map((p, i) =>
-          <div key={i} className="reveal proc-step" style={{ transitionDelay: i * 60 + 'ms', position: 'relative',
-            padding: '0 22px 0 0', '--i': i }}>
-              <div className="proc-node-row">
-                <span className="proc-node"><Glyph name={p.icon} size={20} /></span>
-                {i < PROCESS.length - 1 &&
-                  <span className="proc-link"><span className="proc-link-flow" /></span>}
+            <div key={i} className={'ptl-row' + (i % 2 ? ' ptl-alt' : '')}>
+              {/* Плитка со значком и номер — по ту сторону оси от текста. */}
+              <div className="ptl-mark">
+                <span className="ptl-tile"><Glyph name={p.icon} size={22} /></span>
+                <span className="ptl-num">{p.n}</span>
               </div>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: 13, fontWeight: 600, color: 'var(--txt-3)',
-              letterSpacing: '0.06em', marginBottom: 10 }}>{p.n}</div>
-              <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 21, fontWeight: 600, letterSpacing: '-0.01em', margin: '0 0 10px', color: 'var(--txt)' }}>{p.title}</h3>
-              <p className="muted" style={{ margin: 0, fontSize: 15, lineHeight: 1.5 }}>{p.desc}</p>
+              <span className="ptl-dot" aria-hidden="true" />
+              <div className="ptl-body">
+                <h3 className="ptl-h">{p.title}</h3>
+                <p className="ptl-d">{p.desc}</p>
+              </div>
             </div>
           )}
         </div>
       </div>
     </section>);
-
 }
 
 /* ---------------- CASES (filterable cards) ---------------- */

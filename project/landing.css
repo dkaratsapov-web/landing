@@ -666,6 +666,142 @@ h2.section-title {
    тона: тот же приём, что и между секциями. */
 .footer { background: var(--pg, #08080a); border-top: 1px solid var(--line); }
 
+/* ---------- Process timeline ---------- */
+/* Ось по центру, шаги по сторонам. Сетка из трёх колонок: знак — ось — текст;
+   у чётных шагов колонки меняются местами через grid-column, а не через
+   отдельную разметку: два набора разметки под одно и то же разъезжаются на
+   первой же правке. */
+.ptl { position: relative; display: flex; flex-direction: column; gap: 4px; }
+
+.ptl-axis {
+  position: absolute; left: 50%; top: 12px; bottom: 12px; width: 2px;
+  transform: translateX(-50%); border-radius: 2px;
+  background: var(--line-strong);
+}
+/* Заливка оси по прокрутке. Отдельным слоем поверх серой линии: так у
+   пройденной части есть цвет, а у оставшейся — фон, и обе видны сразу. */
+.ptl-axis::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(180deg, var(--accent), var(--accent-bright));
+  transform-origin: 50% 0; transform: scaleY(0);
+}
+@supports (animation-timeline: view()) {
+  .ptl-axis::after {
+    animation: ptl-fill linear both;
+    animation-timeline: view();
+    /* Обе границы в одной фазе — это важно. С `entry 60% cover 70%` заливка
+       шла немонотонно: при прокрутке вниз откатывалась назад, потому что
+       фазы entry и cover отсчитываются от разных точек и внахлёст. Одна
+       фаза даёт линейный ход без откатов. */
+    animation-range: cover 20% cover 80%;
+  }
+}
+/* Без scroll-driven анимаций ось просто залита целиком: пустая серая линия
+   выглядела бы недогрузившейся. */
+@supports not (animation-timeline: view()) {
+  .ptl-axis::after { transform: scaleY(1); }
+}
+@keyframes ptl-fill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.ptl-row {
+  display: grid; align-items: center;
+  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
+  padding: 26px 0;
+}
+/* grid-row: 1 у всех троих обязателен. Без него зеркальные шаги разъезжались
+   по высоте: автораскладка грида идёт только вперёд, и после знака в третьей
+   колонке узел во второй уже не помещался в ту же строку — его сносило на
+   следующую, а текст на третью. Выглядело как случайные отступы, а причина
+   была в порядке размещения. */
+.ptl-mark { grid-column: 1; grid-row: 1; display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
+.ptl-body { grid-column: 3; grid-row: 1; text-align: left; padding-left: 4px; }
+/* Чётные шаги зеркалим. Порядок в разметке остаётся прежним — меняются
+   только колонки, поэтому и в озвучке экранного диктора, и в потоке
+   документа шаги идут как шли. */
+.ptl-alt .ptl-mark { grid-column: 3; flex-direction: row-reverse; justify-content: flex-end; }
+.ptl-alt .ptl-body { grid-column: 1; text-align: right; padding-left: 0; padding-right: 4px; }
+
+.ptl-tile {
+  width: 56px; height: 56px; border-radius: 16px; flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--tile-b); border: 1px solid var(--line);
+  color: var(--txt-3);
+  transition: background .5s ease, color .5s ease, border-color .5s ease;
+}
+.ptl-num {
+  font-family: var(--font-display); font-size: 12px; font-weight: 700;
+  letter-spacing: .08em; color: var(--txt-3);
+  padding: 5px 9px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--tile-card);
+  font-variant-numeric: tabular-nums;
+  transition: color .5s ease, border-color .5s ease;
+}
+.ptl-dot {
+  grid-column: 2; grid-row: 1; justify-self: center;
+  width: 15px; height: 15px; border-radius: 5px;
+  background: var(--pg, #08080a); border: 2px solid var(--line-strong);
+  transition: background .5s ease, border-color .5s ease, transform .5s ease;
+}
+.ptl-h { font-family: var(--font-display); font-size: 22px; font-weight: 600;
+  letter-spacing: -.01em; margin: 0 0 9px; color: var(--txt); }
+.ptl-d { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--txt-2);
+  max-width: 44ch; }
+.ptl-alt .ptl-d { margin-left: auto; }
+
+@supports (animation-timeline: view()) {
+  /* Шаг загорается, проходя середину экрана. Узкий диапазон в одной фазе:
+     при широком загоралась разом почти вся лента, и последовательность,
+     ради которой всё затевалось, пропадала. */
+  .ptl-tile, .ptl-num, .ptl-dot { animation: ptl-on linear both;
+    animation-timeline: view(); animation-range: cover 42% cover 56%; }
+  .ptl-tile { animation-name: ptl-tile-on; }
+  .ptl-num { animation-name: ptl-num-on; }
+  .ptl-dot { animation-name: ptl-dot-on; }
+}
+@keyframes ptl-tile-on {
+  from { background: var(--tile-b); border-color: var(--line); color: var(--txt-3); }
+  to   { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+}
+@keyframes ptl-num-on {
+  from { color: var(--txt-3); border-color: var(--line); }
+  to   { color: var(--accent-bright); border-color: var(--accent-soft-bd); }
+}
+@keyframes ptl-dot-on {
+  from { background: var(--pg, #08080a); border-color: var(--line-strong); }
+  to   { background: var(--accent-bright); border-color: var(--accent-bright); }
+}
+/* Там, где scroll-driven анимаций нет, всё показываем в конечном состоянии:
+   вечно серый блок читается как сломанный. */
+@supports not (animation-timeline: view()) {
+  .ptl-tile { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .ptl-num { color: var(--accent-bright); border-color: var(--accent-soft-bd); }
+  .ptl-dot { background: var(--accent-bright); border-color: var(--accent-bright); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ptl-axis::after, .ptl-tile, .ptl-num, .ptl-dot { animation: none; }
+  .ptl-axis::after { transform: scaleY(1); }
+  .ptl-tile { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .ptl-num { color: var(--accent-bright); border-color: var(--accent-soft-bd); }
+  .ptl-dot { background: var(--accent-bright); border-color: var(--accent-bright); }
+}
+
+/* На узком экране чередование теряет смысл — половина ширины не вмещает
+   текст. Ось уезжает к левому краю, всё остальное встаёт в одну колонку
+   справа от неё. */
+@media (max-width: 860px) {
+  .ptl-axis { left: 27px; }
+  .ptl-row, .ptl-alt { grid-template-columns: 56px minmax(0, 1fr); padding: 20px 0; column-gap: 20px; }
+  .ptl-mark, .ptl-alt .ptl-mark { grid-column: 1; grid-row: 1; flex-direction: column; gap: 8px;
+    justify-content: center; align-items: center; }
+  .ptl-body, .ptl-alt .ptl-body { grid-column: 2; grid-row: 1; text-align: left;
+    padding: 0; }
+  .ptl-alt .ptl-d { margin-left: 0; }
+  .ptl-dot { display: none; }   /* ось проходит прямо под плиткой, узел на ней не читается */
+  .ptl-tile { width: 54px; height: 54px; }
+  .ptl-h { font-size: 20px; }
+}
+
 /* ---------- Contact deck ---------- */
 /* Раскладка неравными долями: один канал крупный, остальные парами. Три
    одинаковые строки, что были здесь раньше, честно перечисляли способы
@@ -788,9 +924,6 @@ a.cd:hover .cd-ic { color: var(--accent-bright); border-color: var(--accent-soft
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1040px) {
-  .proc-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 36px 24px !important; }
-}
 @media (max-width: 900px) {
   .sec { padding: 56px 0; }
   .sec-tight { padding: 44px 0; }
@@ -814,7 +947,6 @@ a.cd:hover .cd-ic { color: var(--accent-bright); border-color: var(--accent-soft
   .case-head { grid-template-columns: 1fr !important; gap: 16px !important; }
 }
 @media (max-width: 620px) {
-  .proc-grid { grid-template-columns: 1fr !important; }
   .stat-grid { grid-template-columns: 1fr 1fr !important; padding: 20px !important; gap: 16px !important; }
   .stat-num { font-size: 28px !important; }
   .stat-label { font-size: 12px !important; margin-top: 4px !important; }
@@ -838,7 +970,7 @@ a.cd:hover .cd-ic { color: var(--accent-bright); border-color: var(--accent-soft
   .lead { font-size: 16px; }
   h2.section-title { font-size: clamp(28px, 8vw, 44px); }
   /* горизонтальные карусели: убираем «вынос» за край, который тянул viewport */
-  .cert-grid, .svc-x-stack, .case-list, .proc-grid, .kase-tabs, .kase-grid {
+  .cert-grid, .svc-x-stack, .case-list, .kase-tabs, .kase-grid {
     margin-left: -16px !important; margin-right: -16px !important;
     padding-left: 16px !important; padding-right: 16px !important;
   }
@@ -1163,65 +1295,6 @@ section > .wrap, header > .wrap, section > .atmos ~ * { position: relative; z-in
 
 @media (prefers-reduced-motion: reduce) {
   .svc-x.open .svc-x-list li { animation: none; opacity: 1; transform: none; }
-}
-
-/* ============================================================
-   PROCESS — animated chain: flowing current + sequential pulse
-   ============================================================ */
-.proc-node-row { display: flex; align-items: center; margin-bottom: 22px; }
-.proc-node { width: 46px; height: 46px; border-radius: 50%; flex: 0 0 auto;
-  display: inline-flex; align-items: center; justify-content: center;
-  color: var(--accent-bright); background: var(--accent-soft);
-  border: 1px solid var(--accent-soft-bd); position: relative; z-index: 1;
-  animation: procNode 5s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.6s); }
-@keyframes procNode {
-  0%, 55%, 100% { box-shadow: 0 0 0 0 transparent; transform: scale(1); border-color: var(--accent-soft-bd); }
-  10% { box-shadow: 0 0 0 7px var(--accent-soft),
-          0 0 26px 2px color-mix(in srgb, var(--accent-bright) 50%, transparent);
-        transform: scale(1.12); border-color: var(--accent-bright); }
-  22% { box-shadow: 0 0 0 0 transparent; transform: scale(1); border-color: var(--accent-soft-bd); }
-}
-.proc-link { flex: 1; height: 2px; margin-left: 6px; position: relative; overflow: hidden;
-  background: var(--line); border-radius: 2px; }
-.proc-link-flow { position: absolute; inset: 0; border-radius: 2px;
-  background: linear-gradient(90deg, transparent 0%,
-    color-mix(in srgb, var(--accent-bright) 90%, transparent) 50%, transparent 100%);
-  background-size: 55% 100%; background-repeat: no-repeat;
-  animation: procFlow 5s linear infinite;
-  animation-delay: calc(var(--i) * 0.6s); }
-@keyframes procFlow {
-  0%   { background-position: -60% 0; opacity: 0; }
-  4%   { opacity: 1; }
-  20%  { background-position: 170% 0; opacity: 1; }
-  24%, 100% { background-position: 170% 0; opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .proc-node, .proc-link-flow { animation: none; }
-  .proc-link-flow { opacity: 1; background-position: 50% 0; }
-}
-@media (max-width: 1040px) {
-  .proc-chain .proc-link { display: none; }   /* segments only read across a single row */
-}
-/* Телефон: шаги идут сверху вниз.
-   Была горизонтальная карусель по 230px на шаг. При ширине экрана в 390px
-   второй шаг обрезался краем прямо посередине слова — «а что слива…», — и это
-   читалось не как «пролистай дальше», а как сломанная вёрстка.
-
-   Порядок действий вообще естественнее читать сверху вниз: у списка есть
-   начало и конец, у горизонтальной ленты — нет. Соединители цепочки при этом
-   гасим: они рисуют связь по горизонтали и в столбце указывают в пустоту. */
-@media (max-width: 640px) {
-  .proc-grid {
-    display: flex !important; flex-direction: column;
-    gap: 26px !important;
-    overflow: visible;
-    margin: 0 !important; padding: 0 !important;
-  }
-  .proc-step { flex: initial; max-width: none; }
-  .proc-chain .proc-link { display: none; }
-  .proc-step:last-child .proc-node-row { padding-right: 0; }
-  .swipe-hint:has(+ .proc-grid) { display: none; }
 }
 
 /* ---------- Wave section dividers ---------- */
