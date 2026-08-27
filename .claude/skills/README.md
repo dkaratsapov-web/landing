@@ -49,13 +49,17 @@ git add .claude/skills && git commit -m "skills: дизайнерский наб
 
 ### Дизайн и фронтенд
 
-| Скилл | Откуда | Зачем здесь |
+Все пять — из [github.com/Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill),
+каталог `skills/`. При установке их переименовали, поэтому в таблице два имени:
+наше и исходное. Тела файлов сверены — совпадают побайтово.
+
+| Скилл | Оригинал | Зачем здесь |
 |---|---|---|
-| `design-taste-frontend` | Leonxlnx/taste-skill | Главный. Определяет направление по задаче, ставит степень асимметрии, движения и плотности. Большой список запретов на типовые ИИ-решения — в том числе на градиент из бирюзы в фиолетовый |
-| `high-end-visual-design` | источник не записан | «Дорогой» вид: вложенные рамки, кнопка-в-кнопке, крупные отступы, кастомные кривые анимаций вместо `ease-in-out` |
-| `redesign-existing-projects` | источник не записан | Аудит существующего: мёртвые состояния, отсутствующие hover, разъезжающиеся базовые линии, обрезанный текст |
-| `minimalist-ui` | источник не записан | Тёплая монохромная редакционная эстетика. Этому сайту не подходит — тёмная тема с кислотным акцентом |
-| `industrial-brutalist-ui` | источник не записан | Швейцарская типографика плюс военный терминал. Тоже не про этот сайт |
+| `design-taste-frontend` | [`skills/taste-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/taste-skill) | Главный. Определяет направление по задаче, ставит степень асимметрии, движения и плотности. Большой список запретов на типовые ИИ-решения — в том числе на градиент из бирюзы в фиолетовый |
+| `high-end-visual-design` | [`skills/soft-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/soft-skill) | «Дорогой» вид: вложенные рамки, кнопка-в-кнопке, крупные отступы, кастомные кривые анимаций вместо `ease-in-out` |
+| `redesign-existing-projects` | [`skills/redesign-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/redesign-skill) | Аудит существующего: мёртвые состояния, отсутствующие hover, разъезжающиеся базовые линии, обрезанный текст |
+| `minimalist-ui` | [`skills/minimalist-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/minimalist-skill) | Тёплая монохромная редакционная эстетика. Этому сайту не подходит — тёмная тема с кислотным акцентом |
+| `industrial-brutalist-ui` | [`skills/brutalist-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/brutalist-skill) | Швейцарская типографика плюс военный терминал. Тоже не про этот сайт |
 
 Первые три подмешиваются в любую работу с внешним видом. Два последних —
 стилевые, включаются только под соответствующую задачу.
@@ -64,9 +68,9 @@ git add .claude/skills && git commit -m "skills: дизайнерский наб
 
 | Скилл | Откуда | Зачем здесь |
 |---|---|---|
-| `imagegen-frontend-web` | источник не записан | Макеты-референсы, по одному горизонтальному изображению на секцию |
-| `brandkit` | источник не записан | Брендборды, логосистемы, презентации айдентики |
-| `scroll-world` | oso95/scroll-world | Лендинг-полёт через 3D-мир на прокрутке, рендер клипов через Higgsfield |
+| `imagegen-frontend-web` | [`Leonxlnx/taste-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/imagegen-frontend-web) | Макеты-референсы, по одному горизонтальному изображению на секцию |
+| `brandkit` | [`Leonxlnx/taste-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/brandkit) | Брендборды, логосистемы, презентации айдентики |
+| `scroll-world` | [`oso95/scroll-world`](https://github.com/oso95/scroll-world) | Лендинг-полёт через 3D-мир на прокрутке, рендер клипов через Higgsfield |
 
 Требуют внешних сервисов и денег за генерацию, поэтому сами не запускаются.
 
@@ -75,27 +79,28 @@ git add .claude/skills && git commit -m "skills: дизайнерский наб
 | Скилл | Откуда | Зачем здесь |
 |---|---|---|
 | `seo-content` | написан для этого проекта | Публикация статей: канонические факты о владельце, его опыт и протокол проверки утверждений |
-| `ai-seo` | coreyhaines31/marketingskills | Оптимизация под ИИ-поиск и обзоры |
+| `ai-seo` | [`coreyhaines31/marketingskills`](https://github.com/coreyhaines31/marketingskills/tree/main/skills) | Оптимизация под ИИ-поиск и обзоры |
 | `content-strategy` | то же | Планирование контента, кластеры тем |
 | `copywriting` | то же | Тексты для лендингов и услуг |
 | `copy-editing` | то же | Правка готовых текстов |
 | `cro` | то же | Конверсия страниц |
 | `analytics` | то же | Цели, события, разметка |
-| `stop-slop` | hardikpandya/stop-slop | Вычистка признаков ИИ-текста из прозы |
+| `stop-slop` | [`hardikpandya/stop-slop`](https://github.com/hardikpandya/stop-slop) | Вычистка признаков ИИ-текста из прозы |
 
 ### Служебное
 
 | Скилл | Откуда | Зачем здесь |
 |---|---|---|
-| `full-output-enforcement` | источник не записан | Запрещает обрывать вывод многоточиями и заглушками вроде «остальное аналогично» |
+| `full-output-enforcement` | [`Leonxlnx/taste-skill` → `skills/output-skill`](https://github.com/Leonxlnx/taste-skill/tree/main/skills/output-skill) | Запрещает обрывать вывод многоточиями и заглушками вроде «остальное аналогично» |
 
 ---
 
 ## Лицензии
 
 marketingskills — MIT (Corey Haines). stop-slop — репозиторий Hardik Pandya.
-По остальным источник при установке не записали; если будешь публиковать
-набор — сначала выясни происхождение.
+По `Leonxlnx/taste-skill` лицензия в репозитории не указана — то есть по
+умолчанию права у автора. Пользоваться можно, перепубликовывать набор как свой
+— нет.
 
 ## Что стоило бы добавить
 
