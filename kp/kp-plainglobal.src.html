@@ -1,0 +1,579 @@
+<meta charset="utf-8">
+<title>КП: новый сайт PLAIN</title>
+<style>/*FONTS*/</style>
+<style>
+:root{
+  --ink:#15171c; --ink-2:#4a4f5a; --ink-3:#8b909c;
+  --line:#e3e5ea; --line-2:#f0f1f4;
+  --dark:#0e0e10; --dark-2:#1a1a1e;
+  --lime:#b6f01e; --lime-ink:#1a1a1e;
+  --paper:#ffffff;
+}
+*{box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Nunito", "Liberation Sans", system-ui, sans-serif;
+  color:var(--ink); background:#8a8d94; font-size:10pt; line-height:1.5;
+  font-weight:400; -webkit-font-smoothing:antialiased;
+}
+@page{ size:A4; margin:0; }
+.page{
+  position:relative; width:210mm; height:297mm; overflow:hidden;
+  background:var(--paper); margin:0 auto 8mm; padding:16mm 16mm 14mm;
+  display:flex; flex-direction:column;
+}
+.page > *{flex-shrink:0;}
+@media print{ .page{ margin:0; box-shadow:none; page-break-after:always; } .page:last-child{page-break-after:auto;} body{background:#fff;} }
+
+h1,h2,h3,h4{margin:0; font-weight:800; letter-spacing:-0.02em; line-height:1.12;}
+p{margin:0;}
+.mono{font-variant-numeric:tabular-nums;}
+
+/* ---------- shared bits ---------- */
+.kicker{
+  font-size:8pt; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3);
+}
+.rule{height:1px; background:var(--line); border:0;}
+.sect-h{display:flex; align-items:baseline; gap:10px; margin-bottom:4mm;}
+.sect-n{
+  font-size:8pt; font-weight:800; color:var(--lime-ink); background:var(--lime);
+  border-radius:99px; padding:2px 9px; letter-spacing:.06em;
+}
+.sect-t{font-size:16pt;}
+.lead{font-size:10.5pt; color:var(--ink-2); line-height:1.55;}
+
+/* ---------- page 1 (dark) ---------- */
+.cover{background:var(--dark); color:#f5f5f7; padding:16mm 16mm 13mm;}
+.cover a{color:inherit;}
+.cov-top{display:flex; justify-content:space-between; align-items:center;}
+.brand{display:flex; align-items:center; gap:9px;}
+.mark{
+  width:30px; height:30px; border-radius:9px; background:var(--lime);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:12pt; color:#0e0e10; letter-spacing:-0.04em;
+}
+.brand-t{font-size:9pt; font-weight:700; line-height:1.25;}
+.brand-s{font-size:8pt; color:#8e9098; font-weight:400;}
+.cov-url{font-size:9pt; color:#b6f01e; font-weight:700;}
+
+.cov-mid{margin-top:15mm;}
+.cov-kick{
+  font-size:8pt; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--lime); margin-bottom:6mm;
+}
+.cov-h{font-size:42pt; line-height:1.02; letter-spacing:-0.035em;}
+.cov-h em{font-style:normal; color:var(--lime);}
+.cov-sub{margin-top:6mm; font-size:12pt; color:#c9cbd1; font-weight:400; max-width:130mm; line-height:1.45;}
+.dirs{display:flex; gap:7px; margin-top:6mm;}
+.dir{
+  border:1px solid #33353c; border-radius:99px; padding:5px 14px;
+  font-size:9pt; font-weight:700; color:#e7e8eb;
+}
+.dir b{color:var(--lime); font-weight:800;}
+
+.cov-for{
+  margin-top:9mm; display:flex; gap:14mm; font-size:9pt;
+  padding-top:5mm; border-top:1px solid #26272c;
+}
+.cov-for div span{display:block; color:#7d8087; font-size:7.5pt; text-transform:uppercase; letter-spacing:.1em; font-weight:700; margin-bottom:2px;}
+.cov-for div b{font-weight:700; font-size:10pt; color:#f5f5f7;}
+
+.lines{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:10mm;}
+.line{
+  border:1px solid #26272c; border-radius:12px; padding:6mm 5mm 7mm;
+  background:#141418; position:relative; overflow:hidden;
+}
+.line i{position:absolute; left:0; top:0; width:100%; height:2.2px; background:var(--lime); display:block;}
+.line .ln-n{
+  display:block; font-size:7.5pt; font-weight:800; letter-spacing:.12em;
+  color:var(--lime); margin-bottom:3mm;
+}
+.line h4{font-size:13pt; color:#fff; margin-bottom:2.5mm; letter-spacing:-0.02em;}
+.line p{font-size:8.4pt; color:#9b9ea6; line-height:1.6;}
+
+.cov-bottom{margin-top:auto;}
+.promise{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:6mm;
+  padding:6mm 0; border-top:1px solid #26272c; border-bottom:1px solid #26272c;
+}
+.promise h4{font-size:10pt; margin-bottom:2.5mm; color:#fff;}
+.promise p{font-size:8.6pt; color:#9b9ea6; line-height:1.5;}
+.promise .pn{color:var(--lime); font-size:8pt; font-weight:800; letter-spacing:.1em; display:block; margin-bottom:3mm;}
+
+.incl{padding:7mm 0 6mm; border-top:1px solid #26272c;}
+.incl-h{
+  font-size:8pt; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--lime); margin-bottom:4mm;
+}
+.incl ul{
+  margin:0; padding:0; list-style:none;
+  display:grid; grid-template-columns:1fr 1fr; gap:4mm 8mm;
+}
+.incl li{
+  font-size:9pt; color:#d3d5da; padding-left:7mm; position:relative; line-height:1.35;
+}
+.incl li::before{
+  content:""; position:absolute; left:0; top:1.1mm;
+  width:3.2mm; height:1.7mm; border-left:1.6px solid var(--lime); border-bottom:1.6px solid var(--lime);
+  transform:rotate(-45deg);
+}
+
+.facts{display:grid; grid-template-columns:repeat(4,1fr); gap:5mm; margin-top:5mm; padding-top:5mm; border-top:1px solid #26272c;}
+.fact b{display:block; font-size:19pt; font-weight:800; letter-spacing:-0.03em; color:var(--lime); line-height:1;}
+.fact span{display:block; margin-top:2.5mm; font-size:8pt; color:#8e9098; line-height:1.35;}
+
+/* ---------- structure diagram ---------- */
+.diagram{width:100%; height:auto; margin:1mm 0 4mm;}
+
+/* ---------- timeline ---------- */
+.tl{width:100%; border-collapse:collapse; font-size:8.6pt;}
+.tl th{
+  font-size:7.5pt; font-weight:800; color:var(--ink-3); text-transform:uppercase;
+  letter-spacing:.08em; text-align:center; padding:0 0 2mm; border-bottom:1px solid var(--line);
+}
+.tl th.n{text-align:left; width:52mm;}
+.tl td{padding:1.6mm 0; border-bottom:1px solid var(--line-2); vertical-align:middle;}
+.tl td.n{font-weight:700; font-size:9pt; padding-right:4mm;}
+.tl td.n i{display:block; font-style:normal; font-weight:400; font-size:7.8pt; color:var(--ink-3); line-height:1.35; margin-top:1px;}
+.bar-cell{position:relative; height:7mm;}
+.bar{
+  position:absolute; top:50%; transform:translateY(-50%); height:5.2mm;
+  border-radius:99px; background:var(--lime);
+  display:flex; align-items:center; padding-left:2.5mm;
+  font-size:7.6pt; font-weight:800; color:#1a1a1e; white-space:nowrap;
+}
+.bar.soft{background:#e9f9bd;}
+.grid-lines{position:absolute; inset:0; display:grid; grid-template-columns:repeat(7,1fr);}
+.wk-h{display:grid; grid-template-columns:repeat(7,1fr);}
+.wk-h i{font-style:normal; text-align:center; font-size:8pt; color:var(--ink-2); font-weight:800;}
+.grid-lines i{border-left:1px dashed var(--line);}
+
+/* ---------- tables ---------- */
+table.est{width:100%; border-collapse:collapse; font-size:9pt;}
+table.est th{
+  text-align:left; font-size:7.5pt; font-weight:800; color:var(--ink-3);
+  text-transform:uppercase; letter-spacing:.08em; padding:0 0 2.5mm;
+  border-bottom:1.5px solid var(--ink);
+}
+table.est th.r, table.est td.r{text-align:right; white-space:nowrap;}
+table.est td{padding:2.6mm 0; border-bottom:1px solid var(--line-2); vertical-align:top;}
+table.est td.name{font-weight:700; padding-right:6mm; width:48mm;}
+table.est td.desc{color:var(--ink-2); font-size:8.4pt; line-height:1.45;}
+table.est td.r{font-weight:800; font-variant-numeric:tabular-nums; width:28mm;}
+table.est tr.total td{border-bottom:none; border-top:1.5px solid var(--ink); padding-top:3.5mm; font-size:11pt; font-weight:800;}
+table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
+
+/* ---------- stacked bar ---------- */
+.stack{display:flex; height:9mm; border-radius:5px; overflow:hidden; margin-top:1mm;}
+.stack div{display:flex; align-items:center; justify-content:center; font-size:7.5pt; font-weight:800; color:#1a1a1e;}
+.stack-legend{display:flex; flex-wrap:wrap; gap:3mm 6mm; margin-top:3mm; font-size:7.8pt; color:var(--ink-2);}
+.stack-legend span{display:flex; align-items:center; gap:5px;}
+.stack-legend i{width:8px; height:8px; border-radius:2px; display:block;}
+
+/* ---------- options ---------- */
+.opts{width:100%; border-collapse:collapse; font-size:8.8pt;}
+.opts td{padding:2.4mm 0; border-bottom:1px solid var(--line-2);}
+.opts td.r{text-align:right; font-weight:800; white-space:nowrap; font-variant-numeric:tabular-nums;}
+.opts tr:last-child td{border-bottom:none;}
+
+/* ---------- notes / cards ---------- */
+.cards{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm;}
+.card{border:1px solid var(--line); border-radius:10px; padding:4mm;}
+.card h4{font-size:9.4pt; margin-bottom:2mm;}
+.card p{font-size:8.2pt; color:var(--ink-2); line-height:1.5;}
+.card .dot{width:7px;height:7px;border-radius:99px;background:var(--lime);display:block;margin-bottom:3mm;}
+
+.note{
+  background:#f7f8f9; border-left:2.5px solid var(--lime); border-radius:0 8px 8px 0;
+  padding:3mm 5mm; font-size:8.4pt; color:var(--ink-2); line-height:1.5;
+}
+.note b{color:var(--ink);}
+
+.pay{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:1mm;}
+.pay div{border:1px solid var(--line); border-radius:10px; padding:3.5mm 4mm;}
+.pay b{display:block; font-size:15pt; font-weight:800; letter-spacing:-0.03em;}
+.pay span{display:block; font-size:8pt; color:var(--ink-2); margin-top:1.5mm; line-height:1.4;}
+
+/* ---------- CTA ---------- */
+.cta{
+  margin-top:auto; background:var(--dark); color:#f5f5f7;
+  border-radius:12px; padding:6mm 7mm; display:flex; justify-content:space-between; align-items:center; gap:8mm;
+}
+.cta h3{font-size:14pt; color:#fff;}
+.cta p{font-size:8.6pt; color:#9b9ea6; margin-top:2.5mm; line-height:1.5; max-width:88mm;}
+.cta-c{text-align:right; font-size:9pt; line-height:1.7; white-space:nowrap;}
+.cta-c b{display:block; font-size:11pt; color:var(--lime); font-weight:800;}
+.cta-c span{color:#c9cbd1;}
+
+.foot{
+  margin-top:5mm; display:flex; justify-content:space-between;
+  font-size:7.5pt; color:var(--ink-3); padding-top:3mm; border-top:1px solid var(--line);
+}
+.cover .foot{border-top-color:#26272c; color:#6e7078;}
+</style>
+
+<!-- ============ СТРАНИЦА 1 ============ -->
+<section class="page cover">
+  <div class="cov-top">
+    <div class="brand">
+      <div class="mark">ДК</div>
+      <div>
+        <div class="brand-t">Даниил Карацапов</div>
+        <div class="brand-s">интернет-маркетолог · сайты и реклама</div>
+      </div>
+    </div>
+    <div class="cov-url">karatsapov.ru</div>
+  </div>
+
+  <div class="cov-mid">
+    <div class="cov-kick">Коммерческое предложение</div>
+    <h1 class="cov-h">Новый сайт<br><em>PLAIN</em></h1>
+    <p class="cov-sub">Сайт-каталог одежды с тремя направлениями: витрина, которая
+      показывает ассортимент, объясняет отличия линеек и доводит посетителя
+      до заявки, а не просто «есть в интернете».</p>
+    <div class="cov-for">
+      <div><span>Кому</span><b>PLAIN · plainglobal.com</b></div>
+      <div><span>Дата</span><b>Сентябрь 2026</b></div>
+      <div><span>Срок действия</span><b>30 дней</b></div>
+    </div>
+
+    <div class="lines">
+      <div class="line">
+        <i></i>
+        <span class="ln-n">01</span>
+        <h4>Спорт</h4>
+        <p>Ткань, посадка, размерная сетка. Покупают по характеристикам —
+           значит характеристики должны быть на виду.</p>
+      </div>
+      <div class="line">
+        <i></i>
+        <span class="ln-n">02</span>
+        <h4>Дети</h4>
+        <p>Рост и возраст вместо размеров, состав и уход. Решение принимает
+           родитель, и у него другой список вопросов.</p>
+      </div>
+      <div class="line">
+        <i></i>
+        <span class="ln-n">03</span>
+        <h4>База</h4>
+        <p>Цвет, сочетаемость, повторная покупка. Здесь работают подборки
+           и «с этим носят», а не фильтры.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cov-bottom">
+    <div class="incl">
+      <div class="incl-h">Что входит в проект</div>
+      <ul>
+        <li>Дизайн девяти уникальных экранов</li>
+        <li>Каталог до 150 позиций с фильтрами и поиском</li>
+        <li>Адаптив: телефон, планшет, десктоп</li>
+        <li>Админка на русском — правки без программиста</li>
+        <li>Тексты страниц и описания линеек</li>
+        <li>SEO-база: мета-теги, микроразметка, sitemap</li>
+        <li>Яндекс Метрика и GA4 с настроенными целями</li>
+        <li>Перенос домена, тесты и запуск</li>
+      </ul>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>7 недель</b><span>от старта до запуска</span></div>
+      <div class="fact"><b>250 000 ₽</b><span>базовая стоимость проекта</span></div>
+      <div class="fact"><b>3</b><span>направления каталога</span></div>
+      <div class="fact"><b>150</b><span>товарных позиций в базе</span></div>
+    </div>
+
+    <div class="foot">
+      <span>Коммерческое предложение для PLAIN</span>
+      <span>Страница 1 из 3</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ СТРАНИЦА 2 ============ -->
+<section class="page">
+  <div class="sect-h">
+    <span class="sect-n">01</span>
+    <h2 class="sect-t">Как будет устроен сайт</h2>
+  </div>
+  <p class="lead" style="max-width:150mm; margin-bottom:3mm;">
+    Структура строится вокруг трёх направлений: посетитель с первого экрана
+    выбирает свою линейку и дальше идёт коротким путём — каталог с фильтрами,
+    карточка, заявка.
+  </p>
+
+  <svg class="diagram" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style>
+        .bx{fill:#ffffff;stroke:#d9dce2;stroke-width:1.5;}
+        .bx-dark{fill:#15171c;stroke:#15171c;}
+        .bx-lime{fill:#b6f01e;stroke:#b6f01e;}
+        .bx-dash{fill:#ffffff;stroke:#b9bec8;stroke-width:1.5;stroke-dasharray:5 4;}
+        .t{font-family:Nunito,sans-serif;font-size:14px;font-weight:800;fill:#15171c;}
+        .t-w{fill:#ffffff;}
+        .s{font-family:Nunito,sans-serif;font-size:11px;font-weight:400;fill:#7c818c;}
+        .s-w{fill:#9b9ea6;}
+        .ln{stroke:#c9ced7;stroke-width:1.5;fill:none;}
+        .ln-d{stroke:#c9ced7;stroke-width:1.5;fill:none;stroke-dasharray:5 4;}
+        .cap{font-family:Nunito,sans-serif;font-size:10px;font-weight:800;fill:#9aa0ab;letter-spacing:.08em;}
+      </style>
+    </defs>
+
+    <text class="cap" x="0" y="12">УРОВЕНЬ 1</text>
+    <text class="cap" x="0" y="112">УРОВЕНЬ 2</text>
+    <text class="cap" x="0" y="212">УРОВЕНЬ 3</text>
+
+    <!-- level 1 -->
+    <rect class="bx bx-dark" x="330" y="22" width="240" height="52" rx="10"/>
+    <text class="t t-w" x="450" y="46" text-anchor="middle">Главная</text>
+    <text class="s s-w" x="450" y="63" text-anchor="middle">бренд, три входа, новинки</text>
+
+    <!-- connectors 1 -> 2 -->
+    <path class="ln" d="M450 74 v18 H150 v30"/>
+    <path class="ln" d="M450 74 v48"/>
+    <path class="ln" d="M450 74 v18 H750 v30"/>
+
+    <!-- level 2 -->
+    <rect class="bx" x="40" y="122" width="220" height="52" rx="10"/>
+    <text class="t" x="150" y="146" text-anchor="middle">Спорт</text>
+    <text class="s" x="150" y="163" text-anchor="middle">ткани, посадка, размеры</text>
+
+    <rect class="bx" x="340" y="122" width="220" height="52" rx="10"/>
+    <text class="t" x="450" y="146" text-anchor="middle">Дети</text>
+    <text class="s" x="450" y="163" text-anchor="middle">рост, возраст, уход</text>
+
+    <rect class="bx" x="640" y="122" width="220" height="52" rx="10"/>
+    <text class="t" x="750" y="146" text-anchor="middle">База</text>
+    <text class="s" x="750" y="163" text-anchor="middle">цвета, базовый гардероб</text>
+
+    <!-- connectors 2 -> 3 -->
+    <path class="ln" d="M150 174 v18 H450 v30"/>
+    <path class="ln" d="M450 174 v48"/>
+    <path class="ln" d="M750 174 v18 H450 v30"/>
+
+    <!-- level 3 -->
+    <rect class="bx bx-lime" x="300" y="222" width="300" height="52" rx="10"/>
+    <text class="t" x="450" y="246" text-anchor="middle">Карточка товара</text>
+    <text class="s" style="fill:#3c4a10" x="450" y="263" text-anchor="middle">фото, размерная сетка, заявка</text>
+
+    <!-- option: cart -->
+    <path class="ln-d" d="M600 248 H700"/>
+    <rect class="bx bx-dash" x="700" y="222" width="200" height="52" rx="10"/>
+    <text class="t" style="fill:#7c818c" x="800" y="243" text-anchor="middle">Корзина и оплата</text>
+    <text class="s" x="800" y="260" text-anchor="middle">опция, см. стр. 3</text>
+
+    <!-- side pages -->
+    <rect class="bx" x="0" y="22" width="200" height="52" rx="10"/>
+    <text class="t" style="font-size:12px" x="100" y="43" text-anchor="middle">О бренде · Лукбуки</text>
+    <text class="s" x="100" y="60" text-anchor="middle">кто вы и почему PLAIN</text>
+    <path class="ln" d="M200 48 H330"/>
+
+    <rect class="bx" x="700" y="22" width="200" height="52" rx="10"/>
+    <text class="t" style="font-size:12px" x="800" y="43" text-anchor="middle">Доставка · Контакты</text>
+    <text class="s" x="800" y="60" text-anchor="middle">условия и ответы</text>
+    <path class="ln" d="M570 48 H700"/>
+  </svg>
+
+  <div class="cards" style="margin-bottom:5mm;">
+    <div class="card">
+      <span class="dot"></span>
+      <h4>Разные линейки — разная логика</h4>
+      <p>Спорт продаётся через ткань и посадку, детское — через рост и уход,
+         база — через цвет и сочетаемость. Поэтому страницы направлений разные,
+         а не один шаблон на три линейки.</p>
+    </div>
+    <div class="card">
+      <span class="dot"></span>
+      <h4>Карточка закрывает вопросы</h4>
+      <p>Размерная сетка, состав, уход, фото на модели и деталях, похожие
+         товары. Меньше вопросов — меньше отказов и дешевле заявка.</p>
+    </div>
+    <div class="card">
+      <span class="dot"></span>
+      <h4>Наполняете сами</h4>
+      <p>Админка на русском: добавить товар, поменять цену, выключить размер,
+         собрать подборку. Программист для рутины не нужен.</p>
+    </div>
+  </div>
+
+  <div class="sect-h">
+    <span class="sect-n">02</span>
+    <h2 class="sect-t">Как идёт работа</h2>
+  </div>
+
+  <table class="tl">
+    <tr>
+      <th class="n">Этап · недели</th>
+      <th>
+        <div class="wk-h"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i></div>
+      </th>
+    </tr>
+    <tr>
+      <td class="n">Аналитика и структура<i>конкуренты, сценарии, карта сайта, прототипы</i></td>
+      <td class="bar-cell">
+        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar" style="left:0;width:14.2%;">1 нед.</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="n">Дизайн<i>главная, три направления, каталог, карточка</i></td>
+      <td class="bar-cell">
+        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar" style="left:14.2%;width:28.5%;">2 нед.</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="n">Вёрстка и сборка<i>адаптив, админка, каталог с фильтрами</i></td>
+      <td class="bar-cell">
+        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar" style="left:35.7%;width:35.7%;">2,5 нед.</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="n">Контент и наполнение<i>тексты, фото, товары, мета-теги</i></td>
+      <td class="bar-cell">
+        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar soft" style="left:57.1%;width:28.5%;">2 нед.</div>
+      </td>
+    </tr>
+    <tr>
+      <td class="n">Тесты и запуск<i>аналитика, скорость, перенос домена</i></td>
+      <td class="bar-cell">
+        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar" style="left:85.7%;width:14.2%;">1 нед.</div>
+      </td>
+    </tr>
+  </table>
+
+  <p class="note" style="margin-top:5mm;">
+    <b>Что нужно от вас:</b> фотографии товаров, описания линеек, доступ к домену
+    и один человек для согласований. Аналитика, дизайн, код, тексты и настройка —
+    на мне. Правки по этапу собираются одним списком: это и держит срок.
+  </p>
+
+  <div class="foot">
+    <span>Даниил Карацапов · karatsapov.ru</span>
+    <span>Страница 2 из 3</span>
+  </div>
+</section>
+
+<!-- ============ СТРАНИЦА 3 ============ -->
+<section class="page">
+  <div class="sect-h">
+    <span class="sect-n">03</span>
+    <h2 class="sect-t">Стоимость и сроки</h2>
+  </div>
+
+  <table class="est">
+    <tr>
+      <th>Этап</th>
+      <th>Что входит</th>
+      <th class="r">Стоимость</th>
+    </tr>
+    <tr>
+      <td class="name">Аналитика и структура</td>
+      <td class="desc">Разбор конкурентов и сценариев покупки, карта сайта, прототипы ключевых экранов</td>
+      <td class="r">20 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">Дизайн</td>
+      <td class="desc">Главная, три страницы направлений, каталог с фильтрами, карточка товара, служебные страницы</td>
+      <td class="r">65 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">Вёрстка и сборка</td>
+      <td class="desc">Адаптив под телефон, планшет и десктоп, админка для самостоятельных правок</td>
+      <td class="r">80 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">Каталог</td>
+      <td class="desc">До 150 позиций, фильтры и поиск, размерные сетки, подборки, связанные товары</td>
+      <td class="r">45 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">Контент и SEO-база</td>
+      <td class="desc">Тексты страниц, обработка фотографий, мета-теги, микроразметка, sitemap, robots</td>
+      <td class="r">25 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">Тесты и запуск</td>
+      <td class="desc">Яндекс Метрика и GA4, цели и события, скорость, перенос домена, тестирование</td>
+      <td class="r">15 000 ₽</td>
+    </tr>
+    <tr class="total">
+      <td class="name">Итого</td>
+      <td class="desc" style="padding-top:4.5mm;font-size:8.4pt;">сайт-каталог под ключ, срок 7 недель</td>
+      <td class="r">250 000 ₽</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:5mm;">
+    <div class="kicker" style="margin-bottom:2.5mm;">Из чего складывается бюджет</div>
+    <div class="stack">
+      <div style="width:8%;  background:#0e0e10; color:#fff;">8%</div>
+      <div style="width:26%; background:#3d4a1a; color:#fff;">26%</div>
+      <div style="width:32%; background:#7cb010;">32%</div>
+      <div style="width:18%; background:#b6f01e;">18%</div>
+      <div style="width:10%; background:#d6f77e;">10%</div>
+      <div style="width:6%;  background:#eafbc4;">6%</div>
+    </div>
+    <div class="stack-legend">
+      <span><i style="background:#0e0e10"></i> Аналитика и структура</span>
+      <span><i style="background:#3d4a1a"></i> Дизайн</span>
+      <span><i style="background:#7cb010"></i> Вёрстка и сборка</span>
+      <span><i style="background:#b6f01e"></i> Каталог</span>
+      <span><i style="background:#d6f77e"></i> Контент и SEO</span>
+      <span><i style="background:#eafbc4"></i> Тесты и запуск</span>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8mm; margin-top:7mm;">
+    <div>
+      <div class="kicker" style="margin-bottom:3mm;">Опции сверх базы</div>
+      <table class="opts">
+        <tr><td>Корзина и онлайн-оплата</td><td class="r">+70 000 ₽</td></tr>
+        <tr><td>Личный кабинет, история заказов</td><td class="r">+45 000 ₽</td></tr>
+        <tr><td>Английская версия сайта</td><td class="r">+35 000 ₽</td></tr>
+        <tr><td>Интеграция с CRM и складом</td><td class="r">от 30 000 ₽</td></tr>
+        <tr><td>Реклама после запуска, ведение</td><td class="r">от 30 000 ₽/мес</td></tr>
+        <tr><td>Маркетинг под ключ</td><td class="r">от 90 000 ₽/мес</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="kicker" style="margin-bottom:3mm;">Порядок оплаты</div>
+      <div class="pay" style="grid-template-columns:1fr 1fr 1fr;">
+        <div><b>40%</b><span>старт работ</span></div>
+        <div><b>40%</b><span>дизайн утверждён</span></div>
+        <div><b>20%</b><span>сайт запущен</span></div>
+      </div>
+      <p class="note" style="margin-top:4mm;">
+        <b>Что считал.</b> Смета рассчитана на сайт-каталог: товары, фильтры,
+        карточка и заявка. Онлайн-оплата вынесена в опции — если нужен полноценный
+        магазин, считаем его отдельно. После доступа к текущему сайту и статистике
+        цифры уточняются в меньшую или большую сторону.
+      </p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div>
+      <h3>Следующий шаг — 30 минут разговора</h3>
+      <p>Покажу, как вижу структуру под ваш ассортимент, и уточню смету под
+         реальное количество позиций. После разговора пришлю финальное
+         предложение и план работ по неделям.</p>
+    </div>
+    <div class="cta-c">
+      <b>+7 (996) 347-00-65</b>
+      <span>Telegram: @Daniil_065</span><br>
+      <span>d.karatsapov@gmail.com</span><br>
+      <span>karatsapov.ru</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Даниил Карацапов · интернет-маркетолог, сайты и реклама</span>
+    <span>Страница 3 из 3</span>
+  </div>
+</section>
