@@ -129,7 +129,7 @@ p{margin:0;}
 .brand-s{font-size:8pt; color:#8e9098; font-weight:400;}
 .cov-url{font-size:9pt; color:#b6f01e; font-weight:700;}
 
-.cov-mid{margin-top:15mm;}
+.cov-mid{margin-top:13mm;}
 .cov-kick{
   font-size:8pt; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
   color:var(--lime); margin-bottom:6mm;
@@ -196,7 +196,7 @@ p{margin:0;}
 .fact span{display:block; margin-top:2.5mm; font-size:8pt; color:#8e9098; line-height:1.35;}
 
 /* ---------- structure diagram ---------- */
-.diagram{width:100%; height:auto; margin:1mm 0 4mm;}
+.diagram{width:100%; height:auto; margin:1mm 0 3mm;}
 
 /* ---------- timeline ---------- */
 .tl{width:100%; border-collapse:collapse; font-size:8.6pt;}
@@ -205,7 +205,7 @@ p{margin:0;}
   letter-spacing:.08em; text-align:center; padding:0 0 2mm; border-bottom:1px solid var(--line);
 }
 .tl th.n{text-align:left; width:52mm;}
-.tl td{padding:1.6mm 0; border-bottom:1px solid var(--line-2); vertical-align:middle;}
+.tl td{padding:1.4mm 0; border-bottom:1px solid var(--line-2); vertical-align:middle;}
 .tl td.n{font-weight:700; font-size:9pt; padding-right:4mm;}
 .tl td.n i{display:block; font-style:normal; font-weight:400; font-size:7.8pt; color:var(--ink-3); line-height:1.35; margin-top:1px;}
 .bar-cell{position:relative; height:7mm;}
@@ -225,27 +225,40 @@ p{margin:0;}
 table.est{width:100%; border-collapse:collapse; font-size:9pt;}
 table.est th{
   text-align:left; font-size:7.5pt; font-weight:800; color:var(--ink-3);
-  text-transform:uppercase; letter-spacing:.08em; padding:0 0 2.5mm;
+  text-transform:uppercase; letter-spacing:.08em; padding:0 0 2mm;
   border-bottom:1.5px solid var(--ink);
 }
 table.est th.r, table.est td.r{text-align:right; white-space:nowrap;}
-table.est td{padding:2.6mm 0; border-bottom:1px solid var(--line-2); vertical-align:top;}
+table.est td{padding:2.1mm 0; border-bottom:1px solid var(--line-2); vertical-align:top;}
 table.est td.name{font-weight:700; padding-right:6mm; width:48mm;}
 table.est td.desc{color:var(--ink-2); font-size:8.4pt; line-height:1.45;}
 table.est td.r{font-weight:800; font-variant-numeric:tabular-nums; width:28mm;}
-table.est tr.total td{border-bottom:none; border-top:1.5px solid var(--ink); padding-top:3.5mm; font-size:11pt; font-weight:800;}
+table.est tr.total td{border-bottom:none; border-top:1.5px solid var(--ink); padding-top:3mm; font-size:11pt; font-weight:800;}
 table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
 
+/* ---------- пакеты ---------- */
+.packs{display:grid; grid-template-columns:1fr 1fr; gap:4mm; margin-top:4mm;}
+.pack{border:1px solid var(--line); border-radius:10px; padding:3.5mm 4mm 4mm;}
+.pack-hi{border-color:var(--ink); background:#fafbf5;}
+.pack-n{
+  display:block; font-size:7.2pt; font-weight:800; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:2.5mm;
+}
+.pack-hi .pack-n{color:#5c7a0a;}
+.pack h3{font-size:11pt; margin-bottom:2.5mm;}
+.pack h3 b{float:right; font-size:12.5pt; letter-spacing:-0.03em;}
+.pack p{font-size:8pt; color:var(--ink-2); line-height:1.45;}
+
 /* ---------- stacked bar ---------- */
-.stack{display:flex; height:9mm; border-radius:5px; overflow:hidden; margin-top:1mm;}
+.stack{display:flex; height:7mm; border-radius:5px; overflow:hidden; margin-top:1mm;}
 .stack div{display:flex; align-items:center; justify-content:center; font-size:7.5pt; font-weight:800; color:#1a1a1e;}
-.stack-legend{display:flex; flex-wrap:wrap; gap:3mm 6mm; margin-top:3mm; font-size:7.8pt; color:var(--ink-2);}
+.stack-legend{display:flex; flex-wrap:wrap; gap:2.5mm 6mm; margin-top:2.5mm; font-size:7.4pt; color:var(--ink-2);}
 .stack-legend span{display:flex; align-items:center; gap:5px;}
 .stack-legend i{width:8px; height:8px; border-radius:2px; display:block;}
 
 /* ---------- options ---------- */
-.opts{width:100%; border-collapse:collapse; font-size:8.8pt;}
-.opts td{padding:2.4mm 0; border-bottom:1px solid var(--line-2);}
+.opts{width:100%; border-collapse:collapse; font-size:8.6pt;}
+.opts td{padding:2mm 0; border-bottom:1px solid var(--line-2);}
 .opts td.r{text-align:right; font-weight:800; white-space:nowrap; font-variant-numeric:tabular-nums;}
 .opts tr:last-child td{border-bottom:none;}
 
@@ -262,7 +275,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
 }
 .note b{color:var(--ink);}
 
-.pay{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:1mm;}
+.pay{display:grid; grid-template-columns:1fr 1fr; gap:4mm; margin-top:1mm;}
 .pay div{border:1px solid var(--line); border-radius:10px; padding:3.5mm 4mm;}
 .pay b{display:block; font-size:15pt; font-weight:800; letter-spacing:-0.03em;}
 .pay span{display:block; font-size:8pt; color:var(--ink-2); margin-top:1.5mm; line-height:1.4;}
@@ -270,7 +283,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
 /* ---------- CTA ---------- */
 .cta{
   margin-top:auto; background:var(--dark); color:#f5f5f7;
-  border-radius:12px; padding:6mm 7mm; display:flex; justify-content:space-between; align-items:center; gap:8mm;
+  border-radius:12px; padding:5mm 6mm; display:flex; justify-content:space-between; align-items:center; gap:8mm;
 }
 .cta h3{font-size:14pt; color:#fff;}
 .cta p{font-size:8.6pt; color:#9b9ea6; margin-top:2.5mm; line-height:1.5; max-width:88mm;}
@@ -339,10 +352,10 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
     <div class="incl">
       <div class="incl-h">Что входит в проект</div>
       <ul>
-        <li>Дизайн девяти уникальных экранов</li>
+        <li>Дизайн главной, направлений, каталога и карточки</li>
         <li>Каталог до 150 позиций с фильтрами и поиском</li>
         <li>Адаптив: телефон, планшет, десктоп</li>
-        <li>Админка на русском — правки без программиста</li>
+        <li>Две недели правок после запуска</li>
         <li>Тексты страниц и описания линеек</li>
         <li>SEO-база: мета-теги, микроразметка, sitemap</li>
         <li>Яндекс Метрика и GA4 с настроенными целями</li>
@@ -351,8 +364,8 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
     </div>
 
     <div class="facts">
-      <div class="fact"><b>7 недель</b><span>от старта до запуска</span></div>
-      <div class="fact"><b>250 000 ₽</b><span>базовая стоимость проекта</span></div>
+      <div class="fact"><b>14 дней</b><span>от старта до запуска</span></div>
+      <div class="fact"><b>от 50 000 ₽</b><span>стоимость проекта</span></div>
       <div class="fact"><b>3</b><span>направления каталога</span></div>
       <div class="fact"><b>150</b><span>товарных позиций в базе</span></div>
     </div>
@@ -370,7 +383,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
     <span class="sect-n">01</span>
     <h2 class="sect-t">Как будет устроен сайт</h2>
   </div>
-  <p class="lead" style="max-width:150mm; margin-bottom:3mm;">
+  <p class="lead" style="max-width:150mm; margin-bottom:2mm;">
     Структура строится вокруг трёх направлений: посетитель с первого экрана
     выбирает свою линейку и дальше идёт коротким путём — каталог с фильтрами,
     карточка, заявка.
@@ -448,7 +461,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
     <path class="ln" d="M570 48 H700"/>
   </svg>
 
-  <div class="cards" style="margin-bottom:5mm;">
+  <div class="cards" style="margin-bottom:4mm;">
     <div class="card">
       <span class="dot"></span>
       <h4>Разные линейки — разная логика</h4>
@@ -464,9 +477,9 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
     </div>
     <div class="card">
       <span class="dot"></span>
-      <h4>Наполняете сами</h4>
-      <p>Админка на русском: добавить товар, поменять цену, выключить размер,
-         собрать подборку. Программист для рутины не нужен.</p>
+      <h4>Наполняете сами — если нужно</h4>
+      <p>Админка на русском: добавить товар, поменять цену, собрать подборку.
+         Входит в вариант с админкой на стр. 3; без неё правки идут через меня.</p>
     </div>
   </div>
 
@@ -477,52 +490,53 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
 
   <table class="tl">
     <tr>
-      <th class="n">Этап · недели</th>
+      <th class="n">Этап · дни</th>
       <th>
-        <div class="wk-h"><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i></div>
+        <div class="wk-h"><i>1–2</i><i>3–4</i><i>5–6</i><i>7–8</i><i>9–10</i><i>11–12</i><i>13–14</i></div>
       </th>
     </tr>
     <tr>
-      <td class="n">Аналитика и структура<i>конкуренты, сценарии, карта сайта, прототипы</i></td>
+      <td class="n">Структура и прототип<i>сценарии покупки, карта сайта, прототипы</i></td>
       <td class="bar-cell">
         <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:0;width:14.2%;">1 нед.</div>
+        <div class="bar" style="left:0;width:14.2%;">2 дня</div>
       </td>
     </tr>
     <tr>
       <td class="n">Дизайн<i>главная, три направления, каталог, карточка</i></td>
       <td class="bar-cell">
         <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:14.2%;width:28.5%;">2 нед.</div>
+        <div class="bar" style="left:14.2%;width:28.5%;">4 дня</div>
       </td>
     </tr>
     <tr>
-      <td class="n">Вёрстка и сборка<i>адаптив, админка, каталог с фильтрами</i></td>
+      <td class="n">Вёрстка и сборка<i>адаптив, каталог с фильтрами, скорость</i></td>
       <td class="bar-cell">
         <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:35.7%;width:35.7%;">2,5 нед.</div>
+        <div class="bar" style="left:35.7%;width:42.8%;">6 дней</div>
       </td>
     </tr>
     <tr>
-      <td class="n">Контент и наполнение<i>тексты, фото, товары, мета-теги</i></td>
+      <td class="n">Каталог и контент<i>товары, тексты, фото, мета-теги</i></td>
       <td class="bar-cell">
         <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar soft" style="left:57.1%;width:28.5%;">2 нед.</div>
+        <div class="bar soft" style="left:57.1%;width:35.7%;">5 дней</div>
       </td>
     </tr>
     <tr>
       <td class="n">Тесты и запуск<i>аналитика, скорость, перенос домена</i></td>
       <td class="bar-cell">
         <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:85.7%;width:14.2%;">1 нед.</div>
+        <div class="bar" style="left:85.7%;width:14.2%;">2 дня</div>
       </td>
     </tr>
   </table>
 
   <p class="note" style="margin-top:5mm;">
     <b>Что нужно от вас:</b> фотографии товаров, описания линеек, доступ к домену
-    и один человек для согласований. Аналитика, дизайн, код, тексты и настройка —
-    на мне. Правки по этапу собираются одним списком: это и держит срок.
+    и один человек для согласований. Дизайн, код, тексты и настройка — на мне.
+    Срок в 14 дней держится только при быстрых согласованиях: правки по этапу —
+    одним списком в течение рабочего дня.
   </p>
 
   <div class="foot">
@@ -545,86 +559,93 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
       <th class="r">Стоимость</th>
     </tr>
     <tr>
-      <td class="name">Аналитика и структура</td>
-      <td class="desc">Разбор конкурентов и сценариев покупки, карта сайта, прототипы ключевых экранов</td>
-      <td class="r">20 000 ₽</td>
+      <td class="name">Структура и прототип</td>
+      <td class="desc">Сценарии покупки по трём линейкам, карта сайта, прототипы ключевых экранов</td>
+      <td class="r">5 000 ₽</td>
     </tr>
     <tr>
       <td class="name">Дизайн</td>
-      <td class="desc">Главная, три страницы направлений, каталог с фильтрами, карточка товара, служебные страницы</td>
-      <td class="r">65 000 ₽</td>
+      <td class="desc">Главная, страницы направлений, каталог с фильтрами, карточка товара, служебные страницы</td>
+      <td class="r">15 000 ₽</td>
     </tr>
     <tr>
       <td class="name">Вёрстка и сборка</td>
-      <td class="desc">Адаптив под телефон, планшет и десктоп, админка для самостоятельных правок</td>
-      <td class="r">80 000 ₽</td>
+      <td class="desc">Адаптив под телефон, планшет и десктоп, скорость загрузки, кроссбраузерность</td>
+      <td class="r">18 000 ₽</td>
     </tr>
     <tr>
       <td class="name">Каталог</td>
-      <td class="desc">До 150 позиций, фильтры и поиск, размерные сетки, подборки, связанные товары</td>
-      <td class="r">45 000 ₽</td>
+      <td class="desc">Три направления, до 150 позиций, фильтры и поиск, размерные сетки, подборки</td>
+      <td class="r">7 000 ₽</td>
     </tr>
     <tr>
-      <td class="name">Контент и SEO-база</td>
-      <td class="desc">Тексты страниц, обработка фотографий, мета-теги, микроразметка, sitemap, robots</td>
-      <td class="r">25 000 ₽</td>
-    </tr>
-    <tr>
-      <td class="name">Тесты и запуск</td>
-      <td class="desc">Яндекс Метрика и GA4, цели и события, скорость, перенос домена, тестирование</td>
-      <td class="r">15 000 ₽</td>
+      <td class="name">Контент, SEO и запуск</td>
+      <td class="desc">Тексты, мета-теги, микроразметка, Яндекс Метрика и GA4, перенос домена, тесты</td>
+      <td class="r">5 000 ₽</td>
     </tr>
     <tr class="total">
       <td class="name">Итого</td>
-      <td class="desc" style="padding-top:4.5mm;font-size:8.4pt;">сайт-каталог под ключ, срок 7 недель</td>
-      <td class="r">250 000 ₽</td>
+      <td class="desc" style="padding-top:4.5mm;font-size:8.4pt;">сайт-каталог под ключ, срок 14 дней</td>
+      <td class="r">50 000 ₽</td>
     </tr>
   </table>
 
-  <div style="margin-top:5mm;">
-    <div class="kicker" style="margin-bottom:2.5mm;">Из чего складывается бюджет</div>
-    <div class="stack">
-      <div style="width:8%;  background:#0e0e10; color:#fff;">8%</div>
-      <div style="width:26%; background:#3d4a1a; color:#fff;">26%</div>
-      <div style="width:32%; background:#7cb010;">32%</div>
-      <div style="width:18%; background:#b6f01e;">18%</div>
-      <div style="width:10%; background:#d6f77e;">10%</div>
-      <div style="width:6%;  background:#eafbc4;">6%</div>
+  <div class="packs">
+    <div class="pack">
+      <span class="pack-n">Вариант 1</span>
+      <h3>Без админки <b>50 000 ₽</b></h3>
+      <p>Каталог наполняю я при запуске. Дальше товары, цены и подборки
+         меняются через меня — по заявке, в рабочем порядке.</p>
     </div>
-    <div class="stack-legend">
-      <span><i style="background:#0e0e10"></i> Аналитика и структура</span>
-      <span><i style="background:#3d4a1a"></i> Дизайн</span>
-      <span><i style="background:#7cb010"></i> Вёрстка и сборка</span>
-      <span><i style="background:#b6f01e"></i> Каталог</span>
-      <span><i style="background:#d6f77e"></i> Контент и SEO</span>
-      <span><i style="background:#eafbc4"></i> Тесты и запуск</span>
+    <div class="pack pack-hi">
+      <span class="pack-n">Вариант 2 · рекомендую</span>
+      <h3>С админкой <b>65 000 ₽</b></h3>
+      <p>Панель управления на русском: добавить товар, поменять цену, выключить
+         размер, собрать подборку. Программист для рутины не нужен.</p>
     </div>
   </div>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8mm; margin-top:7mm;">
+  <div style="margin-top:4mm;">
+    <div class="kicker" style="margin-bottom:2.5mm;">Из чего складывается работа</div>
+    <div class="stack">
+      <div style="width:10%; background:#0e0e10; color:#fff;">10%</div>
+      <div style="width:30%; background:#3d4a1a; color:#fff;">30%</div>
+      <div style="width:36%; background:#7cb010;">36%</div>
+      <div style="width:14%; background:#b6f01e;">14%</div>
+      <div style="width:10%; background:#d6f77e;">10%</div>
+    </div>
+    <div class="stack-legend">
+      <span><i style="background:#0e0e10"></i> Структура и прототип</span>
+      <span><i style="background:#3d4a1a"></i> Дизайн</span>
+      <span><i style="background:#7cb010"></i> Вёрстка и сборка</span>
+      <span><i style="background:#b6f01e"></i> Каталог</span>
+      <span><i style="background:#d6f77e"></i> Контент, SEO и запуск</span>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8mm; margin-top:5mm;">
     <div>
       <div class="kicker" style="margin-bottom:3mm;">Опции сверх базы</div>
       <table class="opts">
-        <tr><td>Корзина и онлайн-оплата</td><td class="r">+70 000 ₽</td></tr>
-        <tr><td>Личный кабинет, история заказов</td><td class="r">+45 000 ₽</td></tr>
-        <tr><td>Английская версия сайта</td><td class="r">+35 000 ₽</td></tr>
-        <tr><td>Интеграция с CRM и складом</td><td class="r">от 30 000 ₽</td></tr>
+        <tr><td>Админка для самостоятельных правок</td><td class="r">+15 000 ₽</td></tr>
+        <tr><td>Корзина и онлайн-оплата</td><td class="r">+25 000 ₽</td></tr>
+        <tr><td>Английская версия сайта</td><td class="r">+15 000 ₽</td></tr>
+        <tr><td>Интеграция с CRM и складом</td><td class="r">от 10 000 ₽</td></tr>
         <tr><td>Реклама после запуска, ведение</td><td class="r">от 30 000 ₽/мес</td></tr>
         <tr><td>Маркетинг под ключ</td><td class="r">от 90 000 ₽/мес</td></tr>
       </table>
     </div>
     <div>
       <div class="kicker" style="margin-bottom:3mm;">Порядок оплаты</div>
-      <div class="pay" style="grid-template-columns:1fr 1fr 1fr;">
-        <div><b>40%</b><span>старт работ</span></div>
-        <div><b>40%</b><span>дизайн утверждён</span></div>
-        <div><b>20%</b><span>сайт запущен</span></div>
+      <div class="pay">
+        <div><b>50%</b><span>старт работ</span></div>
+        <div><b>50%</b><span>сайт запущен</span></div>
       </div>
       <p class="note" style="margin-top:4mm;">
-        <b>Что считал.</b> Смета рассчитана на сайт-каталог: товары, фильтры,
-        карточка и заявка. Онлайн-оплата вынесена в опции — если нужен полноценный
-        магазин, считаем его отдельно. После доступа к текущему сайту и статистике
-        цифры уточняются в меньшую или большую сторону.
+        <b>Что считал.</b> Смета — на сайт-каталог: товары, фильтры, карточка и
+        заявка. Онлайн-оплата вынесена в опции. Срок в 14 дней держится, если
+        фотографии и описания линеек готовы к старту, а правки приходят одним
+        списком в течение рабочего дня.
       </p>
     </div>
   </div>
@@ -634,7 +655,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
       <h3>Следующий шаг — 30 минут разговора</h3>
       <p>Покажу, как вижу структуру под ваш ассортимент, и уточню смету под
          реальное количество позиций. После разговора пришлю финальное
-         предложение и план работ по неделям.</p>
+         предложение и план работ по дням.</p>
     </div>
     <div class="cta-c">
       <b>+7 (996) 347-00-65</b>
