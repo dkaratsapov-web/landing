@@ -57,12 +57,12 @@ p{margin:0;}
 .brand-s{font-size:8pt; color:#8e9098; font-weight:400;}
 .cov-url{font-size:9pt; color:#b6f01e; font-weight:700;}
 
-.cov-mid{margin-top:13mm;}
+.cov-mid{margin-top:7mm;}
 .cov-kick{
   font-size:8pt; font-weight:800; letter-spacing:.16em; text-transform:uppercase;
   color:var(--lime); margin-bottom:6mm;
 }
-.cov-h{font-size:42pt; line-height:1.02; letter-spacing:-0.035em;}
+.cov-h{font-size:38pt; line-height:1.02; letter-spacing:-0.035em;}
 .cov-h em{font-style:normal; color:var(--lime);}
 .cov-sub{margin-top:6mm; font-size:12pt; color:#c9cbd1; font-weight:400; max-width:130mm; line-height:1.45;}
 .dirs{display:flex; gap:7px; margin-top:6mm;}
@@ -81,7 +81,7 @@ p{margin:0;}
 
 .lines{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:10mm;}
 .line{
-  border:1px solid #26272c; border-radius:12px; padding:6mm 5mm 7mm;
+  border:1px solid #26272c; border-radius:12px; padding:5mm 4.5mm 5.5mm;
   background:#141418; position:relative; overflow:hidden;
 }
 .line i{position:absolute; left:0; top:0; width:100%; height:2.2px; background:var(--lime); display:block;}
@@ -101,7 +101,16 @@ p{margin:0;}
 .promise p{font-size:8.6pt; color:#9b9ea6; line-height:1.5;}
 .promise .pn{color:var(--lime); font-size:8pt; font-weight:800; letter-spacing:.1em; display:block; margin-bottom:3mm;}
 
-.incl{padding:7mm 0 6mm; border-top:1px solid #26272c;}
+.tech{padding:6mm 0 5mm; border-top:1px solid #26272c;}
+.tech-h{
+  font-size:8pt; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--lime); margin-bottom:3.5mm;
+}
+.tech-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:3mm 6mm;}
+.tech-grid div{font-size:8.2pt; color:#9b9ea6; line-height:1.3; white-space:nowrap;}
+.tech-grid b{color:#f5f5f7; font-weight:700;}
+
+.incl{padding:5mm 0 4mm; border-top:1px solid #26272c;}
 .incl-h{
   font-size:8pt; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
   color:var(--lime); margin-bottom:4mm;
@@ -119,7 +128,7 @@ p{margin:0;}
   transform:rotate(-45deg);
 }
 
-.facts{display:grid; grid-template-columns:repeat(4,1fr); gap:5mm; margin-top:5mm; padding-top:5mm; border-top:1px solid #26272c;}
+.facts{display:grid; grid-template-columns:repeat(4,1fr); gap:5mm; margin-top:4mm; padding-top:4mm; border-top:1px solid #26272c;}
 .fact b{display:block; font-size:19pt; font-weight:800; letter-spacing:-0.03em; color:var(--lime); line-height:1;}
 .fact span{display:block; margin-top:2.5mm; font-size:8pt; color:#8e9098; line-height:1.35;}
 
@@ -258,27 +267,39 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
         <i></i>
         <span class="ln-n">01</span>
         <h4>Спорт</h4>
-        <p>Ткань, посадка, размерная сетка. Покупают по характеристикам —
-           значит характеристики должны быть на виду.</p>
+        <p>Ткань, посадка, размеры. Покупают по характеристикам — значит они
+           должны быть на виду.</p>
       </div>
       <div class="line">
         <i></i>
         <span class="ln-n">02</span>
         <h4>Дети</h4>
-        <p>Рост и возраст вместо размеров, состав и уход. Решение принимает
-           родитель, и у него другой список вопросов.</p>
+        <p>Рост и возраст вместо размеров, состав и уход. Решает родитель —
+           у него свой список вопросов.</p>
       </div>
       <div class="line">
         <i></i>
         <span class="ln-n">03</span>
         <h4>База</h4>
-        <p>Цвет, сочетаемость, повторная покупка. Здесь работают подборки
-           и «с этим носят», а не фильтры.</p>
+        <p>Цвет, сочетаемость, повторная покупка. Работают подборки и
+           «с этим носят», а не фильтры.</p>
       </div>
     </div>
   </div>
 
   <div class="cov-bottom">
+    <div class="tech">
+      <div class="tech-h">Технически</div>
+      <div class="tech-grid">
+        <div><b>Платформа</b> — своя сборка на Node.js</div>
+        <div><b>Язык сайта</b> — русский</div>
+        <div><b>База данных</b> — PostgreSQL</div>
+        <div><b>Хостинг</b> — VPS в России</div>
+        <div><b>Оплата</b> — эквайринг ЮKassa / Т-Касса</div>
+        <div><b>Адаптив</b> — от 320 px</div>
+      </div>
+    </div>
+
     <div class="incl">
       <div class="incl-h">Что входит в проект</div>
       <ul>
