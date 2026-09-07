@@ -244,9 +244,9 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
   <div class="cov-mid">
     <div class="cov-kick">Коммерческое предложение</div>
     <h1 class="cov-h">Новый сайт<br><em>PLAIN</em></h1>
-    <p class="cov-sub">Сайт-каталог одежды с тремя направлениями: витрина, которая
-      показывает ассортимент, объясняет отличия линеек и доводит посетителя
-      до заявки, а не просто «есть в интернете».</p>
+    <p class="cov-sub">Сайт-каталог одежды с тремя направлениями: показывает
+      ассортимент, объясняет отличия линеек и доводит посетителя до
+      оплаченного заказа, а не просто «есть в интернете».</p>
     <div class="cov-for">
       <div><span>Кому</span><b>PLAIN · plainglobal.com</b></div>
       <div><span>Дата</span><b>Сентябрь 2026</b></div>
@@ -287,8 +287,8 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
         <li>Адаптив: телефон, планшет, десктоп</li>
         <li>Две недели правок после запуска</li>
         <li>Тексты страниц и описания линеек</li>
-        <li>SEO-база: мета-теги, микроразметка, sitemap</li>
-        <li>Яндекс Метрика и GA4 с настроенными целями</li>
+        <li>Корзина и онлайн-оплата</li>
+        <li>SEO-база, микроразметка, Метрика и GA4</li>
         <li>Перенос домена, тесты и запуск</li>
       </ul>
     </div>
@@ -316,7 +316,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
   <p class="lead" style="max-width:150mm; margin-bottom:2mm;">
     Структура строится вокруг трёх направлений: посетитель с первого экрана
     выбирает свою линейку и дальше идёт коротким путём — каталог с фильтрами,
-    карточка, заявка.
+    карточка товара, корзина, оплата.
   </p>
 
   <svg class="diagram" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
@@ -371,13 +371,13 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
     <!-- level 3 -->
     <rect class="bx bx-lime" x="300" y="222" width="300" height="52" rx="10"/>
     <text class="t" x="450" y="246" text-anchor="middle">Карточка товара</text>
-    <text class="s" style="fill:#3c4a10" x="450" y="263" text-anchor="middle">фото, размерная сетка, заявка</text>
+    <text class="s" style="fill:#3c4a10" x="450" y="263" text-anchor="middle">фото, размерная сетка, в корзину</text>
 
-    <!-- option: cart -->
-    <path class="ln-d" d="M600 248 H700"/>
-    <rect class="bx bx-dash" x="700" y="222" width="200" height="52" rx="10"/>
-    <text class="t" style="fill:#7c818c" x="800" y="243" text-anchor="middle">Корзина и оплата</text>
-    <text class="s" x="800" y="260" text-anchor="middle">считается отдельно</text>
+    <!-- cart -->
+    <path class="ln" d="M600 248 H700"/>
+    <rect class="bx" x="700" y="222" width="200" height="52" rx="10"/>
+    <text class="t" style="font-size:13px" x="800" y="243" text-anchor="middle">Корзина и оплата</text>
+    <text class="s" x="800" y="260" text-anchor="middle">доставка, оплата онлайн</text>
 
     <!-- side pages -->
     <rect class="bx" x="0" y="22" width="200" height="52" rx="10"/>
@@ -403,7 +403,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
       <span class="dot"></span>
       <h4>Карточка закрывает вопросы</h4>
       <p>Размерная сетка, состав, уход, фото на модели и деталях, похожие
-         товары. Меньше вопросов — меньше отказов и дешевле заявка.</p>
+         товары. Меньше вопросов — меньше отказов и дешевле заказ.</p>
     </div>
     <div class="card">
       <span class="dot"></span>
@@ -504,8 +504,8 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
       <td class="r">18 000 ₽</td>
     </tr>
     <tr>
-      <td class="name">Каталог</td>
-      <td class="desc">Три направления, до 150 позиций, фильтры и поиск, размерные сетки, подборки</td>
+      <td class="name">Каталог и заказ</td>
+      <td class="desc">Три направления, до 150 позиций, фильтры и поиск, размерные сетки, корзина и онлайн-оплата</td>
       <td class="r">7 000 ₽</td>
     </tr>
     <tr>
@@ -548,7 +548,7 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
       <span><i style="background:#0e0e10"></i> Структура и прототип</span>
       <span><i style="background:#3d4a1a"></i> Дизайн</span>
       <span><i style="background:#7cb010"></i> Вёрстка и сборка</span>
-      <span><i style="background:#b6f01e"></i> Каталог</span>
+      <span><i style="background:#b6f01e"></i> Каталог и заказ</span>
       <span><i style="background:#d6f77e"></i> Контент, SEO и запуск</span>
     </div>
   </div>
@@ -561,11 +561,10 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
         <tr><td>Яндекс Директ, ведение<i>поиск и РСЯ, минус-слова, отчётность</i></td><td class="r">от 30 000 ₽/мес</td></tr>
         <tr><td>Маркетинг под ключ<i>плюс VK Ads, Telegram Ads, Промостраницы, SEO</i></td><td class="r">от 60 000 ₽/мес</td></tr>
       </table>
-      <p class="opts-note">Доставка Ozon работает вместе с корзиной: пункт выдачи
-        выбирается при оформлении заказа, корзина считается отдельно.
-        В 10 000 ₽ входит базовый набор — карта пунктов выдачи и постаматов,
-        расчёт стоимости и срока, создание отправления. Свои тарифы, частичный
-        выкуп и возвраты через ПВЗ считаются сверх этой суммы.</p>
+      <p class="opts-note">Пункт выдачи Ozon выбирается прямо в корзине — она уже
+        входит в базовую стоимость. В 10 000 ₽ входит базовый набор: карта пунктов
+        выдачи и постаматов, расчёт стоимости и срока, создание отправления.
+        Свои тарифы, частичный выкуп и возвраты через ПВЗ считаются сверху.</p>
     </div>
     <div>
       <div class="kicker" style="margin-bottom:3mm;">Порядок оплаты</div>
@@ -574,10 +573,10 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
         <div><b>50%</b><span>сайт запущен</span></div>
       </div>
       <p class="note" style="margin-top:4mm;">
-        <b>Что считал.</b> Смета — на сайт-каталог: товары, фильтры, карточка и
-        заявка. Корзина и онлайн-оплата в базу не входят и считаются отдельно.
-        Срок в 14 дней держится, если фотографии и описания линеек готовы к
-        старту, а правки приходят одним списком в течение рабочего дня.
+        <b>Что считал.</b> В базу входят каталог, карточка, корзина и онлайн-оплата.
+        Договор с платёжным сервисом — на PLAIN: подключаю я, подписываете вы.
+        Срок в 14 дней держится, если фото и описания линеек готовы к старту,
+        а правки приходят одним списком за рабочий день.
       </p>
     </div>
   </div>
