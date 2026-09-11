@@ -1,0 +1,61 @@
+# Выкладка на обычный хостинг по FTP.
+#
+# Запускается только руками (workflow_dispatch) — пока в репозитории нет
+# секретов FTP_HOST / FTP_USER / FTP_PASSWORD, автозапуск по пушу падал бы
+# на каждом коммите.
+#
+# Как включить:
+#   1. Settings → Secrets and variables → Actions → New repository secret:
+#      FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_DIR (корень сайта у хостера,
+#      обычно /public_html/ или /www/karatsapov.ru/).
+#   2. Прогнать один раз вручную: вкладка Actions → Deploy to hosting → Run.
+#   3. Убедиться, что сайт открылся, и только тогда добавить сюда
+#      автозапуск:  on: { push: { branches: [main] } }
+#   4. Выключить ненужные workflow — deploy.yml (GitHub Pages) или
+#      deploy-vps.yml, иначе сайт будет разъезжаться по трём местам сразу.
+
+name: Deploy to hosting
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: hosting-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Полная история нужна сборке: lastmod в sitemap.xml берётся
+          # из даты последнего коммита каждой страницы.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install build deps
+        run: npm install
+
+      - name: Build site (project -> dist)
+        run: npm run build
+
+      # CNAME нужен только GitHub Pages. На обычном хостинге это лишний
+      # файл в корне, который вдобавок отдаётся по прямой ссылке.
+      - name: Drop CNAME
+        run: rm -f dist/CNAME
+
+      - name: Upload dist/ over FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ${{ secrets.FTP_DIR }}
