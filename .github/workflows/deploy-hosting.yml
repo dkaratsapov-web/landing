@@ -6,8 +6,11 @@
 #
 # Как включить:
 #   1. Settings → Secrets and variables → Actions → New repository secret:
-#      FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_DIR (корень сайта у хостера,
-#      обычно /public_html/ или /www/karatsapov.ru/).
+#      FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_DIR.
+#      На хостинге Рег.ру с ispmanager FTP-пользователь попадает в
+#      /var/www/uXXXXXXX/data/, поэтому FTP_DIR = www/karatsapov.ru/
+#      (точный путь виден в панели, в свойствах сайта). Если FTPS не
+#      подхватится — поменять protocol на ftp.
 #   2. Прогнать один раз вручную: вкладка Actions → Deploy to hosting → Run.
 #   3. Убедиться, что сайт открылся, и только тогда добавить сюда
 #      автозапуск:  on: { push: { branches: [main] } }
