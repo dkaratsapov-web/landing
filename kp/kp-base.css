@@ -47,8 +47,8 @@ p{margin:0;}
 .mark{
   width:30px; height:30px; border-radius:9px; background:var(--lime);
   display:flex; align-items:center; justify-content:center;
-  font-weight:800; font-size:12pt; color:#0e0e10; letter-spacing:-0.04em;
 }
+.mark .plane{width:23px; height:23px; display:block; fill:#0e0e10;}
 .brand-t{font-size:9pt; font-weight:700; line-height:1.25;}
 .brand-s{font-size:8pt; color:#8e9098; font-weight:400;}
 .cov-url{font-size:9pt; color:#b6f01e; font-weight:700;}

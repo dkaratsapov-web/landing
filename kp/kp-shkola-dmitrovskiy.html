@@ -122,8 +122,8 @@ p{margin:0;}
 .mark{
   width:30px; height:30px; border-radius:9px; background:var(--lime);
   display:flex; align-items:center; justify-content:center;
-  font-weight:800; font-size:12pt; color:#0e0e10; letter-spacing:-0.04em;
 }
+.mark .plane{width:23px; height:23px; display:block; fill:#0e0e10;}
 .brand-t{font-size:9pt; font-weight:700; line-height:1.25;}
 .brand-s{font-size:8pt; color:#8e9098; font-weight:400;}
 .cov-url{font-size:9pt; color:#b6f01e; font-weight:700;}
@@ -317,391 +317,153 @@ table.est tr.total td.r{font-size:14pt; letter-spacing:-0.02em;}
 .tech-light .tech-grid b{color:var(--ink); font-weight:700;}
 </style>
 <style>
-/* На обложке нет блока направлений, как в других КП, поэтому герою
-   отдаётся больше воздуха сверху — иначе весь запас уходит в одну
-   дыру между результатами и составом проекта. */
-.cover .cov-mid{margin-top:16mm;}
-.res{margin-top:9mm;}
+/* Одностраничник: только перечень работ и цена. Полоса светлая —
+   документ читают и распечатывают, а не листают с экрана. */
+.head{display:flex; justify-content:space-between; align-items:center;
+  padding-bottom:5mm; border-bottom:1px solid var(--line);}
+.head .brand-t{color:var(--ink);}
+.head .brand-s{color:var(--ink-3);}
+.head-url{font-size:9pt; font-weight:800; color:var(--ink);}
 
-/* ---------- воронка приёма ---------- */
-.funnel{width:100%; height:auto; margin:1mm 0 2mm;}
-.funnel-cap{font-size:7.6pt; color:var(--ink-3); line-height:1.4; margin-bottom:4mm;}
-/* ---------- две сметы рядом ---------- */
-.two{display:grid; grid-template-columns:1fr 1fr; gap:9mm; margin-bottom:4mm;}
-.est-h{
-  font-size:8pt; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--ink-3); margin-bottom:3mm;
-}
-table.mini{width:100%; border-collapse:collapse; font-size:8.4pt;}
-table.mini td{padding:1.2mm 0; border-bottom:1px solid var(--line-2); vertical-align:top;}
-table.mini td.n{font-weight:700; padding-right:4mm;}
-table.mini td.n i{display:block; font-style:normal; font-weight:400; font-size:7.6pt;
-  color:var(--ink-3); line-height:1.35; margin-top:1px;}
-table.mini td.r{text-align:right; font-weight:800; white-space:nowrap; font-variant-numeric:tabular-nums;}
-table.mini tr.sum td{border-bottom:none; border-top:1.5px solid var(--ink); padding-top:2.5mm;
-  font-size:10pt; font-weight:800;}
-table.mini tr.sum td.r{font-size:12pt; letter-spacing:-0.02em;}
-/* ---------- итоговая полоса ---------- */
-.total-bar{
-  display:flex; align-items:center; justify-content:space-between;
+.doc-kick{font-size:8pt; font-weight:800; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin:6mm 0 3mm;}
+.doc-h{font-size:23pt; letter-spacing:-0.03em; line-height:1.05;}
+.doc-h em{font-style:normal; color:#6b9a08;}
+.doc-sub{margin-top:3mm; font-size:10.5pt; color:var(--ink-2); line-height:1.5; max-width:150mm;}
+
+.meta{display:flex; gap:14mm; margin:5mm 0 6mm; padding:4mm 0;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.meta div span{display:block; color:var(--ink-3); font-size:7.5pt;
+  text-transform:uppercase; letter-spacing:.1em; font-weight:800; margin-bottom:2px;}
+.meta div b{font-weight:800; font-size:10pt;}
+
+.blk-h{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:2.5mm;}
+.blk-h h3{font-size:12pt;}
+.blk-h span{font-size:8pt; font-weight:800; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3);}
+
+table.works{width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:5mm;}
+table.works td{padding:1.9mm 0; border-bottom:1px solid var(--line-2); vertical-align:top;}
+table.works td.n{font-weight:700; width:52mm; padding-right:6mm;}
+table.works td.d{color:var(--ink-2); font-size:8.4pt; line-height:1.45;}
+table.works td.r{text-align:right; font-weight:800; white-space:nowrap; width:26mm;
+  font-variant-numeric:tabular-nums;}
+table.works tr.sum td{border-bottom:none; border-top:1.5px solid var(--ink);
+  padding-top:3mm; font-size:10.5pt; font-weight:800;}
+table.works tr.sum td.r{font-size:13pt; letter-spacing:-0.02em;}
+
+.grand{display:flex; align-items:center; justify-content:space-between;
   background:#fafbf5; border:1px solid var(--ink); border-radius:10px;
-  padding:2.5mm 6mm; margin-bottom:4mm;
-}
-.total-bar .lbl{font-size:9.5pt; color:var(--ink-2);}
-.total-bar .lbl b{color:var(--ink); font-weight:800;}
-.total-bar .val{font-size:15pt; font-weight:800; letter-spacing:-0.03em; white-space:nowrap;}
-/* третья полоса плотная: на ней и объяснение CRM, и обе сметы */
-.dense .card{padding:3.5mm;}
-.dense .card p{font-size:8pt; line-height:1.45;}
-.dense .cta{padding:4mm 6mm;}
-.dense .sect-h{margin-bottom:3mm;}
-.dense .lead{font-size:10pt;}
-.dense .note{font-size:8pt;}
-.dense .pay div{padding:3mm 3.5mm;}
-.dense .pay b{font-size:13pt;}
+  padding:3.5mm 6mm; margin-bottom:5mm;}
+.grand .lbl{font-size:10pt; color:var(--ink-2);}
+.grand .lbl b{color:var(--ink); font-weight:800;}
+.grand .val{font-size:17pt; font-weight:800; letter-spacing:-0.03em; white-space:nowrap;}
+.cta{padding:4mm 6mm;}
+.pay div{padding:3mm 3.5mm;}
+.pay b{font-size:13pt;}
+.note{font-size:8pt;}
 </style>
 
-<!-- ============ СТРАНИЦА 1 ============ -->
-<section class="page cover">
-  <div class="cov-top">
+<section class="page">
+  <div class="head">
     <div class="brand">
-      <div class="mark">ДК</div>
+      <div class="mark"><svg class="plane" viewBox="0 0 50 50" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z"/></svg></div>
       <div>
         <div class="brand-t">Даниил Карацапов</div>
         <div class="brand-s">интернет-маркетолог · сайты и реклама</div>
       </div>
     </div>
-    <div class="cov-url">karatsapov.ru</div>
+    <div class="head-url">karatsapov.ru</div>
   </div>
 
-  <div class="cov-mid">
-    <div class="cov-kick">Коммерческое предложение</div>
-    <h1 class="cov-h">Сайт школы<br><em>и CRM для приёма</em></h1>
-    <p class="cov-sub">Новый сайт, который доводит родителя до записи на экскурсию,
-      и простая система, где видно судьбу каждой заявки — от звонка до зачисления.</p>
-    <div class="cov-for">
-      <div><span>Кому</span><b>Школа «Дмитровский»</b></div>
-      <div><span>Дата</span><b>Сентябрь 2026</b></div>
-      <div><span>Срок реализации</span><b>28 дней</b></div>
-    </div>
+  <div class="doc-kick">Коммерческое предложение</div>
+  <h1 class="doc-h">Сайт школы <em>и CRM для приёма</em></h1>
+  <p class="doc-sub">Новый сайт, который доводит родителя до записи на экскурсию,
+    и простой кабинет, где видно судьбу каждой заявки — от звонка до зачисления.</p>
 
-    <div class="res">
-      <div class="incl-h">Что уже сделано вместе</div>
-      <div class="facts res-facts">
-        <div class="fact"><b>+400%</b><span>посетителей сайта за 4 месяца</span></div>
-        <div class="fact"><b>ROI 322%</b><span>окупаемость за 6 месяцев</span></div>
-        <div class="fact"><b>+42%</b><span>набор в классы и группы</span></div>
-        <div class="fact"><b>+82</b><span>отзыва в Яндекс Бизнес за полгода</span></div>
-      </div>
-    </div>
+  <div class="meta">
+    <div><span>Кому</span><b>Школа «Дмитровский»</b></div>
+    <div><span>Дата</span><b>Сентябрь 2026</b></div>
+    <div><span>Срок реализации</span><b>28 дней</b></div>
   </div>
 
-  <div class="cov-bottom">
-    <div class="incl">
-      <div class="incl-h">Что входит в проект</div>
-      <ul>
-        <li>Дизайн главной, ступеней, поступления и служебных страниц</li>
-        <li>Разделы: педагоги, документы, новости, расписание дней открытых дверей</li>
-        <li>Адаптив: телефон, планшет, десктоп</li>
-        <li>Админка на русском — правки без программиста</li>
-        <li>Тексты страниц и описания ступеней обучения</li>
-        <li>Формы записи на экскурсию и обратного звонка</li>
-        <li>SEO-база, микроразметка, Метрика и GA4 с целями</li>
-        <li>Перенос домена, тесты и две недели правок после запуска</li>
-      </ul>
-    </div>
-
-    <div class="facts">
-      <div class="fact"><b>21 день</b><span>до запуска сайта</span></div>
-      <div class="fact"><b>65 000 ₽</b><span>сайт с админкой</span></div>
-      <div class="fact"><b>15 000 ₽</b><span>CRM для приёма</span></div>
-      <div class="fact"><b>+7 дней</b><span>на CRM после сайта</span></div>
-    </div>
-
-    <div class="foot">
-      <span>Коммерческое предложение для школы «Дмитровский»</span>
-      <span>Страница 1 из 3</span>
-    </div>
+  <div class="blk-h">
+    <h3>Сайт с админкой</h3>
+    <span>21 день</span>
   </div>
-</section>
-
-<!-- ============ СТРАНИЦА 2 ============ -->
-<section class="page">
-  <div class="sect-h">
-    <span class="sect-n">01</span>
-    <h2 class="sect-t">Как будет устроен сайт</h2>
-  </div>
-  <p class="lead" style="max-width:152mm; margin-bottom:2mm;">
-    Вся структура ведёт к одному действию — записи на экскурсию. Родитель
-    заходит с вопросом «нам сюда или не сюда», получает ответ за три клика
-    и оставляет заявку с конкретной датой.
-  </p>
-
-  <svg class="diagram" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <style>
-        .bx{fill:#ffffff;stroke:#d9dce2;stroke-width:1.5;}
-        .bx-dark{fill:#15171c;stroke:#15171c;}
-        .bx-lime{fill:#b6f01e;stroke:#b6f01e;}
-        .bx-dash{fill:#ffffff;stroke:#b9bec8;stroke-width:1.5;stroke-dasharray:5 4;}
-        .t{font-family:Nunito,sans-serif;font-size:14px;font-weight:800;fill:#15171c;}
-        .t-w{fill:#ffffff;}
-        .s{font-family:Nunito,sans-serif;font-size:11px;font-weight:400;fill:#7c818c;}
-        .s-w{fill:#9b9ea6;}
-        .ln{stroke:#c9ced7;stroke-width:1.5;fill:none;}
-        .ln-d{stroke:#c9ced7;stroke-width:1.5;fill:none;stroke-dasharray:5 4;}
-        .cap{font-family:Nunito,sans-serif;font-size:10px;font-weight:800;fill:#9aa0ab;letter-spacing:.08em;}
-      </style>
-    </defs>
-
-    <text class="cap" x="0" y="12">УРОВЕНЬ 1</text>
-    <text class="cap" x="0" y="112">УРОВЕНЬ 2</text>
-    <text class="cap" x="0" y="212">ЦЕЛЬ</text>
-
-    <rect class="bx bx-dark" x="330" y="22" width="240" height="52" rx="10"/>
-    <text class="t t-w" x="450" y="46" text-anchor="middle">Главная</text>
-    <text class="s s-w" x="450" y="63" text-anchor="middle">кто вы и ближайшая экскурсия</text>
-
-    <path class="ln" d="M450 74 v18 H150 v30"/>
-    <path class="ln" d="M450 74 v48"/>
-    <path class="ln" d="M450 74 v18 H750 v30"/>
-
-    <rect class="bx" x="40" y="122" width="220" height="52" rx="10"/>
-    <text class="t" x="150" y="146" text-anchor="middle">О школе</text>
-    <text class="s" x="150" y="163" text-anchor="middle">педагоги, лицензия, быт</text>
-
-    <rect class="bx" x="340" y="122" width="220" height="52" rx="10"/>
-    <text class="t" x="450" y="146" text-anchor="middle">Ступени обучения</text>
-    <text class="s" x="450" y="163" text-anchor="middle">начальная, средняя, старшая</text>
-
-    <rect class="bx" x="640" y="122" width="220" height="52" rx="10"/>
-    <text class="t" x="750" y="146" text-anchor="middle">Поступление</text>
-    <text class="s" x="750" y="163" text-anchor="middle">порядок, документы, стоимость</text>
-
-    <path class="ln" d="M150 174 v18 H450 v30"/>
-    <path class="ln" d="M450 174 v48"/>
-    <path class="ln" d="M750 174 v18 H450 v30"/>
-
-    <rect class="bx bx-lime" x="300" y="222" width="300" height="52" rx="10"/>
-    <text class="t" x="450" y="246" text-anchor="middle">Запись на экскурсию</text>
-    <text class="s" style="fill:#3c4a10" x="450" y="263" text-anchor="middle">выбор даты и подтверждение</text>
-
-    <path class="ln-d" d="M600 248 H700"/>
-    <rect class="bx bx-dash" x="700" y="222" width="200" height="52" rx="10"/>
-    <text class="t" style="fill:#7c818c;font-size:13px" x="800" y="243" text-anchor="middle">CRM приёма</text>
-    <text class="s" x="800" y="260" text-anchor="middle">отдельно, стр. 3</text>
-
-    <rect class="bx" x="0" y="22" width="200" height="52" rx="10"/>
-    <text class="t" style="font-size:12px" x="100" y="43" text-anchor="middle">Новости · Жизнь школы</text>
-    <text class="s" x="100" y="60" text-anchor="middle">школа живая, а не на бумаге</text>
-    <path class="ln" d="M200 48 H330"/>
-
-    <rect class="bx" x="700" y="22" width="200" height="52" rx="10"/>
-    <text class="t" style="font-size:12px" x="800" y="43" text-anchor="middle">Документы · Контакты</text>
-    <text class="s" x="800" y="60" text-anchor="middle">лицензия, устав, как доехать</text>
-    <path class="ln" d="M570 48 H700"/>
-  </svg>
-
-  <div class="cards" style="margin-bottom:5mm;">
-    <div class="card">
-      <span class="dot"></span>
-      <h4>Родители решают до звонка</h4>
-      <p>Сайт смотрят вечером и сравнивают с двумя-тремя другими школами.
-         Чего на сайте нет — того для родителя не существует: лицензия,
-         педагоги, стоимость, как кормят и как с безопасностью.</p>
-    </div>
-    <div class="card">
-      <span class="dot"></span>
-      <h4>Одна цель на весь сайт</h4>
-      <p>Не абстрактное «оставьте заявку», а запись на экскурсию с выбором
-         даты. Конкретное действие с датой в календаре доходит до реального
-         визита заметно чаще.</p>
-    </div>
-    <div class="card">
-      <span class="dot"></span>
-      <h4>Правки без программиста</h4>
-      <p>Админка входит в стоимость. Новости, фотографии, состав педагогов
-         и даты дней открытых дверей школа меняет сама, не дожидаясь никого.</p>
-    </div>
-  </div>
-
-  <div class="sect-h">
-    <span class="sect-n">02</span>
-    <h2 class="sect-t">Как идёт работа</h2>
-  </div>
-
-  <table class="tl" style="margin-bottom:5mm;">
+  <table class="works">
     <tr>
-      <th class="n">Этап · дни</th>
-      <th>
-        <div class="wk-h"><i>1–4</i><i>5–8</i><i>9–12</i><i>13–16</i><i>17–20</i><i>21–24</i><i>25–28</i></div>
-      </th>
+      <td class="n">Структура и прототип</td>
+      <td class="d">Сценарии родителя, карта сайта, прототипы</td>
+      <td class="r">5 000 ₽</td>
     </tr>
     <tr>
-      <td class="n">Структура и прототип<i>сценарии родителя, карта сайта</i></td>
-      <td class="bar-cell">
-        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:0;width:14.3%;">4 дня</div>
-      </td>
+      <td class="n">Дизайн</td>
+      <td class="d">Главная, ступени, поступление, педагоги, служебные</td>
+      <td class="r">14 000 ₽</td>
     </tr>
     <tr>
-      <td class="n">Дизайн<i>главная, ступени, поступление</i></td>
-      <td class="bar-cell">
-        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:14.3%;width:25%;">7 дней</div>
-      </td>
+      <td class="n">Вёрстка и сборка</td>
+      <td class="d">Адаптив, скорость загрузки, админка для правок</td>
+      <td class="r">17 000 ₽</td>
     </tr>
     <tr>
-      <td class="n">Вёрстка и сборка<i>адаптив, админка, формы</i></td>
-      <td class="bar-cell">
-        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:32.1%;width:32.1%;">9 дней</div>
-      </td>
+      <td class="n">Разделы и формы</td>
+      <td class="d">Документы, педагоги, новости, запись на экскурсию</td>
+      <td class="r">9 000 ₽</td>
     </tr>
     <tr>
-      <td class="n">Наполнение и контент<i>тексты, педагоги, документы</i></td>
-      <td class="bar-cell">
-        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar soft" style="left:53.6%;width:21.4%;">6 дней</div>
-      </td>
+      <td class="n">Контент, SEO и запуск</td>
+      <td class="d">Тексты, мета-теги, Метрика и GA4, перенос домена</td>
+      <td class="r">5 000 ₽</td>
     </tr>
-    <tr>
-      <td class="n">Тесты и запуск сайта<i>аналитика, скорость, домен</i></td>
-      <td class="bar-cell">
-        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:64.3%;width:10.7%;">3 дня</div>
-      </td>
-    </tr>
-    <tr>
-      <td class="n">CRM приёма<i>кабинет, воронка, отчёт, обучение</i></td>
-      <td class="bar-cell">
-        <div class="grid-lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div class="bar" style="left:75%;width:25%;">7 дней</div>
-      </td>
+    <tr class="sum">
+      <td class="n">Итого</td>
+      <td class="d" style="padding-top:4mm;font-size:8.4pt;">сайт под ключ, две недели правок после запуска</td>
+      <td class="r">50 000 ₽</td>
     </tr>
   </table>
 
-  <div class="tech-light">
-    <div class="est-h">Технически</div>
-    <div class="tech-grid">
-      <div><b>Платформа</b> — своя сборка на Node.js</div>
-      <div><b>База данных</b> — PostgreSQL</div>
-      <div><b>Админка</b> — входит в стоимость</div>
-      <div><b>Хостинг</b> — VPS в России</div>
-      <div><b>Аналитика</b> — Метрика и GA4</div>
-      <div><b>Адаптив</b> — от 320 px</div>
-    </div>
+  <div class="blk-h">
+    <h3>CRM для приёма</h3>
+    <span>+7 дней после сайта</span>
   </div>
+  <table class="works">
+    <tr>
+      <td class="n">Кабинет и доступы</td>
+      <td class="d">Вход для приёмной комиссии, разграничение прав</td>
+      <td class="r">3 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="n">Воронка и карточка заявки</td>
+      <td class="d">Пять этапов: от заявки до зачисления</td>
+      <td class="r">4 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="n">Источники и отчёт</td>
+      <td class="d">Канал заявки → зачисления, а не клики</td>
+      <td class="r">2 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="n">Выгрузка и обучение</td>
+      <td class="d">Экспорт в Excel, час с приёмной комиссией</td>
+      <td class="r">1 000 ₽</td>
+    </tr>
+    <tr class="sum">
+      <td class="n">Итого</td>
+      <td class="d" style="padding-top:4mm;font-size:8.4pt;">кабинет внутри сайта, абонентской платы нет</td>
+      <td class="r">10 000 ₽</td>
+    </tr>
+  </table>
 
-  <div class="foot">
-    <span>Даниил Карацапов · karatsapov.ru</span>
-    <span>Страница 2 из 3</span>
-  </div>
-</section>
-
-<!-- ============ СТРАНИЦА 3 ============ -->
-<section class="page dense">
-  <div class="sect-h">
-    <span class="sect-n">03</span>
-    <h2 class="sect-t">CRM — это порядок в заявках</h2>
-  </div>
-  <p class="lead" style="max-width:158mm; margin-bottom:4mm;">
-    Сейчас заявка с сайта приходит письмом: письмо теряется, кто перезвонил —
-    непонятно, сколько родителей дошло до экскурсии — никто не считает. CRM
-    убирает почту из цепочки: заявки падают в кабинет, и у каждой видна судьба.
-  </p>
-
-  <div class="est-h" style="margin-bottom:2mm;">Путь заявки в кабинете</div>
-  <svg class="funnel" viewBox="0 0 900 84" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <style>
-        .fl{font-family:Nunito,sans-serif;font-size:15px;font-weight:800;fill:#15171c;}
-        .fnum{font-family:Nunito,sans-serif;font-size:19px;font-weight:800;fill:#15171c;}
-        .far{stroke:#c9ced7;stroke-width:1.5;fill:none;}
-      </style>
-    </defs>
-    <rect x="0"   y="6" width="164" height="72" rx="10" fill="#15171c"/>
-    <text class="fl" style="fill:#fff" x="82" y="34" text-anchor="middle">Заявка</text>
-    <text class="fnum" style="fill:#b6f01e" x="82" y="62" text-anchor="middle">50</text>
-
-    <rect x="184" y="6" width="164" height="72" rx="10" fill="#3d4a1a"/>
-    <text class="fl" style="fill:#fff" x="266" y="34" text-anchor="middle">Позвонили</text>
-    <text class="fnum" style="fill:#b6f01e" x="266" y="62" text-anchor="middle">38</text>
-
-    <rect x="368" y="6" width="164" height="72" rx="10" fill="#7cb010"/>
-    <text class="fl" x="450" y="34" text-anchor="middle">Экскурсия назначена</text>
-    <text class="fnum" x="450" y="62" text-anchor="middle">21</text>
-
-    <rect x="552" y="6" width="164" height="72" rx="10" fill="#b6f01e"/>
-    <text class="fl" x="634" y="34" text-anchor="middle">Родители пришли</text>
-    <text class="fnum" x="634" y="62" text-anchor="middle">14</text>
-
-    <rect x="736" y="6" width="164" height="72" rx="10" fill="#d6f77e"/>
-    <text class="fl" x="818" y="34" text-anchor="middle">Зачислен</text>
-    <text class="fnum" x="818" y="62" text-anchor="middle">9</text>
-
-    <path class="far" d="M164 42 H184"/>
-    <path class="far" d="M348 42 H368"/>
-    <path class="far" d="M532 42 H552"/>
-    <path class="far" d="M716 42 H736"/>
-  </svg>
-  <p class="funnel-cap">Цифры для примера: в кабинете на их месте будут ваши, и сразу станет видно, где теряются родители.</p>
-
-  <div class="cards" style="margin-bottom:4mm;">
-    <div class="card">
-      <span class="dot"></span>
-      <h4>Ни одна заявка не теряется</h4>
-      <p>Все обращения в одном списке: статус, ответственный и история —
-         кто звонил, когда и о чём договорились.</p>
-    </div>
-    <div class="card">
-      <span class="dot"></span>
-      <h4>Видно, какой канал приводит учеников</h4>
-      <p>Заявка запоминает источник: Директ, VK, Карты, поиск. В отчёте
-         не клики, а зачисления по каналам.</p>
-    </div>
-    <div class="card">
-      <span class="dot"></span>
-      <h4>Понятно, где теряются родители</h4>
-      <p>Если из пятидесяти заявок до экскурсии доходит восемь — чинить надо
-         разговор по телефону, а не рекламный бюджет.</p>
-    </div>
-  </div>
-
-  <div class="est-h" style="margin-bottom:3mm;">Стоимость</div>
-
-  <div class="two">
-    <div>
-      <div class="est-h">Сайт с админкой</div>
-      <table class="mini">
-        <tr><td class="n">Структура и прототип<i>сценарии, карта сайта, прототипы</i></td><td class="r">6 000 ₽</td></tr>
-        <tr><td class="n">Дизайн<i>главная, ступени, поступление, служебные</i></td><td class="r">18 000 ₽</td></tr>
-        <tr><td class="n">Вёрстка и сборка<i>адаптив, скорость, админка</i></td><td class="r">23 000 ₽</td></tr>
-        <tr><td class="n">Разделы и формы<i>педагоги, документы, новости, заявки</i></td><td class="r">11 000 ₽</td></tr>
-        <tr><td class="n">Контент, SEO и запуск<i>тексты, микроразметка, аналитика</i></td><td class="r">7 000 ₽</td></tr>
-        <tr class="sum"><td class="n">Итого</td><td class="r">65 000 ₽</td></tr>
-      </table>
-    </div>
-    <div>
-      <div class="est-h">CRM для приёма</div>
-      <table class="mini">
-        <tr><td class="n">Кабинет и доступы<i>вход для приёмной комиссии, права</i></td><td class="r">4 000 ₽</td></tr>
-        <tr><td class="n">Воронка и карточка заявки<i>пять этапов, статусы, комментарии</i></td><td class="r">6 000 ₽</td></tr>
-        <tr><td class="n">Источники и отчёт<i>канал заявки → зачисления</i></td><td class="r">3 000 ₽</td></tr>
-        <tr><td class="n">Выгрузка и обучение<i>экспорт в Excel, час с командой</i></td><td class="r">2 000 ₽</td></tr>
-        <tr class="sum"><td class="n">Итого</td><td class="r">15 000 ₽</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <div class="total-bar">
-    <div class="lbl"><b>Сайт и CRM вместе</b> — 65 000 ₽ + 15 000 ₽, срок 28 дней</div>
-    <div class="val">80 000 ₽</div>
+  <div class="grand">
+    <div class="lbl"><b>Сайт и CRM вместе</b> — 50 000 ₽ + 10 000 ₽, срок 28 дней</div>
+    <div class="val">60 000 ₽</div>
   </div>
 
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:8mm;">
     <div>
-      <div class="est-h">Порядок оплаты</div>
+      <div class="kicker" style="margin-bottom:3mm;">Порядок оплаты</div>
       <div class="pay">
         <div><b>50%</b><span>старт работ</span></div>
         <div><b>50%</b><span>сайт запущен</span></div>
@@ -709,10 +471,9 @@ table.mini tr.sum td.r{font-size:12pt; letter-spacing:-0.02em;}
     </div>
     <div>
       <p class="note" style="margin-top:0;">
-        <b>Границы честно.</b> Это не замена amoCRM или Битрикс24: там телефония,
-        сделки и отдел продаж. Здесь один сценарий — приём. Кабинет живёт внутри
-        вашего сайта, абонентской платы нет. CRM можно взять и позже: она
-        пристраивается к готовому сайту без переделок.
+        <b>CRM можно взять позже.</b> Она пристраивается к готовому сайту без
+        переделок, цена от этого не меняется. Это не замена amoCRM или Битрикс24:
+        сценарий один — приём.
       </p>
     </div>
   </div>
@@ -721,7 +482,7 @@ table.mini tr.sum td.r{font-size:12pt; letter-spacing:-0.02em;}
     <div>
       <h3>Следующий шаг — созвон на 30 минут</h3>
       <p>Пройдёмся по структуре под ваши ступени и правила приёма. После
-         разговора пришлю финальное предложение и план работ по дням.</p>
+         разговора пришлю план работ по дням.</p>
     </div>
     <div class="cta-c">
       <b>+7 (996) 347-00-65</b>
@@ -729,10 +490,5 @@ table.mini tr.sum td.r{font-size:12pt; letter-spacing:-0.02em;}
       <span>d.karatsapov@gmail.com</span><br>
       <span>karatsapov.ru</span>
     </div>
-  </div>
-
-  <div class="foot">
-    <span>Даниил Карацапов · интернет-маркетолог, сайты и реклама</span>
-    <span>Страница 3 из 3</span>
   </div>
 </section>
