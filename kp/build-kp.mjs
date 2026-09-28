@@ -1,9 +1,25 @@
-/* build-kp.mjs — собирает самодостаточный HTML коммерческого предложения:
-   подставляет шрифт в base64 вместо плейсхолдера, чтобы файл открывался
-   и печатался одинаково на любой машине без интернета. */
-import { readFileSync, writeFileSync } from 'node:fs';
-const src = readFileSync('kp-plainglobal.src.html', 'utf8');
+/* build-kp.mjs — собирает самодостаточные HTML коммерческих предложений.
+   Подставляет два куска: шрифт Nunito в base64 и общую вёрстку полос из
+   kp-base.css. Файл на выходе открывается и печатается одинаково на любой
+   машине без интернета, а в исходнике каждого КП остаётся только его
+   содержание и то, что специфично именно для него.
+
+   Плейсхолдеры в исходнике: FONTS и BASE внутри комментариев CSS.
+   Собирает все *.src.html в каталоге; имя результата — без .src. */
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+
 const font = readFileSync('nunito-embed.css', 'utf8');
-if (!src.includes('/*FONTS*/')) throw new Error('нет плейсхолдера /*FONTS*/');
-writeFileSync('kp-plainglobal.html', src.replace('/*FONTS*/', font));
-console.log('kp-plainglobal.html готов');
+const base = readFileSync('kp-base.css', 'utf8');
+const MARKS = [['FONTS', font], ['BASE', base]];
+
+for (const src of readdirSync('.').filter(f => f.endsWith('.src.html')).sort()) {
+  let html = readFileSync(src, 'utf8');
+  for (const [name, value] of MARKS) {
+    const mark = '/*' + name + '*/';
+    if (!html.includes(mark)) throw new Error(`${src}: нет плейсхолдера ${name}`);
+    html = html.replace(mark, value);
+  }
+  const out = src.replace('.src.html', '.html');
+  writeFileSync(out, html);
+  console.log(`${out} готов`);
+}
