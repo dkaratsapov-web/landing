@@ -2,7 +2,7 @@
 const { useState: useStateApp } = React;
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "heroVariant": "split",
+  "heroVariant": "center",
   "servicesVariant": "grid",
   "accent": "lime",
   "atmos": true,
@@ -115,7 +115,7 @@ function App() {
       <TweaksPanel>
         <TweakSection label="Главный экран (Hero)" />
         <TweakRadio label="Раскладка" value={t.heroVariant}
-        options={[{ value: 'split', label: 'Сплит' }, { value: 'overlay', label: 'Фото-фон' }, { value: 'editorial', label: 'Крупно' }]}
+        options={[{ value: 'center', label: 'Центр' }, { value: 'split', label: 'Сплит' }, { value: 'overlay', label: 'Фото-фон' }, { value: 'editorial', label: 'Крупно' }]}
         onChange={(v) => setTweak('heroVariant', v)} />
         <TweakSection label="Услуги" />
         <TweakRadio label="Раскладка" value={t.servicesVariant}
