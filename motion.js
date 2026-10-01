@@ -197,4 +197,34 @@
       });
     });
   }
+
+  /* ── Слои первого экрана за курсором ─────────────────────────────────────
+     Вертикальный параллакс первого экрана делает CSS (.mo-parallax на слоях),
+     но он привязан к прокрутке и до первого движения страницы не виден.
+     Здесь отклик на курсор: слои расходятся на разную величину, дальние
+     сильнее. Сдвиг идёт отдельными переменными, а не transform, чтобы не
+     затирать scroll-driven анимацию на том же элементе. */
+  if (finePointer) {
+    const hero = document.querySelector('.hero-center');
+    const layers = hero ? hero.querySelectorAll('[data-hero-layer]') : [];
+    if (layers.length) {
+      const depth = { '1': 22, '2': 15, '3': 6, '4': 3 };
+      let queued = false, mx = 0, my = 0;
+      const flush = () => {
+        queued = false;
+        layers.forEach((el) => {
+          const d = depth[el.getAttribute('data-hero-layer')] || 4;
+          el.style.setProperty('--mo-px', (-mx * d).toFixed(1) + 'px');
+          el.style.setProperty('--mo-py', (-my * d).toFixed(1) + 'px');
+        });
+      };
+      hero.addEventListener('pointermove', (e) => {
+        const r = hero.getBoundingClientRect();
+        mx = (e.clientX - r.left) / r.width - 0.5;
+        my = (e.clientY - r.top) / r.height - 0.5;
+        if (!queued) { queued = true; requestAnimationFrame(flush); }
+      });
+      hero.addEventListener('pointerleave', () => { mx = 0; my = 0; flush(); });
+    }
+  }
 })();
