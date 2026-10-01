@@ -35,6 +35,11 @@ jobs:
       - name: Build site (project -> dist)
         run: npm run build
 
+      # Домен для Pages. Лежит здесь, а не в сборке: на обычный хостинг
+      # этот файл не нужен, а сборка у всех площадок общая.
+      - name: Write CNAME
+        run: echo 'karatsapov.ru' > dist/CNAME
+
       - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

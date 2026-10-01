@@ -76,12 +76,6 @@ jobs:
         if: steps.creds.outputs.ready == 'true'
         run: npm run build
 
-      # CNAME нужен только GitHub Pages. На обычном хостинге это лишний
-      # файл в корне, который вдобавок отдаётся по прямой ссылке.
-      - name: Drop CNAME
-        if: steps.creds.outputs.ready == 'true'
-        run: rm -f dist/CNAME
-
       - name: Upload dist/ to hosting
         if: steps.creds.outputs.ready == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

@@ -73,11 +73,10 @@ copyFileSync(join(srcDir, 'tokens.css'), join(outDir, 'tokens.css'));
 // Компоненты страниц из layout.mjs (/about/, /ceny/, блог).
 copyFileSync(join(srcDir, 'pages.css'), join(outDir, 'pages.css'));
 
-// Домен для GitHub Pages. Пишется на каждой сборке: этим файлом Pages и
-// определяет, по какому адресу отдавать сайт, и без него привязка слетает.
-// До августа 2026 здесь был кириллический карацапов-даниил-маркетинг.рф
-// в punycode-виде.
-writeFileSync(join(outDir, 'CNAME'), 'karatsapov.ru\n', 'utf8');
+// CNAME здесь больше не пишется. Это не файл сайта, а артефакт деплоя:
+// им GitHub Pages определяет, по какому адресу отдавать сайт. Сборка одна
+// на все площадки, поэтому домен дописывает тот воркфлоу, которому он
+// нужен, — .github/workflows/deploy.yml.
 
 // Favicon (lime paper plane) — copy verbatim.
 copyFileSync(join(srcDir, 'favicon.svg'), join(outDir, 'favicon.svg'));
