@@ -580,14 +580,14 @@ function HeroPanels({ part }) {
 function HeroCenter({ onCta }) {
   const H = window.CONTENT.hero || {};
   return (
-    <header id="top" data-parallax-layers className="bg-black hero-center">
+    <header id="top" className="bg-black hero-center">
       <div className="hero-layers">
-        <div data-parallax-layer="1" className="hero-layer hero-layer-panels"><HeroPanels part="top" /></div>
-        <div data-parallax-layer="2" className="hero-layer hero-layer-panels"><HeroPanels part="bottom" /></div>
-        <div data-parallax-layer="4" className="hero-layer hero-layer-field"><AutomationField /></div>
-        <div data-parallax-layer="4" className="hero-layer hero-layer-front"></div>
+        <div data-hero-layer="1" className="hero-layer hero-layer-panels mo-parallax" style={{ '--mo-par': '64px' }}><HeroPanels part="top" /></div>
+        <div data-hero-layer="2" className="hero-layer hero-layer-panels mo-parallax" style={{ '--mo-par': '42px' }}><HeroPanels part="bottom" /></div>
+        <div data-hero-layer="4" className="hero-layer hero-layer-field"><AutomationField /></div>
+        <div data-hero-layer="4" className="hero-layer hero-layer-front"></div>
       </div>
-      <div data-parallax-layer="3" className="wrap hero-center-inner">
+      <div data-hero-layer="3" className="wrap hero-center-inner mo-parallax" style={{ '--mo-par': '16px' }}>
         <span className="eyebrow reveal in">{H.eyebrow}</span>
         <h1 className="display reveal in hero-center-h">
           {H.titleLine1}<br />{H.titleLine2} <span style={{ color: 'var(--accent-bright)' }}>{H.titleAccent}</span>

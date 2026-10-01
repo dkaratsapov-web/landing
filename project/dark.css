@@ -1203,14 +1203,3 @@ input[type="checkbox"], input[type="radio"] { width: 24px; height: 24px; }
    пяти страниц на общем каркасе; менять их все ради трёх смысла нет. */
 .hero-svc h1 { font-size: clamp(32px, 4.4vw, 58px); letter-spacing: -0.03em; }
 
-/* ===== Интерактив: прогресс чтения ===== */
-/* Полоску рисует scroll.js. Разметки в HTML нет намеренно: не загрузился
-   скрипт — нет и висящей пустой линии наверху страницы. */
-.scroll-progress {
-  position: fixed; left: 0; top: 0; z-index: 9999;
-  height: 2px; width: 100%;
-  transform: scaleX(0); transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--accent, #b6f01e), var(--accent-bright, #c4f53e));
-  pointer-events: none; will-change: transform;
-}
-@media (prefers-reduced-motion: reduce) { .scroll-progress { display: none; } }

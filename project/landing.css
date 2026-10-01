@@ -1551,18 +1551,6 @@ main, .footer { position: relative; z-index: 1; }
 .kase-go .arr { transition: transform .18s cubic-bezier(.32,.72,0,1); display: inline-block; }
 .kase:hover .kase-go .arr { transform: translateX(3px); }
 
-/* ===== Интерактив: прогресс чтения ===== */
-/* Полоску рисует scroll.js. Разметки в HTML нет намеренно: не загрузился
-   скрипт — нет и висящей пустой линии наверху страницы. */
-.scroll-progress {
-  position: fixed; left: 0; top: 0; z-index: 9999;
-  height: 2px; width: 100%;
-  transform: scaleX(0); transform-origin: 0 50%;
-  background: linear-gradient(90deg, var(--accent, #b6f01e), var(--accent-bright, #c4f53e));
-  pointer-events: none; will-change: transform;
-}
-@media (prefers-reduced-motion: reduce) { .scroll-progress { display: none; } }
-
 /* ===== Герой: текст по центру внизу, за ним анимированная схема ===== */
 .hero-center {
   position: relative; overflow: hidden;
@@ -1600,8 +1588,17 @@ main, .footer { position: relative; z-index: 1; }
 }
 .hero-center-trust > div { justify-content: center; margin-top: 24px !important; }
 @media (max-width: 760px) {
-  .hero-center { min-height: 100svh; padding-bottom: 22px; }
-  .hero-center-h { max-width: 14ch; }
+  .hero-center { min-height: 100svh; padding-top: 56px; padding-bottom: 20px; }
+  .hero-center-inner .eyebrow { font-size: 10px; letter-spacing: .1em; }
+  .hero-center .hero-center-h {
+    font-size: clamp(24px, 6.4vw, 30px) !important;
+    line-height: 1.1; margin-top: 10px; max-width: none;
+  }
+  .hero-center-sub { font-size: 14px; margin-top: 12px; max-width: 34ch; }
+  .hero-center-cta { margin-top: 18px; gap: 10px; }
+  .hero-center-cta .btn { padding: 13px 20px; font-size: 15px; }
+  .hero-center-trust > div { margin-top: 16px !important; gap: 16px; }
+  .hero-center-trust span:first-child { font-size: 19px; }
 }
 
 /* ===== «О себе»: колонка из портрета и фото за работой ===== */
@@ -1646,3 +1643,8 @@ main, .footer { position: relative; z-index: 1; }
     radial-gradient(120% 70% at 50% 8%, rgba(0,0,0,0) 40%, rgba(0,0,0,.5) 100%);
 }
 @media (max-width: 760px) { .hero-panels { opacity: .35; } }
+
+/* Сдвиг слоёв героя за курсором. Отдельные переменные, а не transform:
+   на тех же элементах висит scroll-driven .mo-parallax, и общий transform
+   они бы затёрли друг у друга. */
+.hero-layer, .hero-center-inner { translate: var(--mo-px, 0) var(--mo-py, 0); transition: translate .5s cubic-bezier(.16,.7,.3,1); }
