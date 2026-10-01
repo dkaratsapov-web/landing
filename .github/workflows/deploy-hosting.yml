@@ -1,25 +1,27 @@
-# Выкладка на обычный хостинг по FTP.
+# Автовыкладка сайта на обычный хостинг по FTP.
 #
-# Запускается только руками (workflow_dispatch) — пока в репозитории нет
-# секретов FTP_HOST / FTP_USER / FTP_PASSWORD, автозапуск по пушу падал бы
-# на каждом коммите.
+# Это основной путь деплоя: на каждый пуш в main сайт собирается и
+# заливается в корень сайта у хостера. Пока секреты не заданы, выкладка
+# тихо пропускается — коммиты не падают красным.
 #
-# Как включить:
-#   1. Settings → Secrets and variables → Actions → New repository secret:
-#      FTP_HOST, FTP_USER, FTP_PASSWORD, FTP_DIR.
-#      На хостинге Рег.ру с ispmanager FTP-пользователь попадает в
-#      /var/www/uXXXXXXX/data/, поэтому FTP_DIR = www/karatsapov.ru/
-#      (точный путь виден в панели, в свойствах сайта). Если FTPS не
-#      подхватится — поменять protocol на ftp.
-#   2. Прогнать один раз вручную: вкладка Actions → Deploy to hosting → Run.
-#   3. Убедиться, что сайт открылся, и только тогда добавить сюда
-#      автозапуск:  on: { push: { branches: [main] } }
-#   4. Выключить ненужные workflow — deploy.yml (GitHub Pages) или
-#      deploy-vps.yml, иначе сайт будет разъезжаться по трём местам сразу.
+# Что добавить в Settings → Secrets and variables → Actions → Secrets:
+#   FTP_HOST      — адрес FTP-сервера из письма хостера
+#   FTP_USER      — логин FTP
+#   FTP_PASSWORD  — пароль FTP
+#   FTP_DIR       — каталог сайта относительно домашнего каталога
+#                   FTP-пользователя. На Рег.ру с ispmanager пользователь
+#                   попадает в /var/www/uXXXXXXX/data/, поэтому путь
+#                   выглядит как  www/karatsapov.ru/
+#
+# Если хостер не поддерживает FTPS, заведите там же, во вкладке Variables,
+# переменную FTP_PROTOCOL со значением ftp. Пароль тогда пойдёт открытым
+# текстом — это крайний случай, сначала стоит спросить поддержку про FTPS.
 
 name: Deploy to hosting
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -30,7 +32,30 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
+      # Доступы проверяем до сборки: нет смысла собирать сайт, если его
+      # всё равно некуда класть.
+      - name: Проверка доступов к хостингу
+        id: creds
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=""
+          [ -z "$FTP_HOST" ]     && missing="$missing FTP_HOST"
+          [ -z "$FTP_USER" ]     && missing="$missing FTP_USER"
+          [ -z "$FTP_PASSWORD" ] && missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Выкладка пропущена — не заданы секреты:$missing"
+            echo "Не заданы секреты:$missing" >> "$GITHUB_STEP_SUMMARY"
+            echo "Добавьте их в Settings → Secrets and variables → Actions." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout
+        if: steps.creds.outputs.ready == 'true'
         uses: actions/checkout@v4
         with:
           # Полная история нужна сборке: lastmod в sitemap.xml берётся
@@ -38,27 +63,38 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Node
+        if: steps.creds.outputs.ready == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install build deps
+        if: steps.creds.outputs.ready == 'true'
         run: npm install
 
       - name: Build site (project -> dist)
+        if: steps.creds.outputs.ready == 'true'
         run: npm run build
 
       # CNAME нужен только GitHub Pages. На обычном хостинге это лишний
       # файл в корне, который вдобавок отдаётся по прямой ссылке.
       - name: Drop CNAME
+        if: steps.creds.outputs.ready == 'true'
         run: rm -f dist/CNAME
 
-      - name: Upload dist/ over FTPS
+      - name: Upload dist/ to hosting
+        if: steps.creds.outputs.ready == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
           local-dir: ./dist/
           server-dir: ${{ secrets.FTP_DIR }}
+
+      - name: Итог
+        if: steps.creds.outputs.ready == 'true'
+        run: |
+          echo "Сайт выложен на хостинг." >> "$GITHUB_STEP_SUMMARY"
+          echo "Проверьте https://karatsapov.ru/ и страницу, которую правили." >> "$GITHUB_STEP_SUMMARY"
