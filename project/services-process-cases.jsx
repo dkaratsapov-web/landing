@@ -216,7 +216,7 @@ function Certificates() {
         </div>
       </div>
 
-      {c &&
+      {c && ReactDOM.createPortal(
       <div className="cert-lb" onClick={close} role="dialog" aria-modal="true" aria-label="Просмотр сертификата">
         <button className="cert-lb-close" onClick={close} aria-label="Закрыть"><IconClose size={26} /></button>
         <button className="cert-lb-nav prev" onClick={(e) => { e.stopPropagation(); step(-1); }} aria-label="Предыдущий"><IconChevron size={28} /></button>
@@ -233,7 +233,7 @@ function Certificates() {
           </div>
         </div>
         <button className="cert-lb-nav next" onClick={(e) => { e.stopPropagation(); step(1); }} aria-label="Следующий"><IconChevron size={28} /></button>
-      </div>}
+      </div>, document.body)}
     </section>);
 
 }

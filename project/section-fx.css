@@ -66,6 +66,9 @@
    однажды снова забыть один. */
 section:has(> .sec-fx), header:has(> .sec-fx) { position: relative; }
 section > .sec-fx ~ *, header > .sec-fx ~ * { position: relative; z-index: 1; }
+section > .sec-fx ~ [role="dialog"], header > .sec-fx ~ [role="dialog"] {
+  position: fixed; z-index: 300;
+}
 .no-atmos .sec-fx { display: none; }
 
 /* Движение только у секций рядом с экраном — класс вешает IntersectionObserver
