@@ -129,6 +129,40 @@
     return r.top < window.innerHeight * 0.92;
   }
 
+  /* Параллакс от курсора на первом экране. Нужен затем, что скролл-параллакс
+     виден только когда начинаешь листать, а первый экран должен отвечать
+     сразу. Слои смещаются на разную величину: дальние сильнее. Сдвиг идёт
+     через translate поверх yPercent от ScrollTrigger — свойства разные,
+     поэтому они не затирают друг друга. */
+  function bindHeroPointerParallax() {
+    const hero = document.querySelector('[data-parallax-layers]');
+    if (!hero || boundPointer.has(hero)) return;
+    boundPointer.add(hero);
+
+    const depth = { '1': 26, '2': 18, '3': 7, '4': 4 };
+    const movers = [];
+    Object.keys(depth).forEach((k) => {
+      hero.querySelectorAll('[data-parallax-layer="' + k + '"]').forEach((el) => {
+        movers.push({
+          amt: depth[k],
+          x: gsap.quickTo(el, 'x', { duration: 0.8, ease: 'power3' }),
+          y: gsap.quickTo(el, 'y', { duration: 0.8, ease: 'power3' }),
+        });
+      });
+    });
+    if (!movers.length) return;
+
+    hero.addEventListener('pointermove', (e) => {
+      const r = hero.getBoundingClientRect();
+      const dx = (e.clientX - r.left) / r.width - 0.5;
+      const dy = (e.clientY - r.top) / r.height - 0.5;
+      movers.forEach((m) => { m.x(-dx * m.amt); m.y(-dy * m.amt); });
+    });
+    hero.addEventListener('pointerleave', () => {
+      movers.forEach((m) => { m.x(0); m.y(0); });
+    });
+  }
+
   /* Слоёный параллакс первого экрана. Слои едут вниз с разной скоростью,
      пока герой уходит за край: дальний быстрее, передний почти стоит.
      scrub:0 — позиция слоёв жёстко привязана к прокрутке, без догона;
@@ -195,6 +229,7 @@
   const boundPointer = new WeakSet();
 
   function bindPointer() {
+    if (window.gsap) bindHeroPointerParallax();
     TILT_SEL.forEach((sel) => {
       document.querySelectorAll(sel).forEach((el) => {
         if (!el.hasAttribute('data-tilt')) el.setAttribute('data-tilt', '5');

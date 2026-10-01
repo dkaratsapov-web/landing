@@ -1566,9 +1566,9 @@ main, .footer { position: relative; z-index: 1; }
 /* ===== Герой: текст по центру внизу, за ним анимированная схема ===== */
 .hero-center {
   position: relative; overflow: hidden;
-  min-height: 78svh; min-height: 78vh;
+  min-height: 100svh; min-height: 100vh;
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding-top: 64px; padding-bottom: clamp(36px, 4.5vh, 64px);
+  padding-top: 64px; padding-bottom: clamp(24px, 3vh, 40px);
 }
 /* Канва тянется на всю секцию и не перехватывает клики: кнопки героя
    лежат выше по z-index, но указатель над фоном всё равно должен
@@ -1600,7 +1600,7 @@ main, .footer { position: relative; z-index: 1; }
 }
 .hero-center-trust > div { justify-content: center; margin-top: 24px !important; }
 @media (max-width: 760px) {
-  .hero-center { min-height: 74svh; padding-bottom: 32px; }
+  .hero-center { min-height: 100svh; padding-bottom: 22px; }
   .hero-center-h { max-width: 14ch; }
 }
 
@@ -1626,7 +1626,7 @@ main, .footer { position: relative; z-index: 1; }
 .hero-layers { position: absolute; inset: 0; z-index: 0; }
 .hero-layer { position: absolute; left: 0; right: 0; top: -30%; height: 160%; }
 .hero-layer-field .auto-field { position: absolute; inset: 0; }
-.hero-panels { width: 100%; height: 100%; display: block; opacity: .5; }
+.hero-panels { width: 100%; height: 100%; display: block; opacity: .62; }
 .hero-panels .hp-card rect,
 .hero-panels .hp-card > rect {
   fill: rgba(182,240,30,.025); stroke: rgba(182,240,30,.16); stroke-width: 1.2;
