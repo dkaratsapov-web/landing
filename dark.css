@@ -669,7 +669,7 @@ h3 { font-weight: 600; }
 }
 .kase-tab.on .kase-tab-n { background: rgba(0,0,0,0.18); }
 
-.kase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 22px; align-items: stretch; }
+.kase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; align-items: stretch; }
 .kase { padding: 0; overflow: hidden; display: flex; flex-direction: column;
   opacity: 0; animation: kaseIn .5s cubic-bezier(.16,.7,.3,1) forwards;
   animation-delay: calc(var(--d) * 70ms); }
@@ -677,7 +677,7 @@ h3 { font-weight: 600; }
 .kase.hide { display: none; }
 .kase:hover { border-color: var(--lime-glow); transform: none; }
 .kase-photo {
-  position: relative; aspect-ratio: 16 / 10; background: var(--surface-2);
+  position: relative; aspect-ratio: 16 / 9; background: var(--surface-2);
   border-bottom: 1px solid var(--line); overflow: hidden;
 }
 .kase-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -689,58 +689,76 @@ h3 { font-weight: 600; }
   padding: 6px 12px; border-radius: var(--r-pill);
 }
 .kase-geo {
-  position: absolute; bottom: 14px; left: 14px; z-index: 1;
+  position: absolute; bottom: 10px; left: 10px; z-index: 1;
   display: inline-flex; align-items: center; gap: 6px;
   background: rgba(8,8,10,0.66); backdrop-filter: blur(8px); color: var(--ink);
   font-size: 13px; padding: 6px 12px; border-radius: var(--r-pill);
 }
 .kase-geo .i { color: var(--lime-bright); }
-.kase-content { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.kase-content { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
 .kase-field { color: var(--lime-bright); font-size: 13px; font-weight: 600;
   text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.3;
-  min-height: 2.6em; display: flex; align-items: flex-end; }
-.kase-name { font-family: var(--font); font-size: 24px; font-weight: 600;
-  letter-spacing: -0.01em; color: var(--ink); margin: -6px 0 0; line-height: 1.15;
-  min-height: 2.3em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.kase-summary { color: var(--muted); font-size: 15px; line-height: 1.5; margin: 0;
-  min-height: 4.5em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.kase-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 18px;
-  margin-top: 2px; padding-top: 16px; border-top: 1px solid var(--line); }
+  min-height: 1.3em; display: flex; align-items: flex-end; }
+.kase-name { font-family: var(--font); font-size: 19px; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--ink); margin: -4px 0 0; line-height: 1.22;
+  min-height: 2.44em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.kase-summary { color: var(--muted); font-size: 13.5px; line-height: 1.45; margin: 0;
+  min-height: 2.9em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.kase-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 14px;
+  margin-top: 2px; padding-top: 12px; border-top: 1px solid var(--line); }
 .kase-metric { display: flex; flex-direction: column; }
 .kase-metric-v { font-family: var(--font); font-weight: 600; letter-spacing: -0.02em;
-  color: var(--lime-bright); font-size: 26px; line-height: 1.05;
-  min-height: 2.1em; display: flex; align-items: flex-start; }
-.kase-metric-l { color: var(--muted-2); font-size: 12.5px; line-height: 1.35; margin-top: 5px;
-  min-height: 2.7em; }
-.kase-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
-.kase-chip { font-size: 12px; color: var(--muted); padding: 5px 11px; border-radius: var(--r-pill);
+  color: var(--lime-bright); font-size: 21px; line-height: 1.05;
+  min-height: 1.1em; display: flex; align-items: flex-start; }
+.kase-metric-l { color: var(--muted-2); font-size: 11.5px; line-height: 1.3; margin-top: 3px;
+  min-height: 2.6em; }
+.kase-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto; }
+.kase-chip { font-size: 11.5px; color: var(--muted); padding: 4px 9px; border-radius: var(--r-pill);
   background: rgba(255,255,255,0.04); border: 1px solid var(--line); }
 @media (prefers-reduced-motion: reduce) { .kase { animation: none; opacity: 1; } }
 
-/* ---------- Полные карточки кейсов (страница «Кейсы») ---------- */
-.kfull-grid { display: flex; flex-direction: column; gap: 28px; }
-.kfull { padding: 0; overflow: hidden;
+/* ---------- Полные карточки кейсов: та же компактная сетка, что и на других страницах ---------- */
+.kfull { padding: 0; overflow: hidden; display: flex; flex-direction: column;
   opacity: 0; animation: kaseIn .5s cubic-bezier(.16,.7,.3,1) forwards;
   animation-delay: calc(var(--d) * 70ms); }
 .kfull.hide { display: none; }
-.kfull-head { display: grid; grid-template-columns: 320px 1fr; gap: 0; align-items: stretch; }
-.kfull-photo { position: relative; background: var(--surface-2); border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); overflow: hidden; min-height: 240px; }
-.kfull-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-.kfull-intro { padding: 20px 26px; display: flex; flex-direction: column; gap: 10px; border-left: 1px solid var(--line); margin-left: -1px; align-self: stretch; }
-.kfull-name { font-family: var(--font); font-size: 24px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); margin: -2px 0 0; }
-.kfull-lead { color: var(--muted); font-size: 14.5px; line-height: 1.5; margin: 0; }
-.kfull-meta { display: flex; flex-direction: column; gap: 7px; margin-top: 2px; }
-.kfull-meta-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.kfull-meta-l { color: var(--muted-2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; flex: 0 0 auto; min-width: 64px; }
-.kfull-meta-v { color: var(--ink-2); font-size: 14px; }
+.kfull:hover { border-color: var(--lime-glow); }
+.kfull .kase-chips { margin-top: auto; }
+.kfull-toggle {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; margin-top: 2px; padding: 9px 16px; border-radius: var(--r-pill);
+  background: var(--surface-2); border: 1px solid var(--line-2); color: var(--ink);
+  font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.kfull-toggle:hover { border-color: var(--lime); color: var(--lime-bright); }
+.kfull-toggle-i { transition: transform .25s ease; flex: 0 0 auto; }
+.kfull.open .kfull-toggle-i { transform: rotate(180deg); }
+.kfull.open .kfull-toggle { background: var(--lime); border-color: transparent; color: var(--lime-ink); }
+.kfull.open .kfull-toggle:hover { color: var(--lime-ink); }
+
+/* Раскрытая карточка занимает всю ширину ряда и возвращает подробную вёрстку */
+.kfull-details { display: none; }
+.kfull.open { grid-column: 1 / -1; display: grid; grid-template-columns: 300px minmax(0, 1fr); align-items: stretch; }
+.kfull.open > .kase-photo { aspect-ratio: auto; min-height: 260px; border-right: 1px solid var(--line); border-bottom: none; }
+.kfull.open > .kase-content { padding: 22px 26px; }
+.kfull.open .kase-field { min-height: 0; }
+.kfull.open .kase-name { font-size: 23px; min-height: 0; display: block; overflow: visible; }
+.kfull.open .kase-summary { font-size: 14.5px; line-height: 1.5; min-height: 0; display: block; overflow: visible; }
+.kfull.open .kase-metrics { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px 20px; }
+.kfull.open .kase-metric-v { font-size: 22px; }
+.kfull.open .kase-metric-l { min-height: 0; }
+.kfull.open .kfull-toggle { width: auto; align-self: flex-start; padding: 10px 18px; font-size: 14px; }
+.kfull.open .kfull-details { display: block; grid-column: 1 / -1; }
+
 .kfull-body { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 18px 26px; border-top: 1px solid var(--line); }
 .kfull-col { display: flex; flex-direction: column; gap: 9px; }
 .kfull-h { font-family: var(--font); font-size: 14.5px; font-weight: 600; color: var(--ink); margin: 0; }
 .kfull-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
 .kfull-list li { position: relative; padding-left: 24px; color: var(--muted); font-size: 13.5px; line-height: 1.4; }
 .kfull-list li::before { position: absolute; left: 0; top: 1px; font-size: 13px; line-height: 1.35; }
-.kfull-list.neg li::before { content: "✕"; color: #ff6b6b; }
-.kfull-list.pos li::before { content: "✓"; color: var(--lime-bright); }
+.kfull-list.neg li::before { content: "\2715"; color: #ff6b6b; }
+.kfull-list.pos li::before { content: "\2713"; color: var(--lime-bright); }
 .kfull-lower { display: grid; grid-template-columns: 1.25fr 1fr; border-top: 1px solid var(--line); }
 .kfull-side { padding: 18px 26px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; }
 .kfull-works { padding: 18px 26px; display: flex; flex-direction: column; gap: 10px; }
@@ -753,41 +771,18 @@ h3 { font-weight: 600; }
 .kfull-works-list > li > ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .kfull-works-list > li > ul > li { position: relative; padding-left: 16px; color: var(--muted); font-size: 13px; line-height: 1.4; }
 .kfull-works-list > li > ul > li::before { content: ""; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--lime-glow); }
-.kfull-chips { padding: 0 26px 18px; }
-.kfull-side .kase-metrics { gap: 10px 14px; padding-top: 12px; }
-.kfull-side .kase-metric-v { font-size: 22px; min-height: 0; }
-.kfull-side .kase-metric-l { font-size: 12px; min-height: 0; margin-top: 3px; }
-.kfull-details { display: none; }
-.kfull.open .kfull-details { display: block; }
-.kfull-toggle {
-  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
-  margin-top: 6px; padding: 11px 20px; border-radius: var(--r-pill);
-  background: var(--surface-2); border: 1px solid var(--line-2); color: var(--ink);
-  font-family: var(--font); font-size: 14px; font-weight: 600; cursor: pointer;
-  transition: background .2s ease, border-color .2s ease, color .2s ease;
-}
-.kfull-toggle:hover { border-color: var(--lime); color: var(--lime-bright); }
-.kfull-toggle-i { transition: transform .25s ease; flex: 0 0 auto; }
-.kfull.open .kfull-toggle-i { transform: rotate(180deg); }
-.kfull.open .kfull-toggle { background: var(--lime); border-color: transparent; color: var(--lime-ink); }
-.kfull.open .kfull-toggle:hover { color: var(--lime-ink); }
 @media (max-width: 860px) {
-  .kfull-head { grid-template-columns: 1fr; }
-  .kfull-photo { aspect-ratio: 16 / 10; min-height: 0; border-right: none; }
-  .kfull-intro { border-left: none; margin-left: 0; }
+  .kfull.open { grid-template-columns: 1fr; }
+  .kfull.open .kase-metrics { grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+  .kfull.open > .kase-photo { aspect-ratio: 16 / 9; min-height: 0; border-right: none; border-bottom: 1px solid var(--line); }
   .kfull-body { grid-template-columns: 1fr; gap: 22px; }
   .kfull-lower { grid-template-columns: 1fr; }
   .kfull-side { border-left: none; border-top: 1px solid var(--line); }
 }
 @media (max-width: 640px) {
-  .kfull-intro, .kfull-body, .kfull-works, .kfull-side { padding: 20px 16px; gap: 12px; }
-  .kfull-chips { padding: 0 16px 20px; }
-  .kfull-name { font-size: 22px; }
-  .kfull-lead { font-size: 14.5px; }
-  .kfull-meta-row { gap: 8px; }
-  .kfull-meta-l { min-width: 0; }
-  .kase-metrics { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .kfull-toggle { width: 100%; justify-content: center; }
+  .kfull-body, .kfull-works, .kfull-side { padding: 18px 16px; gap: 12px; }
+  .kfull.open .kase-name { font-size: 21px; }
+  .kfull.open .kfull-toggle { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .kfull { animation: none; opacity: 1; } }
 
@@ -949,11 +944,14 @@ h3 { font-weight: 600; }
     margin: 0 -18px; padding: 4px 18px 16px; scrollbar-width: none; }
   .kase-grid::-webkit-scrollbar { display: none; }
   .kase { flex: 0 0 100%; max-width: none; scroll-snap-align: center; }
+  /* Раскрываемые карточки кейсов живут в той же мобильной карусели */
+  .kfull { flex: 0 0 100%; max-width: none; scroll-snap-align: center; }
+  .kfull.open { display: flex; flex-direction: column; }
   /* Карточки кейсов — мельче шрифт, чтобы весь текст помещался */
   .kase-content { padding: 20px; gap: 11px; }
   .kase-field { font-size: 11.5px; min-height: 2.4em; }
   .kase-name { font-size: 20px; min-height: 2.3em; }
-  .kase-summary { font-size: 13.5px; line-height: 1.45; min-height: 4.35em; }
+  .kase-summary { font-size: 13.5px; line-height: 1.45; min-height: 4.35em; -webkit-line-clamp: 3; }
   .kase-metrics { gap: 12px 14px; padding-top: 14px; }
   .kase-metric-v { font-size: 17px; min-height: 0; white-space: nowrap; }
   .kase-metric-l { font-size: 11.5px; min-height: 3em; }
