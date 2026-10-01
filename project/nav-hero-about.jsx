@@ -404,10 +404,16 @@ function AutomationField() {
       /* Связи. Чем короче связь, тем она заметнее — так схема не
          превращается в равномерную сетку. */
       ctx.lineWidth = 1;
+      const GLOW = 230;                     /* радиус «фонарика» под курсором */
       for (let i = 0; i < links.length; i++) {
         const l = links[i], a = nodes[l.a], b = nodes[l.b];
-        const alpha = 0.20 * (1 - l.d / (step * 1.5));
+        let alpha = 0.20 * (1 - l.d / (step * 1.5));
         if (alpha <= 0) continue;
+        /* Связь рядом с курсором разгорается: экран отвечает на движение,
+           а не просто живёт сам по себе. */
+        const mx = (a.x + b.x) / 2 - mouse.x, my = (a.y + b.y) / 2 - mouse.y;
+        const md = Math.sqrt(mx * mx + my * my);
+        if (md < GLOW) alpha += (1 - md / GLOW) * 0.5;
         ctx.strokeStyle = 'rgba(' + ACCENT + ',' + alpha.toFixed(3) + ')';
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
@@ -422,7 +428,8 @@ function AutomationField() {
         if (pk.p >= 1) {
           const end = pk.back ? nodes[l.a] : nodes[l.b];
           if (end && pulses.length < 14) pulses.push({ x: end.x, y: end.y, r: 0 });
-          packets[i] = newPacket(0);
+          if (packets.length > 60) { packets.splice(i, 1); i--; }
+          else packets[i] = newPacket(0);
           continue;
         }
         const from = pk.back ? nodes[l.b] : nodes[l.a];
@@ -455,8 +462,13 @@ function AutomationField() {
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i];
         const breathe = 0.5 + 0.5 * Math.sin(n.ph);
-        ctx.fillStyle = 'rgba(' + ACCENT + ',' + (0.30 + breathe * 0.45).toFixed(3) + ')';
-        ctx.beginPath(); ctx.arc(n.x, n.y, n.r + breathe * 0.5, 0, Math.PI * 2); ctx.fill();
+        const dxm = n.x - mouse.x, dym = n.y - mouse.y;
+        const near = Math.max(0, 1 - Math.sqrt(dxm * dxm + dym * dym) / GLOW);
+        ctx.fillStyle = 'rgba(' + ACCENT + ',' +
+          Math.min(1, 0.30 + breathe * 0.45 + near * 0.5).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r + breathe * 0.5 + near * 2.2, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
 
@@ -467,6 +479,28 @@ function AutomationField() {
       mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
     };
     const onLeave = () => { mouse.x = -9999; mouse.y = -9999; };
+
+    /* Клик по фону — срабатывание узла: кольцо и залп пакетов по всем его
+       связям. Главное живое взаимодействие первого экрана. */
+    const onDown = (e) => {
+      const r = wrap.getBoundingClientRect();
+      const px = e.clientX - r.left, py = e.clientY - r.top;
+      let best = -1, bestD = Infinity;
+      for (let i = 0; i < nodes.length; i++) {
+        const dx = nodes[i].x - px, dy = nodes[i].y - py;
+        const d = dx * dx + dy * dy;
+        if (d < bestD) { bestD = d; best = i; }
+      }
+      pulses.push({ x: px, y: py, r: 0 });
+      if (best < 0) return;
+      let fired = 0;
+      for (let i = 0; i < links.length && fired < 6; i++) {
+        if (links[i].a !== best && links[i].b !== best) continue;
+        packets.push({ li: i, p: 0, sp: 0.010, back: links[i].b === best });
+        fired++;
+      }
+      pulses.push({ x: nodes[best].x, y: nodes[best].y, r: 0 });
+    };
     const onVis = () => {
       if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
       else if (!raf && !reduce) loop();
@@ -478,6 +512,7 @@ function AutomationField() {
       loop();
       wrap.addEventListener('pointermove', onMove);
       wrap.addEventListener('pointerleave', onLeave);
+      wrap.addEventListener('pointerdown', onDown);
       document.addEventListener('visibilitychange', onVis);
     }
     let rt = 0;
@@ -490,6 +525,7 @@ function AutomationField() {
       window.removeEventListener('resize', onResize);
       wrap.removeEventListener('pointermove', onMove);
       wrap.removeEventListener('pointerleave', onLeave);
+      wrap.removeEventListener('pointerdown', onDown);
       document.removeEventListener('visibilitychange', onVis);
     };
   }, []);
