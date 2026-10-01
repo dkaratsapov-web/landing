@@ -501,13 +501,57 @@ function AutomationField() {
   );
 }
 
+/* Средний слой параллакса: панели интерфейса, собранные из SVG, а не из
+   картинок. Так слой ничего не весит, не требует ретина-версий и красится
+   одной переменной. Три сюжета — отчёт, воронка и бот — то же, о чём
+   говорит заголовок. */
+function HeroPanels({ part }) {
+  const top = part !== 'bottom';
+  const bottom = part !== 'top';
+  return (
+    <svg className="hero-panels" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      {top && <g className="hp-card">
+        <rect x="90" y="150" width="330" height="210" rx="16" />
+        <path className="hp-line" d="M120 320 L180 285 L240 300 L300 240 L360 262 L390 215" />
+        <rect className="hp-bar" x="120" y="330" width="26" height="16" rx="4" />
+        <rect className="hp-bar" x="156" y="322" width="26" height="24" rx="4" />
+        <rect className="hp-bar" x="192" y="308" width="26" height="38" rx="4" />
+        <rect className="hp-bar" x="228" y="316" width="26" height="30" rx="4" />
+        <rect className="hp-dot" x="120" y="178" width="92" height="10" rx="5" />
+      </g>}
+      {top && <g className="hp-card">
+        <rect x="1030" y="210" width="300" height="240" rx="16" />
+        <path className="hp-fill" d="M1060 250 H1300 L1256 310 H1104 Z" />
+        <path className="hp-fill" d="M1104 326 H1256 L1222 380 H1138 Z" />
+        <path className="hp-fill" d="M1138 396 H1222 L1200 436 H1160 Z" />
+      </g>}
+      {bottom && <g className="hp-card">
+        <rect x="170" y="600" width="340" height="130" rx="16" />
+        <rect className="hp-bubble" x="200" y="630" width="180" height="30" rx="15" />
+        <rect className="hp-bubble hp-bubble-own" x="300" y="672" width="180" height="30" rx="15" />
+      </g>}
+      {bottom && <g className="hp-card">
+        <rect x="1070" y="590" width="260" height="150" rx="16" />
+        <rect className="hp-dot" x="1100" y="620" width="120" height="10" rx="5" />
+        <rect className="hp-dot hp-dot-strong" x="1100" y="648" width="188" height="26" rx="8" />
+        <rect className="hp-dot" x="1100" y="692" width="96" height="10" rx="5" />
+      </g>}
+    </svg>
+  );
+}
+
 /* ---------------- ГЕРОЙ: текст по центру внизу, фото ушло в блок ниже ---- */
 function HeroCenter({ onCta }) {
   const H = window.CONTENT.hero || {};
   return (
-    <header id="top" className="bg-black hero-center">
-      <AutomationField />
-      <div className="wrap hero-center-inner">
+    <header id="top" data-parallax-layers className="bg-black hero-center">
+      <div className="hero-layers">
+        <div data-parallax-layer="1" className="hero-layer hero-layer-panels"><HeroPanels part="top" /></div>
+        <div data-parallax-layer="2" className="hero-layer hero-layer-panels"><HeroPanels part="bottom" /></div>
+        <div data-parallax-layer="4" className="hero-layer hero-layer-field"><AutomationField /></div>
+        <div data-parallax-layer="4" className="hero-layer hero-layer-front"></div>
+      </div>
+      <div data-parallax-layer="3" className="wrap hero-center-inner">
         <span className="eyebrow reveal in">{H.eyebrow}</span>
         <h1 className="display reveal in hero-center-h">
           {H.titleLine1}<br />{H.titleLine2} <span style={{ color: 'var(--accent-bright)' }}>{H.titleAccent}</span>

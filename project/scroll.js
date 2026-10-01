@@ -129,7 +129,28 @@
     return r.top < window.innerHeight * 0.92;
   }
 
+  /* Слоёный параллакс первого экрана. Слои едут вниз с разной скоростью,
+     пока герой уходит за край: дальний быстрее, передний почти стоит.
+     scrub:0 — позиция слоёв жёстко привязана к прокрутке, без догона;
+     любое сглаживание здесь читается как лаг. */
+  function bindHeroParallax() {
+    const trigger = document.querySelector('[data-parallax-layers]');
+    if (!trigger || boundScroll.has(trigger)) return;
+    boundScroll.add(trigger);
+
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: trigger, start: '0% 0%', end: '100% 0%', scrub: 0 },
+    });
+    const layers = [['1', 70], ['2', 55], ['3', 40], ['4', 10]];
+    layers.forEach(([layer, yPercent], i) => {
+      const els = trigger.querySelectorAll('[data-parallax-layer="' + layer + '"]');
+      if (!els.length) return;
+      tl.to(els, { yPercent: yPercent, ease: 'none' }, i === 0 ? undefined : '<');
+    });
+  }
+
   function bindScroll() {
+    bindHeroParallax();
     STAGGER_SEL.forEach((sel) => {
       document.querySelectorAll(sel).forEach((box) => box.setAttribute('data-gsap-stagger', ''));
     });
