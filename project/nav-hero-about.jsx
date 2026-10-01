@@ -799,9 +799,11 @@ function About() {
           </div>
         </div>
         <div className="reveal about-photo-col">
-          <div className="about-photo-wrap" data-gsap-parallax="3" style={{ borderRadius: 'var(--r-lg)', overflow: 'clip',
-            border: '1px solid var(--line)', background: 'var(--tile-b)' }}>
-            <image-slot id="about-portrait" src="assets/portrait.webp" placeholder="Портрет" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
+          <div className="about-photo-wrap about-portrait" style={{ borderRadius: 'var(--r-lg)', overflow: 'clip',
+            border: '1px solid var(--line)', background: 'var(--tile-c)' }}>
+            <img src="assets/portrait.webp" alt="Даниил Карацапов" loading="lazy" decoding="async"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 18%', display: 'block' }} />
+            <span className="chip about-portrait-chip"><IconBolt size={14} />Веду проект лично</span>
           </div>
           <div className="about-photo-wrap" style={{ borderRadius: 'var(--r-lg)', overflow: 'clip',
             border: '1px solid var(--line)', background: 'var(--tile-b)' }}>
