@@ -307,10 +307,231 @@ function PortraitFrame({ portrait, short }) {
   );
 }
 
+/* ---------------- ФОН ГЕРОЯ: схема автоматизации ----------------
+   Узлы на разреженной сетке, связи между соседями и пакеты данных,
+   бегущие по связям. Читается как схема сквозной аналитики: источники →
+   обработка → результат. Сетка, а не случайные точки, выбрана намеренно:
+   хаотичное облако читается как «космос», а нам нужна «система».
+
+   Всё, что дорого, считается один раз на resize. В кадре остаётся только
+   отрисовка и продвижение пакетов. На скрытой вкладке цикл останавливается,
+   при prefers-reduced-motion рисуется один статичный кадр. */
+function AutomationField() {
+  const canvasRef = useRefA(null);
+  const wrapRef = useRefA(null);
+
+  useEffectA(() => {
+    const canvas = canvasRef.current;
+    const wrap = wrapRef.current;
+    if (!canvas || !wrap) return;
+
+    const reduce = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ctx = canvas.getContext('2d');
+    const ACCENT = '182,240,30';
+
+    let DPR = 1, W = 0, H = 0, raf = 0, tick = 0, step = 126;
+    let nodes = [], links = [], packets = [], pulses = [];
+    const mouse = { x: -9999, y: -9999 };
+
+    function build() {
+      step = W < 760 ? 104 : 126;
+      const cols = Math.max(3, Math.round(W / step) + 1);
+      const rows = Math.max(3, Math.round(H / step) + 1);
+      nodes = [];
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          const x = (i / (cols - 1)) * W + (Math.random() - 0.5) * step * 0.5;
+          const y = (j / (rows - 1)) * H + (Math.random() - 0.5) * step * 0.5;
+          nodes.push({ x, y, ox: x, oy: y,
+            r: Math.random() * 1.6 + 1.3,
+            ph: Math.random() * Math.PI * 2,
+            sp: Math.random() * 0.012 + 0.006 });
+        }
+      }
+      links = [];
+      const max = step * 1.5;
+      for (let a = 0; a < nodes.length; a++) {
+        for (let b = a + 1; b < nodes.length; b++) {
+          const dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < max) links.push({ a, b, d });
+        }
+      }
+      packets = [];
+      const count = Math.min(46, Math.max(14, Math.round(links.length * 0.16)));
+      for (let i = 0; i < count; i++) packets.push(newPacket(Math.random()));
+      pulses = [];
+    }
+
+    function newPacket(p) {
+      return { li: (Math.random() * links.length) | 0,
+               p: p == null ? 0 : p,
+               sp: Math.random() * 0.0040 + 0.0020,
+               back: Math.random() < 0.5 };
+    }
+
+    function resize() {
+      const rect = wrap.getBoundingClientRect();
+      W = Math.max(1, rect.width); H = Math.max(1, rect.height);
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = W * DPR; canvas.height = H * DPR;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      build();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      tick += 1;
+
+      /* Узлы дышат и слегка тянутся к курсору — фон отвечает на движение,
+         но не бегает за ним: резкий отклик на главной выглядит нервно. */
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        n.ph += n.sp;
+        let tx = n.ox, ty = n.oy;
+        const dx = mouse.x - n.ox, dy = mouse.y - n.oy;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < 240 * 240) {
+          const f = (1 - Math.sqrt(d2) / 240) * 16;
+          tx += dx * 0.01 * f; ty += dy * 0.01 * f;
+        }
+        n.x += (tx - n.x) * 0.06;
+        n.y += (ty - n.y) * 0.06;
+      }
+
+      /* Связи. Чем короче связь, тем она заметнее — так схема не
+         превращается в равномерную сетку. */
+      ctx.lineWidth = 1;
+      for (let i = 0; i < links.length; i++) {
+        const l = links[i], a = nodes[l.a], b = nodes[l.b];
+        const alpha = 0.20 * (1 - l.d / (step * 1.5));
+        if (alpha <= 0) continue;
+        ctx.strokeStyle = 'rgba(' + ACCENT + ',' + alpha.toFixed(3) + ')';
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      }
+
+      /* Пакеты данных. Добравшись до узла, пакет «зажигает» его — это и есть
+         метафора срабатывания автоматизации. */
+      for (let i = 0; i < packets.length; i++) {
+        const pk = packets[i];
+        const l = links[pk.li];
+        if (!l) { packets[i] = newPacket(0); continue; }
+        pk.p += pk.sp;
+        if (pk.p >= 1) {
+          const end = pk.back ? nodes[l.a] : nodes[l.b];
+          if (end && pulses.length < 14) pulses.push({ x: end.x, y: end.y, r: 0 });
+          packets[i] = newPacket(0);
+          continue;
+        }
+        const from = pk.back ? nodes[l.b] : nodes[l.a];
+        const to = pk.back ? nodes[l.a] : nodes[l.b];
+        if (!from || !to) { packets[i] = newPacket(0); continue; }
+        const x = from.x + (to.x - from.x) * pk.p;
+        const y = from.y + (to.y - from.y) * pk.p;
+        const tailP = Math.max(0, pk.p - 0.12);
+        const tx = from.x + (to.x - from.x) * tailP;
+        const ty = from.y + (to.y - from.y) * tailP;
+        const g = ctx.createLinearGradient(tx, ty, x, y);
+        g.addColorStop(0, 'rgba(' + ACCENT + ',0)');
+        g.addColorStop(1, 'rgba(' + ACCENT + ',0.55)');
+        ctx.strokeStyle = g; ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(x, y); ctx.stroke();
+        ctx.fillStyle = 'rgba(' + ACCENT + ',0.9)';
+        ctx.beginPath(); ctx.arc(x, y, 1.9, 0, Math.PI * 2); ctx.fill();
+      }
+
+      for (let i = pulses.length - 1; i >= 0; i--) {
+        const p = pulses[i];
+        p.r += 0.9;
+        const a = 1 - p.r / 34;
+        if (a <= 0) { pulses.splice(i, 1); continue; }
+        ctx.strokeStyle = 'rgba(' + ACCENT + ',' + (a * 0.45).toFixed(3) + ')';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.stroke();
+      }
+
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i];
+        const breathe = 0.5 + 0.5 * Math.sin(n.ph);
+        ctx.fillStyle = 'rgba(' + ACCENT + ',' + (0.30 + breathe * 0.45).toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r + breathe * 0.5, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+
+    function loop() { draw(); raf = requestAnimationFrame(loop); }
+
+    const onMove = (e) => {
+      const r = wrap.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    };
+    const onLeave = () => { mouse.x = -9999; mouse.y = -9999; };
+    const onVis = () => {
+      if (document.hidden) { cancelAnimationFrame(raf); raf = 0; }
+      else if (!raf && !reduce) loop();
+    };
+
+    resize();
+    if (reduce) { draw(); }
+    else {
+      loop();
+      wrap.addEventListener('pointermove', onMove);
+      wrap.addEventListener('pointerleave', onLeave);
+      document.addEventListener('visibilitychange', onVis);
+    }
+    let rt = 0;
+    const onResize = () => { clearTimeout(rt); rt = setTimeout(resize, 180); };
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(rt);
+      window.removeEventListener('resize', onResize);
+      wrap.removeEventListener('pointermove', onMove);
+      wrap.removeEventListener('pointerleave', onLeave);
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, []);
+
+  return (
+    <div ref={wrapRef} className="auto-field" aria-hidden="true">
+      <canvas ref={canvasRef} />
+    </div>
+  );
+}
+
+/* ---------------- ГЕРОЙ: текст по центру внизу, фото ушло в блок ниже ---- */
+function HeroCenter({ onCta }) {
+  const H = window.CONTENT.hero || {};
+  return (
+    <header id="top" className="bg-black hero-center">
+      <AutomationField />
+      <div className="wrap hero-center-inner">
+        <span className="eyebrow reveal in">{H.eyebrow}</span>
+        <h1 className="display reveal in hero-center-h">
+          {H.titleLine1}<br />{H.titleLine2} <span style={{ color: 'var(--accent-bright)' }}>{H.titleAccent}</span>
+        </h1>
+        <p className="lead reveal in hero-center-sub">{H.sub}</p>
+        <div className="reveal in hero-center-cta">
+          <a className="btn btn-fill btn-lg" href="#contacts" onClick={(e) => { e.preventDefault(); onCta(); }}>
+            {H.ctaPrimary}<IconArrowRight size={18} />
+          </a>
+          <a className="btn btn-ghost btn-lg" href={H.telegramUrl} target="_blank" rel="noopener noreferrer">
+            <IconSend size={17} />{H.ctaTelegram}
+          </a>
+        </div>
+        <div className="hero-center-trust"><HeroTrust /></div>
+      </div>
+    </header>
+  );
+}
+
 function Hero({ variant, portrait, onCta }) {
   if (variant === 'overlay') return <HeroOverlay portrait={portrait} onCta={onCta} />;
   if (variant === 'editorial') return <HeroEditorial portrait={portrait} onCta={onCta} />;
-  return <HeroSplit portrait={portrait} onCta={onCta} />;
+  if (variant === 'split') return <HeroSplit portrait={portrait} onCta={onCta} />;
+  return <HeroCenter onCta={onCta} />;
 }
 
 /* ---------------- STARFIELD (подложка «Обо мне», звёзды разбегаются от курсора) -------- */
@@ -533,9 +754,15 @@ function About() {
             {STATS.map((s, i) => <StatBlock key={i} s={s} />)}
           </div>
         </div>
-        <div className="reveal about-photo-wrap" style={{ borderRadius: 'var(--r-lg)', overflow: 'clip',
-          border: '1px solid var(--line)', background: 'var(--tile-b)', minHeight: 0 }}>
-          <image-slot id="about-photo" src="assets/about-work.webp" placeholder="Фото за работой" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
+        <div className="reveal about-photo-col">
+          <div className="about-photo-wrap" data-gsap-parallax="3" style={{ borderRadius: 'var(--r-lg)', overflow: 'clip',
+            border: '1px solid var(--line)', background: 'var(--tile-b)' }}>
+            <image-slot id="about-portrait" src="assets/portrait.webp" placeholder="Портрет" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
+          </div>
+          <div className="about-photo-wrap" style={{ borderRadius: 'var(--r-lg)', overflow: 'clip',
+            border: '1px solid var(--line)', background: 'var(--tile-b)' }}>
+            <image-slot id="about-photo" src="assets/about-work.webp" placeholder="Фото за работой" shape="rounded" radius="18" fit="cover" style={{ width: '100%', height: '100%', display: 'block' }}></image-slot>
+          </div>
         </div>
       </div>
     </section>

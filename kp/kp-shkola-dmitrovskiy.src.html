@@ -1,0 +1,170 @@
+<meta charset="utf-8">
+<title>КП: сайт и CRM для школы «Дмитровский»</title>
+<style>/*FONTS*/</style>
+<style>/*BASE*/</style>
+<style>
+/* Одностраничник: только перечень работ и цена. Полоса светлая —
+   документ читают и распечатывают, а не листают с экрана. */
+.head{display:flex; justify-content:space-between; align-items:center;
+  padding-bottom:5mm; border-bottom:1px solid var(--line);}
+.head .brand-t{color:var(--ink);}
+.head .brand-s{color:var(--ink-3);}
+.head-url{font-size:9pt; font-weight:800; color:var(--ink);}
+
+.doc-kick{font-size:8pt; font-weight:800; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin:6mm 0 3mm;}
+.doc-h{font-size:23pt; letter-spacing:-0.03em; line-height:1.05;}
+.doc-h em{font-style:normal; color:#6b9a08;}
+.doc-sub{margin-top:3mm; font-size:10.5pt; color:var(--ink-2); line-height:1.5; max-width:150mm;}
+
+.meta{display:flex; gap:14mm; margin:5mm 0 6mm; padding:4mm 0;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+.meta div span{display:block; color:var(--ink-3); font-size:7.5pt;
+  text-transform:uppercase; letter-spacing:.1em; font-weight:800; margin-bottom:2px;}
+.meta div b{font-weight:800; font-size:10pt;}
+
+.blk-h{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:2.5mm;}
+.blk-h h3{font-size:12pt;}
+.blk-h span{font-size:8pt; font-weight:800; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3);}
+
+table.works{width:100%; border-collapse:collapse; font-size:9pt; margin-bottom:5mm;}
+table.works td{padding:1.9mm 0; border-bottom:1px solid var(--line-2); vertical-align:top;}
+table.works td.n{font-weight:700; width:52mm; padding-right:6mm;}
+table.works td.d{color:var(--ink-2); font-size:8.4pt; line-height:1.45; padding-right:6mm;}
+table.works td.r{text-align:right; font-weight:800; white-space:nowrap; width:26mm;
+  font-variant-numeric:tabular-nums;}
+table.works tr.sum td{border-bottom:none; border-top:1.5px solid var(--ink);
+  padding-top:3mm; font-size:10.5pt; font-weight:800;}
+table.works tr.sum td.r{font-size:13pt; letter-spacing:-0.02em;}
+
+.grand{display:flex; align-items:center; justify-content:space-between;
+  background:#fafbf5; border:1px solid var(--ink); border-radius:10px;
+  padding:3.5mm 6mm; margin-bottom:5mm;}
+.grand .lbl{font-size:10pt; color:var(--ink-2);}
+.grand .lbl b{color:var(--ink); font-weight:800;}
+.grand .val{font-size:17pt; font-weight:800; letter-spacing:-0.03em; white-space:nowrap;}
+.cta{padding:4mm 6mm;}
+.pay div{padding:3mm 3.5mm;}
+.pay b{font-size:13pt;}
+.note{font-size:8pt;}
+</style>
+
+<section class="page">
+  <div class="head">
+    <div class="brand">
+      <div class="mark"><svg class="plane" viewBox="0 0 50 50" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z"/></svg></div>
+      <div>
+        <div class="brand-t">Даниил Карацапов</div>
+        <div class="brand-s">интернет-маркетолог · сайты и реклама</div>
+      </div>
+    </div>
+    <div class="head-url">karatsapov.ru</div>
+  </div>
+
+  <div class="doc-kick">Коммерческое предложение</div>
+  <h1 class="doc-h">Сайт школы <em>и CRM для приёма</em></h1>
+  <p class="doc-sub">Новый сайт, который доводит родителя до записи на экскурсию,
+    и простой кабинет, где видно судьбу каждой заявки — от звонка до зачисления.</p>
+
+  <div class="meta">
+    <div><span>Кому</span><b>Школа «Дмитровский»</b></div>
+    <div><span>Срок реализации</span><b>21 день</b></div>
+  </div>
+
+  <div class="blk-h">
+    <h3>Сайт с админкой</h3>
+    <span>14 дней</span>
+  </div>
+  <table class="works">
+    <tr>
+      <td class="n">Структура и прототип</td>
+      <td class="d" colspan="2">Сценарии родителя, карта сайта, прототипы</td>
+    </tr>
+    <tr>
+      <td class="n">Дизайн</td>
+      <td class="d" colspan="2">Главная, ступени, поступление, педагоги, служебные</td>
+    </tr>
+    <tr>
+      <td class="n">Вёрстка и сборка</td>
+      <td class="d" colspan="2">Адаптив, скорость загрузки, админка для правок</td>
+    </tr>
+    <tr>
+      <td class="n">Разделы и формы</td>
+      <td class="d" colspan="2">Документы, педагоги, новости, запись на экскурсию</td>
+    </tr>
+    <tr>
+      <td class="n">Контент, SEO и запуск</td>
+      <td class="d" colspan="2">Тексты, мета-теги, Метрика и GA4, перенос домена</td>
+    </tr>
+    <tr class="sum">
+      <td class="n">Итого</td>
+      <td class="d" style="padding-top:4mm;font-size:8.4pt;">сайт под ключ, две недели правок после запуска</td>
+      <td class="r">50 000 ₽</td>
+    </tr>
+  </table>
+
+  <div class="blk-h">
+    <h3>CRM для приёма</h3>
+    <span>+7 дней после сайта</span>
+  </div>
+  <table class="works">
+    <tr>
+      <td class="n">Кабинет и доступы</td>
+      <td class="d" colspan="2">Отдельный вход каждому сотруднику, права и функции настраиваются под роль</td>
+    </tr>
+    <tr>
+      <td class="n">Воронка и карточка заявки</td>
+      <td class="d" colspan="2">Пять этапов: от заявки до зачисления</td>
+    </tr>
+    <tr>
+      <td class="n">Источники и отчёт</td>
+      <td class="d" colspan="2">Канал заявки → зачисления, а не клики</td>
+    </tr>
+    <tr>
+      <td class="n">Выгрузка и обучение</td>
+      <td class="d" colspan="2">Экспорт в Excel, час с приёмной комиссией</td>
+    </tr>
+    <tr class="sum">
+      <td class="n">Итого</td>
+      <td class="d" style="padding-top:4mm;font-size:8.4pt;">кабинет внутри сайта, абонентской платы нет</td>
+      <td class="r">10 000 ₽</td>
+    </tr>
+  </table>
+
+  <div class="grand">
+    <div class="lbl"><b>Сайт и CRM вместе</b> — 50 000 ₽ + 10 000 ₽, срок 21 день</div>
+    <div class="val">60 000 ₽</div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8mm;">
+    <div>
+      <div class="kicker" style="margin-bottom:3mm;">Порядок оплаты</div>
+      <div class="pay">
+        <div><b>50%</b><span>старт работ</span></div>
+        <div><b>50%</b><span>сайт запущен</span></div>
+      </div>
+    </div>
+    <div>
+      <p class="note" style="margin-top:0;">
+        <b>CRM можно взять позже.</b> Она пристраивается к готовому сайту без
+        переделок, цена от этого не меняется. Это не замена amoCRM или Битрикс24:
+        сценарий один — приём.
+      </p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div>
+      <h3>Следующий шаг — созвон на 30 минут</h3>
+      <p>Пройдёмся по структуре под ваши ступени и правила приёма. После
+         разговора пришлю план работ по дням.</p>
+    </div>
+    <div class="cta-c">
+      <b>+7 (996) 347-00-65</b>
+      <span>Telegram: @Daniil_065</span><br>
+      <span>d.karatsapov@gmail.com</span><br>
+      <span>karatsapov.ru</span>
+    </div>
+  </div>
+</section>
