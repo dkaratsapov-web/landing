@@ -604,6 +604,26 @@ function checkServiceLinks() {
   }
 }
 
+/* Ссылки на кейсы со статических страниц услуг. Адреса кейсов там написаны
+   руками, а сами страницы генерируются из cases-data.mjs: переименовали slug —
+   и карточка на странице услуги молча ведёт в 404. Сверяем каждую такую
+   ссылку со списком кейсов на сборке. */
+function checkCaseLinks() {
+  const known = new Set(GENERATED_PAGES.map((pg) => pg.meta.path));
+  const bad = [];
+  for (const p of SUBPAGES) {
+    const file = join(srcDir, p, 'index.html');
+    if (!existsSync(file)) continue;
+    const html = readFileSync(file, 'utf8');
+    for (const m of html.matchAll(/href="(\/keysy\/[a-z0-9-]+\/)"/g)) {
+      if (!known.has(m[1])) bad.push(`${p}/index.html → ${m[1]}`);
+    }
+  }
+  if (bad.length) {
+    throw new Error('build: ссылки на несуществующие кейсы.\n  ' + bad.join('\n  '));
+  }
+}
+
 function checkFooterInSync() {
   const jsx = readFileSync(join(srcDir, 'audit-contacts-quiz.jsx'), 'utf8');
   const start = jsx.indexOf('const FOOTER_LINKS');
@@ -688,6 +708,7 @@ checkBrandIcons();
 /* Проверка ссылок услуг стоит здесь, а не рядом с остальными: ей нужен
    список SUBPAGES, объявленный ниже по файлу. */
 checkServiceLinks();
+checkCaseLinks();
 
 // Static subpages — копирование ниже; сам список поднят к остальным
 // перечням страниц, потому что на него смотрит проверка ссылок услуг.
