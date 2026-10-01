@@ -1,9 +1,8 @@
 name: Deploy site to GitHub Pages
 
-# Автозапуск по пушу выключен 01.10.2026 — сайт переезжает на обычный хостинг: если Pages продолжит выкладываться
-# и держать кастомный домен, он будет конфликтовать с DNS хостера.
-# Чтобы вернуть, допишите сюда:  push: { branches: [main] }
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
