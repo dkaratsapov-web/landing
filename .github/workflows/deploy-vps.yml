@@ -1,8 +1,8 @@
 name: Deploy to VPS
 
+# Автозапуск по пушу выключен 01.10.2026 — VPS гасится; воркфлоу оставлен на случай, если придётся вернуться.
+# Чтобы вернуть, допишите сюда:  push: { branches: [main] }
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:
