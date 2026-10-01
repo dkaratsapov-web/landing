@@ -104,7 +104,7 @@
      половину. Кнопка-призыв и карточка-ссылка ведут себя одинаково на всём
      сайте, потому что правило одно. */
   document.querySelectorAll('.btn-fill, .btn-lime').forEach((b) => b.classList.add('mo-magnetic'));
-  document.querySelectorAll('.price-card, .kfull, .post-card, .icon-card, .tool, .shot-open, .cert-row')
+  document.querySelectorAll('.price-card, .post-card, .icon-card, .tool, .shot-open, .cert-row')
     .forEach((c) => c.classList.add('mo-spot'));
 
   if (!finePointer) return;
