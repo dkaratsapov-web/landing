@@ -48,6 +48,7 @@ JS
 | `nunito-embed.css` | Nunito (cyrillic + latin, 400/600/700/800) в base64 |
 | `kp-plainglobal.*` | КП на сайт-каталог для PLAIN |
 | `kp-shkola-dmitrovskiy.*` | КП на сайт и CRM для школы «Дмитровский» |
+| `kp-diauto69-target.*` | КП на таргет в VK, Telegram и MAX для «ДиАвто69» |
 | `preview-*.png`, `shkola-*.png` | превью полос |
 
 Превью полос снимаются по одной: к собранному файлу дописывается

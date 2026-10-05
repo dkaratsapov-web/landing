@@ -1,0 +1,262 @@
+<meta charset="utf-8">
+<title>КП: таргет в VK, Telegram и MAX для «ДиАвто69»</title>
+<style>/*FONTS*/</style>
+<style>/*BASE*/</style>
+<style>
+/* Две полосы: тёмная обложка с предложением и светлая с бюджетом,
+   объёмом ведения и порядком запуска. Главная мысль КП — расходы
+   клиента состоят только из рекламного бюджета, поэтому цифра 0 ₽
+   стоит и на обложке, и в итоговой таблице. */
+.ch{display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:5mm;}
+.cov-h{font-size:31pt;}
+.cov-sub{margin-top:5mm; font-size:11pt;}
+.dirs{margin-top:5mm;}
+.promise{padding:5mm 0;}
+.promise p{font-size:8.2pt;}
+.facts{margin-top:3.5mm; padding-top:3.5mm;}
+.ch-i{border:1px solid #26272c; border-radius:12px; padding:4.5mm 4.5mm 5mm;
+  background:#141418; position:relative; overflow:hidden;}
+.ch-i i.top{position:absolute; left:0; top:0; width:100%; height:2.2px; background:var(--lime); display:block;}
+.ch-n{display:block; font-size:7.5pt; font-weight:800; letter-spacing:.12em;
+  color:var(--lime); margin-bottom:2.5mm;}
+.ch-i h4{font-size:12.5pt; color:#fff; margin-bottom:1.5mm; letter-spacing:-0.02em;}
+.ch-b{font-size:17pt; font-weight:800; letter-spacing:-0.03em; color:#fff; line-height:1;}
+.ch-b em{font-style:normal; font-size:8pt; font-weight:700; color:#8e9098;
+  display:block; margin-top:1.8mm; letter-spacing:0;}
+.ch-i p{font-size:8.2pt; color:#9b9ea6; line-height:1.5; margin-top:3mm;
+  padding-top:3mm; border-top:1px solid #26272c;}
+
+.zero{display:flex; align-items:center; justify-content:space-between; gap:8mm;
+  margin-top:5mm; padding:4mm 6mm; border:1px solid var(--lime); border-radius:12px;
+  background:#16180f;}
+.zero-l{font-size:10.5pt; color:#d3d5da; line-height:1.45;}
+.zero-l b{color:#fff; font-weight:800;}
+.zero-v{font-size:26pt; font-weight:800; letter-spacing:-0.04em; color:var(--lime); white-space:nowrap; line-height:1;}
+.zero-v em{font-style:normal; display:block; font-size:8pt; font-weight:700;
+  color:#8e9098; letter-spacing:.06em; text-transform:uppercase; margin-top:2mm; text-align:right;}
+
+.blk-h{display:flex; align-items:baseline; justify-content:space-between; margin:0 0 3mm;}
+.blk-h h3{font-size:13pt;}
+.blk-h span{font-size:8pt; font-weight:800; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3);}
+.sp{margin-top:4mm;}
+table.est td{padding:1.8mm 0;}
+.card{padding:3.5mm;}
+.card p{font-size:8pt;}
+.note{padding:2.5mm 5mm;}
+
+table.est td.name{width:44mm;}
+table.est td.r{width:30mm;}
+table.est td.r.free{color:#5c7a0a;}
+.cards{margin-top:1mm;}
+.need{display:grid; grid-template-columns:1fr 1fr; gap:2.5mm 8mm; margin-top:1mm;
+  padding:0; list-style:none;}
+.need li{font-size:8.6pt; color:var(--ink-2); line-height:1.4; padding-left:6mm; position:relative;}
+.need li::before{content:""; position:absolute; left:0; top:1.3mm;
+  width:3mm; height:1.6mm; border-left:1.6px solid #8fbe12; border-bottom:1.6px solid #8fbe12;
+  transform:rotate(-45deg);}
+.need li b{color:var(--ink); font-weight:700;}
+</style>
+
+<!-- ───────────────────────── полоса 1: обложка ───────────────────────── -->
+<section class="page cover">
+  <div class="cov-top">
+    <div class="brand">
+      <div class="mark"><svg class="plane" viewBox="0 0 50 50" aria-hidden="true"><path d="M5 5L13.1505 42L27.1012 29.4506L12.6396 13.0136L34.6486 25.502L46 20.4601L5 5Z"/><path d="M35 29.0967L30.2839 45V29.6413L24.6612 23L35 29.0967ZM23 39.4725L27.4277 45V35.3329L23 39.4725Z"/></svg></div>
+      <div>
+        <div class="brand-t">Даниил Карацапов</div>
+        <div class="brand-s">интернет-маркетолог · сайты и реклама</div>
+      </div>
+    </div>
+    <div class="cov-url">karatsapov.ru</div>
+  </div>
+
+  <div class="cov-mid">
+    <div class="cov-kick">Коммерческое предложение</div>
+    <h1 class="cov-h">Таргет в VK,<br>Telegram и MAX.<br><em>Ведение бесплатно</em></h1>
+    <p class="cov-sub">Три новых канала трафика поверх того, что у вас уже работает.
+      С вашей стороны — только рекламный бюджет: стратегия, креативы, настройка,
+      запуск и ежедневное ведение с меня.</p>
+    <div class="dirs">
+      <div class="dir"><b>VK</b> Реклама</div>
+      <div class="dir"><b>Telegram</b> Ads</div>
+      <div class="dir"><b>MAX</b> каналы</div>
+    </div>
+  </div>
+
+  <div class="ch">
+    <div class="ch-i"><i class="top"></i>
+      <span class="ch-n">01</span>
+      <h4>Telegram Ads</h4>
+      <div class="ch-b">37 000 ₽<em>минимум площадки</em></div>
+      <p>Объявления в каналах про авто и импорт. Ведём в ваш канал и в мини-приложение.</p>
+    </div>
+    <div class="ch-i"><i class="top"></i>
+      <span class="ch-n">02</span>
+      <h4>VK Реклама</h4>
+      <div class="ch-b">20 000 ₽<em>рекомендую</em></div>
+      <p>ВКонтакте, Одноклассники и сайты рекламной сети VK. Здесь же — догоняющая реклама.</p>
+    </div>
+    <div class="ch-i"><i class="top"></i>
+      <span class="ch-n">03</span>
+      <h4>MAX</h4>
+      <div class="ch-b">20 000 ₽<em>рекомендую</em></div>
+      <p>Новый канал: реклама в мессенджере запущена осенью, рекламодателей пока мало.</p>
+    </div>
+  </div>
+
+  <div class="zero">
+    <div class="zero-l"><b>Ваши расходы — только бюджет.</b> 77 000 ₽ в месяц уходят
+      площадкам за показы. Деньги вы заводите сами, напрямую в кабинеты на своё юрлицо.</div>
+    <div class="zero-v">0 ₽<em>за ведение</em></div>
+  </div>
+
+  <div class="cov-bottom">
+    <div class="promise">
+      <div>
+        <span class="pn">ПОЧЕМУ СЕЙЧАС</span>
+        <h4>Канал уже есть</h4>
+        <p>Telegram Ads ведёт подписчика прямо в ваш канал, а бот дальше сам пишет ему,
+           когда приходит подходящее авто. Это уже построено и работает.</p>
+      </div>
+      <div>
+        <span class="pn">ПОЧЕМУ СРАБОТАЕТ</span>
+        <h4>Каталог открывается внутри мессенджера</h4>
+        <p>Мини-приложение показывает те же 133 автомобиля и ту же форму заявки,
+           без перехода на сайт. На переходе людей не теряем.</p>
+      </div>
+      <div>
+        <span class="pn">ЧТО УЖЕ СОБРАНО</span>
+        <h4>Аудитории готовы</h4>
+        <p>Семь целей Метрики, включая сегмент «смотрел шесть разных авто и ушёл
+           без заявки». Самая тёплая аудитория для догоняющей рекламы.</p>
+      </div>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>3</b><span>площадки<br>в одном запуске</span></div>
+      <div class="fact"><b>77 000 ₽</b><span>бюджет<br>в месяц</span></div>
+      <div class="fact"><b>0 ₽</b><span>за настройку<br>и ведение</span></div>
+      <div class="fact"><b>5 дней</b><span>от согласования<br>до первых показов</span></div>
+    </div>
+
+    <div class="foot">
+      <span>Коммерческое предложение для «ДиАвто69»</span>
+      <span>karatsapov.ru · +7 (996) 347-00-65</span>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── полоса 2: бюджет и работы ───────────────── -->
+<section class="page">
+  <div class="sect-h">
+    <span class="sect-n">1</span>
+    <h2 class="sect-t">Бюджет: то единственное, что вы оплачиваете</h2>
+  </div>
+
+  <table class="est">
+    <tr>
+      <th>Площадка</th>
+      <th>Что покупаем</th>
+      <th class="r">В месяц</th>
+    </tr>
+    <tr>
+      <td class="name">Telegram Ads</td>
+      <td class="desc">Показы в каналах про авто и импорт. Переход — в ваш канал или сразу в мини-приложение.</td>
+      <td class="r">37 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">VK Реклама</td>
+      <td class="desc">ВКонтакте, Одноклассники и рекламная сеть VK. Здесь же догоняющая реклама.</td>
+      <td class="r">20 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">MAX</td>
+      <td class="desc">Продвижение канала в мессенджере через кабинет VK Рекламы.</td>
+      <td class="r">20 000 ₽</td>
+    </tr>
+    <tr>
+      <td class="name">Настройка и ведение</td>
+      <td class="desc">Стратегия, креативы, запуск, оптимизация и отчётность — весь объём ниже.</td>
+      <td class="r free">0 ₽</td>
+    </tr>
+    <tr class="total">
+      <td class="name">Итого в месяц</td>
+      <td class="desc" style="padding-top:4mm; font-size:8.4pt;">бюджет целиком уходит площадкам за показы</td>
+      <td class="r">77 000 ₽</td>
+    </tr>
+  </table>
+
+  <div class="note" style="margin-top:4mm;">
+    <b>37 000 ₽ на Telegram Ads — порог самой площадки, а не моя комиссия.</b>
+    Это минимальное пополнение кабинета, деньги целиком уходят на показы. У VK и MAX
+    порога нет: 20 000 ₽ — сумма, на которой кампания успевает обучиться и дать
+    статистику для решений.
+  </div>
+
+  <div class="sect-h sp">
+    <span class="sect-n">2</span>
+    <h2 class="sect-t">Что я делаю бесплатно</h2>
+  </div>
+
+  <ul class="need">
+    <li><b>Стратегия и аудитории.</b> Поиск авто, подписчики конкурентов, похожие на базу заявок, догоняющая по каталогу.</li>
+    <li><b>Кабинеты и маркировка.</b> Регистрация в трёх системах, маркировка в ЕРИР — без неё штраф рекламодателю.</li>
+    <li><b>Креативы и тексты.</b> Объявления под каждый формат, карточки авто из каталога, тесты заголовков.</li>
+    <li><b>Посадочные.</b> Канал, мини-приложение, рекламные страницы сайта — там, где человек не потеряется.</li>
+    <li><b>Аналитика.</b> UTM, цели Метрики, подписчики и заявки по источникам в одном отчёте.</li>
+    <li><b>Ведение.</b> Ставки, отключение слабых связок, перенос бюджета между площадками, отчёт раз в неделю.</li>
+  </ul>
+
+  <div class="sect-h sp">
+    <span class="sect-n">3</span>
+    <h2 class="sect-t">Как поймём, что сработало</h2>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <span class="dot"></span>
+      <h4>Стоимость подписчика</h4>
+      <p>Telegram и MAX считаем по подписчикам: бот дальше сам пишет человеку про
+        каждое новое подходящее авто.</p>
+    </div>
+    <div class="card">
+      <span class="dot"></span>
+      <h4>Стоимость заявки</h4>
+      <p>VK считаем по заявкам с сайта и из мини-приложения. Цели уже стоят —
+        ждать месяц настройки не нужно.</p>
+    </div>
+    <div class="card">
+      <span class="dot"></span>
+      <h4>Сравнение с Директом</h4>
+      <p>Через месяц будет видно, какой канал приводит покупателя дешевле Директа
+        и куда переносить бюджет.</p>
+    </div>
+  </div>
+
+  <div class="sect-h sp">
+    <span class="sect-n">4</span>
+    <h2 class="sect-t">Что нужно от вас</h2>
+  </div>
+
+  <ul class="need">
+    <li><b>Бюджет на счетах площадок.</b> Пополняете сами, со своего счёта. Я к деньгам не прикасаюсь.</li>
+    <li><b>Реквизиты для маркировки.</b> Без них реклама по закону не запускается.</li>
+    <li><b>Фото и видео авто.</b> Подойдут те, что уже выходят в канале.</li>
+    <li><b>15 минут в неделю.</b> Созвон по отчёту и согласование текстов.</li>
+  </ul>
+
+  <div class="cta">
+    <div>
+      <h3>Запускаемся за 5 рабочих дней</h3>
+      <p>Два дня на кабинеты и маркировку, два на аудитории и креативы, пятый — первые
+        показы. Скажите «да» — пришлю список доступов.</p>
+    </div>
+    <div class="cta-c">
+      <b>+7 (996) 347-00-65</b>
+      <span>Telegram: @Daniil_065</span><br>
+      <span>d.karatsapov@gmail.com</span><br>
+      <span>karatsapov.ru</span>
+    </div>
+  </div>
+</section>
