@@ -1,0 +1,36 @@
+# systemd-юнит сервиса. Положить в /etc/systemd/system/crm.service
+#
+#   systemctl daemon-reload && systemctl enable --now crm
+#   journalctl -u crm -f          — смотреть лог
+#
+# Пароль и путь к базе лежат в /etc/crm.env, который виден только root:
+#   CRM_PASSWORD=длинный-пароль
+#   CRM_DATA=/var/lib/crm/base.ndjson
+# и права на него:  chmod 600 /etc/crm.env
+
+[Unit]
+Description=CRM: база компаний и проверка сайтов
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/crm
+ExecStart=/usr/bin/node /opt/crm/server.mjs
+EnvironmentFile=/etc/crm.env
+Restart=always
+RestartSec=3
+
+# Сервис читает и пишет только свой каталог с базой. Остальная файловая
+# система для него доступна только на чтение — ошибка в коде не сможет
+# задеть сайт, который лежит рядом.
+User=www-data
+Group=www-data
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+NoNewPrivileges=yes
+ReadWritePaths=/var/lib/crm
+
+[Install]
+WantedBy=multi-user.target

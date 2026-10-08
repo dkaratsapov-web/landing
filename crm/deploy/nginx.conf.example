@@ -1,0 +1,49 @@
+# Nginx для админки. Положить в /etc/nginx/sites-available/crm и включить:
+#   ln -s /etc/nginx/sites-available/crm /etc/nginx/sites-enabled/
+#   certbot --nginx -d crm.karatsapov.ru
+#   nginx -t && systemctl reload nginx
+#
+# Сервис слушает только 127.0.0.1:8787 и снаружи недоступен напрямую.
+# Наружу его отдаёт Nginx — он же держит сертификат.
+
+server {
+    listen 80;
+    server_name crm.karatsapov.ru;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name crm.karatsapov.ru;
+
+    # Пути подставит certbot.
+    ssl_certificate     /etc/letsencrypt/live/crm.karatsapov.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/crm.karatsapov.ru/privkey.pem;
+
+    # Админка не должна попасть в поиск ни при каких обстоятельствах.
+    add_header X-Robots-Tag "noindex, nofollow" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+
+    # Загрузка выгрузок: файл на 10 МБ должен проходить.
+    client_max_body_size 64m;
+
+    # Проверка тысяч сайтов идёт долго, но запрос на её запуск возвращается
+    # сразу. А вот экспорт большой базы может считаться минуту — поэтому
+    # таймауты подняты.
+    proxy_read_timeout 300s;
+    proxy_send_timeout 300s;
+
+    # Если захотите пускать только со своих адресов — раскомментируйте
+    # и перечислите их. Это самая дешёвая защита из возможных.
+    # allow 203.0.113.4;
+    # deny all;
+
+    location / {
+        proxy_pass http://127.0.0.1:8787;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
