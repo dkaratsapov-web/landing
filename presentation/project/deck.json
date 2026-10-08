@@ -1,0 +1,46 @@
+{
+  "v": 4,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-08T18:00:00Z"
+  },
+  "lists": "css",
+  "title": "Даниил Карацапов — интернет-маркетолог",
+  "order": [
+    "cover",
+    "path",
+    "numbers",
+    "services",
+    "process",
+    "results",
+    "niches",
+    "statement",
+    "pricing",
+    "contact"
+  ],
+  "sections": {
+    "intro": {
+      "description": "Кто это и чем занимается",
+      "start": "cover"
+    },
+    "proof": {
+      "description": "Опыт, цифры и доказательства в кейсах",
+      "start": "numbers"
+    },
+    "work": {
+      "description": "Как устроена работа и сколько стоит",
+      "start": "statement"
+    }
+  },
+  "faces": {
+    "nunito-sans": {
+      "family": "Nunito Sans",
+      "href": "https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap"
+    },
+    "manrope": {
+      "family": "Manrope",
+      "href": "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+    }
+  },
+  "designSystems": []
+}
