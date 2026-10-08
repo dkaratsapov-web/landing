@@ -12,25 +12,37 @@ import { createServer } from 'node:http';
 import { readFileSync, existsSync, statSync } from 'node:fs';
 import { join, dirname, extname, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createHmac, timingSafeEqual, randomBytes } from 'node:crypto';
+import { timingSafeEqual, randomBytes } from 'node:crypto';
 import { Store, STATUS_LABELS, STATUSES } from './store.mjs';
 import { parseCsv, parseXlsx, importRows, findHeader } from './import.mjs';
 import { Checker, VERDICTS } from './check.mjs';
 import { score, SERVICES, NICHE_FIT } from './score.mjs';
+import { YandexAuth, makeSession, readSession } from './auth.mjs';
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const PORT = +(process.env.CRM_PORT || 8787);
 const HOST = process.env.CRM_HOST || '127.0.0.1';
 const PASSWORD = process.env.CRM_PASSWORD || '';
 const DATA = process.env.CRM_DATA || join(DIR, 'data', 'base.ndjson');
-/* Секрет для подписи сессии живёт в памяти процесса. Перезапуск сервиса
-   разлогинивает — для однопользовательской админки это не цена, а плюс. */
-const SECRET = randomBytes(32);
+/* Секрет для подписи сессий. Если не задан, берётся случайный — тогда
+   перезапуск сервиса разлогинивает. Для входа через Яндекс это одна лишняя
+   кнопка, поэтому по умолчанию так и оставляем: меньше секретов на диске. */
+const SECRET = process.env.CRM_SECRET || randomBytes(32).toString('hex');
 
-if (!PASSWORD) {
-  console.error('CRM_PASSWORD не задан. Запуск без пароля запрещён: админка видит всю базу.');
+const ya = new YandexAuth();
+
+if (!PASSWORD && !ya.enabled) {
+  console.error('Не настроен ни один способ входа. Задайте CRM_PASSWORD либо '
+    + 'CRM_YANDEX_CLIENT_ID, CRM_YANDEX_CLIENT_SECRET и CRM_BASE_URL.');
   process.exit(1);
 }
+if (ya.enabled && !ya.allowed.size) {
+  console.error('CRM_YANDEX_* заданы, но CRM_ALLOWED_EMAILS пуст. Вход через Яндекс '
+    + 'без списка разрешённых адресов пускал бы любого владельца яндекс-почты.');
+  process.exit(1);
+}
+if (ya.enabled) console.log(`вход через Яндекс: ${[...ya.allowed].join(', ')}`);
+if (PASSWORD) console.log('вход по паролю: включён');
 
 const store = new Store(DATA);
 const checker = new Checker(store, score);
@@ -44,21 +56,41 @@ const json = (res, code, obj) => {
   res.end(body);
 };
 
-function sign(ts) {
-  return createHmac('sha256', SECRET).update(String(ts)).digest('hex');
+const cookieOf = (req, name) => {
+  const m = new RegExp(`(?:^|;\\s*)${name}=([^;]+)`).exec(req.headers.cookie || '');
+  return m ? decodeURIComponent(m[1]) : '';
+};
+
+/* Права проверяются при каждом запросе, а не один раз при входе. Поэтому
+   достаточно убрать адрес из CRM_ALLOWED_EMAILS и перезапустить сервис —
+   и человек теряет доступ, не дожидаясь, пока истечёт его кука. */
+function currentUser(req) {
+  const sess = readSession(SECRET, cookieOf(req, 'crm_session'));
+  if (!sess) return null;
+  if (sess.email === 'password') return PASSWORD ? { email: 'вход по паролю', kind: 'password' } : null;
+  return ya.isAllowed(sess.email) ? { email: sess.email, kind: 'yandex' } : null;
 }
 
-function authed(req) {
-  const cookie = req.headers.cookie || '';
-  const m = /crm_session=([^;]+)/.exec(cookie);
-  if (!m) return false;
-  const [ts, sig] = decodeURIComponent(m[1]).split('.');
-  if (!ts || !sig) return false;
-  if (Date.now() - +ts > 30 * 24 * 3600 * 1000) return false;
-  const want = sign(ts);
-  try {
-    return timingSafeEqual(Buffer.from(sig, 'hex'), Buffer.from(want, 'hex'));
-  } catch { return false; }
+const authed = (req) => Boolean(currentUser(req));
+
+function setSession(res, email) {
+  const s = makeSession(SECRET, email);
+  res.setHeader('set-cookie',
+    `crm_session=${encodeURIComponent(s.value)}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${s.maxAge}`);
+}
+
+/* Страница с понятным текстом вместо голого кода ошибки: человек, которому
+   отказали, должен понимать почему и что делать дальше. */
+function authPage(res, code, title, text) {
+  res.writeHead(code, { 'content-type': 'text/html; charset=utf-8' });
+  res.end(`<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title>
+<style>body{margin:0;background:#0d0d0f;color:#f5f5f7;font-family:system-ui,sans-serif;
+display:flex;align-items:center;justify-content:center;height:100vh}
+.b{max-width:420px;padding:28px;background:#161618;border:1px solid rgba(255,255,255,.1);border-radius:16px}
+h1{font-size:18px;margin:0 0 10px}p{color:#a1a1a6;font-size:14px;line-height:1.5;margin:0 0 16px}
+a{color:#c4f53e}</style></head><body><div class="b"><h1>${title}</h1><p>${text}</p>
+<a href="/">Вернуться ко входу</a></div></body></html>`);
 }
 
 function readBody(req, limit = 64 * 1024 * 1024) {
@@ -122,18 +154,25 @@ async function api(req, res, url) {
   const p = url.pathname;
   const q = url.searchParams;
 
+  /* Какие способы входа показывать — решает сервер: интерфейс не должен
+     угадывать, настроен ли Яндекс. */
+  if (p === '/api/auth-methods') {
+    return json(res, 200, { password: Boolean(PASSWORD), yandex: ya.enabled });
+  }
+
   if (p === '/api/login' && req.method === 'POST') {
+    if (!PASSWORD) return json(res, 400, { error: 'вход по паролю выключен' });
     const body = JSON.parse((await readBody(req, 4096)).toString('utf8') || '{}');
     const ok = Buffer.byteLength(body.password || '') === Buffer.byteLength(PASSWORD)
       && timingSafeEqual(Buffer.from(body.password || ''), Buffer.from(PASSWORD));
     if (!ok) return json(res, 401, { error: 'неверный пароль' });
-    const ts = Date.now();
-    res.setHeader('set-cookie',
-      `crm_session=${encodeURIComponent(ts + '.' + sign(ts))}; HttpOnly; SameSite=Lax; Path=/; Max-Age=${30 * 24 * 3600}`);
+    setSession(res, 'password');
     return json(res, 200, { ok: true });
   }
 
   if (!authed(req)) return json(res, 401, { error: 'нужен вход' });
+
+  if (p === '/api/me') return json(res, 200, currentUser(req));
 
   if (p === '/api/logout' && req.method === 'POST') {
     res.setHeader('set-cookie', 'crm_session=; HttpOnly; Path=/; Max-Age=0');
@@ -292,6 +331,63 @@ async function api(req, res, url) {
   return json(res, 404, { error: 'нет такого метода' });
 }
 
+/* ───────────────────────── вход через Яндекс ───────────────────────── */
+
+async function auth(req, res, url) {
+  if (!ya.enabled) return authPage(res, 404, 'Вход через Яндекс не настроен',
+    'В окружении сервиса не заданы CRM_YANDEX_CLIENT_ID, CRM_YANDEX_CLIENT_SECRET и CRM_BASE_URL.');
+
+  if (url.pathname === '/auth/yandex') {
+    const { url: go, state } = ya.startUrl();
+    res.writeHead(302, {
+      location: go,
+      /* Кука со state живёт десять минут и только ради одной проверки на
+         обратном пути. Secure не ставим жёстко: на локальной отладке по http
+         такая кука просто не доедет, а на сервере всё и так за https. */
+      'set-cookie': `crm_state=${state}; HttpOnly; SameSite=Lax; Path=/auth; Max-Age=600`,
+    });
+    return res.end();
+  }
+
+  if (url.pathname === '/auth/yandex/callback') {
+    const err = url.searchParams.get('error');
+    if (err) {
+      return authPage(res, 400, 'Яндекс отказал во входе',
+        `Причина: ${escapeHtml(url.searchParams.get('error_description') || err)}.`);
+    }
+    if (!ya.checkState(url.searchParams.get('state'), cookieOf(req, 'crm_state'))) {
+      /* Либо ссылку открыли не с той вкладки, где начинали, либо прошло
+         больше десяти минут, либо кто-то подсунул чужой адрес возврата. */
+      return authPage(res, 400, 'Вход не завершён',
+        'Проверочный код не совпал или устарел. Начните вход заново — это нормальная ситуация, '
+        + 'если страница провисела открытой слишком долго.');
+    }
+    try {
+      const user = await ya.complete(url.searchParams.get('code'));
+      setSession(res, user.email);
+      res.setHeader('set-cookie', [res.getHeader('set-cookie')].flat().concat(
+        'crm_state=; HttpOnly; Path=/auth; Max-Age=0'));
+      res.writeHead(302, { location: '/' });
+      console.log('вход:', user.email, user.name ? `(${user.name})` : '');
+      return res.end();
+    } catch (e) {
+      if (e.forbidden) {
+        console.warn('отказано во входе:', e.email);
+        return authPage(res, 403, 'Доступ не разрешён',
+          `Вы вошли как <b>${escapeHtml(e.email)}</b>, но этого адреса нет в списке разрешённых. `
+          + 'Добавьте его в CRM_ALLOWED_EMAILS и перезапустите сервис.');
+      }
+      console.error('ошибка входа через Яндекс:', e.message);
+      return authPage(res, 502, 'Не получилось войти', escapeHtml(e.message));
+    }
+  }
+
+  return authPage(res, 404, 'Нет такой страницы', 'Проверьте адрес.');
+}
+
+const escapeHtml = (s) => String(s).replace(/[&<>"]/g,
+  (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
 /* ───────────────────────── статика ───────────────────────── */
 
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
@@ -314,6 +410,7 @@ createServer(async (req, res) => {
   res.setHeader('x-robots-tag', 'noindex, nofollow');
   res.setHeader('referrer-policy', 'no-referrer');
   try {
+    if (url.pathname.startsWith('/auth/')) return await auth(req, res, url);
     if (url.pathname.startsWith('/api/')) return await api(req, res, url);
     return serveStatic(res, url.pathname);
   } catch (e) {

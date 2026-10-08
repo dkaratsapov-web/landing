@@ -9,7 +9,7 @@ const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<
 const root = $('#root');
 
 const S = {
-  stats: null, facets: null, rows: [], total: 0, page: 1,
+  stats: null, facets: null, me: null, rows: [], total: 0, page: 1,
   filter: { q: '', status: '', verdict: '', need: '', cat: '', city: '', checked: '', contact: '' },
   sort: 'priority', open: null, check: null, busy: false,
 };
@@ -34,14 +34,24 @@ const qs = () => new URLSearchParams(
 
 /* ─────────────────────────── вход ─────────────────────────── */
 
-function renderLogin(err) {
+async function renderLogin(err) {
+  let m = { password: true, yandex: false };
+  try { m = await (await fetch('/api/auth-methods')).json(); } catch { /* сервер не ответил */ }
+
   root.innerHTML = `<div class="login">
     <h1>База компаний</h1>
-    <p>Доступ по паролю. Сессия живёт 30 дней.</p>
-    <input id="pw" type="password" placeholder="пароль" autofocus>
+    <p>Сессия живёт 30 дней.</p>
+    ${m.yandex ? `<a class="btn btn-accent ya" href="/auth/yandex">
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#fc3f1d"/>
+      <path d="M13.3 18.6h2.1V5.4h-3c-3 0-4.6 1.6-4.6 3.9 0 1.9.9 3 2.5 4.1l-2.8 5.2h2.3l3.1-5.8-1.1-.7c-1.3-.9-1.9-1.6-1.9-3 0-1.2.8-2 2.4-2h1v11.5z" fill="#fff"/></svg>
+      Войти через Яндекс</a>` : ''}
+    ${m.yandex && m.password ? '<div class="or">или</div>' : ''}
+    ${m.password ? `<input id="pw" type="password" placeholder="пароль" autofocus>
+      <button class="btn" id="go" style="width:100%;margin-top:10px">Войти по паролю</button>` : ''}
     ${err ? `<div class="err">${esc(err)}</div>` : ''}
-    <button class="btn btn-accent" id="go" style="width:100%;margin-top:12px">Войти</button>
   </div>`;
+
+  if (!m.password) return;
   const go = async () => {
     try {
       await api('/api/login', { method: 'POST', body: JSON.stringify({ password: $('#pw').value }) });
@@ -64,6 +74,7 @@ async function load() {
 }
 
 async function boot() {
+  S.me = await api('/api/me').catch(() => null);
   S.facets = await api('/api/facets');
   await load();
   pollCheck();
@@ -91,6 +102,7 @@ function render() {
     <h1>База компаний</h1>
     <span class="stat">всего <b>${st.total}</b> · проверено <b>${st.checked}</b></span>
     <span class="spacer"></span>
+    ${S.me ? `<span class="stat" title="вы вошли как">${esc(S.me.email)}</span>` : ''}
     <button class="btn" id="imp">Импорт</button>
     <button class="btn" id="chk">Проверить</button>
     <a class="btn" href="/api/export.csv?${qs()}">Экспорт CSV</a>

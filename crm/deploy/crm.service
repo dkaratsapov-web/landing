@@ -3,10 +3,20 @@
 #   systemctl daemon-reload && systemctl enable --now crm
 #   journalctl -u crm -f          — смотреть лог
 #
-# Пароль и путь к базе лежат в /etc/crm.env, который виден только root:
-#   CRM_PASSWORD=длинный-пароль
+# Настройки лежат в /etc/crm.env, который виден только root
+# (chmod 600 /etc/crm.env):
+#
 #   CRM_DATA=/var/lib/crm/base.ndjson
-# и права на него:  chmod 600 /etc/crm.env
+#   CRM_SECRET=длинная-случайная-строка
+#
+#   # вход через Яндекс ID
+#   CRM_YANDEX_CLIENT_ID=...
+#   CRM_YANDEX_CLIENT_SECRET=...
+#   CRM_BASE_URL=https://crm.karatsapov.ru
+#   CRM_ALLOWED_EMAILS=вы@yandex.ru
+#
+#   # запасной вход по паролю (можно не задавать)
+#   CRM_PASSWORD=длинный-пароль
 
 [Unit]
 Description=CRM: база компаний и проверка сайтов
