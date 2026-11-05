@@ -165,12 +165,53 @@ LEAD_ORIGINS=https://karatsapov.ru
    по рабочим дням**. Пока не пройдена — доставки не будет.
 3. Токен скопировать в `/etc/crm.env`. В чат и в репозиторий он не попадает
    никогда.
-4. Узнать свой `user_id`: отдельного метода для этого нет. Напишите боту
-   `/start` и заберите `user.user_id` из события:
+4. Узнать свой `user_id`. Отдельного метода «верни мой идентификатор» в API
+   нет: он приходит только внутри событий. Поэтому — написать боту `/start`
+   в MAX, а потом запустить помощник, он всё разберёт сам:
+
    ```bash
-   curl -s -H "Authorization: $LEAD_MAX_TOKEN" \
-     "https://platform-api2.max.ru/updates?limit=10"
+   LEAD_MAX_TOKEN=... node tools/max-whoami.mjs
    ```
+
+   Помощник проверит токен, покажет бота и выведет готовую строку для
+   `/etc/crm.env`. Он только читает: ничего не отправляет и не меняет.
+
+### Подключение по шагам
+
+```bash
+# 1. код на сервер
+rsync -av --exclude data --exclude node_modules crm/ root@СЕРВЕР:/opt/crm/
+
+# 2. сертификат Минцифры (без него запрос к MAX падает на TLS)
+#    скачать с gosuslugi.ru, положить и обновить хранилище:
+update-ca-certificates
+
+# 3. настройки
+cat >> /etc/crm.env <<'ENV'
+LEAD_MAX_TOKEN=<токен из business.max.ru>
+LEAD_MAX_USER_ID=<из tools/max-whoami.mjs>
+LEAD_FILE=/var/lib/crm/leads.ndjson
+LEAD_ORIGINS=https://karatsapov.ru
+NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/russian_trusted_root_ca.crt
+ENV
+chmod 600 /etc/crm.env
+
+# 4. перезапуск и проверка
+systemctl restart crm && journalctl -u crm -n 20 --no-pager
+
+# 5. Nginx: добавить блок из deploy/nginx-lead.conf.example
+nginx -t && systemctl reload nginx
+
+# 6. контрольная заявка — должна прийти в MAX
+curl -s -X POST https://karatsapov.ru/api/lead \
+  -H 'content-type: application/json' \
+  -H 'origin: https://karatsapov.ru' \
+  -d '{"name":"Проверка","phone":"+7 996 347 00 65","source":"ручная проверка"}'
+```
+
+Ожидаемый ответ — `{"ok":true,"delivered":"max"}`. Если `"delivered":"stored"`,
+заявка принята и лежит в файле, но до MAX не дошла: смотреть
+`journalctl -u crm` — там будет причина.
 
 ### Сертификат Минцифры
 
