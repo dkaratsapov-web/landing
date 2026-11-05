@@ -28,6 +28,13 @@
             '<input type="tel" id="lm-phone" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" required>' +
             '<span class="field-err">Укажите телефон для связи</span>' +
           '</div>' +
+          /* Приманка для ботов: поле спрятано и от глаз, и от экранных
+             читалок, человек его не заполнит никогда. Заполнено — значит,
+             форму отправил робот, и сервер молча отбросит заявку. */
+          '<div style="position:absolute;left:-9999px" aria-hidden="true">' +
+            '<label for="lm-website">Сайт</label>' +
+            '<input type="text" id="lm-website" name="website" tabindex="-1" autocomplete="off">' +
+          '</div>' +
           /* Только имя и телефон. Поля «сайт» и «комментарий» убраны: форма
              открывается по кнопке «Обсудить задачу», где человек ещё ничего не
              решил, и каждое лишнее поле здесь стоит заявок. Всё остальное
@@ -74,37 +81,9 @@
     });
 
     /* ---- Отправка заявки ----------------------------------------------
-       Первый путь — Telegram Bot API, если в lead-config.js заданы токен и
-       чат. Сейчас они пустые намеренно: файл отдаётся браузеру как есть, и
-       любой секрет в нём публичен. Рабочий путь — WhatsApp с готовым
-       текстом заявки.
-
-       Возвращается способ доставки, а не true. Разница существенная: при
-       отправке ботом заявка действительно у владельца, а при переходе в
-       WhatsApp её отправляет человек — и если браузер заблокировал новое
-       окно, не отправляет никто. Экран «заявка отправлена» в этот момент
-       был бы прямым обманом. */
-    function wa(text) {
-      var w = window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-      return w ? 'wa' : 'none';
-    }
-    function sendLead(text) {
-      var TOKEN = window.LEAD_TG_TOKEN || '';
-      var CHAT = window.LEAD_TG_CHAT || '';
-      if (TOKEN && CHAT) {
-        var url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage' +
-          '?chat_id=' + encodeURIComponent(CHAT) +
-          '&disable_web_page_preview=true' +
-          '&text=' + encodeURIComponent(text);
-        return fetch(url).then(function (r) {
-          return r.json().catch(function () { return {}; }).then(function (j) {
-            if (r.ok && j && j.ok) return 'tg';
-            return wa(text);
-          });
-        }).catch(function () { return wa(text); });
-      }
-      return Promise.resolve(wa(text));
-    }
+       Вся логика доставки — в lead-config.js, общая для всех форм сайта.
+       Здесь остаётся только показать результат. Токена в браузере нет:
+       заявка уходит на свой сервер, а он уже пишет в MAX. */
 
     function val(id) { var el = document.getElementById(id); return (el && el.value) || ''; }
 
@@ -119,14 +98,15 @@
       var digits = (phone.value.match(/\d/g) || []).length;
       if (digits < 11) { phoneField.classList.add('invalid'); phone.focus(); return; }
       phoneField.classList.remove('invalid');
-      var text =
-        '🟢 Новая заявка с сайта (' + SOURCE + ' · попап)\n' +
-        '👤 Имя: ' + (val('lm-name') || '—') + '\n' +
-        '📞 Телефон: ' + phone.value;
       var btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = '.6'; }
-      sendLead(text).then(function (how) {
-        if (how !== 'tg') {
+      window.leadSend({
+        name: val('lm-name'),
+        phone: phone.value,
+        source: SOURCE + ' · попап',
+        website: val('lm-website'),
+      }).then(function (how) {
+        if (how !== 'srv') {
           var okH = ok.querySelector('h3');
           var okP = ok.querySelector('p');
           if (how === 'wa') {

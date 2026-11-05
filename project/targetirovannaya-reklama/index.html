@@ -1012,8 +1012,6 @@
     }
 
     async function sendQuizLead(name, contact, method) {
-      const TOKEN = window.LEAD_TG_TOKEN || '';
-      const CHAT = window.LEAD_TG_CHAT || '';
       const summary = Object.values(answers).flat().join(', ');
       const text =
         '🟢 Новая заявка (Квиз · Таргетированная реклама)\n' +
@@ -1021,15 +1019,8 @@
         '📲 Способ: ' + (method || '—') + '\n' +
         '📞 Контакт: ' + (contact || '—') + '\n' +
         '📋 Ответы: ' + summary;
-      if (TOKEN && CHAT) {
-        try {
-          const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + encodeURIComponent(CHAT) + '&disable_web_page_preview=true&text=' + encodeURIComponent(text);
-          const r = await fetch(url);
-          const j = await r.json().catch(() => ({}));
-          if (r.ok && j.ok) return;
-        } catch (e) {}
-      }
-      window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
+      /* Доставка — в lead-config.js, общая для всех форм сайта. */
+      return window.leadSend(text);
     }
 
     nextBtn.addEventListener('click', async () => {
@@ -1077,18 +1068,9 @@
     });
     const val = (id) => (document.getElementById(id) || {}).value || '';
     async function sendLead(text) {
-      const TOKEN = window.LEAD_TG_TOKEN || '';
-      const CHAT = window.LEAD_TG_CHAT || '';
-      if (TOKEN && CHAT) {
-        try {
-          const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage?chat_id=' + encodeURIComponent(CHAT) + '&disable_web_page_preview=true&text=' + encodeURIComponent(text);
-          const r = await fetch(url);
-          const j = await r.json().catch(() => ({}));
-          if (r.ok && j && j.ok) return true;
-        } catch (e) {}
-      }
-      window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-      return true;
+      /* Доставка живёт в lead-config.js и общая для всех форм сайта: на
+         сервер, а он уже пишет в MAX своим токеном. Токена в браузере нет. */
+      return window.leadSend(text);
     }
     form.addEventListener('submit', async (e) => {
       e.preventDefault();

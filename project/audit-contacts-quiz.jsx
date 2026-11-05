@@ -25,28 +25,14 @@ function Field({ label, children, error }) {
    «я получил» значит врать, а если всплывающее окно ещё и заблокировано
    браузером, то врать вдвойне: заявка не ушла никуда.
 
-   'tg'  — доставлено ботом
+   'srv' — сервер принял заявку, она у владельца
    'wa'  — открыт WhatsApp, отправляет человек
    'none'— окно заблокировано, доставки не произошло */
 async function sendLead(text) {
-  const TOKEN = window.LEAD_TG_TOKEN || '';
-  const CHAT = window.LEAD_TG_CHAT || '';
-  if (TOKEN && CHAT) {
-    try {
-      // GET без кастомных заголовков — не вызывает CORS-preflight
-      const url = 'https://api.telegram.org/bot' + TOKEN + '/sendMessage'
-        + '?chat_id=' + encodeURIComponent(CHAT)
-        + '&disable_web_page_preview=true'
-        + '&text=' + encodeURIComponent(text);
-      const r = await fetch(url);
-      const j = await r.json().catch(() => ({}));
-      if (r.ok && j && j.ok) return 'tg';
-    } catch (e) {}
-  }
-  try {
-    const w = window.open('https://wa.me/79963470065?text=' + encodeURIComponent(text), '_blank');
-    return w ? 'wa' : 'none';
-  } catch (e) { return 'none'; }
+  /* Доставка живёт в lead-config.js и общая для всех форм сайта: заявка
+     уходит на свой сервер, а он уже пишет в MAX своим токеном. В браузере
+     секрета нет — раньше здесь лежал токен бота, и его прочитали. */
+  return window.leadSend(text);
 }
 
 function useLeadForm(toast, successMsg, source) {
@@ -85,7 +71,7 @@ function useLeadForm(toast, successMsg, source) {
        отправляет человек, и подгонять его сообщением об успехе нечестно. */
     sendLead(text).then((how) => {
       setVia(how);
-      toast(how === 'tg' ? successMsg
+      toast(how === 'srv' ? successMsg
         : how === 'wa' ? 'Открыл WhatsApp — осталось нажать «Отправить»'
         : 'Окно заблокировано браузером. Позвоните или напишите в Telegram');
     }).catch(() => {
@@ -152,7 +138,7 @@ function Audit() {
 }
 
 /* via — способ доставки из sendLead(). Текст панели зависит от него, потому
-   что «я получил заявку» правда только для Telegram. Для WhatsApp честная
+   что «я получил заявку» правда только тогда, когда её принял сервер. Для WhatsApp честная
    формулировка — «осталось нажать отправить»: до этого момента заявки у
    владельца нет. Если окно заблокировано, панель перестаёт быть успехом и
    показывает прямые контакты. */

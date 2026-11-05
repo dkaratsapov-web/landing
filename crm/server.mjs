@@ -18,6 +18,7 @@ import { parseCsv, parseXlsx, importRows, findHeader } from './import.mjs';
 import { Checker, VERDICTS } from './check.mjs';
 import { score, SERVICES, NICHE_FIT } from './score.mjs';
 import { YandexAuth, makeSession, readSession } from './auth.mjs';
+import { handleLead } from './lead.mjs';
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const PORT = +(process.env.CRM_PORT || 8787);
@@ -168,6 +169,24 @@ async function api(req, res, url) {
     if (!ok) return json(res, 401, { error: 'неверный пароль' });
     setSession(res, 'password');
     return json(res, 200, { ok: true });
+  }
+
+  /* Приём заявок с сайта — единственный метод без входа: его дёргает
+     посетитель, а не владелец. Стоит до проверки сессии намеренно; своя
+     защита (ограничение частоты, honeypot, проверка источника) внутри. */
+  if (p === '/api/lead') {
+    if (req.method === 'OPTIONS') {
+      const origin = String(req.headers.origin || '');
+      if (origin) {
+        res.setHeader('access-control-allow-origin', origin);
+        res.setHeader('access-control-allow-headers', 'content-type');
+        res.setHeader('access-control-allow-methods', 'POST, OPTIONS');
+        res.setHeader('access-control-max-age', '86400');
+      }
+      res.writeHead(204);
+      return res.end();
+    }
+    return handleLead(req, res, readBody, json);
   }
 
   if (!authed(req)) return json(res, 401, { error: 'нужен вход' });
